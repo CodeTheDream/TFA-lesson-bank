@@ -1,2 +1,2 @@
-class Lesson < ApplicationRecord
+class Lesson < ApplicationRecord 
 end
