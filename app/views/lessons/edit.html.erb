@@ -14,7 +14,7 @@
 <h1>Editing Lesson</h1>
 
 <%= render 'form', lesson: @lesson %>
-<%= link_to 'Show', @lesson %> |
-<%= link_to 'Back', lessons_path %>
+<%= link_to 'Show', @lesson, :class => "btn btn-primary btn-sm", :style => "color: white" %> |
+<%= link_to 'Back', lessons_path, :class => "btn btn-primary btn-sm", :style => "color: white" %>
 </body>
 </html>
