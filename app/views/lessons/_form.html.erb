@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TFA Project</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  </head>
+  <body>
+<div class= "container-fluid">
+<%= form_for(lesson) do |f| %>
+  
+  <% if lesson.errors.any? %>
+    <div id="error_explanation" class="my_alert">
+      <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+      <ul>
+      <% lesson.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+ <div class="form-group col">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>  
+  </div>
+  
+  <div class="form-group col">
+    <%= f.label :description %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+  
+  <div class="form-group col">
+    <%= f.label :subject %>
+    <%= f.text_field :subject, class: 'form-control' %>
+  </div>
+
+  <div class="form-group col">
+    <%= f.label :course %>
+    <%= f.text_field :course, class: 'form-control' %>
+  </div>
+
+  <div class="form-group col">
+    <%= f.label :state %>
+    <%= f.text_field :state, class: 'form-control' %>
+  </div>
+
+  <div class="form-group col">
+    <%= f.label :district %>
+    <%= f.text_field :district, class: 'form-control' %>
+  </div>
+
+  <div class="form-group col">
+    <%= f.label :rating %>
+    <%= f.text_field :rating, class: 'form-control' %>
+  </div>
+
+  <div class="form-group col">
+    <%= f.label :downloads %>
+    <%= f.text_field :downloads, class: 'form-control' %>
+  </div>
+
+    <div class="form-group col">
+    <%= f.label :tags %>
+    <%= f.text_field :tags, class: 'form-control' %>
+  </div>
+
+
+  <div class="form-group col">
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+  
+<% end %>
+</div>
+</body>
+</html>
