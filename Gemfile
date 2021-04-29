@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 # Use Devise for users
 gem 'devise'
+# Use pundit for authorization
+gem "pundit"
 gem 'bootstrap'
 
 # Use Active Storage variant

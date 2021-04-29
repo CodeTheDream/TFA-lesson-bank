@@ -1,7 +1,8 @@
 class CoursesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :set_course, only: [:show, :edit, :update, :destroy]
-  
+  before_action :verify_role!
+
   def index
     @courses = Course.all
   end
@@ -24,9 +25,10 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
+    @course.user = current_user
     if @course.save
       flash.notice = "The course record was created successfully."
-      redirect_to @course
+      redirect_to courses_path
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
       render :new  
@@ -56,6 +58,11 @@ class CoursesController < ApplicationController
   end
       
   private
+  
+  def verify_role!
+    authorize Course 
+  end
+  
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     @course = Course.find(params[:id])
