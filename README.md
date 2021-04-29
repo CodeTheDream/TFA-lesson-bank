@@ -196,7 +196,12 @@ gem install rails
 
 This allows the Rails command to become available to use in the terminal
 
-### 5. Migrate Database
+
+### 5. Create & Migrate Database
+
+```
+rails db:create
+```
 
 Now that we have the proper database created. Let's make some tables and rows.
 
@@ -209,10 +214,6 @@ rails db:migrate RAILS_ENV=test
 
 `-E` stands for **E**ncoding. Use UTF-8.
 Can also run if you already have rails setup
-
-```
-rails db:create
-```
 
 ## At this point you should be able to test the app.
 The command 'rspec' should run the test suite with no errors or failures.
