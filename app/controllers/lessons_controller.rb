@@ -64,7 +64,7 @@ class LessonsController < ApplicationController
     
   # Only allow a list of trusted parameters through.
   def lesson_params
-    params.require(:lesson).permit(:title, :description, :subject, :course, :state, :district, :rating, :downloads, :tags)
+    params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tags)
   end
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
