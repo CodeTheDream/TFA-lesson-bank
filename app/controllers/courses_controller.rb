@@ -60,7 +60,7 @@ class CoursesController < ApplicationController
   private
   
   def verify_role!
-    authorize Course 
+    authorize @course || Course 
   end
   
   # Use callbacks to share common setup or constraints between actions.

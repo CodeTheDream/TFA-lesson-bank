@@ -4,7 +4,8 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def owner_or_admin?
-    (@user&.role == 'admin') || (@record&.user == @user) 
+    byebug
+    (@user&.role == 'admin') || (@record&.user_id == @user.id) 
   end
 
   %i(index? new? create? show?).each do |ali|
