@@ -4,7 +4,6 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def owner_or_admin?
-    byebug
     (@user&.role == 'admin') || (@record&.user_id == @user.id) 
   end
 
