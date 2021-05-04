@@ -1,0 +1,29 @@
+<p>
+  <strong>Course:</strong>
+  <%= @lesson.course_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @lesson.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @lesson.description %>
+</p>
+
+<p>
+  <strong>Units</strong>
+  <%= @lesson.units_covered %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @lesson.tags %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_lesson_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> |
+<%= link_to 'Back', lessons_path, :class => "btn btn-outline-primary btn-sm" %>

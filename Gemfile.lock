@@ -56,10 +56,16 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    autoprefixer-rails (10.2.4.0)
+      execjs
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.7.4)
       msgpack (~> 1.0)
+    bootstrap (4.6.0)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 1.14.3, < 2)
+      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
     concurrent-ruby (1.1.8)
@@ -72,6 +78,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     erubi (1.10.0)
+    execjs (2.7.0)
     ffi (1.15.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -99,8 +106,11 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.2.3)
+    popper_js (1.16.0)
     puma (4.3.7)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-proxy (0.6.5)
@@ -207,12 +217,14 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
+  bootstrap
   byebug
   devise
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
+  pundit
   rails (~> 6.0.3, >= 6.0.3.4)
   rspec-rails
   sass-rails (>= 6)
