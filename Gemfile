@@ -26,6 +26,10 @@ gem 'devise'
 # Use pundit for authorization
 gem "pundit"
 gem 'bootstrap'
+gem 'activestorage-validator'
+gem 'poppler'
+gem 'ffmpeg'
+gem 'image_processing'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

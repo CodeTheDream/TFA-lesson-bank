@@ -25,10 +25,19 @@
   <%= @document.lesson %>
 </p>
 
-<%# <p> %>
-  <%# <strong>File:</strong> %>
-  <%# <%= @course.file %> 
-<%# </p> %>
+<p>
+  <strong>Document:</strong>
+  <td data-title="Document"><br>
+    <% if @document.document.attached? %>
+      <% if @document.document.representable? %>
+      <%= image_tag @document.document.preview(resize_to_fit: [200,200])%>
+      <br>
+      <%= link_to "View File", @document.document %> 
+      <br>
+      <%= link_to "Download File", @document.document, download: '' %>
+      <% end %>
+    <% end %>
+</p> 
 
 </div>
 <%= link_to 'Edit', edit_document_path(@document), :class => "btn btn-outline-primary btn-sm" %> |
