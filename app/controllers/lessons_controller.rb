@@ -1,9 +1,10 @@
 class LessonsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
+  before_action :get_course
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
 
   def index
-    @lessons = Lesson.all
+    @lessons = @course.lessons
   end
     
   # GET /lessons/1
@@ -13,7 +14,7 @@ class LessonsController < ApplicationController
     
   # GET /lessons/new
   def new
-    @lesson = Lesson.new
+    @lesson = @course.lessons.build
   end
     
   # GET /Lessons/1/edit
@@ -23,10 +24,10 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = Lesson.new(lesson_params)
+    @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       flash.notice = "The lesson record was created successfully."
-      redirect_to @lesson
+      redirect_to course_lessons_path(@course)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :new  
@@ -38,7 +39,7 @@ class LessonsController < ApplicationController
   def update
     if @lesson.update(lesson_params)
       flash.notice = "The lesson record was updated successfully."
-      redirect_to @lesson
+      redirect_to course_lessons_path(@course)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :edit
@@ -50,15 +51,19 @@ class LessonsController < ApplicationController
   def destroy
     @lesson.destroy
     respond_to do |format|
-    format.html { redirect_to lessons_url, notice: 'Lesson was successfully destroyed.' }
+    format.html { redirect_to course_lessons_path(@course), notice: 'Lesson was successfully destroyed.' }
     format.json { head :no_content }
     end
   end
     
   private
+  def get_course
+    @course = Course.find(params[:course_id])
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_lesson
-    @lesson = Lesson.find(params[:id])
+    @lesson = @course.lessons.find(params[:id])
   end
     
   # Only allow a list of trusted parameters through.
@@ -68,7 +73,7 @@ class LessonsController < ApplicationController
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s
-    redirect_to lessons_path
+    redirect_to courses_path
   end
 end
 
