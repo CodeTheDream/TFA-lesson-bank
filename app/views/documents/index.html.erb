@@ -9,7 +9,7 @@
       <th class="h2" style="background:none;">Type</th>
       <th class="h2" style="background:none;">Course</th>
       <th class="h2" style="background:none;">Lesson</th>
-      <th class="h2" style="background:none;">Document</th>
+      <th class="h2" style="background:none;">File</th>
       <th colspan="3"></th>
     </tr>
     </div>
@@ -24,14 +24,14 @@
         <td data-title="Type"><%= document.kind %></td>
         <td data-title="Type"><%= document.course_id %></td>
         <td data-title="Type"><%= document.lesson_id %></td>
-        <td data-title="Document">
-          <% if (document.document.attached?) %> 
-            <% if document.document.representable? %>
-              <%= image_tag(document.document.preview(resize_to_fit: [100,100])) %>
+        <td data-title="File">
+          <% if (document.file.attached?) %> 
+            <% if document.file.representable? %>
+              <%= image_tag(document.file.preview(resize_to_fit: [100,100])) %>
               <br>
-              <%= link_to "View File", document.document %> 
+              <%= link_to "View File", document.file %> 
               <br>
-              <%= link_to "Download File", document.document, download: '' %>
+              <%= link_to "Download File", document.file, download: '' %>
             <% end %>  
           <% end %>
         </td>

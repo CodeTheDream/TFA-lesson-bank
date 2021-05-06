@@ -26,15 +26,15 @@
 </p>
 
 <p>
-  <strong>Document:</strong>
+  <strong>File:</strong>
   <td data-title="Document"><br>
-    <% if @document.document.attached? %>
-      <% if @document.document.representable? %>
-      <%= image_tag @document.document.preview(resize_to_fit: [200,200])%>
+    <% if @document.file.attached? %>
+      <% if @document.file.representable? %>
+      <%= image_tag @document.file.preview(resize_to_fit: [200,200])%>
       <br>
-      <%= link_to "View File", @document.document %> 
+      <%= link_to "View File", @document.file %> 
       <br>
-      <%= link_to "Download File", @document.document, download: '' %>
+      <%= link_to "Download File", @document.file, download: '' %>
       <% end %>
     <% end %>
 </p> 
