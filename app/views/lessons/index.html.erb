@@ -26,9 +26,9 @@
         <td data-title="Tags"><%= lesson.tags %></td>
 
 
-        <td><%= link_to 'Show', lesson, :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Edit', edit_lesson_path(lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Destroy', lesson, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Show', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Edit', edit_course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Destroy', course_lesson_path(@course, lesson), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
       </tr>
     </div>
     <% end %>
@@ -37,4 +37,4 @@
 </div>
 <br>
 
-<%= link_to 'New Lesson', new_lesson_path, :class => "btn btn-outline-primary btn-sm" %>
+<%= link_to 'New Lesson', new_course_lesson_path, :class => "btn btn-outline-primary btn-sm" %>
