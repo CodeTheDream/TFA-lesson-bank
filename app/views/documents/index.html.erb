@@ -1,0 +1,52 @@
+<h1 class="title mt-5 mb-5 display-3" style="text-align: center;">Documents</h1>
+<div id="no-more-tables" class="table-responsive card mb-5">
+<table class="table table-hover">
+  <thead>
+    <div class="row">
+    <tr>
+      <th class="h2" style="background:none;">Name</th>
+      <th class="h2" style="background:none;">Description</th>
+      <th class="h2" style="background:none;">Type</th>
+      <th class="h2" style="background:none;">Course</th>
+      <th class="h2" style="background:none;">Lesson</th>
+      <%# <th class="h2" style="background:none;">File</th> %>
+      <th colspan="3"></th>
+    </tr>
+    </div>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <div class="row">
+      <tr>
+        <td data-title="Name"><%= document.name %></td>
+        <td data-title="Description"><%= document.description %></td>
+        <td data-title="Type"><%= document.kind %></td>
+        <td data-title="Type"><%= document.course_id %></td>
+        <td data-title="Type"><%= document.lesson_id %></td>
+
+        <%# <td data-title="File"> %>
+          <%# <% if (lesson.file.attached?) %>  
+            <%# <% if lesson.file.representable? %> 
+              <%# <%= image_tag(lesson.file.preview(resize_to_fit: [100,100])) %> 
+              <%# <br> %>
+              <%# <%= link_to "View File", lesson.file %>  
+              <%# <br> %>
+              <%# <%= link_to "Download File", lesson.file, download: '' %> 
+            <%# <% end %>   
+          <%# <% end %> 
+        <%# </td> %>
+
+
+        <td><%= link_to 'Show', document, :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Edit', edit_document_path(document), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
+      </tr>
+    </div>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+<%= link_to 'New Document', new_document_path, :class => "btn btn-outline-primary btn-sm" %>

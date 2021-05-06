@@ -1,0 +1,37 @@
+<h2 class="title mt-5 mb-5 display-3" style="text-align:center">Documents</h2>
+<div id="no-more-tables" class="table-responsive card mb-5">
+<p>
+  <strong>Name:</strong>
+  <%= @document.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @document.description %>
+</p>
+
+<p>
+  <strong>Type</strong>
+  <%= @document.kind %>
+</p>
+
+<p>
+  <strong>Course</strong>
+  <%= @document.course %>
+</p>
+
+<p>
+  <strong>Lesson</strong>
+  <%= @document.lesson %>
+</p>
+
+<%# <p> %>
+  <%# <strong>File:</strong> %>
+  <%# <%= @course.file %> 
+<%# </p> %>
+
+</div>
+<%= link_to 'Edit', edit_document_path(@document), :class => "btn btn-outline-primary btn-sm" %> |
+<%= link_to 'Back', documents_path, :class => "btn btn-outline-primary btn-sm" %>
+
+
