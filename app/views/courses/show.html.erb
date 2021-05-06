@@ -1,3 +1,5 @@
+<h2 class="title mt-5 mb-5 display-3" style="text-align:center">Courses</h2>
+<div id="no-more-tables" class="table-responsive card mb-5">
 <p>
   <strong>Title:</strong>
   <%= @course.title %>
@@ -37,6 +39,9 @@
   <strong>End Date:</strong>
   <%= @course.end_date %>
 </p>
+</div>
 
 <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary btn-sm" %> |
 <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary btn-sm" %>
+
+</div>
