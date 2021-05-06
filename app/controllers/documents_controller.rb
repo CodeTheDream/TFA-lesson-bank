@@ -69,7 +69,7 @@ class DocumentsController < ApplicationController
         
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:name, :description, :kind, :course_id, :lesson_id)
+      params.require(:document).permit(:name, :description, :kind, :course_id, :lesson_id, :file)
     end
   
     def catch_not_found(e)

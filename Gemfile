@@ -26,6 +26,10 @@ gem 'devise'
 # Use pundit for authorization
 gem "pundit"
 gem 'bootstrap'
+# Use for validating blobs
+gem 'activestorage-validator'
+# Use for rendering pdfs
+gem 'poppler'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
