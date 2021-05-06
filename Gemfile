@@ -30,6 +30,8 @@ gem 'bootstrap'
 gem 'activestorage-validator'
 # Use for rendering pdfs
 gem 'poppler'
+# upgrading actionpack for security issue - potential denial of service attach
+gem "actionpack", ">= 6.0.3.7"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
