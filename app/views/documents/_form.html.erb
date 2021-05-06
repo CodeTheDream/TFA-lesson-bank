@@ -1,0 +1,62 @@
+<%= form_for(document) do |f| %>
+  
+  <% if document.errors.any? %>
+    <div id="error_explanation" class="my_alert">
+      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+      <ul>
+      <% document.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+ <div class="form-group col">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>  
+  </div>
+  
+  <div class="form-group col">
+    <%= f.label :description %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+  
+  <div class="form-group col">
+    <%= f.label :type %>
+    <%= f.text_field :kind, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <label for="course"><%= Course %></label>
+    <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
+  </div>
+
+  <div class="form-group">
+    <label for="lesson"><%= Lesson %></label>
+    <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
+  </div>
+
+  <%# <div class="form-group col"> %>
+    <%# <%= f.label :course_id %> 
+    <%# <%= f.text_field :course_id, class: 'form-control' %> 
+  <%# </div> %>
+
+  <%# <div class="form-group col"> %>
+    <%# <%= f.label :lesson %> 
+    <%# <%= f.text_field :lesson_id, class: 'form-control' %> 
+  <%# </div> %>
+
+  <%# <div class="form-group col">
+    <%= f.label :document %>
+    <%# <%= f.text_field :document, class: 'form-control' %> 
+  <%# </div> %> 
+
+  <div class="form-group col">
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+  
+<% end %>
+</div>
+

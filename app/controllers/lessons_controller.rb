@@ -1,6 +1,5 @@
 class LessonsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  # layout 'lesson_layout'
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
 
   def index
