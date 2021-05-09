@@ -1,5 +1,6 @@
 class DocumentsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
+    before_action :get_course
     before_action :set_document, only: [:show, :edit, :update, :destroy]
     before_action :verify_role!
   
@@ -14,7 +15,8 @@ class DocumentsController < ApplicationController
         
     # GET /documents/new
     def new
-      @document = Document.new
+      @document = @course.documents.build
+      # @document = Document.new
     end
         
     # GET /documents/1/edit
@@ -24,10 +26,12 @@ class DocumentsController < ApplicationController
     # POST /documents
     # POST /documents.json
     def create
-      @document = Document.new(document_params)
+      @document = @course.documents.build(document_params)
       if @document.save
         flash.notice = "The document record was created successfully."
-        redirect_to documents_path
+        redirect_to course_documents_path(@course)
+      # else
+      #   redirect_to documents_path
       else
         flash.now.alert = @document.errors.full_messages.to_sentence
         render :new  
@@ -39,7 +43,7 @@ class DocumentsController < ApplicationController
     def update
       if @document.update(document_params)
         flash.notice = "The document record was updated successfully."
-        redirect_to @document
+        redirect_to course_documents_path(@course)
       else
         flash.now.alert = @document.errors.full_messages.to_sentence
         render :edit
@@ -51,7 +55,7 @@ class DocumentsController < ApplicationController
     def destroy
       @document.destroy
       respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+      format.html { redirect_to course_documents_path(@course), notice: 'Document was successfully destroyed.' }
       format.json { head :no_content }
       end
     end
@@ -63,6 +67,10 @@ class DocumentsController < ApplicationController
     end
     
     # Use callbacks to share common setup or constraints between actions.
+    def get_course
+      @course = Course.find(params[:course_id])
+    end
+
     def set_document
       @document = Document.find(params[:id])
     end
@@ -75,7 +83,7 @@ class DocumentsController < ApplicationController
     def catch_not_found(e)
       Rails.logger.debug("We had a not found exception.")
       flash.alert = e.to_s
-      redirect_to documents_path
+      redirect_to course_document_path
     end
 
 end

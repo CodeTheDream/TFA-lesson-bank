@@ -1,4 +1,4 @@
-<%= form_for(document) do |f| %>
+<%= form_for([@course,@document]) do |f| %>
   
   <% if document.errors.any? %>
     <div id="error_explanation" class="my_alert">
@@ -31,10 +31,11 @@
     <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
   </div>
 
-  <div class="form-group">
-    <label for="lesson"><%= Lesson %></label>
-    <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
-  </div>
+  <%# <div class="form-group"> %>
+    <%# <label for="lesson"><%= Lesson %>
+    <%# </label>  %>
+    <%# <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %> 
+  <%# </div> %>
 
   <div class="form-group col">
     <%= f.label :file %>
