@@ -4,9 +4,17 @@ Rails.application.routes.draw do
   root to: 'pages#landing_page'
   resources :courses do 
     resources :lessons
-    resources :documents
+    resources :documents do
+      member do
+        get :course_index
+      end
+    end
   end
   resources :lessons do
-    resources :documents
+    resources :documents do
+      member do
+        get :lesson_index
+      end
+    end
   end
 end

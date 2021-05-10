@@ -1,6 +1,6 @@
 class DocumentsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-    before_action :get_course
+    before_action :get_course_or_lesson
     before_action :set_document, only: [:show, :edit, :update, :destroy]
     before_action :verify_role!
   
@@ -8,6 +8,14 @@ class DocumentsController < ApplicationController
       @documents = Document.all
     end
         
+    def course_index
+      @documents = @course.documents
+    end
+
+    def lesson_index
+      @documents = @lesson.documents
+    end
+
     # GET /documents/1
     # GET /documents/1.json
     def show
@@ -15,7 +23,11 @@ class DocumentsController < ApplicationController
         
     # GET /documents/new
     def new
-      @document = @course.documents.build
+      if @document
+        @document = @course.documents.build
+      elsif @lessson
+        @document = @lesson.documents.build
+      end
       # @document = Document.new
     end
         
@@ -26,7 +38,11 @@ class DocumentsController < ApplicationController
     # POST /documents
     # POST /documents.json
     def create
-      @document = @course.documents.build(document_params)
+      if @document
+        @document = @course.documents.build(document_params)
+      elsif @lesson
+        @document = @lesson.documents.build(document_params)
+      end
       if @document.save
         flash.notice = "The document record was created successfully."
         redirect_to course_documents_path(@course)
@@ -67,8 +83,12 @@ class DocumentsController < ApplicationController
     end
     
     # Use callbacks to share common setup or constraints between actions.
-    def get_course
-      @course = Course.find(params[:course_id])
+    def get_course_or_lesson
+      if params[:course_id].present?
+        @course = Course.find(params[:course_id])
+      elsif params[:lesson_id]
+        @lesson = Lesson.find params[:lesson_id]
+      end
     end
 
     def set_document
@@ -83,7 +103,7 @@ class DocumentsController < ApplicationController
     def catch_not_found(e)
       Rails.logger.debug("We had a not found exception.")
       flash.alert = e.to_s
-      redirect_to course_document_path
+      redirect_to courses_path(@course)
     end
 
 end

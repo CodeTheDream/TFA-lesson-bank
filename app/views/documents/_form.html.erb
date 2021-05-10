@@ -1,4 +1,5 @@
-<%= form_for([@course,@document]) do |f| %>
+<% obj = @course.present? ? @course : @lesson %>
+<%= form_for([obj,@document]) do |f| %>
   
   <% if document.errors.any? %>
     <div id="error_explanation" class="my_alert">
