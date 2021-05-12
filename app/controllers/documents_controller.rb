@@ -19,15 +19,23 @@ class DocumentsController < ApplicationController
     # GET /documents/1
     # GET /documents/1.json
     def show
+      # byebug
+      if @course
+        @document = @course.documents.build(document_params)
+      elsif @lesson
+        @document = @course.lesson.documents.build(document_params)
+      end
     end
         
     # GET /documents/new
     def new
-      if @document
-        @document = @course.documents.build
-      elsif @lessson
-        @document = @lesson.documents.build
-      end
+      @document = Document.new
+      # if @document
+      #   @document = @course.documents.build
+      # elsif @lessson
+      #   @document = @lesson.documents.build
+      # end
+      # byebug
       # @document = Document.new
     end
         
@@ -38,16 +46,20 @@ class DocumentsController < ApplicationController
     # POST /documents
     # POST /documents.json
     def create
-      if @document
+      if @course
         @document = @course.documents.build(document_params)
       elsif @lesson
         @document = @lesson.documents.build(document_params)
       end
       if @document.save
         flash.notice = "The document record was created successfully."
-        redirect_to course_documents_path(@course)
-      # else
-      #   redirect_to documents_path
+        if @course.present?
+          redirect_to course_documents_path(@course)
+        elsif @lesson.present?
+         redirect_to lesson_documents_path(@lesson)
+        else
+          redirect_to "/"
+        end
       else
         flash.now.alert = @document.errors.full_messages.to_sentence
         render :new  
@@ -57,9 +69,21 @@ class DocumentsController < ApplicationController
     # PATCH/PUT /documents/1
     # PATCH/PUT /documents/1.json
     def update
+      # if @course
+      #   @document = @course.documents.build(document_params)
+      # elsif @lesson
+      #   @document = @lesson.documents.build(document_params)
+      # end
       if @document.update(document_params)
         flash.notice = "The document record was updated successfully."
-        redirect_to course_documents_path(@course)
+        if @course.present?
+          redirect_to course_documents_path(@course)
+        elsif @lesson.present?
+         redirect_to lesson_documents_path(@lesson)
+        else
+          redirect_to "/"
+        end
+        # redirect_to course_documents_path(@course)
       else
         flash.now.alert = @document.errors.full_messages.to_sentence
         render :edit
@@ -69,9 +93,20 @@ class DocumentsController < ApplicationController
     # DELETE /lessons/1
     # DELETE /lessons/1.json
     def destroy
+      if @course.present?
+        @course = @document.course
+        @document = @course.documents
+        byebug
+      elsif @lesson.present?
+        @document = @lesson.documents
+        byebug
+      end
+      byebug
       @document.destroy
       respond_to do |format|
-      format.html { redirect_to course_documents_path(@course), notice: 'Document was successfully destroyed.' }
+      byebug
+      format.html { redirect_to "/", notice: 'Document was successfully destroyed.' }
+      # format.html { redirect_to course_documents_path(@course), notice: 'Document was successfully destroyed.' }
       format.json { head :no_content }
       end
     end
