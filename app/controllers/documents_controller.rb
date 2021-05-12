@@ -93,18 +93,9 @@ class DocumentsController < ApplicationController
     # DELETE /lessons/1
     # DELETE /lessons/1.json
     def destroy
-      if @course.present?
-        @course = @document.course
-        @document = @course.documents
-        byebug
-      elsif @lesson.present?
-        @document = @lesson.documents
-        byebug
-      end
-      byebug
+      @document = Document.find params[:id]
       @document.destroy
       respond_to do |format|
-      byebug
       format.html { redirect_to "/", notice: 'Document was successfully destroyed.' }
       # format.html { redirect_to course_documents_path(@course), notice: 'Document was successfully destroyed.' }
       format.json { head :no_content }
