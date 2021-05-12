@@ -19,11 +19,12 @@ class DocumentsController < ApplicationController
     # GET /documents/1
     # GET /documents/1.json
     def show
-      # byebug
       if @course
         @document = @course.documents.build(document_params)
       elsif @lesson
+        byebug
         @document = @course.lesson.documents.build(document_params)
+        byebug
       end
     end
         
@@ -123,7 +124,7 @@ class DocumentsController < ApplicationController
         
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:name, :description, :kind, :course_id, :lesson_id, :file)
+      params.require(:document).permit(:name, :description, :kind, :course_id, :lesson_id, :file, :id)
     end
   
     def catch_not_found(e)
