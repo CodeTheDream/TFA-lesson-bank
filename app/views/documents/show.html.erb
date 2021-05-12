@@ -40,18 +40,13 @@
 </p> 
 
 </div>
-<%if @course.present? %> 
-  <%# <%= link_to 'Back', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %> 
-  
-  <td><%= link_to 'Edit', edit_course_document_path(@course, @document), :class => "btn btn-outline-primary btn-sm" %></td>
-  <%= link_to 'Back (Course)', course_path(@course), :class => "btn btn-primary btn-sm", :style => "color: white" %>
-
-  <%# <%= link_to 'Edit', edit_course_document_path(@document), :class => "btn btn-outline-primary btn-sm" %> | %>
-  <%# <%= link_to 'Back', course_documents_path, :class => "btn btn-outline-primary btn-sm" %> %>
+<%if @course.present? %>   
+  <td><%= link_to 'Edit', edit_course_document_path(@course, @document), :class => "btn btn-outline-primary btn-sm" %> | </td>
+  <td><%= link_to 'Back (Course)', course_path(@course), :class => "btn btn-primary btn-sm", :style => "color: white" %></td>
 <%elsif @lesson.present?%>
-   <%# <%= link_to 'Back', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> 
-  <%= link_to 'Edit', edit_lesson_document_path(@document, @lesson), :class => "btn btn-outline-primary btn-sm" %> |
-  <%= link_to 'Back', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %>
+  <td><%= link_to 'Edit', edit_lesson_document_path(@lesson, @document), :class => "btn btn-outline-primary btn-sm" %> | </td>
+  <td><%= link_to 'Back (Lesson)', course_lesson_path(@lesson), :class => "btn btn-outline-primary btn-sm" %></td>
+  <%# <td><%= link_to 'Back (Lesson)', lesson_index_lesson_document_path(@lesson, @id), :class => "btn btn-outline-primary btn-sm" %></td> %>
 <%end %>
 
 

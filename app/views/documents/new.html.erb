@@ -2,7 +2,7 @@
 
 <%= render 'form', document: @document %>
 <%if @course.present? %> 
-  <%= link_to 'Back', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %>
+  <%= link_to 'Back Course', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %>
 <%elsif @lesson.present?%>
-   <%= link_to 'Back', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %>
+   <%= link_to 'Back Lesson', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %>
 <%end %>
