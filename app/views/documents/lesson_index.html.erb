@@ -46,4 +46,4 @@
 <br>
 
 <%= link_to 'New Document (Lesson)', new_lesson_document_path, :class => "btn btn-outline-primary btn-sm" %>
-<%= link_to 'Back (Lesson)', lesson_path(@lesson), :class => "btn btn-primary btn-sm", :style => "color: white" %>
+<%= link_to 'Back (Lesson)', course_lesson_path(@lesson.course, @lesson), :class => "btn btn-primary btn-sm", :style => "color: white" %>

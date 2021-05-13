@@ -5,14 +5,14 @@ Rails.application.routes.draw do
   resources :courses do 
     resources :lessons
     resources :documents do
-      member do
+      collection do
         get :course_index
       end
     end
   end
   resources :lessons do
     resources :documents do
-      member do
+      collection do
         get :lesson_index
       end
     end
