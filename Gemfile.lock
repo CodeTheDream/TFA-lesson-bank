@@ -88,6 +88,13 @@ GEM
     diff-lcs (1.4.4)
     erubi (1.10.0)
     execjs (2.7.0)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
+    faker (2.17.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.0)
     ffmpeg (0.2.5)
     gio2 (3.4.4)
@@ -158,6 +165,10 @@ GEM
       bundler (>= 1.3.0)
       railties (= 6.0.3.7)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -206,6 +217,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    shoulda-matchers (4.5.1)
+      activesupport (>= 4.2.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -251,6 +264,8 @@ DEPENDENCIES
   bootstrap
   byebug
   devise
+  factory_bot_rails
+  faker
   ffmpeg
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
@@ -260,8 +275,10 @@ DEPENDENCIES
   puma (~> 4.1)
   pundit
   rails (~> 6.0.3, >= 6.0.3.4)
+  rails-controller-testing
   rspec-rails
   sass-rails (>= 6)
+  shoulda-matchers
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
