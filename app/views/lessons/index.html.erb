@@ -9,7 +9,6 @@
       <th class="h2" style="background:none;">Lesson Title</th>
       <th class="h2" style="background:none;">Description</th>
       <th class="h2" style="background:none;">Units</th>
-      <th class="h2" style="background:none;">Tags</th>
       <th colspan="3"></th>
     </tr>
     </div>
@@ -23,7 +22,6 @@
         <td data-title="Title"><%= lesson.title %></td>
         <td data-title="Description"><%= lesson.description %></td>
         <td data-title="Units"><%= lesson.units_covered %></td>
-        <td data-title="Tags"><%= lesson.tags %></td>
 
 
         <td><%= link_to 'Show', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
