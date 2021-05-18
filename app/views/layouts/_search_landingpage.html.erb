@@ -1,22 +1,28 @@
 <%= form_tag courses_path, :method => 'get', enforce_utf8: false do %>
+<div class="form-inline">
+  <% if current_user&.role == 'teacher' %>
+  <div class="input-group">
+    <%= check_box_tag 'my_courses', 'yes'  %>
+    Search My Courses
+  </div>
   <div>
-    <% if current_user&.role == 'teacher' %>
-    <div>
-      <%= check_box_tag 'my_courses', 'yes' %>
-      Search My Courses
-    </div>
-    <div>
-      Lessons
-      <label class="switch">
-        <%= check_box_tag 'view_reqs', 'yes' %>
-        <span class="slider round"></span>
-      </label>
-      Lessons
-    </div>
-    <% end %>
-  <%= search_field_tag :search, params[:search], placeholder: 'Search Courses' %>
+    Lessons
+    <label class="switch">
+      <%= check_box_tag 'view_reqs', 'yes' %>
+      <span class="slider round"></span>
+    </label>
+    Lessons
+  </div>
+  <% end %>
+  <%= search_field_tag :search, params[:search], placeholder: 'Search Courses', class: "form-control mr-sm-2" %>
+  <%
+=begin%>
   <%= date_field_tag :date_desired, params[:date_desired], placeholder: 'Date Desired' %>
   <%= search_field_tag :sort_by_name, params[:sort_by_name], placeholder: 'Sort by name' %>
-  <%= submit_tag("Search") %>
+  <%
+=end%>
+  <div class="input-group-btn">
+    <%= submit_tag "Search", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
   </div>
+</div>
 <% end %>
