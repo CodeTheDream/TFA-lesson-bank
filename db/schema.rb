@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_032044) do
+ActiveRecord::Schema.define(version: 2021_05_18_015239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,21 @@ ActiveRecord::Schema.define(version: 2021_05_06_032044) do
     t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
+  create_table "taggingcourses", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_taggingcourses_on_course_id"
+    t.index ["tag_id"], name: "index_taggingcourses_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -95,4 +110,6 @@ ActiveRecord::Schema.define(version: 2021_05_06_032044) do
   add_foreign_key "documents", "courses"
   add_foreign_key "documents", "lessons"
   add_foreign_key "lessons", "courses"
+  add_foreign_key "taggingcourses", "courses"
+  add_foreign_key "taggingcourses", "tags"
 end
