@@ -2,6 +2,10 @@
 
 
 <%= render 'form', document: @document %>
-<%= link_to 'Show', @document, :class => "btn btn-primary btn-sm", :style => "color: white" %> |
-<%= link_to 'Back', documents_path, :class => "btn btn-primary btn-sm", :style => "color: white" %>
-
+<%if @course.present? %> 
+  <%= link_to 'Show', course_document_path(@course, @document), :class => "btn btn-primary btn-sm", :style => "color: white" %>|
+  <%= link_to 'Back', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %>
+<%elsif @lesson.present?%>
+   <%= link_to 'Show', lesson_document_path(@lesson, @document), :class => "btn btn-primary btn-sm", :style => "color: white" %>|
+   <%= link_to 'Back', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %>
+<%end %>
