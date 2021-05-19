@@ -1,4 +1,8 @@
 <h2 class="title mt-5 mb-5 display-3" style="text-align:center">New Document</h2>
 
 <%= render 'form', document: @document %>
-<%= link_to 'Back', documents_path, :class => "btn btn-outline-primary btn-sm" %>
+<%if @course.present? %> 
+  <%= link_to 'Back Course', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %>
+<%elsif @lesson.present?%>
+   <%= link_to 'Back Lesson', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %>
+<%end %>
