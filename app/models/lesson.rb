@@ -3,6 +3,7 @@ class Lesson < ApplicationRecord
   belongs_to :course  
   validates :title, presence: true
   validates :description, presence: true
+  validates :units_covered, presence: true
   has_many :tagginglessons
   has_many :tags, through: :tagginglessons
   def tag_list
