@@ -54,7 +54,7 @@
    box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
  }
  
- form input[type="submit"] {
+ /* form input[type="submit"] {
    display: inline-block;
    font-weight: 400;
    text-align: center;
@@ -70,7 +70,7 @@
    border-radius: 3px;
    text-decoration: none;
    box-shadow: none;
- }
+ } */
  form input[type="submit"]:hover {
    background: #007bff;
    color: white;
