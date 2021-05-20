@@ -51,6 +51,11 @@
     <%= f.date_select :end_date, start_year: 2000, end_year: 2050, class: 'form-control' %>
   </div>
 
+  <div class="form-group col"> 
+    <%= f.label :tag_list %><br />
+    <%= f.text_area :tag_list, class: 'form-control' %>
+  </div>
+
   <div class="form-group col">
     <div class="actions">
       <%= f.submit %>
