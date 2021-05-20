@@ -6,7 +6,52 @@ RSpec.describe Course, type: :model do
     it "is valid with valid attributes" do
       expect(subject).to be_valid    
     end
-
   end
+  describe "Associations" do
+    it { should belong_to(:user) }
+    it { should have_many(:lessons) }
+    it { should have_many(:documents) }
+  end
+  it "is not valid without a title" do
+    subject.title = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a description" do
+    subject.description = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a subject" do
+    subject.subject = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a grade_level" do
+    subject.grade_level = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a state" do
+    subject.state = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a district" do
+    subject.district = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a start_date" do
+    subject.start_date = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a end_date" do
+    subject.end_date = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a created_at" do
+    subject.created_at = nil
+    expect(subject).to_not be_valid
+  end
+  it "is not valid without a updated_at" do
+    subject.updated_at = nil
+    expect(subject).to_not be_valid
+  end
+
 end
 
