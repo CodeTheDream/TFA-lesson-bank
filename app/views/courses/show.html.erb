@@ -39,6 +39,13 @@
   <strong>End Date:</strong>
   <%= @course.end_date %>
 </p>
+
+<p>
+  <strong>Tags:</strong>
+  <% @course.tags.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag) %>
+  <% end %>
+</p>
 </div>
 
 <%# Lessons for this course %>
