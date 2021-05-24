@@ -6,27 +6,28 @@ class CoursesController < ApplicationController
   def index
     @courses = Course.all
   end
-      
+
   # GET /courses/1
   # GET /courses/1.json
   def show
   end
-      
+
   # GET /courses/new
   def new
     @course = Course.new
   end
-      
+
   # GET /courses/1/edit
   def edit
   end
-      
+
   # POST /courses
   # POST /courses.json
   def create
     @course = Course.new(course_params)
     @course.user = current_user
     if @course.save
+      create_tags(tags_params[:tag_names], @course)
       flash.notice = "The course record was created successfully."
       redirect_to courses_path
     else
@@ -34,7 +35,7 @@ class CoursesController < ApplicationController
       render :new  
     end
   end
-      
+
   # PATCH/PUT /courses/1
   # PATCH/PUT /courses/1.json
   def update
@@ -46,7 +47,7 @@ class CoursesController < ApplicationController
       render :edit
     end
   end
-      
+
   # DELETE /lessons/1
   # DELETE /lessons/1.json
   def destroy
@@ -56,21 +57,37 @@ class CoursesController < ApplicationController
     format.json { head :no_content }
     end
   end
-      
+
   private
-  
+
   def verify_role!
     authorize @course || Course 
   end
-  
+
+  def create_tags(tags_string, course)
+    tag_names = tags_string.split(",").uniq
+    tag_names.each do |tag_name|
+      tag = Tag.find_by name: tag_name.downcase
+      tag = Tag.create name: tag_name.downcase if tag.nil?
+      hash = { tag_id: tag.id, course_id: course.id }
+      key_word = KeyWord.find_by hash
+      hash[:frequency] = 1
+      key_word.present? ? (key_word.frequency += 1) : (KeyWord.create hash)
+    end
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     @course = Course.find(params[:id])
   end
-      
+
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_list)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date)
+  end
+
+  def tags_params
+    params.permit(:tag_names)
   end
 
   def catch_not_found(e)
