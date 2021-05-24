@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_161056) do
   create_table "lessons", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.string "tags"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "units_covered"
