@@ -32,7 +32,7 @@ gem 'activestorage-validator'
 gem 'poppler'
 # upgrading actionpack for security issue - potential denial of service attach
 gem "actionpack", ">= 6.0.3.7"
-
+gem 'rack-cors'
 gem 'ffmpeg'
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
