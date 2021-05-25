@@ -26,6 +26,7 @@ class LessonsController < ApplicationController
   def create
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
+      create_tags(tags_params[:tag_names], @lesson)
       flash.notice = "The lesson record was created successfully."
       redirect_to course_lessons_path(@course)
     else
@@ -57,6 +58,23 @@ class LessonsController < ApplicationController
   end
     
   private
+
+  def create_tags(tags_string, lesson)
+    tag_names = tags_string.split(",").uniq
+    tag_names.each do |tag_name|
+      tag = Tag.find_by name: tag_name.downcase
+      tag = Tag.create name: tag_name.downcase if tag.nil?
+      hash = { tag_id: tag.id, lesson_id: lesson.id }
+      key_word = KeyWord.find_by hash
+      hash[:frequency] = 1
+      key_word.present? ? (key_word.frequency += 1) : (KeyWord.create hash)
+    end
+  end
+
+  def tags_params
+    params.permit(:tag_names)
+  end
+
   def get_course
     @course = Course.find(params[:course_id])
   end
