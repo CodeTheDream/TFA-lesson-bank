@@ -11,44 +11,50 @@
     </div>
   <% end %>
   
- <div class="form-group col">
+  <div class="form-group col">
     <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control' %>  
+    <%= f.text_field :title, class: 'form-control', :required => true %>  
   </div>
   
   <div class="form-group col">
     <%= f.label :description %>
-    <%= f.text_field :description, class: 'form-control' %>
+    <%= f.text_field :description, class: 'form-control', :required => true %>
   </div>
   
   <div class="form-group col">
     <%= f.label :subject %>
-    <%= f.text_field :subject, class: 'form-control' %>
+    <%= f.text_field :subject, class: 'form-control', :required => true %>
   </div>
 
   <div class="form-group col">
     <%= f.label :grade_level %>
-    <%= f.text_field :grade_level, class: 'form-control' %>
+    <%= f.text_field :grade_level, class: 'form-control', :required => true %>
   </div>
 
   <div class="form-group col">
     <%= f.label :state %>
-    <%= f.text_field :state, class: 'form-control' %>
+    <%= f.text_field :state, class: 'form-control', :required => true %>
   </div>
 
   <div class="form-group col">
     <%= f.label :district %>
-    <%= f.text_field :district, class: 'form-control' %>
+    <%= f.text_field :district, class: 'form-control', :required => true %>
   </div>
 
   <div class="form-group col">
     <%= f.label :start_date %></b><span>*</span>
-    <%= f.date_select :start_date, start_year: 2000, end_year: 2050, class: 'form-control' %>
+    <%= f.date_select :start_date, start_year: 2000, end_year: 2050, class: 'form-control', :required => true %>
   </div>
 
   <div class="form-group col">
     <%= f.label :end_date %></b><span>*</span>
-    <%= f.date_select :end_date, start_year: 2000, end_year: 2050, class: 'form-control' %>
+    <%= f.date_select :end_date, start_year: 2000, end_year: 2050, class: 'form-control', :required => true %>
+  </div>
+
+  <div class="form-group col"> 
+    <%= f.label :tag_names %>
+    <%= text_field_tag :tag_names, "Enter your tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %>
+    <!--<%#= f.text_field :tag_names, class: 'form-control', placeholder: "Enter tags separated by commas- Ruby,Technology,Programming" %>-->
   </div>
 
   <div class="form-group col">
@@ -58,5 +64,3 @@
   </div>
   
 <% end %>
-</div>
-
