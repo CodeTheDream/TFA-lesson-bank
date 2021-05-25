@@ -1,9 +1,5 @@
 class Tag < ApplicationRecord
-  has_many :taggingcourses
-  has_many :courses, through: :taggingcourses
-  has_many :tagginglessons
-  has_many :lessons, through: :tagginglessons
-  def to_s
-    name
-  end
+  has_many :key_words
+  has_many :courses, through: :key_words
+  has_many :lessons, through: :key_words
 end
