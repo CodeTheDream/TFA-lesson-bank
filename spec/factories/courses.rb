@@ -10,6 +10,8 @@ FactoryBot.define do
     f.district { "01" }
     f.start_date { 2021-05-05 }
     f.end_date { 2021-05-05  }
+    f.created_at { 2021-05-05 }
+    f.updated_at { 2021-05-05 }
     f.user_id { 1 }
   end
 end
