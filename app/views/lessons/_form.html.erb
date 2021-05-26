@@ -14,7 +14,7 @@
 
   <div class="form-group">
     <label for="course"><%= Course %></label>
-    <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
+    <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true, :required => true %>
   </div>
   
  <div class="form-group col">
@@ -33,8 +33,8 @@
   </div>
 
   <div class="form-group col"> 
-    <%= f.label :tag_list %><br />
-    <%= f.text_area :tag_list, class: 'form-control' %>
+    <%= f.label :tag_names %>
+    <%= text_field_tag :tag_names, "Enter your tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %>
   </div>
 
   <div class="form-group col">

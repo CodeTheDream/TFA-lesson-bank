@@ -99,7 +99,7 @@ class DocumentsController < ApplicationController
     @document = Document.find params[:id]
     @document.destroy
     respond_to do |format|
-    format.html { redirect_to "/", notice: 'Document was successfully destroyed.' }
+    format.html { redirect_to courses_path, notice: 'Document was successfully destroyed.' }
     # format.html { redirect_to course_documents_path(@course), notice: 'Document was successfully destroyed.' }
     format.json { head :no_content }
     end

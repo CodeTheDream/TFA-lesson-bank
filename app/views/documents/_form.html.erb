@@ -1,5 +1,4 @@
 <% obj = @course.present? ? @course : @lesson %>
-<%# <%byebug%> 
 <%= form_for([obj,@document]) do |f| %>
   
   <% if document.errors.any? %>
@@ -13,7 +12,7 @@
     </div>
   <% end %>
   
- <div class="form-group col">
+  <div class="form-group col">
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control', :required => true %>  
   </div>
@@ -28,28 +27,27 @@
     <%= f.text_field :kind, class: 'form-control', :required => true %>
   </div>
 
-  <div class="form-group">
-    <label for="course"><%= Course %></label>
-    <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
-  </div>
+ <div class="form-group">
+   <label for="course"><%= Course %></label>
+   <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
+ </div>
 
-  <div class="form-group">
-    <label for="lesson"><%= Lesson %>
-    </label> 
-    <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
-  </div>
+ <div class="form-group">
+   <label for="lesson"><%= Lesson %>
+   </label> 
+   <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
+ </div>
 
-  <div class="form-group col">
-    <%= f.label :file %>
-    <%= f.file_field :file %>
-  </div>
+ <div class="form-group col">
+   <%= f.label :file %>
+   <%= f.file_field :file %>
+ </div>
 
-  <div class="form-group col">
-    <div class="actions">
-      <%= f.submit %>
-    </div>
-  </div>
+ <div class="form-group col">
+   <div class="actions">
+     <%= f.submit %>
+   </div>
+ </div>
   
 <% end %>
-</div>
 

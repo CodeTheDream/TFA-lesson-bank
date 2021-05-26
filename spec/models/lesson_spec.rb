@@ -12,8 +12,7 @@ RSpec.describe Lesson, type: :model do
   describe "Associations" do
     it { should belong_to(:course) }
     it { should have_many(:documents) }
-    it { should have_many(:tagginglessons) }
-    it { should have_many(:tags).through(:tagginglessons)  }
+    it { should have_many(:tags).through(:key_words)  }
   end
   it "is not valid without a title" do
     subject.title = nil
