@@ -5,19 +5,16 @@ RSpec.describe Course, type: :model do
     subject { Course.new(id: 1, title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: "2021-05-05 07:09:07", updated_at: "2021-05-05 07:09:07", user_id: user.id)}
 
     it "is valid with valid attributes" do
-      byebug
       expect(subject).to be_valid 
     end
 
     it "is not valid without a title" do
-    subject.title = nil
-    byebug
-    expect(subject).to_not be_valid
+      subject.title = nil
+      expect(subject).to_not be_valid
     end
-    
+
     it "is not valid without a description" do
       subject.description = nil
-      byebug
       expect(subject).to_not be_valid
     end
     it "is not valid without a subject" do
@@ -59,10 +56,6 @@ RSpec.describe Course, type: :model do
     it { should have_many(:lessons) }
     it { should have_many(:documents) }
   end
-  # it "is not valid without a title" do
-  #   subject.title = nil
-  #   expect(subject).to_not be_valid
-  # end
   
   it "allows the creation of tag lists" do
     subject.tag_list = "a,b,c"
