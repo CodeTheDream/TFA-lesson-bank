@@ -13,8 +13,7 @@ class Course < ApplicationRecord
   validates :district, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validates :created_at, presence: true
-  validates :updated_at, presence: true
+
 
 #  accepts_nested_attributes_for :tags
 

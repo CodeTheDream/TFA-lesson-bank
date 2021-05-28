@@ -44,23 +44,35 @@ RSpec.describe Lesson, type: :model do
       @lesson = Lesson.create(lesson_hash)
       hash = {course_id: @course.id, lesson_id: @lesson.id, tag_id: @tag.id, frequency: 1}
       KeyWord.find_or_create_by(hash)
-      byebug
     end
-    # after do
-    #   @user.delete
-    #   @tag.delete
-    #   @course.delete
-    #   @lesson.delete
-    #   @key_words.delete
-    # end
+    after do
+      # @user.delete
+      # @tag.delete
+      # @course.delete
+      # @lesson.delete
+      # @key_words.delete
+    end
     it "has tags" do
       expect(@lesson.tags).to eq([@tag])
     end
+    # it "has documment" do
+    #   attach_file 'document',
+    #   File.new("#{Rails.root}/spec/factories/railsbook.pdf")
+    #   byebug
+    #   expect(Lesson.documments).to eq 'railsbook.pdf'
+    #   byebug
+    # end
+      # after(:each) do
+      #   attach_file 'Form', @driver.save_screenshot('page.png')
+      # end
+      # let(:documents) {Rack::Test::UploadedFile.new("#{Rails.root}/spec/factories/railsbook.pdf")}
+      # click_button 'Sign up'
+      # attach_file("Upload Your PDF File", Rails.root + "spec/factories/railsbook.pdf")
+    
 
     it "course belongs to @user" do
-      byebug
       expect(@course.user).to eq(@user)
-      byebug
+      # byebug
     end
 
     it "lesson belongs to @course" do
@@ -80,7 +92,7 @@ RSpec.describe Lesson, type: :model do
       @lesson = Lesson.create(lesson_hash)
       hash = {course_id: @course.id, lesson_id: @lesson.id, tag_id: @tag.id, frequency: 1}
       KeyWord.find_or_create_by(hash)
-      byebug
+      # byebug
     end
 
     # after do

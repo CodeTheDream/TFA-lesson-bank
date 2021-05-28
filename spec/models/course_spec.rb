@@ -49,14 +49,7 @@ RSpec.describe Course, type: :model do
       @course.end_date = nil
       expect(@course).to_not be_valid
     end
-    it "is not valid without a created_at" do
-      @course.created_at = nil
-      expect(@course).to_not be_valid
-    end
-    it "is not valid without a updated_at" do
-      @course.updated_at = nil
-      expect(@course).to_not be_valid
-    end
+
   
   end
   describe "Associations" do

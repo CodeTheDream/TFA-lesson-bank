@@ -24,7 +24,7 @@
 
 <p>
   <strong>Tags:</strong>
-  <% @course.tags.each do |tag| %>
+  <% @lesson.tags.each do |tag| %>
     <%= link_to tag.name, tag_path(tag) %>
   <% end %>
 </p>
