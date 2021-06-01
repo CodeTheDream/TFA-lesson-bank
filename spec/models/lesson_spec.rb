@@ -8,6 +8,10 @@ RSpec.describe Lesson, type: :model do
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, units_covered: "3", course_id: @course.id}
       @lesson = Lesson.new(lesson_hash)
+      @document = Factory.create(:document)
+      # let!(:document) { create(
+      #   :document, lesson: lesson, title: "Document",
+      #   size: 1, lesson_id: 1) }
     end
 
     after do
@@ -56,8 +60,7 @@ RSpec.describe Lesson, type: :model do
     it "has tags" do
       expect(@lesson.tags).to eq([@tag])
     end
-     
-
+ 
     it "course belongs to @user" do
       expect(@course.user).to eq(@user)
       # byebug

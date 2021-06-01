@@ -1,9 +1,9 @@
 class Course < ApplicationRecord
   belongs_to :user
-  has_many :lessons
-  has_many :documents
-  has_many :key_words
-  has_many :tags, through: :key_words
+  has_many :lessons, dependent: :delete_all 
+  has_many :documents, dependent: :delete_all 
+  has_many :key_words, dependent: :delete_all 
+  has_many :tags, through: :key_words, dependent: :delete_all 
 
   validates :title, presence: true
   validates :description, presence: true

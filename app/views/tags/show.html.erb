@@ -1,8 +1,18 @@
-<h1>Courses Tagged with <%= @tag.name %></h1>
+<h1><%= @tag.name %>  This is the tag for lessons:</h1>
 
-<ul>
+<td><%= link_to 'Edit Tag', edit_tag_path(@tag), :class => "btn btn-outline-primary btn-sm" %></td>
+<td><%= link_to 'Delete Tag', tag_path(@tag), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %> </td></li>
+
+<%# <ul>
   <% @tag.courses.each do |course| %>
-    <li><%= link_to course.title, course_path(course) %></li>
-  <% end %>
-</ul>
+    <%# <li><%= link_to course.title, course_path(course) %>
+    <%# </li>  %>
+  <%# <% end %> 
+<%# </ul> %> 
 
+<%# <ul> %>
+<%# <% @tag.lessons.each do |lesson| %> 
+    <%# <tr><%= link_to lesson.title, lesson_path(lesson) %>
+    <%# </tr> %> 
+<%# <% end %>
+<%# </ul> %>

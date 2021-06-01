@@ -32,9 +32,15 @@
     <%= f.text_field :units_covered, class: 'form-control', :required => true %>
   </div>
 
-  <div class="form-group col"> 
-    <%= f.label :tag_names %>
-    <%= text_field_tag :tag_names, "Enter your tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %>
+  <div class="form-group col">
+  <%= f.label :tag_names %>
+  <% if @lesson.tags.present? %>
+    <% @lesson.tags.each do |tag| %> 
+      <%= link_to tag.name, tag_path(tag) %>
+    <%end%>
+    <% else %>
+      <%= text_field_tag :tag_names, "Enter the new tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %>
+    <% end %>
   </div>
 
   <div class="form-group col">
@@ -45,4 +51,36 @@
   
 <% end %>
 </div>
+    <%# <% render partial: "lessons/tags", collection: lesson.tags, locals: { lesson: lesson}%> 
+  <%# ANTES %>
+    <%# <% @lesson.tags.each do |tag| %> 
+      <%# <%byebug%> 
+      <%# <%= link_to tag.name, tag_path(tag) %> 
+    <%# <% end %> 
+      <%# <%= text_field_tag :tag_names, "Enter the new tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %> 
+
+      <%# <%= text_field_tag :, class: 'form-control' %> 
+    <%# <% @lesson.tags.each do |tag| %> 
+      <%# <%= text_field_tag :tag_names, class: 'form-control' %> 
+      <%# <%= link_to tag.name, tag_path(tag) %> 
+    <%# <% end %>
+
+  <%# <% else %> 
+    <%# <%byebug%> 
+    <%# <%= text_field_tag :tag_names, "Enter your tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %>  
+  <%# <% end %> 
+
+
+    <%# <%= text_field_tag :tag_names, "Enter your tags separated by a comma - Ruby,Technology,Programming", autocomplete: :off, class: 'form-control' %> 
+  
+  <%# <%= render 'form', document: @document %> 
+<%# <%if @course.present? %>  
+  <%# <%= link_to 'Show', course_document_path(@course, @document), :class => "btn btn-primary btn-sm", :style => "color: white" %>
+  <%# <%= link_to 'Back', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %> 
+<%# <%elsif @lesson.present?%> 
+   <%# <%= link_to 'Show', lesson_document_path(@lesson, @document), :class => "btn btn-primary btn-sm", :style => "color: white" %>
+   <%# <%= link_to 'Back', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> 
+<%# <%end %>
+  
+  
 

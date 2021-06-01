@@ -17,6 +17,9 @@ Rails.application.routes.draw do
       end
     end
   end
+  # resources :lessons do
+  #   resources :tags
+  # end
   resources :tags
   resources :key_words
 end

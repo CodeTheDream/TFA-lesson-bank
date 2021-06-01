@@ -39,9 +39,14 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1.json
   def update
     if @lesson.update(lesson_params)
+    # byebug
+      # update_tags(tags_params[:tag_names], @lesson)
+      #Question should we create a method to update the tag when there is nothing in the array from here 
+      #or from Tags controller. From Tags controller we can update a specific Tag and delete this specific tag. 
       flash.notice = "The lesson record was updated successfully."
       redirect_to course_lessons_path(@course)
     else
+    byebug
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :edit
     end
