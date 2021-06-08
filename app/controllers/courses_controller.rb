@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     @course.user = current_user
     if @course.save
-      create_tags(tags_params[:tag_names], @course)
+	    create_tags(tags_params.values, @course)
       flash.notice = "The course record was created successfully."
       redirect_to courses_path
     else
@@ -65,7 +65,7 @@ class CoursesController < ApplicationController
   end
 
   def create_tags(tags_string, course)
-    tag_names = tags_string.split(",").uniq
+    tag_names = tags_string.uniq
     tag_names.each do |tag_name|
       tag = Tag.find_by name: tag_name.downcase
       tag = Tag.create name: tag_name.downcase if tag.nil?
@@ -87,7 +87,7 @@ class CoursesController < ApplicationController
   end
 
   def tags_params
-    params.permit(:tag_names)
+    params.require(:tag_names)
   end
 
   def catch_not_found(e)
