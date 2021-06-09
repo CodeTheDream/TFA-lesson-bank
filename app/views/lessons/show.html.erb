@@ -24,12 +24,13 @@
 
 <p>
   <strong>Tags:</strong>
-  <% @lesson.tags.each do |tag| %>
-    <%= link_to tag.name, tag_path(tag) %>
-  <% end %>
+  <%= @lesson.tag_list %>
+  <%# <% @lesson.tags.each do |tag| %> 
+    <%# <%= link_to tag.name, tag_path(tag) %> 
+  <%# <% end %> 
 </p>
 
 </div>
-<%= link_to 'Edit', edit_course_lesson_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> |
+<%= link_to 'Edit', edit_course_lesson_path(@course, @lesson), :class => "btn btn-outline-primary btn-sm" %> |
 <%= link_to 'Documents', lesson_index_lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> |
 <%= link_to 'Back', course_lessons_path, :class => "btn btn-outline-primary btn-sm" %>

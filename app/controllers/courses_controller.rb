@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     @course.user = current_user
     if @course.save
-	    create_tags(tags_params.values, @course)
+      @course.tag_list=(tags_params.values)
       flash.notice = "The course record was created successfully."
       redirect_to courses_path
     else
@@ -64,18 +64,6 @@ class CoursesController < ApplicationController
     authorize @course || Course 
   end
 
-  def create_tags(tags_string, course)
-    tag_names = tags_string.uniq
-    tag_names.each do |tag_name|
-      tag = Tag.find_by name: tag_name.downcase
-      tag = Tag.create name: tag_name.downcase if tag.nil?
-      hash = { tag_id: tag.id, course_id: course.id }
-      key_word = KeyWord.find_by hash
-      hash[:frequency] = 1
-      key_word.present? ? (key_word.frequency += 1) : (KeyWord.create hash)
-    end
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     @course = Course.find(params[:id])
@@ -83,7 +71,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names)
   end
 
   def tags_params
