@@ -97,11 +97,9 @@ RSpec.describe "Courses", type: :request do
       # create_tags(tags_params[@tag], @course)
       # create_tags(@tag, @course)
 
-      byebug
       expect { post courses_path, params: {course: course_attributes}
 
     }.to change(Course, :count)
-    byebug
       expect(response).to redirect_to course_path(id: Course.last.id)
     end
   end
