@@ -3,8 +3,9 @@ FactoryBot.define do
       f.id { 1 }
       f.email  {Faker::Internet.email}
       f.role { "teacher" }
-      f.created_at { 2021-05-05 }
-      f.updated_at { 2021-05-05 }
+      f.created_at { Time.now }
+      f.updated_at { Time.now }
       f.password { "Pa$$word1" }
+      f.password_confirmation { "Pa$$word1" }
   end
 end
