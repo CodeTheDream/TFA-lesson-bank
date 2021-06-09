@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tags_course do
-    tag { nil }
-    course { nil }
+    tag { "t1" }
+    course { 1 }
   end
 end

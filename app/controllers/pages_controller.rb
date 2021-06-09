@@ -7,7 +7,7 @@ class PagesController < ApplicationController
       redirect_to(root_path, alert: 'Empty field!') and return
     else
       @parameter = params[:search].downcase
-      @results = Course.all.where("lower(title) LIKE :search", search: @parameter)
+      @results = Course.all.where("title ILIKE ?", "%#{@parameter}%")
     end
   end
 end

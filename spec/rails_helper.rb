@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -68,4 +69,25 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+  
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  
+  Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+  module DeviseRequestSpecHelpers
+
+    include Warden::Test::Helpers
+  
+    def sign_in(resource_or_scope, resource = nil)
+      resource ||= resource_or_scope
+      scope = Devise::Mapping.find_scope!(resource_or_scope)
+      login_as(resource, scope: scope)
+    end
+  
+    def sign_out(resource_or_scope)
+      scope = Devise::Mapping.find_scope!(resource_or_scope)
+      logout(scope)
+    end
+  
+  end
+
 end
