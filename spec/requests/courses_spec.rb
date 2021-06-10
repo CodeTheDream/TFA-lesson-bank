@@ -89,6 +89,9 @@ RSpec.describe "Courses", type: :request do
       sign_in @user
       @user.confirm
       course_attributes = FactoryBot.attributes_for(:course)
+      # create_tags(tags_params[@tag], @course)
+      # create_tags(@tag, @course)
+
       expect { post courses_path, params: {course: course_attributes}
     }.to change(Course, :count)
       expect(response).to redirect_to courses_path #course_path(id: Course.last.id)
