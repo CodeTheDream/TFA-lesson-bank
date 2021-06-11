@@ -51,16 +51,25 @@
     <%= f.label :end_date %></b><span>*</span>
     <%= f.date_select :end_date, start_year: 2000, end_year: 2050, class: 'form-control', :required => true %>
   </div>
-
-  <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-  <br />
-  <div id="TagHeader" style="display:none"> 
-     Tag Name: 
+  
+  <div class="form-group col">
+    <% if @course.tags.blank? %>
+      <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+      <br />
+      <div id="TagHeader" style="display:none"> 
+        Tag Name: 
+      </div>
+      <br />
+      <ul id="myList">
+      </ul>
+    <% else %>
+      <strong>Existing Tags:</strong>
+      <% @course.tags.each do |tag| %>
+        <%= link_to tag.name, tag_path(tag) %>
+      <% end %>
+    <%end%>
   </div>
-  <br />
-  <ul id="myList">
-  </ul>
-
+  
   <div class="form-group col">
     <div class="actions">
       <%= f.submit %>

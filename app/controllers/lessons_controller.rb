@@ -27,8 +27,9 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       # create_tags(tags_params[:tag_names], @lesson)
+      @lesson.tag_list=(tags_params.values)
       flash.notice = "The lesson record was created successfully."
-      redirect_to course_lessons_path(@course)
+      redirect_to course_lessons_path(@lesson)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :new  
@@ -72,7 +73,8 @@ class LessonsController < ApplicationController
   # end
 
   def tags_params
-    params.permit(:tag_names)
+    # params.permit(:tag_names)
+    params.require(:tag_names)
   end
 
   def get_course
@@ -89,7 +91,7 @@ class LessonsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def lesson_params
-    params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tag_list)
+    params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tag_names)
   end
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
