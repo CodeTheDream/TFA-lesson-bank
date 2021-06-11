@@ -29,7 +29,7 @@ class LessonsController < ApplicationController
       # create_tags(tags_params[:tag_names], @lesson)
       @lesson.tag_list=(tags_params.values)
       flash.notice = "The lesson record was created successfully."
-      redirect_to course_lessons_path(@lesson)
+      redirect_to [@course, @lesson]#course_lessons_path(@lesson)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :new  
@@ -41,7 +41,7 @@ class LessonsController < ApplicationController
   def update
     if @lesson.update(lesson_params)
       flash.notice = "The lesson record was updated successfully."
-      redirect_to course_lessons_path(@course)
+      redirect_to [@course, @lesson]#course_lessons_path(@course)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :edit

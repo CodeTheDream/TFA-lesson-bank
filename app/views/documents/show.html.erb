@@ -40,6 +40,7 @@
 </p> 
 
 </div>
+<div class="actions">
 <%if @course.present? %>   
   <td><%= link_to 'Edit', edit_course_document_path(@course, @document), :class => "btn btn-outline-primary btn-sm" %> | </td>
   <td><%= link_to 'Back (Course)', course_path(@course), :class => "btn btn-primary btn-sm", :style => "color: white" %></td>
@@ -48,5 +49,6 @@
   <td><%= link_to 'Back (Lesson)', course_lesson_path(@lesson), :class => "btn btn-outline-primary btn-sm" %></td>
   <%# <td><%= link_to 'Back (Lesson)', lesson_index_lesson_document_path(@lesson, @id), :class => "btn btn-outline-primary btn-sm" %></td> %>
 <%end %>
+</div>
 
 
