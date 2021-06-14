@@ -103,7 +103,7 @@ RSpec.describe Lesson, type: :model do
     end
 
     it "has a tag_list" do
-      expect(@course.tag_list).to eq(["MyString"])
+      expect(@course.tag_list).to eq("MyString")
     end
   end
 end
