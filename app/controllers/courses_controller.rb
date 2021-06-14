@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     @course.user = current_user
     if @course.save
-      @course.tag_list=(tags_params.values)
+      @course.tag_list=(tags_params.values) if params[:tag_names].present?
       flash.notice = "The course record was created successfully."
       redirect_to courses_path
     else
@@ -40,6 +40,14 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1.json
   def update
     if @course.update(course_params)
+      if params[:tag_names]&.present? && params[:existing_tags]&.present?
+        tags = tags_params.values + existing_tags_params
+      elsif params[:tag_names]&.present?
+        tags = tags_params.values
+      elsif params[:existing_tags]&.present?
+        tags = existing_tags_params
+      end
+      @course.tag_list=(tags) if tags.present?
       flash.notice = "The course record was updated successfully."
       redirect_to @course
     else
@@ -77,6 +85,11 @@ class CoursesController < ApplicationController
   def tags_params
     params.require(:tag_names)
   end
+
+  def existing_tags_params
+    params.require(:existing_tags)
+  end
+
 
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
