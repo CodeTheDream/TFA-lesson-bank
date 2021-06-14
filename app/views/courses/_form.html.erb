@@ -59,6 +59,10 @@
   </div>
   <br />
   <ul id="myList">
+    <% course.tags.each do |tag| %>	  
+      <% time_stamp = Time.now.to_i %>	  
+      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
+    <% end %>
   </ul>
 
   <div class="form-group col">
