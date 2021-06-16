@@ -15,6 +15,7 @@ module TagList
 	key_word = is_course ? KeyWord.find_by(course_id: object.id, tag_id: tag.id) : KeyWord.find_by(lesson_id: object.id, tag_id: tag.id)
         # see if tag belogs to any other courses or lessons
         # if yes - delete association, if not delete the tag
+        # byebug
         (tag.lessons.count + tag.courses.count) > 1 ? key_word.delete : tag.delete
       end
     end
