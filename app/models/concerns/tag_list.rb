@@ -19,6 +19,7 @@ module TagList
       end
     end
     # create tags and/or associations through key_words for all values passed in
+    self.reload
     tag_names = input_tag_names.collect{|t| t.strip.downcase}.uniq
     tag_names = tag_names.reject {|x| x == ""}
     new_or_found_tags = tag_names.collect { |name| Tag.find_or_create_by(name: name) }

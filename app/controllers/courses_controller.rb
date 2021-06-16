@@ -41,7 +41,7 @@ class CoursesController < ApplicationController
   def update
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
-        tags = tags_params.values + existing_tags_params
+	tags = tags_params.values + existing_tags_params
       elsif params[:tag_names]&.present?
         tags = tags_params.values
       elsif params[:existing_tags]&.present?
