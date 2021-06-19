@@ -43,10 +43,8 @@ class CoursesController < ApplicationController
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
       elsif params[:tag_names]&.present?
-        
         tags = tags_params.values
       elsif params[:existing_tags]&.present?
-        
         tags = existing_tags_params
       end
       @course.tag_list=(tags) if tags.present?

@@ -27,7 +27,7 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       # create_tags(tags_params[:tag_names], @lesson)
-      @lesson.tag_list=(tags_params.values)
+      @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
       flash.notice = "The lesson record was created successfully."
       redirect_to [@course, @lesson]#course_lessons_path(@lesson)
     else
@@ -40,6 +40,17 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1.json
   def update
     if @lesson.update(lesson_params)
+      if params[:tag_names]&.present? && params[:existing_tags]&.present?
+        byebug
+	      tags = tags_params.values + existing_tags_params
+      elsif params[:tag_names]&.present?
+        byebug
+        tags = tags_params.values
+      elsif params[:existing_tags]&.present?
+        byebug
+        tags = existing_tags_params
+      end
+      @lesson.tag_list=(tags) if tags.present?
       flash.notice = "The lesson record was updated successfully."
       redirect_to [@course, @lesson]#course_lessons_path(@course)
     else
@@ -77,6 +88,10 @@ class LessonsController < ApplicationController
     params.require(:tag_names)
   end
 
+  def existing_tags_params
+    params.require(:existing_tags)
+  end
+
   def get_course
     @course = Course.find(params[:course_id])
   end
@@ -85,9 +100,6 @@ class LessonsController < ApplicationController
   def set_lesson
     @lesson = @course.lessons.find(params[:id])
   end
-  # def article_params
-  #   params.require(:article).permit(:title, :body, :tag_list)
-  # end
 
   # Only allow a list of trusted parameters through.
   def lesson_params
