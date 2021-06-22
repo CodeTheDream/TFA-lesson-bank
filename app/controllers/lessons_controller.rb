@@ -41,13 +41,10 @@ class LessonsController < ApplicationController
   def update
     if @lesson.update(lesson_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
-        byebug
 	      tags = tags_params.values + existing_tags_params
       elsif params[:tag_names]&.present?
-        byebug
         tags = tags_params.values
       elsif params[:existing_tags]&.present?
-        byebug
         tags = existing_tags_params
       end
       @lesson.tag_list=(tags) if tags.present?

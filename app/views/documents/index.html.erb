@@ -44,13 +44,11 @@
         <%# </td> %> 
 
       <%if @course.present? %> 
-        <%# <%byebug%> 
         <td><%= link_to 'Show', course_document_path(@course, document), :class => "btn btn-outline-primary btn-sm" %></td>
         <td><%= link_to 'Edit', edit_course_document_path(@course, document), :class => "btn btn-outline-primary btn-sm" %></td>
         <td><%= link_to 'Destroy', course_document_path(@course, document), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
         <%# <%= link_to 'Back', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %> 
       <%elsif @lesson.present?%>
-        <%# <%byebug%> 
         <%# lesson_document GET    /lessons/:lesson_id/documents/:id(.:format)   %>
         <td><%= link_to 'Show', lesson_document_path(@lesson, document), :class => "btn btn-outline-primary btn-sm" %></td>
         <td><%= link_to 'Edit', edit_lesson_document_path(@lesson, document), :class => "btn btn-outline-primary btn-sm" %></td>
