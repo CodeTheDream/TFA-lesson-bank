@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do |f|
-      f.id { 1 }
+      f.id { 100 }
       f.email  {Faker::Internet.email}
       f.role { "teacher" }
       f.created_at { Time.now }

@@ -23,10 +23,8 @@ class DocumentsController < ApplicationController
     # if @course
     #   @document = @course.documents.build(document_params)
     # elsif @lesson
-    #   byebug
 
       # @document = @course.lesson.documents.build(document_params)
-    #   byebug
     #end
   end
       
@@ -38,7 +36,6 @@ class DocumentsController < ApplicationController
     # elsif @lessson
     #   @document = @lesson.documents.build
     # end
-    # byebug
     # @document = Document.new
   end
       
@@ -57,9 +54,9 @@ class DocumentsController < ApplicationController
     if @document.save
       flash.notice = "The document record was created successfully."
       if @course.present?
-        redirect_to course_index_course_documents_path(@course)
+        redirect_to [@course, @document] #course_index_course_documents_path(@course)
       elsif @lesson.present?
-       redirect_to lesson_index_lesson_documents_path(@lesson)
+       redirect_to [@lesson, @document] #lesson_index_lesson_documents_path(@lesson)
       else
         redirect_to "/"
       end
@@ -80,9 +77,9 @@ class DocumentsController < ApplicationController
     if @document.update(document_params)
       flash.notice = "The document record was updated successfully."
       if @course.present?
-        redirect_to course_documents_path(@course)
+        redirect_to [@course, @document]#course_documents_path(@course)
       elsif @lesson.present?
-       redirect_to lesson_documents_path(@lesson)
+       redirect_to [@lesson, @document]#lesson_documents_path(@lesson)
       else
         redirect_to "/"
       end
