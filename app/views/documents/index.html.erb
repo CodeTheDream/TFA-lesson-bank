@@ -1,0 +1,74 @@
+<h1 class="title mt-5 mb-5 display-3" style="text-align: center;">Documents</h1>
+<div id="no-more-tables" class="table-responsive card mb-5">
+<table class="table table-hover">
+  <thead>
+    <div class="row">
+    <tr>
+      <th class="h2" style="background:none;">Name</th>
+      <th class="h2" style="background:none;">Description</th>
+      <th class="h2" style="background:none;">Type</th>
+      <th class="h2" style="background:none;">Course</th>
+      <th class="h2" style="background:none;">Lesson</th>
+      <th class="h2" style="background:none;">File</th>
+      <th colspan="3"></th>
+    </tr>
+    </div>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <div class="row">
+      <tr>
+        <td data-title="Name"><%= document.name %></td>
+        <td data-title="Description"><%= document.description %></td>
+        <td data-title="Type"><%= document.kind %></td>
+        <td data-title="Type"><%= document.course_id %></td>
+        <td data-title="Type"><%= document.lesson_id %></td>
+        <td data-title="File">
+          <% if (document.file.attached?) %> 
+            <% if document.file.representable? %>
+              <%= image_tag(document.file.preview(resize_to_fit: [100,100])) %>
+              <br>
+              <%= link_to "View File", document.file %> 
+              <br>
+              <%= link_to "Download File", document.file, download: '' %>
+            <% end %>  
+          <% end %>
+        </td>
+
+        <%# <td><%= link_to 'Show', course_document_path(@course, document), :class => "btn btn-outline-primary btn-sm" %>
+        <%# </td> %> 
+        <%# <td><%= link_to 'Edit', edit_course_document_path(@course, document), :class => "btn btn-outline-primary btn-sm" %>
+        <%# </td> %> 
+        <%# <td><%= link_to 'Destroy', course_document_path(@course, document), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %>
+        <%# </td> %> 
+
+      <%if @course.present? %> 
+        <%# <%byebug%> 
+        <td><%= link_to 'Show', course_document_path(@course, document), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Edit', edit_course_document_path(@course, document), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Destroy', course_document_path(@course, document), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
+        <%# <%= link_to 'Back', course_documents_path(@course), :class => "btn btn-outline-primary btn-sm" %> 
+      <%elsif @lesson.present?%>
+        <%# <%byebug%> 
+        <%# lesson_document GET    /lessons/:lesson_id/documents/:id(.:format)   %>
+        <td><%= link_to 'Show', lesson_document_path(@lesson, document), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Edit', edit_lesson_document_path(@lesson, document), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Destroy', lesson_document_path(@lesson, document), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
+        <%# <%= link_to 'Back', lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> 
+      <%end %>
+
+      </tr>
+    </div>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+<%if @course.present? %>
+<%= link_to 'New Document (Course)', new_course_document_path, :class => "btn btn-outline-primary btn-sm" %>
+<%= link_to 'Back (Course)', course_path(@course), :class => "btn btn-primary btn-sm", :style => "color: white" %>
+<%elsif @lesson.present?%>
+<%= link_to 'New Document (Lesson)', new_lesson_document_path, :class => "btn btn-outline-primary btn-sm" %>
+<%= link_to 'Back (Lesson)', course_path(@lesson), :class => "btn btn-primary btn-sm", :style => "color: white" %>
+<%end%>

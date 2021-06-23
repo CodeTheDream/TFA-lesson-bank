@@ -1,0 +1,26 @@
+.search-page-outer{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 2em;
+  min-height: 90vh;
+}
+
+.main-area{
+  display:grid;
+  
+}
+
+.main-search{
+  grid-row: 1;
+  justify-content: center;
+}
+// .filter-container{
+//   display: grid;
+ 
+  
+  
+// }
+.filter-div{
+   grid-template-columns: fit-content(100px) fit-content(100px) 1fr;
+  
+}

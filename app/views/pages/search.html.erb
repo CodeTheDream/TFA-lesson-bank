@@ -1,0 +1,136 @@
+<%
+=begin%>
+<h1 class="mt-5">Search Results</h1>
+<%
+=end%>
+<div class="search-page-outer">
+
+
+  <div class="row filter-container border border-primary ">
+    <div class="container filter-div border border-danger col-md-2 d-flex flex-column align-items-center  w-50 ">
+      <div class="dropdown  ">
+        <h6 class="inline-block  mt-5">
+          <strong>Subject</strong> </h6>
+        <button class="btn   bg-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          Choose One
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">Action</button></li>
+          <li><button class="dropdown-item" type="button">Another action</button></li>
+          <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <h6 class="inline-block mt-5">
+          <strong>Topic</strong> </h6>
+        <button class="btn   bg-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          Choose One
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">Action</button></li>
+          <li><button class="dropdown-item" type="button">Another action</button></li>
+          <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <h6 class="inline-block mt-5">
+          <strong>Grade Level</strong> </h6>
+        <button class="btn   bg-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          Choose One
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">Action</button></li>
+          <li><button class="dropdown-item" type="button">Another action</button></li>
+          <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <h6 class="inline-block mt-5">
+          <strong>US State</strong> </h6>
+        <button class="btn   bg-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          Choose One
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">Action</button></li>
+          <li><button class="dropdown-item" type="button">Another action</button></li>
+          <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <h6 class="inline-block mt-5">
+          <strong>School District</strong> </h6>
+        <button class="btn   bg-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          Choose One
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><button class="dropdown-item" type="button">Action</button></li>
+          <li><button class="dropdown-item" type="button">Another action</button></li>
+          <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <div class=" border border-danger main-area ">
+    <div class="container-fluid border border-primary mt-5 main-search ">
+      search bar
+      <%= form_tag search_page_path, :method => 'get', enforce_utf8: false do %>
+      <div class="form-inline">
+        <% if current_user&.role == 'teacher' %>
+        <div class="input-group">
+          <%= check_box_tag 'my_courses', 'yes'  %>
+          Search My Courses
+        </div>
+        <!--<div>
+     Lessons
+     <label class="switch">
+       <%#= check_box_tag 'my_lessons', 'yes' %>
+       Search My Lessons
+     </label>
+     Lessons
+   </div>-->
+        <% end %>
+        <%= search_field_tag :search, params[:search], placeholder: 'Search Courses', class: "form-control mr-sm-2" %>
+        <div class="input-group-btn ">
+          <%= submit_tag "Search", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
+        </div>
+      </div>
+      <% end %>
+
+    </div>
+    <div class=" border border-primary container mt-5 mr-0 ml-0  ps-3 d-flex flex-row  ">
+      <h1>
+        Best Rated
+      </h1>
+    </div>
+    <div class=" border border-primary container mr-0 ml-0  pb-3  mt-2 ps-1 d-flex flex-row  ">
+
+
+      <% @results.each do |result| %>
+      <div class=" border border-primary card mt-5 mx-3 bg-light mb-3" style=" width: 18rem;">
+
+
+        <div class="card-body ">
+
+          <h5 class="card-title">
+            <strong><%= result.title %> </strong>
+          </h5>
+
+          <p class="card-text">
+            <%= result.description %></p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+
+        </div>
+
+
+
+      </div>
+      <%end%>
+    </div>
+  </div>
+
+</div>
