@@ -1,4 +1,4 @@
-<h2 class="title mt-5 mb-5 display-3" style="text-align: center;">Lessons</h2>
+<h1 class="title mt-5 mb-5 display-3" style="text-align: center;">Lessons</h1>
     <div id="no-more-tables" class="table-responsive card mb-5">
     <table class="table table-hover">
 
@@ -9,6 +9,7 @@
       <th class="h2" style="background:none;">Lesson Title</th>
       <th class="h2" style="background:none;">Description</th>
       <th class="h2" style="background:none;">Units</th>
+      <th class="h2" style="background:none;">Tags</th>
       <th colspan="3"></th>
     </tr>
     </div>
@@ -22,11 +23,12 @@
         <td data-title="Title"><%= lesson.title %></td>
         <td data-title="Description"><%= lesson.description %></td>
         <td data-title="Units"><%= lesson.units_covered %></td>
+        <td data-title="Tags"><%= lesson.tags %></td>
 
 
-        <td><%= link_to 'Show', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Edit', edit_course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Destroy', course_lesson_path(@course, lesson), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Show', lesson, :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Edit', edit_lesson_path(lesson), :class => "btn btn-outline-primary btn-sm" %></td>
+        <td><%= link_to 'Destroy', lesson, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
       </tr>
     </div>
     <% end %>
@@ -34,5 +36,5 @@
 </table>
 </div>
 <br>
-<td><%= link_to 'New Lesson', new_course_lesson_path, :class => "btn btn-outline-primary btn-sm" %></td>
-<td><%= link_to 'Back to Courses', courses_path(@course), :class => "btn btn-outline-primary btn-sm" %></td>
+
+<%= link_to 'New Lesson', new_lesson_path, :class => "btn btn-outline-primary btn-sm" %>

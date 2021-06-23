@@ -26,24 +26,12 @@ gem 'devise'
 # Use pundit for authorization
 gem "pundit"
 gem 'bootstrap'
-# Use for validating blobs
-gem 'activestorage-validator'
-# Use for rendering pdfs
-gem 'poppler'
-# upgrading actionpack for security issue - potential denial of service attach
-gem "actionpack", ">= 6.0.3.7"
-gem 'rack-cors'
-gem 'ffmpeg'
+
 # Use Active Storage variant
-gem 'image_processing', '~> 1.2'
+# gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
-gem 'rails-controller-testing'
-gem 'factory_bot_rails'
-gem 'faker', :require => false
-#gem 'shoulda-matchers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -59,12 +47,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-group :test do
-  gem 'shoulda-matchers'
-end
-
-gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

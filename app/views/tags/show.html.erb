@@ -1,8 +1,0 @@
-<h1>Courses Tagged with <%= @tag.name %></h1>
-
-<ul>
-  <% @tag.courses.each do |course| %>
-    <li><%= link_to course.title, course_path(course) %></li>
-  <% end %>
-</ul>
-

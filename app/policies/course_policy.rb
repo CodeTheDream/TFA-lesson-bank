@@ -11,7 +11,7 @@ class CoursePolicy < ApplicationPolicy
     alias_method ali, :logged_in?
   end
 
-  %i(edit? update? destroy?).each do |ali|
+  %i(edit? update? destroy).each do |ali|
     alias_method ali, :owner_or_admin?
   end
 end
