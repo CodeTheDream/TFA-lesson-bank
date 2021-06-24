@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Courses", type: :request do
   describe "sign in" do
-    it "signs user in and out" do
+    it "signs user in and get the root path" do
       @user = FactoryBot.create(:user)
       sign_in @user
       get root_path
@@ -49,7 +49,7 @@ RSpec.describe "Courses", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.new(course_hash)
       sign_in @user
-      # User is not confirmed and role is tranger
+      # User is not confirmed and role is stranger
       get new_course_path
       # expect(response.status).to eq(404)
       expect(response).to redirect_to user_session_path
