@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :documents
   resources :courses do 
-    resources :lessons
+  
   end
+  resources :lessons 
 end
