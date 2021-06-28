@@ -40,6 +40,9 @@ gem 'image_processing', '~> 1.2'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Use searchkick to interact with ElastciSearch
+gem 'searchkick'
+
 gem 'rails-controller-testing'
 gem 'factory_bot_rails'
 gem 'faker', :require => false

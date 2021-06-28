@@ -5,6 +5,7 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.all
+    @courses = CourseSearch.new(query: params[:q], options: search_params).search
   end
 
   # GET /courses/1
