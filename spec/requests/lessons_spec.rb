@@ -69,5 +69,18 @@ RSpec.describe "Lessons", type: :request do
         params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       expect(response).to render_template(:new)
     end
+    it "redirects to the new_user_session_path if a user is not confirm" do
+      @user = FactoryBot.create(:user)
+      sign_in @user
+      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      @course = Course.create(course_hash)
+      lesson_hash = {title: "test lesson1", description: "test lesson1", 
+        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+      @lesson = Lesson.create(lesson_hash)
+      get new_course_lesson_path(course_id: @course.id, id: @lesson.id),
+        params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
+      #response 300 checkit
+      expect(response).to redirect_to new_user_session_path
+    end
   end
 end
