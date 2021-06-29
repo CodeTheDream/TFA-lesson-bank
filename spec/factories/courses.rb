@@ -10,7 +10,7 @@ FactoryBot.define do
     f.district { "01" }
     f.start_date { Time.now }
     f.end_date { Time.now }
-    f.user_id { 100 }
+    f.user_id { 1000 }
     
   end
 end
