@@ -10,6 +10,9 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
+    @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
+    @lesson = @lesson[0] if @lesson.class !=  Lesson
   end
 
   # GET /courses/new
@@ -41,7 +44,7 @@ class CoursesController < ApplicationController
   def update
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
-	tags = tags_params.values + existing_tags_params
+	      tags = tags_params.values + existing_tags_params
       elsif params[:tag_names]&.present?
         tags = tags_params.values
       elsif params[:existing_tags]&.present?
