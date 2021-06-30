@@ -1,0 +1,10 @@
+<%#byebug%>
+<div>
+  <%= lesson.title %>
+</div>
+
+<div>
+  <% lesson.documents.each do |document| %>
+    <%= document.name %>
+  <% end %>
+</div>
