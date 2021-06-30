@@ -1,104 +1,86 @@
-<h2 class="title mt-5 mb-5 display-3" style="text-align:center">Courses</h2>
-<div id="no-more-tables" class="table-responsive card mb-5">
-<p>
-  <strong>Title:</strong>
-  <%= @course.title %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Course header-->
+      <div  class="mb-2">
+        <h1 class="fw-bolder  mt-5 mb-2"><%= @course.title %></h1>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.subject %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.grade_level %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.state %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.district %></div>
+        <p>
+          <strong>Start Date:</strong>
+          <%= @course.start_date %></br>       
+          <strong>End Date:</strong>
+          <%= @course.end_date %>
+        </p>  
 
-<p>
-  <strong>Subject</strong>
-  <%= @course.subject %>
-</p>
+          <h>Tags:</strong>
+            <% @course.tags.each do |tag| %>
+              <ul>
+                <a class="badge bg-secondary text-decoration-none link-light" href="#!"><%= link_to tag.name, tag_path(tag) %></a>
+              </ul>
+              <% end %>     
+      </div> 
 
-<p>
-  <strong>Grade Level:</strong>
-  <%= @course.grade_level %>
-</p>
+      <!-- Description Section-->
+      <section class="mb-5">
+       <h2>Course Description:</h2>  
+       <p>
+        <%= @course.description %>
+        </p>
+      </section>
 
-<p>
-  <strong>State:</strong>
-  <%= @course.state %>
-</p>
-
-<p>
-  <strong>District:</strong>
-  <%= @course.district %>
-</p>
-
-<p>
-  <strong>Start Date:</strong>
-  <%= @course.start_date %>
-</p>
-
-<p>
-  <strong>End Date:</strong>
-  <%= @course.end_date %>
-</p>
-
-<p>
-  <strong>Tags:</strong>
-  <% @course.tags.each do |tag| %>
-    <%= link_to tag.name, tag_path(tag) %>
-  <% end %>
-</p>
-
-
-<%# Lessons for this course %>
-    <h2 class="title mb-5 display-3" style="text-align:center"><%= t ("Lessons")%></h2>
-    <div id="no-more-tables" class="table-responsive card mb-5">
-    <table class="table table-hover">
-      <thead>
-          <tr>
-          <strong><th class="h2" style="background:none;"> Lesson Name</th></strong>
-          <strong><th class="h2" style="background:none;"> Lesson Description</th></strong>
-
-          </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% @course.lessons.each do |lesson| %>
-          <td data-title="Title"><%= lesson.title %></td>
-          <td data-title="Description"><%= lesson.description %></td>
-        </tr>
+      <!-- Documents Section-->
+      <section class="mb-5">
+        <h4>Documents for this Course:</h4>  
+        <% @course.documents.each do |document| %>          
+          <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= document.name %> 
+          </button>  
+          <%= image_tag(document.file.preview(resize_to_fit: [100,100])) %>
         <% end %>
-      </tbody>
-    </table>
+      </section>
     </div>
-  </div>
-  </div>
-
-  <%# Documents for this course %>
-    <h2 class="title mb-5 display-3" style="text-align:center">Documents</h2>
-    <div id="no-more-tables" class="table-responsive card mb-5">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-        <strong><th class="h2" style="background:none;"> Document Name</th></strong>
-        <strong><th class="h2" style="background:none;"> File</th></strong>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% @course.documents.each do |document| %>
-          <td data-title="Title"><%= document.name %></td>
-          <td data-title="File"><%= image_tag(document.file.preview(resize_to_fit: [100,100])) %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+      <!-- Side Lessons-->
+    <div class="col-lg-6 mt-5">       
+      <div class="dropdown ">
+        <button class="btn btn-secondary dropdown-toggle btn-lg" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Lessons for <%= @course.title %> Course
+        </button> 
+      
+      <!-- Lesson card-->
+      <div class="card mb-4 mt-4 ">
+          <div class="card-header">What you'll need for this Lesson:</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">                     
+                <% @course.lessons.each do |lesson| %>       
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button"><%= lesson.title %></button>           
+                  </div>
+                  <%= lesson.description %>  
+                <% end %>                       
+              </div>
+            </div>
+          </div>
+        </div>       
+      </div>      
     </div>
+
+    <div class="row mx-auto py-3">
+      <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary btn-sm" %> |
+      <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary btn-sm" %>|
+
+      <%= link_to 'Lessons', course_lessons_path(@course), :class => "btn btn-outline-primary btn-sm" %>
+      <%= link_to 'Documents', course_index_course_documents_path(@course) , :class => "btn btn-outline-primary btn-sm" %>
+    </div>
+
+    
+
+  
   </div>
-  </div>
-
-<%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary btn-sm" %> |
-<%= link_to 'Back', courses_path, :class => "btn btn-outline-primary btn-sm" %>|
-
-<%= link_to 'Lessons', course_lessons_path(@course), :class => "btn btn-outline-primary btn-sm" %> 
-<%= link_to 'Documents', course_index_course_documents_path(@course) , :class => "btn btn-outline-primary btn-sm" %>
-
 </div>
+
+
