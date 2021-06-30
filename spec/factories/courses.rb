@@ -1,7 +1,7 @@
 require 'faker'
 FactoryBot.define do
   factory :course do |f|
-    f.id { 1 }
+    f.id { 100 }
     f.title  { "title" }
     f.description { "description" }
     f.subject { "subject" }
@@ -10,7 +10,7 @@ FactoryBot.define do
     f.district { "01" }
     f.start_date { Time.now }
     f.end_date { Time.now }
-    f.user_id { 1 }
+    f.user_id { 1000 }
     
   end
 end

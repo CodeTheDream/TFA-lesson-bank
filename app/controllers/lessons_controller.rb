@@ -27,8 +27,9 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       # create_tags(tags_params[:tag_names], @lesson)
+      @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
       flash.notice = "The lesson record was created successfully."
-      redirect_to course_lessons_path(@course)
+      redirect_to [@course, @lesson]#course_lessons_path(@lesson)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :new  
@@ -39,8 +40,16 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1.json
   def update
     if @lesson.update(lesson_params)
+      if params[:tag_names]&.present? && params[:existing_tags]&.present?
+	      tags = tags_params.values + existing_tags_params
+      elsif params[:tag_names]&.present?
+        tags = tags_params.values
+      elsif params[:existing_tags]&.present?
+        tags = existing_tags_params
+      end
+      @lesson.tag_list=(tags) if tags.present?
       flash.notice = "The lesson record was updated successfully."
-      redirect_to course_lessons_path(@course)
+      redirect_to [@course, @lesson]#course_lessons_path(@course)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       render :edit
@@ -72,7 +81,12 @@ class LessonsController < ApplicationController
   # end
 
   def tags_params
-    params.permit(:tag_names)
+    # params.permit(:tag_names)
+    params.require(:tag_names)
+  end
+
+  def existing_tags_params
+    params.require(:existing_tags)
   end
 
   def get_course
@@ -83,13 +97,10 @@ class LessonsController < ApplicationController
   def set_lesson
     @lesson = @course.lessons.find(params[:id])
   end
-  # def article_params
-  #   params.require(:article).permit(:title, :body, :tag_list)
-  # end
 
   # Only allow a list of trusted parameters through.
   def lesson_params
-    params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tag_list)
+    params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tag_names)
   end
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
