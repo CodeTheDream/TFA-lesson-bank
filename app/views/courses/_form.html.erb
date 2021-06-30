@@ -39,7 +39,7 @@
   <div class="form-row center-right pl-4">
     <div class="form-group col-sm-2 course-dropdown">
       <%= f.label :state, :class => "course-dropdown" %>
-      <%= f.select :state, options_for_select(states)  %>
+      <%= f.select :state, options_for_select(states, course.state)  %>
     </div>
 
     <div class="form-group col-sm-2 move-left">
@@ -48,11 +48,11 @@
 
     <div class="form-group col-sm-2 bump-left course-dropdown">
       <%= f.label :grade_level, :class => "control-label" %>
-      <%= f.select :grade_level, options_for_select(available_grade_levels)  %>
+      <%= f.select :grade_level, options_for_select(available_grade_levels, course.grade_level)  %>
     </div>
     <div class="form-group col-sm-2 nudge-left course-dropdown">
       <%= f.label :subject, :class => "control-label" %>
-      <%= f.select :subject, options_for_select(subjects)  %>
+      <%= f.select :subject, options_for_select(subjects, course.subject)  %>
     </div>
   </div>
 

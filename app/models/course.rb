@@ -10,7 +10,7 @@ class Course < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :subject, presence: true
-  validates :grade_level, presence: true, numericality: { only_integer: true }
+  validates :grade_level, presence: true
   validates :state, presence: true
   validates :district, presence: true
 
