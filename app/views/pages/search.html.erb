@@ -7,8 +7,8 @@
 <%
 =end%>
 <div class="grid-container">
- <div class="search-filter">
-   <%= form_tag(search_page_path) do -%>
+  <div class="search-filter">
+   <%= form_tag(search_page_path, :method => 'get') do -%>
     <div class="mb-4">
       <small class="form-text text-muted">Subject</small>
       <%= select_tag :subject, options_for_select(@subjects), { include_blank: true, class: 'form-control' } %>
@@ -18,9 +18,10 @@
       <%= select_tag :state, options_for_select(@states), { include_blank: true, class: 'form-control' } %>
     </div>
     <div class="mb-4">
-      <small class="form-text text-muted">State</small>
+      <small class="form-text text-muted">Grade Level</small>
       <%= select_tag :grade_level, options_for_select(@available_grade_levels), { include_blank: true, class: 'form-control' } %>
     </div>
+    <%= hidden_field_tag :search, @search %>
     <div>
       <%= submit_tag "Filter", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
     </div>
