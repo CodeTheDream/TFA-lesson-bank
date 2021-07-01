@@ -1,98 +1,64 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Course header-->
+      <div  class="mb-2">
+        <h1 class="fw-bolder  mt-5 mb-2"><%= @course.title %></h1>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.subject %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.grade_level %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.state %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.district %></div>
+      
+        <div class= "mt-2">
+          <h5>Tags:</h5>
+            <% @course.tags.each do |tag| %>           
+                <a><%= link_to tag.name, tag_path(tag) %></a>       
+            <% end %>     
+        </div>
+    </div> 
 
-<h2 class="title mt-5 mb-5 display-3" style="text-align:center">Courses</h2>
-<div id="no-more-tables" class="table-responsive card mb-5">
+      <!-- Description Section-->
+      <section class="mb-5">
+       <h4>Course Description:</h4>  
+       <p>
+        <%= @course.description %>
+        </p>
+      </section>
 
-<p>
-  <strong>Title:</strong>
-  <%= @course.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
-
-<p>
-  <strong>Subject</strong>
-  <%= @course.subject %>
-</p>
-
-<p>
-  <strong>Grade Level:</strong>
-  <%= @course.grade_level %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @course.state %>
-</p>
-
-<p>
-  <strong>District:</strong>
-  <%= @course.district %>
-</p>
-
-<p>
-  <strong>Tags:</strong>
-  <% @course.tags.each do |tag| %>
-    <%= link_to tag.name, tag_path(tag) %>
-  <% end %>
-</p>
-
-
-<%# Lessons for this course %>
-    <h2 class="title mb-5 display-3" style="text-align:center"><%= t ("Lessons")%></h2>
-    <div id="no-more-tables" class="table-responsive card mb-5">
-    <table class="table table-hover">
-      <thead>
-          <tr>
-          <strong><th class="h2" style="background:none;"> Lesson Name</th></strong>
-          <strong><th class="h2" style="background:none;"> Lesson Description</th></strong>
-
-          </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% @course.lessons.each do |lesson| %>
-          <td data-title="Title"><%= lesson.title %></td>
-          <td data-title="Description"><%= lesson.description %></td>
-        </tr>
+      <!-- Documents Section-->
+      <section class="mb-5">
+        <h4>Download the Files for this Course:</h4>  
+        <% @course.documents.each do |document| %>          
+          <button class="btn btn-primary btn-sm " type="button" >
+            <%= document.name %> 
+          </button>  
+          <%#= image_tag(document.file.preview(resize_to_fit: [100,100])) %>
         <% end %>
-      </tbody>
-    </table>
+      </section>
     </div>
-
-
-
-  <%# Documents for this course %>
-    <h2 class="title mb-5 display-3" style="text-align:center">Documents</h2>
-    <div id="no-more-tables" class="table-responsive card mb-5">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-        <strong><th class="h2" style="background:none;"> Document Name</th></strong>
-        <strong><th class="h2" style="background:none;"> File</th></strong>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% @course.documents.each do |document| %>
-          <td data-title="Title"><%= document.name %></td>
-          <td data-title="File"><%= image_tag(document.file.preview(resize_to_fit: [100,100])) %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-    </div>
-
-  <div class="actions">
-    <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary btn-sm" %> |
-    <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary btn-sm" %>|
-
-    <%= link_to 'Lessons', course_lessons_path(@course), :class => "btn btn-outline-primary btn-sm" %> 
-    <%= link_to 'Documents', course_index_course_documents_path(@course) , :class => "btn btn-outline-primary btn-sm" %>
+      <!-- Side Lessons-->
+    <div class="col-lg-6 mt-5 mb-2">           
+      <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
+        <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+          <div class=" mb-4 "> 
+            <h3 class="fw-bolder text-left  ">Lessons for <%= @course.title%> Course:</h3>      
+            <% lesson_titles = @course.lessons.pluck(:title)%>
+            <%= select_tag :lesson_id, options_from_collection_for_select(@course.lessons, :id, :title), :class => 'btn btn-info btn-lg '%> 
+          </div> 
+            <%= submit_tag "Preview", :class => 'btn btn-outline-secondary btn-lg ' %>
+        <% end %>      
+      <% end %>      
+      <!-- Lesson card-->
+      <% if @lesson.present? %>
+        <%= render 'lesson', lesson: @lesson %>
+      <% end %>       
+    </div>  
+    
+    <div class="form-group col">
+      <div class="actions">
+        <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
+        <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
+      </div>
+    </div>      
   </div>
-  <br>
-</div>
-
-
+</div>  
