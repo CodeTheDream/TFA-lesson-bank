@@ -1,5 +1,81 @@
+<%
+=begin%>
 <h1 class="mt-5">Search Results</h1>
-	<% @results.each do |result| %>
-		<h4><%= result.title %></h4><br>
-	<%end%>
+<% @results.each do |result| %>
+<h4><%= result.title %></h4><br>
+<%end%>
+<%
+=end%>
+<div class="grid-container">
+ <div class="search-filter">
+   <%= form_tag(search_page_path) do -%>
+    <div class="mb-4">
+      <small class="form-text text-muted">Subject</small>
+      <%= select_tag :subject, options_for_select(@subjects), { include_blank: true, class: 'form-control' } %>
+    </div>
+    <div class="mb-4">
+      <small class="form-text text-muted">State</small>
+      <%= select_tag :state, options_for_select(@states), { include_blank: true, class: 'form-control' } %>
+    </div>
+    <div class="mb-4">
+      <small class="form-text text-muted">State</small>
+      <%= select_tag :grade_level, options_for_select(@available_grade_levels), { include_blank: true, class: 'form-control' } %>
+    </div>
+    <div>
+      <%= submit_tag "Filter", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
+    </div>
 
+   <% end %>
+ </div>
+ <div class="main-result">
+   <div class="search-bar">
+     <%= form_tag(search_page_path, :method => 'get') do %>
+     <div class=" form-inline">
+       <% if current_user&.role == 'teacher' %>
+       <%
+=begin%>
+       <div class="input-group">
+         <%= check_box_tag 'my_courses', 'yes'  %>
+       </div>
+       <%
+=end%>
+       <!--<div>
+    Lessons
+    <label class="switch">
+      <%#= check_box_tag 'my_lessons', 'yes' %>
+      Search My Lessons
+    </label>
+    Lessons
+  </div>-->
+       <% end %>
+       <%= search_field_tag :search, params[:search], placeholder: 'Search Courses', class: "form-control mr-sm-2" %>
+       <div class="input-group-btn ">
+         <%= submit_tag "Search", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
+       </div>
+     </div>
+     <% end %>
+   </div>
+   <div class="heading1-title">
+     <h1>
+       Best Rated
+     </h1>
+   </div>
+   <div class="cards">
+     <% @results.each do |result| %>
+     <div class="card   " style=" width: 18rem;">
+       <div class="card-body ">
+         <div class="card-title">
+           <div><h3><%= result.title %></h3></div>
+           <br>
+           <div class="mb-4"><h4><%= result.description %></h4></div>
+           <div class="mb-4"><h5>Subject: <%= result.subject %></h5></div>
+           <div class="mb-4"><h5>Grade: <%= result.grade_level %></h5></div>
+         </div>
+         <a href="#" class="btn btn-outline-primary">Go somewhere</a>
+       </div>
+     </div>
+     <%end%>
+   </div>
+ </div>
+</div>
+</div>
