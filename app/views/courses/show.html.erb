@@ -27,12 +27,26 @@
 
       <!-- Documents Section-->
       <section class="mb-5">
-        <h4>Download the Files for this Course:</h4>  
-        <% @course.documents.each do |document| %>          
-          <button class="btn btn-primary btn-sm " type="button" >
-            <%= document.name %> 
-          </button>  
-          <%#= image_tag(document.file.preview(resize_to_fit: [100,100])) %>
+        <h4>Download the Files for this Course:</h4> 
+        <% if @course.documents.any? %>
+          <button class="btn btn-primary btn-sm mt-4" type="button" >
+            <% @course.documents.each do |document| %>          
+              <p>
+                <strong>File:</strong>
+                <td data-title="Document"><br>
+                  <% if document.file.attached? %>
+                    <% if document.file.representable? %>
+                    <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
+                    <br>
+                    <%= link_to "View File", document.file %> 
+                    <br>
+                    <%= link_to "Download File", document.file, download: '' %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </p> 
+            <% end %>
+          </button>
         <% end %>
       </section>
     </div>

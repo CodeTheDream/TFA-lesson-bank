@@ -10,9 +10,13 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
-    @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
-    @lesson = @lesson[0] if @lesson.class !=  Lesson
+    if params[:lesson_id].present?
+      @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
+      @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
+      @lesson = @lesson[0] if @lesson.class !=  Lesson
+    else
+      @lesson = nil
+    end
   end
 
   # GET /courses/new
