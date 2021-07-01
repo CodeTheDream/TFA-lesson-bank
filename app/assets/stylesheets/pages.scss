@@ -1,3 +1,71 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+body.landing {
+  width: 100%;
+  height: 100vh;
+  display: flex !important;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body.landing::before {
+  background-image: url("https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGJvb2tzJTIwYWJzdHJhY3R8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60");
+  content: "";
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100% !important;
+  opacity: 0.2;
+  background-color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+
+  z-index: -1;
+}
+
+.search_box {
+  width: 600px;
+  height: 55px;
+  padding: 10px 10px;
+  margin: 5px 10px 5px 0;
+  box-sizing: border-box;
+  border: 2px solid #013745;
+  border-radius: 0px;
+  font-size: 26px;
+}
+.form-inline {
+  position: relative;
+  top: 250px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+.b_landing {
+  border: 2px solid #013745 !important;
+  height: 55px;
+  font-size: 26px;
+}
+.b_landing:hover {
+  background-color: #013745 !important;
+}
+@media (max-width: 576px) {
+  .search_box {
+    width: 85% !important;
+  }
+
+  .b_landing {
+    align-items: center;
+  }
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
