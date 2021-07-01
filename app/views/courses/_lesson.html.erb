@@ -1,10 +1,27 @@
-<%#byebug%>
-<div>
-  <%= lesson.title %>
+<div class="row row-cols-1 row-cols-md-3 mt-2">
+  <div class="col mb-4">
+    <div class="card h-100  style="width: 18rem; ">
+      
+      <div class="card-body">
+        
+        <h5 class="card-title">What You'll need for These <%= @course.title %> Lessons:</h5>
+        <li class="card-text"><%= lesson.description %></li>
+        <h5 class="card-title mt-2">What You'll learn in Lesson One: </h5>
+        <div>
+          <p class="card-text text-muted"> By the End of this <%= @course.title %> lesson, you will have learned:</p>
+          <li <%= lesson.units_covered %></li>
+        </div>
+        <div>
+          <h5 class="card-title mt-2">Download Files for this Lesson:</h5>
+          <button class="btn btn-primary btn-sm " type="button" >
+            <% lesson.documents.each do |document| %>
+              <%= document.name %>
+            <% end %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div>
-  <% lesson.documents.each do |document| %>
-    <%= document.name %>
-  <% end %>
-</div>
+

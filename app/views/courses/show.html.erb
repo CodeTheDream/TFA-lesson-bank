@@ -8,7 +8,6 @@
         <div class="badge bg-secondary text-decoration-none link-light"><%= @course.grade_level %></div>
         <div class="badge bg-secondary text-decoration-none link-light"><%= @course.state %></div>
         <div class="badge bg-secondary text-decoration-none link-light"><%= @course.district %></div>
-<<<<<<< HEAD
       
         <div class= "mt-2">
           <h5>Tags:</h5>
@@ -17,15 +16,6 @@
             <% end %>     
         </div>
     </div> 
-=======
-        <h>Tags:</strong>
-          <% @course.tags.each do |tag| %>
-            <ul>
-              <a class="badge bg-secondary text-decoration-none link-light" href="#!"><%= link_to tag.name, tag_path(tag) %></a>
-            </ul>
-          <% end %>     
-      </div> 
->>>>>>> 753e0631c1495599286b7abacba75ad1072e90c6
 
       <!-- Description Section-->
       <section class="mb-5">
@@ -37,9 +27,9 @@
 
       <!-- Documents Section-->
       <section class="mb-5">
-        <h4>Documents for this Course:</h4>  
+        <h4>Download the Files for this Course:</h4>  
         <% @course.documents.each do |document| %>          
-          <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary btn-sm " type="button" >
             <%= document.name %> 
           </button>  
           <%#= image_tag(document.file.preview(resize_to_fit: [100,100])) %>
@@ -47,61 +37,36 @@
       </section>
     </div>
       <!-- Side Lessons-->
-    <div class="col-lg-6 mt-5">       
-<<<<<<< HEAD
-      <div >
-        <h2>
-          Lessons for <%= @course.title %> Course:
-        </h2> 
-      </div> 
-      
+    <div class="col-lg-6 mt-5 mb-2">           
+      <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
+        <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+          <div class=" mb-4 "> 
+            <h3 class="fw-bolder text-left  ">Lessons for <%= @course.title%> Course:</h3>      
+            <% lesson_titles = @course.lessons.pluck(:title)%>
+            <%= select_tag :lesson_id, options_from_collection_for_select(@course.lessons, :id, :title), :class => 'btn btn-info btn-lg '%> 
+          </div> 
+            <%= submit_tag "Preview", :class => 'btn btn-outline-secondary btn-lg ' %>
+        <% end %>      
+      <% end %>      
       <!-- Lesson card-->
-      <div class="card mb-4 mt-4 ">
-        <% @course.lessons.each do |lesson| %>  
-          <td><%= link_to 'lesson', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-          <div class="card-header">
-            <%= lesson.title %>
-          </div>
-          
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-6">       
-                <%= lesson.description %>        
-              </div> 
-            </div>                                 
-          </div>
-        <% end %>   
-      </div>     
-              
-=======
-      <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>
-        <div class="form-inline">
-          <% if current_user&.role == 'teacher' %>
-            <div class="input-group">
-              <% lesson_titles = @course.lessons.pluck(:title) %>
-              <%= select_tag :lesson_id, options_from_collection_for_select(@course.lessons, :id, :title) %> 
-            </div>
-            <div class="input-group-btn">
-              <%= submit_tag "View Lesson", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-
-      <!-- Lesson card-->
-      <div class="card mb-4 mt-4 ">
-        <%#byebug %>
-        <% if @lesson.present? %>
-          <%= render 'lesson', lesson: @lesson %>
-        <% end %>
->>>>>>> 753e0631c1495599286b7abacba75ad1072e90c6
-      </div>      
-    </div>
-
-    <div class="row float right">
-      <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary " %> |
-      <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>|    
-      
-    </div>
+      <% if @lesson.present? %>
+        <%= render 'lesson', lesson: @lesson %>
+      <% end %>       
+    </div>  
+    
+    <div class="form-group col">
+      <div class="actions">
+        <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
+        <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
+      </div>
+    </div>      
   </div>
-</div>
+</div>         
+      
+     
+
+     
+      
+       
+   
+
