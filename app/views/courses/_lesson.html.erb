@@ -1,0 +1,38 @@
+<div class="row row-cols-1 row-cols-md-3 mt-2">
+  <div class="col mb-4">
+    <div class="card h-100 " style="width: 18rem; ">
+      
+      <div class="card-body">
+        
+        <h5 class="card-title"><%= lesson.title %></h5>
+        <li class="card-text"><%= lesson.description %></li>
+        <h5 class="card-title mt-2">Units covered: <%= lesson.units_covered %> </h5>
+        <div>
+          <h5 class="card-title mt-2">Download Files for this Lesson:</h5>
+            <% if lesson.documents.any? %>
+              <button class="btn btn-primary btn-sm " type="button" >
+              <% lesson.documents.each do |document| %>
+                <p>
+                  <strong>File:</strong>
+                  <td data-title="Document"><br>
+                    <% if document.file.attached? %>
+                      <% if document.file.representable? %>
+                      <%= image_tag document.file.preview(resize_to_fit: [75,75])%>
+                      <br>
+                      <%= link_to "View File", document.file %> 
+                      <br>
+                      <%= link_to "Download File", document.file, download: '' %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </p> 
+              <% end %>
+            <% end %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

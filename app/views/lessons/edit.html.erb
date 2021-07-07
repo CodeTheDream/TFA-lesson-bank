@@ -1,7 +1,3 @@
 <h2 class="title mt-5 mb-5 display-3" style="text-align:center">Editing Lesson</h2>
 
 <%= render 'form', lesson: @lesson %>
-<%= link_to 'Show', course_lesson_path(@course, @lesson), :class => "btn btn-primary btn-sm", :style => "color: white" %> |
-<%= link_to 'Documents (Lesson)', lesson_index_lesson_documents_path(@lesson), :class => "btn btn-outline-primary btn-sm" %> |
-<%= link_to 'Back', course_lessons_path(@course), :class => "btn btn-primary btn-sm", :style => "color: white" %>
-
