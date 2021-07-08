@@ -23,10 +23,8 @@ class DocumentsController < ApplicationController
     # if @course
     #   @document = @course.documents.build(document_params)
     # elsif @lesson
-    #   byebug
 
       # @document = @course.lesson.documents.build(document_params)
-    #   byebug
     #end
   end
       
@@ -38,7 +36,6 @@ class DocumentsController < ApplicationController
     # elsif @lessson
     #   @document = @lesson.documents.build
     # end
-    # byebug
     # @document = Document.new
   end
       
