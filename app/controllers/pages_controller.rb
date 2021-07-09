@@ -3,16 +3,15 @@ class PagesController < ApplicationController
   end 
 
   def search
-    if params[:search].blank? 
-      redirect_to(root_path, alert: 'Empty field!') and return
-    else
-      @parameter = params[:search].downcase
-      #@results = Course.all.where("title ILIKE ?", "%#{@parameter}%")
-      @results = CourseSearch.new(query: params[:q], options: search_params).search
-    end
+    query = search_params[:search] 
+    #@results = Course.all.where("title ILIKE ?", "%#{@parameter}%")
+    byebug
+    @results = CourseSearch.search(query: query, options: search_params)
   end
 
+  private
+
   def search_params
-    params.permit :page, :sort_attribute, :sort_order
+    params.permit(:search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district)
   end
 end
