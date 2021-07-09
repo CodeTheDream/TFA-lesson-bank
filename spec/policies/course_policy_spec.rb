@@ -39,7 +39,7 @@ describe CoursePolicy do
       context 'owner' do
         it 'allow access to admin' do
           @user = FactoryBot.create(:user, role:'admin')
-          course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+          course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
           @course = Course.new(course_hash)
           expect(policy).to permit @user
         end
