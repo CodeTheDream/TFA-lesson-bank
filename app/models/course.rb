@@ -19,12 +19,12 @@ class Course < ApplicationRecord
 
   def search_data attrs = attributes.dup                                            
     relational = {
-      title: title,                                                                 
-      description: description,                                                     
-      subject: subject,                                                             
-      grade_level: grade_level,                                                     
-      state: state,                                                                 
-      district: district,                                                           
+      title: title,
+      description: description,
+      subject: subject,
+      grade_level: grade_level,
+      state: state,
+      district: district,
     }                                                                               
   end                          
 
