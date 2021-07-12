@@ -8,8 +8,6 @@ FactoryBot.define do
     f.grade_level { 1 }
     f.state { "CA" }
     f.district { "01" }
-    f.start_date { Time.now }
-    f.end_date { Time.now }
     f.user_id { 1000 }
     
   end
