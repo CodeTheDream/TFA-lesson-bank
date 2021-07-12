@@ -12,38 +12,38 @@
     </div>
   <% end %>
   
-  <div class="form-group col">
+  <div class="form-group center-right pl-4 fit-width">
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control', :required => true %>  
   </div>
   
-  <div class="form-group col">
+  <div class="form-group center-right fit-width pl-4">
     <%= f.label :description %>
-    <%= f.text_field :description, class: 'form-control', :required => true %>
+    <%= f.text_area :description, class: 'form-control', :required => true %>
   </div>
   
-  <div class="form-group col">
+  <div class="form-group center-right pl-4 fit-width">
     <%= f.label :type %>
     <%= f.text_field :kind, class: 'form-control', :required => true %>
   </div>
 
- <div class="form-group">
+ <div class="form-group center-right pl-4">
    <label for="course"><%= Course %></label>
    <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
  </div>
 
- <div class="form-group">
+ <div class="form-group center-right pl-4">
    <label for="lesson"><%= Lesson %>
    </label> 
    <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
  </div>
 
- <div class="form-group col">
+ <div class="form-group center-right pl-4">
    <%= f.label :file %>
    <%= f.file_field :file %>
  </div>
 
- <div class="form-group col">
+ <div class="form-group center-right pl-4">
    <div class="actions">
      <%= f.submit %>
    </div>

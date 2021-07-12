@@ -13,11 +13,9 @@ class Course < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :subject, presence: true
-  validates :grade_level, presence: true, numericality: { only_integer: true }
+  validates :grade_level, presence: true
   validates :state, presence: true
   validates :district, presence: true
-  validates :start_date, presence: true
-  validates :end_date, presence: true
 
   def search_data attrs = attributes.dup                                            
     relational = {
@@ -29,4 +27,8 @@ class Course < ApplicationRecord
       district: district,                                                           
     }                                                                               
   end                          
+
+  def available_grade_levels 
+    %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+  end
 end

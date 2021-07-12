@@ -4,7 +4,6 @@ module CourseSearch
   PER_PAGE = 20
 
   def self.search(query:nil, options: {})
-    byebug
     @query = query.presence || "*"
     @options = options
 
@@ -16,11 +15,10 @@ module CourseSearch
     constraints[:where] = where_options
     constraints[:order] = order
 
-    Course.search(query, constraints)
+    Course.search(@query, constraints)
   end
 
   def self.where_options
-    byebug
     where = {}
 
     if @options["subject"].present?
