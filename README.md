@@ -68,6 +68,37 @@ rails db:migrate RAILS_ENV=test
 ```
 **Note:** On Line 3, make sure to add ``;`` at the end of command. Confirmation message should look like ``CREATED ROLE``
 
+We use [searchkick](https://github.com/ankane/searchkick) to enable searching in ElasticSearch.
+
+There are 2 methods to get ElasticSearch running. The first is to just install ElasticSearch and the second is to install Docker.
+
+Installing ElasticSearch: [elasticsearch](https://www.thegeekstuff.com/2019/04/install-elasticsearch)
+
+Installing Docker: [docker](https://www.tutorialspoint.com/docker/installing_docker_on_linux.html)
+
+Next you need to start [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html)
+```    
+./bin/elasticsearch
+```
+
+Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
+All the data we want to search through must be indexed to ElasticSearch
+
+Log into the rails console
+```
+rails c
+```
+
+Index the Posts
+```
+Post.reindex
+```
+
+Quit the console
+```
+quit
+```
+
 ## At this point you should be able to test the app.
 The command 'rspec' should run the test suite with no errors or failures.  
 You should be able to run the console with no errors.  
@@ -210,10 +241,46 @@ rails db:migrate
 rails db:migrate RAILS_ENV=test
 ```
 
-
-
 `-E` stands for **E**ncoding. Use UTF-8.
 Can also run if you already have rails setup
+
+### 6. ElasticSearch
+
+We use [searchkick](https://github.com/ankane/searchkick) to enable searching in ElasticSearch.
+
+There are 2 methods to get ElasticSearch running. The first is to just install ElasticSearch and the second is to install Docker.
+
+Installing ElasticSearch: [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/brew.html)
+
+Installing Docker: [docker](https://docs.docker.com/docker-for-mac/apple-m1/)
+
+Next you need to start [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html)
+```    
+brew services start ealsticsearch
+```
+
+or 
+```
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+```
+
+Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
+All the data we want to search through must be indexed to ElasticSearch
+
+Log into the rails console
+```
+rails c
+```
+
+Index the Posts
+```
+Post.reindex
+```
+
+Quit the console
+```
+quit
+```
 
 ## At this point you should be able to test the app.
 The command 'rspec' should run the test suite with no errors or failures.
