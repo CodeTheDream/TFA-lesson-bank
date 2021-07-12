@@ -89,9 +89,9 @@ Log into the rails console
 rails c
 ```
 
-Index the Posts
+Index the Courses 
 ```
-Post.reindex
+Course.reindex
 ```
 
 Quit the console
@@ -272,9 +272,9 @@ Log into the rails console
 rails c
 ```
 
-Index the Posts
+Index the Courses 
 ```
-Post.reindex
+Course.reindex
 ```
 
 Quit the console
