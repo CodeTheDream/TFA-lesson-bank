@@ -35,6 +35,9 @@
                 <strong>File:</strong>
                 <td data-title="Document"><br>
                   <% if document.file.attached? %>
+                    <%byebug %>
+                    <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
+                    <% document.id %>
                     <% if document.file.representable? %>
                     <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
                     <br>
@@ -69,10 +72,46 @@
     </div>  
     
     <div class="form-group col">
+      <%# <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>        %>
+    <%= form_tag course_path(@course), remote: true, method: :post, id:"form-download" do %>
+      <%= hidden_field_tag 'course_id', @course.id %>
+
       <div class="actions">
         <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
         <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
+        <%# <%= link_to 'Download ZIP', download_course_path(@course), :class => "btn btn-outline-primary " %> %>
+        <button type="button" id="btn_download">
+        <%# class="btn btn-warning" %>
+          <i class="far fa-address-book"></i> Download
+          <%byebug%>
+        </button>
       </div>
     </div>      
   </div>
+    <%end%>
 </div>  
+
+<script>
+var btn_download = document.getElementById('btn_download');
+var form = document.getElementById('form-download');
+
+  //get the checkboxes
+  var checkboxes = document.getElementsByClassName("checkbox");
+  for(i=0;i < checkboxes.length; i++){
+    checkboxes[i].addEventListener("click", function() {
+    var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
+    if (checkboxesSelected.length > 0) {
+        btn_download.disabled = false;
+      }
+    else{
+        btn_download.disabled = true;
+      }
+    });
+  }
+
+    //when it click to the button download zip
+    btn_download.addEventListener("click", function() {
+      //  document.submit();
+       form.submit();
+     });
+</script>

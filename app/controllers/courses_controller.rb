@@ -1,6 +1,7 @@
+require "zip"
 class CoursesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download]
   before_action :verify_role!
 
   def index
@@ -88,7 +89,41 @@ class CoursesController < ApplicationController
     end
   end
 
+  def download
+    # (course, documents)
+    byebug
+    @course.documents.where(id: params[:document_ids])
+    byebug
+    tmp_user_folder = "tmp/course_#{@course.id}"
+    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @course.documents.length
+    byebug
+    FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
+    @course.documents.each do |document|
+      filename = document.file.blob.filename.to_s
+      create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
+      #---------- Convert to .zip --------------------------------------- #
+      create_zip_from_tmp_folder(tmp_user_folder, filename) unless directory_length_same_as_documents
+    end
+    # Sends the *.zip file to be download to the client's browser
+    send_file(Rails.root.join("#{tmp_user_folder}.zip"), :type => "application/zip",
+                                                         :filename => "Files_for_#{@course.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
+  end
+
   private
+
+  def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
+    File.open(File.join(tmp_user_folder, filename), "wb") do |file|
+      # As per georgeclaghorn in comment ;)
+      document.file.download { |chunk| file.write(chunk) }
+    end
+  end
+
+  def create_zip_from_tmp_folder(tmp_user_folder, filename)
+    Zip::File.open("#{tmp_user_folder}.zip", Zip::File::CREATE) do |zf|
+      zf.add(filename, "#{tmp_user_folder}/#{filename}")
+    end
+  end
+
 
   def verify_role!
     authorize @course || Course 
