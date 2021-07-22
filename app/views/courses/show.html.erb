@@ -28,28 +28,34 @@
       <!-- Documents Section-->
       <section class="mb-5">
         <h4>Download the Files for this Course:</h4> 
-        <% if @course.documents.any? %>
-          <button class="btn btn-primary btn-sm mt-4" type="button" >
-            <% @course.documents.each do |document| %>          
-              <p>
-                <strong>File:</strong>
-                <td data-title="Document"><br>
-                  <% if document.file.attached? %>
-                    <%byebug %>
-                    <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
-                    <% document.id %>
-                    <% if document.file.representable? %>
-                    <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
-                    <br>
-                    <%= link_to "View File", document.file %> 
-                    <br>
-                    <%= link_to "Download File", document.file, download: '' %>
-                    <% end %>
-                  <% end %>
-                </td>
-              </p> 
-            <% end %>
-          </button>
+        <%= form_tag download_course_path(@course), :method => 'get', enforce_utf8: false do %>       
+          <% if @course.documents.any? %>
+              <div class="row">
+                <% @course.documents.each do |document| %>          
+                  <p>
+                    <strong>File:</strong>
+                    <td data-title="Document"><br>
+                      <% if document.file.attached? %>
+                        <%byebug %>
+                        <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
+                        <% document.id %>
+                        <% if document.file.representable? %>
+                        <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
+                        <br>
+                        <%= link_to "View File", document.file %> 
+                        <br>
+                        <%= link_to "Download File", document.file, download: '' %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </p> 
+                <% end %>
+              </div>
+              <div>
+              <%# class="btn btn-warning" %>
+                <%= submit_tag "Download All", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
+              </div>
+          <% end %>
         <% end %>
       </section>
     </div>
@@ -72,19 +78,14 @@
     </div>  
     
     <div class="form-group col">
-      <%# <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>        %>
+      <%# <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>
     <%= form_tag course_path(@course), remote: true, method: :post, id:"form-download" do %>
       <%= hidden_field_tag 'course_id', @course.id %>
 
       <div class="actions">
         <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
         <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
-        <%# <%= link_to 'Download ZIP', download_course_path(@course), :class => "btn btn-outline-primary " %> %>
-        <button type="button" id="btn_download">
-        <%# class="btn btn-warning" %>
-          <i class="far fa-address-book"></i> Download
-          <%byebug%>
-        </button>
+        <%# <%= link_to 'Download ZIP', download_course_path(@course), :class => "btn btn-outline-primary " %>
       </div>
     </div>      
   </div>
