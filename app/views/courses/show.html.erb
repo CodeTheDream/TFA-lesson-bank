@@ -26,6 +26,9 @@
       </section>
 
       <!-- Documents Section-->
+      <%= form_tag download_course_path (@course), :method => 'get', enforce_utf8: false do %>       
+        <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+
       <section class="mb-5">
         <h4>Download the Files for this Course:</h4> 
         <% if @course.documents.any? %>
@@ -35,6 +38,9 @@
                 <strong>File:</strong>
                 <td data-title="Document"><br>
                   <% if document.file.attached? %>
+                  <%byebug%>
+                  <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
+                    <% document.id %>
                     <% if document.file.representable? %>
                     <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
                     <br>
@@ -50,6 +56,40 @@
         <% end %>
       </section>
     </div>
+
+
+            <%= submit_tag "Preview", :class => 'btn btn-outline-secondary btn-lg ' %>
+        <% end %>      
+      <% end %>      
+
+      <%# <section class="mb-5"> %>
+        <%# <h4>Download the Files for this Course:</h4>  %>
+        <%# <% if @course.documents.any? %> 
+          <%# <button class="btn btn-primary btn-sm mt-4" type="button" > %>
+            <%# <% @course.documents.each do |document| %>           
+              <%# <p> %>
+                <%# <strong>File:</strong> %>
+                <%# <td data-title="Document"><br> %>
+                  <%# <% if document.file.attached? %> 
+                  <%# <%byebug%> 
+                  <%# <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %> 
+                    <%# <% document.id %> 
+                    <%# <% if document.file.representable? %> 
+                    <%# <%= image_tag document.file.preview(resize_to_fit: [100,100])%> 
+                    <%# <br> %>
+                    <%# <%= link_to "View File", document.file %>  
+                    <%# <br> %>
+                    <%# <%= link_to "Download File", document.file, download: '' %> 
+                    <%# <% end %> 
+                  <%# <% end %>
+                <%# </td> %>
+              <%# </p>  %>
+            <%# <% end %> 
+          <%# </button> %>
+        <%# <% end %> 
+      <%# </section> %>
+    </div>
+
       <!-- Side Lessons-->
     <div class="col-lg-6 mt-5 mb-2">           
       <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
@@ -72,7 +112,45 @@
       <div class="actions">
         <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
         <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
+        <%byebug%>
+        <%# <%= link_to 'Download ZIP', download_course_path(@course), :class => "btn btn-outline-primary " %> %>
+        
+<%# download button %>
+<%# <div class="btn-group" role="group" aria-label="Basic example"> 
+  <button type="button" class="btn btn-warning" id="btn_download">
+    <i class="far fa-address-book"></i> Download
+  </button>
+</div> %>
+
       </div>
     </div>      
   </div>
 </div>  
+
+
+
+<script>
+// var btn_download = document.getElementById('btn_download');
+
+  //get the checkboxes
+  var checkboxes = document.getElementsByClassName("checkbox");
+  for(i=0;i < checkboxes.length; i++){
+    checkboxes[i].addEventListener("click", function() {
+    var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
+    // if (checkboxesSelected.length > 0) {
+    //     btn_download.disabled = false;
+    //   }
+    // else{
+    //     btn_download.disabled = true;
+    //   }
+    });
+  }
+
+    //when it click to the button download zip
+    btn_download.addEventListener("click", function() {
+       document.submit();
+       // form.submit();
+     });
+</script>
+
+

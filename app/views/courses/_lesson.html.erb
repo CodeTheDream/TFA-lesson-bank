@@ -16,6 +16,8 @@
                   <strong>File:</strong>
                   <td data-title="Document"><br>
                     <% if document.file.attached? %>
+                      <%= check_box_tag "selected_documents_ids[]", document.id %>
+                      <% document.id %>
                       <% if document.file.representable? %>
                       <%= image_tag document.file.preview(resize_to_fit: [75,75])%>
                       <br>
@@ -34,5 +36,38 @@
     </div>
   </div>
 </div>
+       <button type="button" class="btn btn-warning" id="btn_download">
+    <i class="far fa-address-book"></i> Download
+  </button>
+
+
+  <%# <button type="button" class="btn btn-warning" id="btn_download">
+    <i class="far fa-address-book"></i> Download
+  </button> %>
+<script>
+  var btn_download = document.getElementById('btn_download');
+  var form = document.getElementById('form-download');
+  
+  
+  btn_download.disabled = true;
+  
+  var checkboxes = document.getElementsByClassName("checkbox");
+  for(i=0;i < checkboxes.length; i++){
+    checkboxes[i].addEventListener("click", function() {
+    var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
+    if (checkboxesSelected.length > 0) {
+        btn_download.disabled = false;
+      }else{
+        btn_download.disabled = true;
+      }
+    });
+  }
+  
+  
+  //cuando hace click en el boton download
+   btn_download.addEventListener("click", function() {
+     form.submit();
+   });
+</script>
 
 

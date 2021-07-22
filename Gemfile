@@ -46,6 +46,7 @@ gem 'searchkick'
 gem 'rails-controller-testing'
 gem 'factory_bot_rails'
 gem 'faker', :require => false
+gem "rubyzip", "~> 2.3"
 #gem 'shoulda-matchers'
 
 group :development, :test do

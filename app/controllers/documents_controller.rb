@@ -19,7 +19,13 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
+    respond_to do |format|
+      byebug
+      format.html { render }
+      format.zip { send_zip @document.file }
+    end
     @document = Document.find params[:id]
+
     # if @course
     #   @document = @course.documents.build(document_params)
     # elsif @lesson

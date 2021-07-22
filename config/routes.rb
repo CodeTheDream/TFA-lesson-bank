@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get '/search' => 'pages#search', :as => 'search_page'
 
   resources :documents
-  resources :courses do 
+  resources :courses do
+    member do
+      get :download
+    end 
     resources :lessons
     resources :documents do
       collection do
@@ -23,4 +26,5 @@ Rails.application.routes.draw do
   end
   resources :tags
   resources :key_words
+
 end
