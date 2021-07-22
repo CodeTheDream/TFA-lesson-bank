@@ -89,7 +89,8 @@ class CoursesController < ApplicationController
     end
   end
 
-  def download(course, documents)
+  def download
+    # (course, documents)
     byebug
     @course.documents.where(id: params[:document_ids])
     byebug
