@@ -26,6 +26,8 @@ class LessonsController < ApplicationController
   def create
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
+      hash = {searchable_id: @lesson.id, searchable_type: 'Lesson' }
+      @lesson.search_item = SearchItem.new(hash)
       # create_tags(tags_params[:tag_names], @lesson)
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
       flash.notice = "The lesson record was created successfully."
