@@ -18,7 +18,6 @@ RSpec.describe "Courses", type: :request do
       sign_in @user
       @user.confirm
       get courses_path
-      # byebug
       expect(response.status).to render_template(:index)
     end
   end
@@ -163,7 +162,6 @@ RSpec.describe "Courses", type: :request do
       sign_in @user
       @user.confirm
       get courses_path
-      # byebug
       expect(response.status).to render_template(:index)
     end
   end

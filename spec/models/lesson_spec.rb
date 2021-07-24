@@ -63,7 +63,6 @@ RSpec.describe Lesson, type: :model do
 
     it "course belongs to @user" do
       expect(@course.user).to eq(@user)
-      # byebug
     end
 
     it "lesson belongs to @course" do
