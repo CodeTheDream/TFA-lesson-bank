@@ -1,4 +1,5 @@
 require "zip"
+require 'fileutils'
 class CoursesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :set_course, only: [:show, :edit, :update, :destroy, :download]
@@ -89,16 +90,18 @@ class CoursesController < ApplicationController
     end
   end
 
+
   def download
-    # (course, documents)
-    byebug
-    @course.documents.where(id: params[:document_ids])
-    byebug
+    @courses = @course.documents.where(id: params[:document_ids])
     tmp_user_folder = "tmp/course_#{@course.id}"
-    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @course.documents.length
-    byebug
+    begin
+      FileUtils.rm_rf(tmp_user_folder)
+      File.delete("#{tmp_user_folder}.zip") if File.exist?("#{tmp_user_folder}.zip")
+    rescue StandarError
+    end
+    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @courses.length
     FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
-    @course.documents.each do |document|
+    @courses.each do |document|
       filename = document.file.blob.filename.to_s
       create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
       #---------- Convert to .zip --------------------------------------- #

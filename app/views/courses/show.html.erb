@@ -28,7 +28,7 @@
       <!-- Documents Section-->
       <section class="mb-5">
         <h4>Download the Files for this Course:</h4> 
-        <%= form_tag download_course_path(@course), :method => 'get', enforce_utf8: false do %>       
+        <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
           <% if @course.documents.any? %>
               <div class="row">
                 <% @course.documents.each do |document| %>          
@@ -52,8 +52,9 @@
                 <% end %>
               </div>
               <div>
-              <%# class="btn btn-warning" %>
-                <%= submit_tag "Download All", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
+                <button type="button" class="btn btn-warning" id="btn_download">
+                  <i class="far fa-address-book"></i> Download
+                </button>
               </div>
           <% end %>
         <% end %>
@@ -78,18 +79,12 @@
     </div>  
     
     <div class="form-group col">
-      <%# <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>
-    <%= form_tag course_path(@course), remote: true, method: :post, id:"form-download" do %>
-      <%= hidden_field_tag 'course_id', @course.id %>
-
       <div class="actions">
         <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
         <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
-        <%# <%= link_to 'Download ZIP', download_course_path(@course), :class => "btn btn-outline-primary " %>
       </div>
     </div>      
   </div>
-    <%end%>
 </div>  
 
 <script>
@@ -112,7 +107,6 @@ var form = document.getElementById('form-download');
 
     //when it click to the button download zip
     btn_download.addEventListener("click", function() {
-      //  document.submit();
        form.submit();
      });
 </script>
