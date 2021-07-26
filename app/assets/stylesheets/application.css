@@ -24,6 +24,7 @@ body {
   display: flex !important;
   flex-direction: column;
   font-family: Georgia;
+
   /* overflow-x: hidden; Prevent scroll on narrow devices */
 }
 

@@ -18,6 +18,15 @@
 //   color: #1996aa !important;
 //   color: black;
 // }
-.all_nav_items {
-  padding-inline: 20px;
+.navbar-nav .nav-item .nav-link {
+  font-size: 20px;
+  color: rgb(73, 69, 69);
+  padding-left: 35px !important;
+  margin-right: 25px;
+  font-family: Georgia;
+  letter-spacing: 1px;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #1996aa;
 }
