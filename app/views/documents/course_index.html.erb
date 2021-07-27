@@ -4,6 +4,7 @@
   <thead>
     <div class="row">
     <tr>
+      <th class="h2" style="background:none;">Checkbox</th>
       <th class="h2" style="background:none;">Name</th>
       <th class="h2" style="background:none;">Description</th>
       <th class="h2" style="background:none;">Type</th>
@@ -18,6 +19,8 @@
     <% @documents.each do |document| %>
       <div class="row">
       <tr>
+        <td data-title="Checkbox"><%= check_box_tag "selected_documents_ids[]", document.id %></td>
+        <%# <% document.id %> 
         <td data-title="Name"><%= document.name %></td>
         <td data-title="Description"><%= document.description %></td>
         <td data-title="Type"><%= document.kind %></td>
