@@ -20,7 +20,6 @@ class DocumentsController < ApplicationController
   # GET /documents/1.json
   def show
     respond_to do |format|
-      byebug
       format.html { render }
       format.zip { send_zip @document.file }
     end

@@ -9,7 +9,6 @@ class PagesController < ApplicationController
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @search = search_params[:search].present? ? search_params[:search] : nil
     query = @search
-    byebug
     @results = CourseSearch.search(query: query, options: search_params)
   end
 
