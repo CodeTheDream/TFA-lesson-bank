@@ -14,7 +14,6 @@ module CourseSearch
 
     constraints[:where] = where_options
     constraints[:order] = order
-
     Course.search(@query, constraints)
   end
 
