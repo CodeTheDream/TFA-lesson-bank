@@ -15,6 +15,18 @@
  
  @import "import '../stylesheets/application";
  /* @import "bootstrap/dist/css/bootstrap"; */
+html {
+  height: 100%;
+}
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex !important;
+  flex-direction: column;
+  font-family: Georgia;
+
+  /* overflow-x: hidden; Prevent scroll on narrow devices */
+}
 
 a,
 a:link,
@@ -31,19 +43,32 @@ a.btn.callout-button {
 a.btn.callout-button:hover {
   color: #f0f0f0;
 }
-
-#carouselExampleSlidesOnly.carousel.slide,
-.jumbo {
-  width: 100%;
-  margin-top: 15px;
-  margin-bottom: 50px;
+.header_nav {
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+  min-height: 100px;
 }
-.jumbo .img {
-  max-height: 100px;
-  max-width: 150px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.header_pillow {
+  height: 150px;
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+}
+.logo_end {
+  height: 45px;
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+}
+.logo_end img {
+  align-items: center;
+  margin-bottom: 165px !important;
+  height: 70px;
+}
+.original_logo {
+  max-width: 100px;
+}
+
+.four_img {
+  padding: 10px !important;
 }
 
 table.table a {
