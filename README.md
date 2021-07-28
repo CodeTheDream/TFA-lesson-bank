@@ -296,8 +296,44 @@ quit
 
 ## At this point you should be able to test the app.
 
-The command 'rspec' should run the test suite with no errors or failures.
+Before your run the command 'rspec' you must make sure that Elastic Search is running locally.
+
+You can run this command to check if Elastic Search is running in your command line
+
+```
+curl localhost:9200
+```
+
+If Elastic Search is not running you can follow these steps:
+
+```
+brew services start elasticsearch
+```
+
+or
+
+```
+brew services restart elasticsearch
+```
+
+Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
+All the data we want to search through must be indexed to ElasticSearch
+
+Log into the rails console
+
+```
+rails c
+```
+
+Index the Courses
+
+```
+Course.reindex
+```
+
+If you run everything without errors the command 'rspec' should run the test suite with no errors or failures.
 You should be able to run the console with no errors.
+
 You should be able to run the server with no errors.Go to the browser and type http://localhost:3000/. Make a new account (sign up) and a confirmation message will be sent to your email. Click the confirmation link and login. (In development you must go into the rails console and run `u = User.last` then `u.confirm`)
 You should be redirected to the landing page.  
 **Note:** Staff accounts will need be created from `rails console` with a role of `admin`.
