@@ -15,6 +15,6 @@ class PagesController < ApplicationController
   private
 
   def search_params
-    params.permit(:search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district)
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district)
   end
 end
