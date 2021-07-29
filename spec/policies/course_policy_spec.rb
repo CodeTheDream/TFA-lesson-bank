@@ -47,32 +47,3 @@ describe CoursePolicy do
     end
   end
 end
-      
-      # context 'role teacher' do
-      #   before do
-      #     @user = nil
-      #   end
-      #   it 'allow access to teacher' do
-      #     @user = FactoryBot.create(:user, role:'teacher')
-      #     byebug
-      #     # @record&.user_id == @user.id
-      #     # @user&.role == 'teacher'
-      #     expect(policy).to permit @user
-      #     byebug
-      #   end
-      # end
-      # context 'owner' do
-      #   # before do
-      #   #   @user = nil
-      #   # end
-      #   it 'allow access to owner' do
-      #     @user = FactoryBot.create(:user)
-      #     course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", start_date: "2021-05-05 00:00:00", end_date: "2021-12-31 00:00:00", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
-      #     @record = Course.new(course_hash)
-      #     # is owner
-      #     # byebug
-      #     @user&.id == @record.user_id
-      #     # @course&.user_id == @user.id
-      #     expect(policy).to permit @user
-      #   end
-      # end 

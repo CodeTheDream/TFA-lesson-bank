@@ -45,6 +45,7 @@ class CoursesController < ApplicationController
     @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @course = Course.new(course_params)
     @course.user = current_user
     if @course.save
@@ -63,6 +64,7 @@ class CoursesController < ApplicationController
     @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -116,7 +118,6 @@ class CoursesController < ApplicationController
 
   def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
     File.open(File.join(tmp_user_folder, filename), "wb") do |file|
-      # As per georgeclaghorn in comment ;)
       document.file.download { |chunk| file.write(chunk) }
     end
   end
