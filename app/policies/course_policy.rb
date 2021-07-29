@@ -7,11 +7,11 @@ class CoursePolicy < ApplicationPolicy
     (@user&.role == 'admin') || (@record&.user_id == @user.id) 
   end
 
-  %i(index? new? create? show?).each do |ali|
+  %i(index? new? create? show? download?).each do |ali|
     alias_method ali, :logged_in?
   end
 
-  %i(edit? update? destroy).each do |ali|
+  %i(edit? update? destroy?).each do |ali|
     alias_method ali, :owner_or_admin?
   end
 end

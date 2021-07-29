@@ -57,6 +57,7 @@ You may need to open your pg_hba.conf file (often this is located at ~/../../etc
 Clone this repository.
 
 Back to the comand line:
+
 ```bash
 cd tfa_lesson_bank
 psql -U your-linux-userid postgres
@@ -66,15 +67,54 @@ rake db:create:all
 rails db:migrate
 rails db:migrate RAILS_ENV=test
 ```
-**Note:** On Line 3, make sure to add ``;`` at the end of command. Confirmation message should look like ``CREATED ROLE``
+
+**Note:** On Line 3, make sure to add `;` at the end of command. Confirmation message should look like `CREATED ROLE`
+
+We use [searchkick](https://github.com/ankane/searchkick) to enable searching in ElasticSearch.
+
+There are 2 methods to get ElasticSearch running. The first is to just install ElasticSearch and the second is to install Docker.
+
+**ElasticSearch must be installed on the directory above the app**
+
+Installing ElasticSearch: [elasticsearch](https://www.thegeekstuff.com/2019/04/install-elasticsearch)
+
+Installing Docker: [docker](https://www.tutorialspoint.com/docker/installing_docker_on_linux.html)
+
+Next you need to start [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html)
+
+```
+./bin/elasticsearch
+```
+
+Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
+All the data we want to search through must be indexed to ElasticSearch
+
+Log into the rails console
+
+```
+rails c
+```
+
+Index the SearchItems 
+
+```
+SearchItem.reindex
+```
+
+Quit the console
+
+```
+quit
+```
 
 ## At this point you should be able to test the app.
+
 The command 'rspec' should run the test suite with no errors or failures.  
 You should be able to run the console with no errors.  
 You should be able to run the server with no errors.  
 Go to the browser and type http://localhost:3000/. Make a new account (sign up) and a confirmation message will be sent to your email. Click the confirmation link and login. (In development you must go into the rails console and run `u = User.last` then `u.confirm`)
 You should be redirected to the landing page.  
-**Note:** Staff accounts will need be created from ``rails console`` with a role of ``admin``.
+**Note:** Staff accounts will need be created from `rails console` with a role of `admin`.
 
 # MacOS setup:
 
@@ -123,6 +163,7 @@ If you don't see that snippet, initiate postgres database clusters with
 ```bash
 initdb /usr/local/var/postgres
 ```
+
 ### 3. Start Postgres Server
 
 To have launchd start postgresql now and restart at login:
@@ -141,8 +182,9 @@ You may need to open your pg_hba.conf file (often this is located at ~/../../etc
 We create a user (aka role) with
 
 ```
-createuser tfa_lesson_bank 
+createuser tfa_lesson_bank
 ```
+
 ### 5. Create Database
 
 Create development and test databases
@@ -162,7 +204,6 @@ Can also run if you already have rails setup
 ```
 rails db:create
 ```
-
 
 ## How to Setup Rails
 
@@ -196,7 +237,6 @@ gem install rails
 
 This allows the Rails command to become available to use in the terminal
 
-
 ### 5. Create & Migrate Database
 
 ```
@@ -210,14 +250,100 @@ rails db:migrate
 rails db:migrate RAILS_ENV=test
 ```
 
-
-
 `-E` stands for **E**ncoding. Use UTF-8.
 Can also run if you already have rails setup
 
+### 6. ElasticSearch
+
+We use [searchkick](https://github.com/ankane/searchkick) to enable searching in ElasticSearch.
+
+There are 2 methods to get ElasticSearch running. The first is to just install ElasticSearch and the second is to install Docker.
+
+**ElasticSearch must be installed on the directory above the app**
+
+Installing ElasticSearch: [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/brew.html)
+
+Installing Docker: [docker](https://docs.docker.com/docker-for-mac/apple-m1/)
+
+Next you need to start [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html)
+```    
+brew services start elasticsearch
+```
+
+or
+```
+brew services restart elasticsearch
+```
+if elasticsearch is already running
+
+or
+
+```
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+```
+to run docker
+
+Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
+All the data we want to search through must be indexed to ElasticSearch
+
+Log into the rails console
+
+```
+rails c
+```
+
+Index the SearchItems 
+
+```
+SearchItem.reindex
+```
+
+Quit the console
+
+```
+quit
+```
+
 ## At this point you should be able to test the app.
-The command 'rspec' should run the test suite with no errors or failures.
+
+Before your run the command 'rspec' you must make sure that Elastic Search is running locally.
+
+You can run this command to check if Elastic Search is running in your command line
+
+```
+curl localhost:9200
+```
+
+If Elastic Search is not running you can follow these steps:
+
+```
+brew services start elasticsearch
+```
+
+or
+
+```
+brew services restart elasticsearch
+```
+
+Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
+All the data we want to search through must be indexed to ElasticSearch
+
+Log into the rails console
+
+```
+rails c
+```
+
+Index the SearchItems 
+
+```
+SearchItem.reindex
+```
+
+If you run everything without errors the command 'rspec' should run the test suite with no errors or failures.
 You should be able to run the console with no errors.
+
 You should be able to run the server with no errors.Go to the browser and type http://localhost:3000/. Make a new account (sign up) and a confirmation message will be sent to your email. Click the confirmation link and login. (In development you must go into the rails console and run `u = User.last` then `u.confirm`)
 You should be redirected to the landing page.  
-**Note:** Staff accounts will need be created from ``rails console`` with a role of ``admin``.
+**Note:** Staff accounts will need be created from `rails console` with a role of `admin`.

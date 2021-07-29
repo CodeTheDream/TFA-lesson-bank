@@ -1,22 +1,15 @@
-<%= form_tag courses_path, :method => 'get', enforce_utf8: false do %>
-  <div>
-    <% if current_user&.role == 'teacher' %>
-    <div>
-      <%= check_box_tag 'my_courses', 'yes' %>
-      Search My Courses
-    </div>
-    <div>
-      Lessons
-      <label class="switch">
-        <%= check_box_tag 'view_reqs', 'yes' %>
-        <span class="slider round"></span>
-      </label>
-      Lessons
-    </div>
-    <% end %>
-  <%= search_field_tag :search, params[:search], placeholder: 'Search Courses' %>
-  <%= date_field_tag :date_desired, params[:date_desired], placeholder: 'Date Desired' %>
-  <%= search_field_tag :sort_by_name, params[:sort_by_name], placeholder: 'Sort by name' %>
-  <%= submit_tag("Search") %>
+
+<div class="row justify-content-center mb-4">
+  <div class="col-xl-6">    
+      <%= form_tag search_page_path, :method => 'get', enforce_utf8: false do %>
+        <div class="row mb-4">
+          <div class="input-group">      
+            <%= search_field_tag :search, params[:search], placeholder: 'Search for a topic...', class: " form-control form-control-lg", style:'width: 50%' %>
+               
+            <input type ="submit" value="Search " class="btn-lg my-0 search_button" />     
+            
+          </div>
+        </div>
+      <% end %>    
   </div>
-<% end %>
+</div>

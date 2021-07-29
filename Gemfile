@@ -26,12 +26,28 @@ gem 'devise'
 # Use pundit for authorization
 gem "pundit"
 gem 'bootstrap'
-
+# Use for validating blobs
+gem 'activestorage-validator'
+# Use for rendering pdfs
+gem 'poppler'
+# upgrading actionpack for security issue - potential denial of service attach
+gem "actionpack", ">= 6.0.3.7"
+gem 'rack-cors'
+gem 'ffmpeg'
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+
+# Use searchkick to interact with ElastciSearch
+gem 'searchkick'
+
+gem 'rails-controller-testing'
+gem 'factory_bot_rails'
+gem 'faker', :require => false
+gem "rubyzip", "~> 2.3"
+#gem 'shoulda-matchers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -46,6 +62,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'pundit-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

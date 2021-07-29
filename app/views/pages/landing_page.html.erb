@@ -1,70 +1,48 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  </head>
-  <body>
-    <!-- begin HTML -->
-    <!-- container -->
-    <div class="container-md pt-5">
+<div class="header_pillow  "></div> 
+  <div class="logo_end text-center  ">
+    <img src="assets/LessonPlanLibrary-Logo.png" >   
+  </div>
 
-      <!-- first row -->
-      <div class="row mt-5">
-      <!-- left column -->
-      <div class="col-lg-5 mt-5"><h1 class="display-3 font-weight-bold text-body text-center">Teaching for America</h1>
-        <img src="assets/courses.jpeg" class="img-fluid rounded mx-auto d-block mt-2" width="400" alt="Photo of Courses">
-      </div>
+<div class="container pt-5 ">
+  
+  <div class="text-center about_text">    
+     
+    <p class="mb-2">Search the bank of ready-to-implement courses and lesson </br> plans and focus on building relationships and providing an </br> excellent and equitable education to your entire class. </p>
+    <hr style="width: 2px; height: 50px; background: lightgrey; border: none;" />
+    <%= render 'layouts/search_landingpage' %>
+  </div>
 
-      <!-- right column -->
-      <div class="col-lg-6 bg-transparent">
-      
-      <!-- SIGN UP BOX -->
-      <div>
-        <% if current_user == nil %>
-          <br>
-          <div id="shadow"><h3 class="text-center font-weight-normal">To get the full experience of (website name)
-            <br>register for a free account!</h3>
-            <center><%= link_to 'Sign Up Now!', new_user_registration_path, :class => "btn btn-success btn-lg" %> 
-              <br><br><h4>Already Registered? <%= link_to 'Sign in', new_user_session_path %></h4>
-            </center>
-          </div>
-        <% else %>
-          <br>
-          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: '' %>
-        <% end %>
-      </div>
 
-      <!--/SIGN UP BOX-->
-      <br><br><h1 class="text-center font-weight-normal">Share clases and courses<br>Support your community with your knowledge</h1>
-      <hr class="my-3">
-      <h4 class="text-center font-weight-normal">Teaching for America Project 
-      <p><h4 class="text-center font-weight-normal">Share courses and clases to support your community with your knowlege</h4>
-      <p> <hr class="my-2">
-    </div><!-- right column -->
-    </div><!-- left column -->
-    <!-- second row -->
-	  <div class="row">
-		  <!-- single column SEARCH BAR -->
-		  <div class="col">
-        <% if current_user.nil? %>
-          <h1 class="text-center font-weight-normal">Want to try it out?
-          <br>Search for a product below!</h1>
-        <% else %>
-          <br><h1 class="text-center font-weight-normal">Welcome Back, <%= current_user.email %>!</h1>
-          <br><center>
-          <%# <%= render 'pages/user_portal' %>
-          </center>
-          <br><br><h3 class="text-center font-weight-normal">Search Courses and Lessons</h3>
-        <% end %>
-        <p><center><%= render 'layouts/search_landingpage' %></center>
-        <p><hr class="my-5">
-		  </div>
-      <!-- /single column SEARCH BAR -->
+  <div class="row text-center text-lg-left four_img">
+ 
+    <div class="col-lg-3 col-md-4 col-6">
+        
+        <img class="img-fluid pic_landing" src="assets/RandiHildreth.2013.51.jpg" alt="">        
+   
     </div>
-    <!-- second row -->
-  </div><!-- /container -->
-  </body>
+    <div class="col-lg-3 col-md-4 col-6">      
+        <img class="img-fluid pic_landing " src="assets/mask.jpg" alt="">     
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+     
+        <img class="img-fluid pic_landing" src="assets/VinnieAmendolare.2013.77.jpg" alt="">           
+    
+    </div>
+    <div class="col-lg-3 col-md-4 col-6 mb-4">
+      
+        <img class="img-fluid pic_landing" src="assets/OD2016_WINTER_151130_MilaniLawrence_006.jpg" alt="">           
+          
+    </div>
+    <div class="col-12 text-center mt-4 mb-4 original_logo">      
+        <img class="img-fluid  " src="assets/TeachForAmerica_logo_coated.jpg" alt="">  
+          
+    </div>
+    <div class="col-12 text-center text-muted " >
+      
+        <p >Legal Disclaimer Lorem Ipsum is simply dummy teb-xt of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>          
+                
+    </div>
+   
+  </div>
 
-</html>
+</div>

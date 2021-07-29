@@ -12,49 +12,75 @@
  *
  *= require_tree .
  *= require_self
- */
+ 
  @import "import '../stylesheets/application";
  /* @import "bootstrap/dist/css/bootstrap"; */
- a,
- a:link,
- a:visited,
- a:hover {
-   text-decoration: none;
-   color: #212529;
- }
- a.btn.callout-button {
-   margin-top: 150px;
-   background-color: #563d7c;
-   color: #ffffff80;
- }
- a.btn.callout-button:hover {
-   color: #f0f0f0;
- }
- 
- #carouselExampleSlidesOnly.carousel.slide,
- .jumbo {
-   width: 100%;
-   margin-top: 15px;
-   margin-bottom: 50px;
- }
- .jumbo .img {
-   max-height: 100px;
-   max-width: 150px;
-   display: block;
-   margin-left: auto;
-   margin-right: auto;
- }
- 
- table.table a {
-   text-decoration: none;
- }
- .card {
-   box-shadow: -webkit-box-shadow -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
-   -moz-box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
-   box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
- }
- 
- form input[type="submit"] {
+html {
+  height: 100%;
+}
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex !important;
+  flex-direction: column;
+  font-family: Georgia;
+
+  /* overflow-x: hidden; Prevent scroll on narrow devices */
+}
+
+a,
+a:link,
+a:visited,
+a:hover {
+  text-decoration: none;
+  color: #212529;
+}
+a.btn.callout-button {
+  margin-top: 150px;
+  background-color: #563d7c;
+  color: #ffffff80;
+}
+a.btn.callout-button:hover {
+  color: #f0f0f0;
+}
+.header_nav {
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+  min-height: 100px;
+}
+.header_pillow {
+  height: 150px;
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+}
+.logo_end {
+  height: 45px;
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+}
+.logo_end img {
+  align-items: center;
+  margin-bottom: 165px !important;
+  height: 70px;
+}
+.original_logo {
+  max-width: 100px;
+}
+
+.four_img {
+  padding: 10px !important;
+}
+
+table.table a {
+  text-decoration: none;
+}
+.card {
+  box-shadow: -webkit-box-shadow -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
+  -moz-box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
+  box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
+}
+
+/* form input[type="submit"] {
    display: inline-block;
    font-weight: 400;
    text-align: center;
@@ -70,79 +96,85 @@
    border-radius: 3px;
    text-decoration: none;
    box-shadow: none;
- }
- form input[type="submit"]:hover {
-   background: #007bff;
-   color: white;
-   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-     border-color 0.15s ease-in-out;
- }
- form input[type="submit"]:not(.disabled):hover,
- form input[type="button"]:not(.disabled):hover,
- form button:not(.disabled):hover {
-   background-color: #007bff;
-   background-image: none;
- }
- .line {
-   width: 100%;
-   box-sizing: border-box;
- }
- .line figure {
-   width: 45%;
-   margin: 0;
-   display: inline-block;
- }
- .hidden{
-   display: none;
- }
- 
- @media only screen and (max-width: 1200px) {
-     
-     /* Force table to not be like tables anymore */
-   #no-more-tables table, 
-   #no-more-tables thead, 
-   #no-more-tables tbody, 
-   #no-more-tables th, 
-   #no-more-tables td, 
-   #no-more-tables tr { 
-     display: block; 
-   }
-  
-   /* Hide table headers (but not display: none;, for accessibility) */
-   #no-more-tables thead tr { 
-     position: absolute;
-     top: -9999px;
-     left: -9999px;
-   }
-  
-   #no-more-tables tr { border: 1px solid #ccc; }
-  
-   #no-more-tables td { 
-     /* Behave  like a "row" */
-     border: none;
-     border-bottom: 1px solid #eee; 
-     position: relative;
-     padding-left: 50%; 
-     white-space: normal;
-     text-align:left;
-   }
-  
-   #no-more-tables td:before { 
-     /* Now like a table header */
-     position: absolute;
-     /* Top/left values mimic padding */
-     top: 6px;
-     left: 6px;
-     width: 45%; 
-     padding-right: 10px; 
-     white-space: nowrap;
-     text-align:left;
-     font-weight: bold;
-   }
-  
-   /*
+ } */
+form input[type="submit"]:hover {
+  background: #007bff;
+  color: white;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+form input[type="submit"]:not(.disabled):hover,
+form input[type="button"]:not(.disabled):hover,
+form button:not(.disabled):hover {
+  background-color: #007bff;
+  background-image: none;
+}
+.line {
+  width: 100%;
+  box-sizing: border-box;
+}
+.line figure {
+  width: 45%;
+  margin: 0;
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  /* Force table to not be like tables anymore */
+  #no-more-tables table,
+  #no-more-tables thead,
+  #no-more-tables tbody,
+  #no-more-tables th,
+  #no-more-tables td,
+  #no-more-tables tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #no-more-tables thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  #no-more-tables tr {
+    border: 1px solid #ccc;
+  }
+
+  #no-more-tables td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    white-space: normal;
+    text-align: left;
+  }
+
+  #no-more-tables td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  /*
    Label the data
    */
-   #no-more-tables td:before { content: attr(data-title); }
- }
- 
+  #no-more-tables td:before {
+    content: attr(data-title);
+  }
+}
+
+.my_alert {
+  color: red;
+}

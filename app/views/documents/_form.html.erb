@@ -1,0 +1,53 @@
+<% obj = @course.present? ? @course : @lesson %>
+<%= form_for([obj,@document]) do |f| %>
+  
+  <% if document.errors.any? %>
+    <div id="error_explanation" class="my_alert">
+      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+      <ul>
+      <% document.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="form-group center-right pl-4 fit-width">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control', :required => true %>  
+  </div>
+  
+  <div class="form-group center-right fit-width pl-4">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: 'form-control', :required => true %>
+  </div>
+  
+  <div class="form-group center-right pl-4 fit-width">
+    <%= f.label :type %>
+    <%= f.text_field :kind, class: 'form-control', :required => true %>
+  </div>
+
+ <div class="form-group center-right pl-4">
+   <label for="course"><%= Course %></label>
+   <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
+ </div>
+
+ <div class="form-group center-right pl-4">
+   <label for="lesson"><%= Lesson %>
+   </label> 
+   <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
+ </div>
+
+ <div class="form-group center-right pl-4">
+   <%= f.label :file %>
+   <%= f.file_field :file %>
+ </div>
+
+ <div class="form-group center-right pl-4">
+   <div class="actions">
+     <%= f.submit %>
+   </div>
+ </div>
+  
+<% end %>
+

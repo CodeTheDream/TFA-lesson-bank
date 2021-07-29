@@ -1,42 +1,111 @@
-<p>
-  <strong>Title:</strong>
-  <%= @course.title %>
-</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Course header-->
+      <div  class="mb-2">
+        <h1 class="fw-bolder  mt-5 mb-2"><%= @course.title %></h1>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.subject %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.grade_level %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.state %></div>
+        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.district %></div>
+      
+        <div class= "mt-2">
+          <h5>Tags:</h5>
+            <% @course.tags.each do |tag| %>           
+                <a><%= link_to tag.name, tag_path(tag) %></a>       
+            <% end %>     
+        </div>
+    </div> 
 
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
+      <!-- Description Section-->
+      <section class="mb-5">
+       <h4>Course Description:</h4>  
+       <p>
+        <%= @course.description %>
+        </p>
+      </section>
 
-<p>
-  <strong>Subject</strong>
-  <%= @course.subject %>
-</p>
+      <!-- Documents Section-->
+      <section class="mb-5">
+        <h4>Download the Files for this Course:</h4> 
+        <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+          <% if @course.documents.any? %>
+              <div class="row">
+                <% @course.documents.each do |document| %>          
+                  <p>
+                    <strong>File:</strong>
+                    <td data-title="Document"><br>
+                      <% if document.file.attached? %>
+                        <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
+                        <% document.id %>
+                        <% if document.file.representable? %>
+                        <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
+                        <br>
+                        <%= link_to "View File", document.file %> 
+                        <br>
+                        <%= link_to "Download File", document.file, download: '' %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </p> 
+                <% end %>
+              </div>
+              <div>
+                <button type="button" class="btn btn-warning" id="btn_download">
+                  <i class="far fa-address-book"></i> Download
+                </button>
+              </div>
+          <% end %>
+        <% end %>
+      </section>
+    </div>
+      <!-- Side Lessons-->
+    <div class="col-lg-6 mt-5 mb-2">           
+      <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
+        <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+          <div class=" mb-4 "> 
+            <h3 class="fw-bolder text-left  ">Lessons for <%= @course.title%> Course:</h3>      
+            <% lesson_titles = @course.lessons.pluck(:title)%>
+            <%= select_tag :lesson_id, options_from_collection_for_select(@course.lessons, :id, :title), :class => 'btn btn-info btn-lg '%> 
+          </div> 
+            <%= submit_tag "Preview", :class => 'btn btn-outline-secondary btn-lg ' %>
+        <% end %>      
+      <% end %>      
+      <!-- Lesson card-->
+      <% if @lesson.present? %>
+        <%= render 'lesson', lesson: @lesson %>
+      <% end %>       
+    </div>  
+    
+    <div class="form-group col">
+      <div class="actions">
+        <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
+        <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
+      </div>
+    </div>      
+  </div>
+</div>  
 
-<p>
-  <strong>Grade Level:</strong>
-  <%= @course.grade_level %>
-</p>
+<script>
+var btn_download = document.getElementById('btn_download');
+var form = document.getElementById('form-download');
 
-<p>
-  <strong>State:</strong>
-  <%= @course.state %>
-</p>
+  //get the checkboxes
+  var checkboxes = document.getElementsByClassName("checkbox");
+  for(i=0;i < checkboxes.length; i++){
+    checkboxes[i].addEventListener("click", function() {
+    var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
+    if (checkboxesSelected.length > 0) {
+        btn_download.disabled = false;
+      }
+    else{
+        btn_download.disabled = true;
+      }
+    });
+  }
 
-<p>
-  <strong>District:</strong>
-  <%= @course.district %>
-</p>
-
-<p>
-  <strong>Start Date:</strong>
-  <%= @course.start_date %>
-</p>
-
-<p>
-  <strong>End Date:</strong>
-  <%= @course.end_date %>
-</p>
-
-<%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary btn-sm" %> |
-<%= link_to 'Back', courses_path, :class => "btn btn-outline-primary btn-sm" %>
+    //when it click to the button download zip
+    btn_download.addEventListener("click", function() {
+       form.submit();
+     });
+</script>

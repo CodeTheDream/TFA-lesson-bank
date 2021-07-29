@@ -1,3 +1,33 @@
 // Place all the styles related to the Courses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.tag_button {
+  height: 10px;
+}
+
+.center-right {
+  position: relative;
+  left: 15em;
+}
+
+.fit-width {
+  width: 66%;
+  height: 125px;
+}
+
+.course-dropdown {
+  font-size: 24px;
+}
+
+.move-left {
+  right:6em;
+}
+
+.bump-left {
+  right:1.7em;
+}
+
+.nudge-left {
+  right:.7em;
+}

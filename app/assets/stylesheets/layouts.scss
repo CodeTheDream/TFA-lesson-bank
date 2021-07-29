@@ -1,0 +1,32 @@
+// Place all the styles related to the layouts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.navbar {
+  min-height: 100px;
+  background-color: hsl(0, 0%, 90%);
+  transition: background-color 300ms;
+}
+
+.search_button {
+  background-color: #081e32;
+  color: white;
+  font-size: 14px !important;
+  border-radius: 0% !important;
+}
+// .search_button:hover {
+//   color: #1996aa !important;
+//   color: black;
+// }
+.navbar-nav .nav-item .nav-link {
+  font-size: 20px;
+  color: rgb(73, 69, 69);
+  padding-left: 35px !important;
+  margin-right: 25px;
+  font-family: Georgia;
+  letter-spacing: 1px;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #1996aa;
+}
