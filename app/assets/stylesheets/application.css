@@ -67,10 +67,6 @@ a.btn.callout-button:hover {
   max-width: 100px;
 }
 
-.four_img {
-  padding: 10px !important;
-}
-
 table.table a {
   text-decoration: none;
 }
@@ -172,6 +168,13 @@ form button:not(.disabled):hover {
    */
   #no-more-tables td:before {
     content: attr(data-title);
+  }
+}
+
+@media (max-width: 992px) {
+  .pic_landing {
+    padding-bottom: 20px;
+    margin-left: 8px;
   }
 }
 

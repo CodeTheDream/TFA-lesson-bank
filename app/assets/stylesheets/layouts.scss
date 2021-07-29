@@ -11,31 +11,33 @@
 .search_button {
   background-color: #081e32;
   color: white;
-  font-size: 14px !important;
+  font-size: 12px !important;
   border-radius: 0% !important;
+  border: none;
 }
 // .search_button:hover {
 //   color: #1996aa !important;
 //   color: black;
 // }
 .navbar-nav .nav-item .nav-link {
-  font-size: 20px;
+  font-size: 14px;
   color: rgb(73, 69, 69);
-  padding-left: 35px !important;
+  padding-left: 15px !important;
   margin-right: 25px;
   font-family: Georgia;
   letter-spacing: 1px;
+  color: #081e32;
 }
 
 .navbar-nav .nav-item .nav-link:hover {
   color: #1996aa;
 }
 .fancy-toggler.navbar-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(25,150,170, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(8,30,50)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 .fancy-toggler.navbar-toggler {
-  border-color: #1996aa;
+  border-color: #081e32;
 }
 .fancy-toggler.navbar-toggler:focus {
-  outline-color: #1996aa;
+  outline-color: #081e32;
 }
