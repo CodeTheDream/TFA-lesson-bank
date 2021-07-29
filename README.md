@@ -74,6 +74,8 @@ We use [searchkick](https://github.com/ankane/searchkick) to enable searching in
 
 There are 2 methods to get ElasticSearch running. The first is to just install ElasticSearch and the second is to install Docker.
 
+**ElasticSearch must be installed on the directory above the app**
+
 Installing ElasticSearch: [elasticsearch](https://www.thegeekstuff.com/2019/04/install-elasticsearch)
 
 Installing Docker: [docker](https://www.tutorialspoint.com/docker/installing_docker_on_linux.html)
@@ -93,10 +95,10 @@ Log into the rails console
 rails c
 ```
 
-Index the Courses
+Index the SearchItems 
 
 ```
-Course.reindex
+SearchItem.reindex
 ```
 
 Quit the console
@@ -257,21 +259,29 @@ We use [searchkick](https://github.com/ankane/searchkick) to enable searching in
 
 There are 2 methods to get ElasticSearch running. The first is to just install ElasticSearch and the second is to install Docker.
 
+**ElasticSearch must be installed on the directory above the app**
+
 Installing ElasticSearch: [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/brew.html)
 
 Installing Docker: [docker](https://docs.docker.com/docker-for-mac/apple-m1/)
 
 Next you need to start [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html)
-
-```
+```    
 brew services start elasticsearch
 ```
+
+or
+```
+brew services restart elasticsearch
+```
+if elasticsearch is already running
 
 or
 
 ```
 docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.11.2
 ```
+to run docker
 
 Once ElasticSearch is running Searchkick should be able to find it using the default port 9200
 All the data we want to search through must be indexed to ElasticSearch
@@ -282,10 +292,10 @@ Log into the rails console
 rails c
 ```
 
-Index the Courses
+Index the SearchItems 
 
 ```
-Course.reindex
+SearchItem.reindex
 ```
 
 Quit the console
@@ -325,10 +335,10 @@ Log into the rails console
 rails c
 ```
 
-Index the Courses
+Index the SearchItems 
 
 ```
-Course.reindex
+SearchItem.reindex
 ```
 
 If you run everything without errors the command 'rspec' should run the test suite with no errors or failures.

@@ -26,8 +26,9 @@ class LessonsController < ApplicationController
   def create
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
-      # create_tags(tags_params[:tag_names], @lesson)
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
+      hash = { searchable_id: @lesson.id, searchable_type: 'Course', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id } 
+      @lesson.search_item = SearchItem.create(hash)
       flash.notice = "The lesson record was created successfully."
       redirect_to [@course, @lesson]#course_lessons_path(@lesson)
     else
@@ -48,6 +49,8 @@ class LessonsController < ApplicationController
         tags = existing_tags_params
       end
       @lesson.tag_list=(tags) if tags.present?
+      hash = { searchable_id: @lesson.id, searchable_type: 'Course', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id } 
+      @lesson.search_item.update(hash)
       flash.notice = "The lesson record was updated successfully."
       redirect_to [@course, @lesson]#course_lessons_path(@course)
     else
@@ -67,18 +70,6 @@ class LessonsController < ApplicationController
   end
     
   private
-
-  # def create_tags(tags_string, lesson)
-  #   tag_names = tags_string.split(",").uniq
-  #   tag_names.each do |tag_name|
-  #     tag = Tag.find_by name: tag_name.downcase
-  #     tag = Tag.create name: tag_name.downcase if tag.nil?
-  #     hash = { tag_id: tag.id, lesson_id: lesson.id }
-  #     key_word = KeyWord.find_by hash
-  #     hash[:frequency] = 1
-  #     key_word.present? ? (key_word.frequency += 1) : (KeyWord.create hash)
-  #   end
-  # end
 
   def tags_params
     # params.permit(:tag_names)
@@ -102,6 +93,7 @@ class LessonsController < ApplicationController
   def lesson_params
     params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tag_names)
   end
+
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s

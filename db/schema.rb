@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_184532) do
+ActiveRecord::Schema.define(version: 2021_07_29_151300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,22 @@ ActiveRecord::Schema.define(version: 2021_06_30_184532) do
     t.string "units_covered"
     t.bigint "course_id", null: false
     t.index ["course_id"], name: "index_lessons_on_course_id"
+  end
+
+  create_table "search_items", force: :cascade do |t|
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "title"
+    t.string "description"
+    t.string "subject"
+    t.string "grade_level"
+    t.string "state"
+    t.string "district"
+    t.string "units_covered"
+    t.string "course_id"
+    t.index ["searchable_type", "searchable_id"], name: "index_search_items_on_searchable_type_and_searchable_id"
   end
 
   create_table "tags", force: :cascade do |t|
