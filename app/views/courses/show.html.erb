@@ -28,25 +28,34 @@
       <!-- Documents Section-->
       <section class="mb-5">
         <h4>Download the Files for this Course:</h4> 
-        <% if @course.documents.any? %>
-          <button class="btn btn-primary btn-sm mt-4" type="button" >
-            <% @course.documents.each do |document| %>          
-              <p>
-                <strong>File:</strong>
-                <td data-title="Document"><br>
-                  <% if document.file.attached? %>
-                    <% if document.file.representable? %>
-                    <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
-                    <br>
-                    <%= link_to "View File", document.file %> 
-                    <br>
-                    <%= link_to "Download File", document.file, download: '' %>
-                    <% end %>
-                  <% end %>
-                </td>
-              </p> 
-            <% end %>
-          </button>
+        <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+          <% if @course.documents.any? %>
+              <div class="row">
+                <% @course.documents.each do |document| %>          
+                  <p>
+                    <strong>File:</strong>
+                    <td data-title="Document"><br>
+                      <% if document.file.attached? %>
+                        <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
+                        <% document.id %>
+                        <% if document.file.representable? %>
+                        <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
+                        <br>
+                        <%= link_to "View File", document.file %> 
+                        <br>
+                        <%= link_to "Download File", document.file, download: '' %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </p> 
+                <% end %>
+              </div>
+              <div>
+                <button type="button" class="btn btn-warning" id="btn_download">
+                  <i class="far fa-address-book"></i> Download
+                </button>
+              </div>
+          <% end %>
         <% end %>
       </section>
     </div>
@@ -76,3 +85,27 @@
     </div>      
   </div>
 </div>  
+
+<script>
+var btn_download = document.getElementById('btn_download');
+var form = document.getElementById('form-download');
+
+  //get the checkboxes
+  var checkboxes = document.getElementsByClassName("checkbox");
+  for(i=0;i < checkboxes.length; i++){
+    checkboxes[i].addEventListener("click", function() {
+    var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
+    if (checkboxesSelected.length > 0) {
+        btn_download.disabled = false;
+      }
+    else{
+        btn_download.disabled = true;
+      }
+    });
+  }
+
+    //when it click to the button download zip
+    btn_download.addEventListener("click", function() {
+       form.submit();
+     });
+</script>

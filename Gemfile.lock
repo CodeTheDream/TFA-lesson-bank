@@ -236,6 +236,7 @@ GEM
     ruby-vips (2.1.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.4)
+    rubyzip (2.3.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -312,6 +313,7 @@ DEPENDENCIES
   rails (~> 6.0.3, >= 6.0.3.4)
   rails-controller-testing
   rspec-rails
+  rubyzip (~> 2.3)
   sass-rails (>= 6)
   searchkick
   shoulda-matchers
