@@ -95,10 +95,10 @@ Log into the rails console
 rails c
 ```
 
-Index the Courses
+Index the SearchItems 
 
 ```
-Course.reindex
+SearchItem.reindex
 ```
 
 Quit the console
@@ -292,10 +292,10 @@ Log into the rails console
 rails c
 ```
 
-Index the Courses
+Index the SearchItems 
 
 ```
-Course.reindex
+SearchItem.reindex
 ```
 
 Quit the console
@@ -335,10 +335,10 @@ Log into the rails console
 rails c
 ```
 
-Index the Courses
+Index the SearchItems 
 
 ```
-Course.reindex
+SearchItem.reindex
 ```
 
 If you run everything without errors the command 'rspec' should run the test suite with no errors or failures.
