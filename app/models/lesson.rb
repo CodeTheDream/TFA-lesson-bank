@@ -5,8 +5,7 @@ class Lesson < ApplicationRecord
   has_many :documents, dependent: :destroy 
   has_many :key_words, dependent: :destroy
   has_many :tags, through: :key_words
-#  belongs_to :searchable, polymorphic: true
-  has_one :search_item, as: :searchable
+  has_one :search_item, as: :searchable, dependent: :destroy
   
   validates :title, presence: true
   validates :description, presence: true

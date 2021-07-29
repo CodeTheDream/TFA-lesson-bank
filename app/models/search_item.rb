@@ -1,12 +1,10 @@
 class SearchItem < ApplicationRecord
+  include SearchItemSearch
   belongs_to :searchable, polymorphic: true
-#  has_one :courses, as: :searchable
-#  has_one :lessons, as: :searchable
 
-  searchkick word_middle: [ :title, :description], merge_mappings: true
+  searchkick word_middle: [ :title, :description, :tags], merge_mappings: true
 
   def search_data attrs = attributes.dup
-    byebug
     if self.searchable_type == 'Course'
       relational = {
         title: self.searchable.title,
@@ -17,6 +15,7 @@ class SearchItem < ApplicationRecord
         district: self.searchable.district,
         units_covered: "",
         course_id: "",
+        tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
       }
     else
       relational = {
@@ -27,7 +26,8 @@ class SearchItem < ApplicationRecord
         state: "",
         district: "",
         units_covered: self.searchable.units_covered,
-        course_id: self.searchable.course_id,
+        course_id: self.searchable.course_id.to_s,
+        tags: Lesson.find(self.searchable.id).tags.pluck(:name).join(' '),
       }
     end
   end

@@ -47,13 +47,11 @@ class CoursesController < ApplicationController
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @course = Course.new(course_params)
-#    @course = SearchItem.course.build(course_params)
     @course.user = current_user
     if @course.save
-      byebug
-      hash = {searchable_id: @course.id, searchable_type: 'Course' } 
-      @course.search_item = SearchItem.new(hash)
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
+      @course.search_item = SearchItem.create(hash)
       flash.notice = "The course record was created successfully."
       redirect_to courses_path
     else
@@ -78,6 +76,8 @@ class CoursesController < ApplicationController
         tags = existing_tags_params
       end
       @course.tag_list=(tags) if tags.present?
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
+      @course.search_item.update hash
       flash.notice = "The course record was updated successfully."
       redirect_to @course
     else
