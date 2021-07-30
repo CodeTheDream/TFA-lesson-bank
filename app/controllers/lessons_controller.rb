@@ -14,16 +14,29 @@ class LessonsController < ApplicationController
     
   # GET /lessons/new
   def new
-    @lesson = @course.lessons.build
+    @lesson = @course.lessons.new
+    # @course = Course.new
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
   end
     
   # GET /Lessons/1/edit
   def edit
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
   end
     
   # POST /lessons
   # POST /lessons.json
   def create
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
@@ -40,6 +53,10 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1
   # PATCH/PUT /lessons/1.json
   def update
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
     if @lesson.update(lesson_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params

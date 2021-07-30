@@ -1,5 +1,5 @@
 class Lesson < ApplicationRecord
-  include TagList
+  include TagList, CourseSearch
   
   belongs_to :course 
   has_many :documents, dependent: :destroy 
