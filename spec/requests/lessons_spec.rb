@@ -153,7 +153,7 @@ RSpec.describe "Lessons", type: :request do
         expect(@lesson.course_id).to eq(@course.id) 
         expect(@lesson.id).to eq(@lesson.id)   
         expect(@lesson.description).to eq("test lesson1") 
-      expect(response).to redirect_to [@course, @lesson]
+        expect(response).to redirect_to [@course, @lesson]
       end
     end
   describe "put course_lesson_path with valid data" do
