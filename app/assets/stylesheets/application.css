@@ -27,13 +27,19 @@ body {
 
   /* overflow-x: hidden; Prevent scroll on narrow devices */
 }
-
+main {
+  padding-top: 36px;
+  padding-bottom: 45px;
+}
 a,
 a:link,
 a:visited,
 a:hover {
   text-decoration: none;
   color: #212529;
+}
+.btn {
+  border-radius: 0% !important;
 }
 a.btn.callout-button {
   margin-top: 150px;
