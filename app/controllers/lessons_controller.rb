@@ -50,8 +50,7 @@ class LessonsController < ApplicationController
       end
       @lesson.tag_list=(tags) if tags.present?
       hash = { searchable_id: @lesson.id, searchable_type: 'Course', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id } 
-      byebug
-      search_item = SearchItem.find_by(searchable_id: @lesson.id)
+      search_item = SearchItem.find_or_create_by(searchable_id: @lesson.id)
       search_item.update(hash)
       @lesson.search_item = search_item
       flash.notice = "The lesson record was updated successfully."

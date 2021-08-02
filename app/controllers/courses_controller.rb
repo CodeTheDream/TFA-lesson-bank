@@ -77,7 +77,7 @@ class CoursesController < ApplicationController
       end
       @course.tag_list=(tags) if tags.present?
       hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
-      search_item = SearchItem.find @course.id
+      search_item = SearchItem.find_or_create_by searchable_id: @course.id
       search_item.update hash
       @course.search_item = search_item
       flash.notice = "The course record was updated successfully."
