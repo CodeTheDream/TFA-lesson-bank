@@ -63,16 +63,11 @@
    </div>
    <div class="cards">
      <% @results.each do |result| %>
-     <div class="card   " style=" width: 18rem;">
-       <div class="card-body ">
-         <div class="card-title">
-           <div><h3><%= result.title %></h3></div>
-           <br>
-           <div class="mb-4"><h4><%= result.description %></h4></div>
-         </div>
-         <a href='/courses/<%="#{result.id}"%>' class="btn btn-outline-primary">View Course</a>
-       </div>
-     </div>
+       <% if result.searchable_type == "Lesson" %>
+         <%= render 'lesson_card', lesson: result %>
+       <% else %>  
+         <%= render 'course_card', course: result %>
+       <% end %>  
      <%end%>
    </div>
  </div>

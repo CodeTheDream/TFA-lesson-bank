@@ -1,0 +1,12 @@
+<div class="card   " style=" width: 18rem;">
+  <div class="card-body ">
+    I'm a lesson card
+    <div class="card-title">
+      <div><h3><%= lesson.title %></h3></div>
+      <br>
+      <div class="mb-4"><h4><%= lesson.description %></h4></div>
+    </div>
+    <a href='/courses/<%="#{lesson.course_id}"%>?lesson_id=<%="#{lesson.searchable_id}"%>&commit=Preview   ' class="btn btn-outline-primary">View Lesson</a>
+  </div>
+</div>
+
