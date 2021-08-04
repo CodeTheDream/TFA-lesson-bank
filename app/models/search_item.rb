@@ -18,7 +18,7 @@ class SearchItem < ApplicationRecord
         tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
       }
     else
-      relational = {
+        relational = {
         title: self.searchable.title,
         description: self.searchable.description,
         subject: "",

@@ -119,6 +119,9 @@ RSpec.describe "Courses", type: :request do
       @user.confirm
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district }
+      search_item = SearchItem.create(hash)
+      @course.search_item = search_item
       put course_path(id: @course.id), params: {course:{title: "React", description: "React", subject: "Hooks", 
         grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       @course.reload

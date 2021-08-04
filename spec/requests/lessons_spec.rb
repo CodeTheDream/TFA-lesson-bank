@@ -146,6 +146,10 @@ RSpec.describe "Lessons", type: :request do
         lesson_hash = {title: "test lesson1", description: "test lesson1", 
           created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
         @lesson = Lesson.create(lesson_hash)
+        hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id }
+        search_item = SearchItem.create(hash)
+        @lesson.search_item = search_item 
+
         put course_lesson_path(course_id: @course.id, id: @lesson.id), 
         params: {lesson: {title: "test lesson1", description: "test lesson1", 
           created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}}
