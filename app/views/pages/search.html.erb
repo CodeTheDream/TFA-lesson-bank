@@ -40,12 +40,12 @@
           </div>
         <% end %>
       </div>
-    
-      <% @results.each do |result| %>
-        <div class="heading1-title">          
-          <p><b>RESULTS FOR </b><%=result.title%></p>
-        </div>      
-        <div class="cards row gx-lg-5">         
+
+      <div class="heading1-title">
+        <p><b>RESULTS FOR: <%= params[:search] %></b></p>
+      </div>
+      <div class="cards row gx-lg-5">
+        <% @results.each do |result| %>
           <div class="search_card" style=" width: 15rem;">
             <div class="card-header"></div>  
             <div class="card-body d-flex flex-column">              
@@ -59,12 +59,10 @@
                 <a href='/courses/<%="#{result.id}"%>'  class=" btn button_view_card text-center">VIEW COURSE</a>   
               </div>                  
             </div>
-          
           </div>
-        </div>
-      <%end%>      
-    </div>
-
+        <% end %>
+     </div>
+  </div>
 </div>
 
 

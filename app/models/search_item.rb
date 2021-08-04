@@ -5,7 +5,7 @@ class SearchItem < ApplicationRecord
   searchkick word_middle: [ :title, :description, :tags], merge_mappings: true
 
   def search_data attrs = attributes.dup
-    if self.searchable_type == 'Course'
+    if self.searchable.class == Course
       relational = {
         title: self.searchable.title,
         description: self.searchable.description,
@@ -18,7 +18,7 @@ class SearchItem < ApplicationRecord
         tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
       }
     else
-      relational = {
+        relational = {
         title: self.searchable.title,
         description: self.searchable.description,
         subject: "",
