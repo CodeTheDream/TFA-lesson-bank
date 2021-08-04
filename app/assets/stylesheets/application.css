@@ -55,7 +55,7 @@ a.btn.callout-button:hover {
   min-height: 100px;
 }
 .header_pillow {
-  height: 150px;
+  height: 110px;
   background-color: hsl(0, 0%, 90%);
   transition: background-color 300ms;
 }
