@@ -1,35 +1,27 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-.grid-container{
+.grid-container {
   display: grid;
-  grid-template-columns:1fr 4fr ;
+  grid-template-columns: 1fr 4fr;
   grid-column-gap: 1em;
   height: 100vh;
   grid-gap: 1em;
   padding: 1em;
 }
-.main-result{
+.main-result {
   display: grid;
   padding-top: 4em;
   padding-bottom: 2em;
   grid-template-rows: 100px 100px 1fr;
 }
-.cards{
+.cards {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1em;
-  .card {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-    height: 350px;
-  }
 }
-.card-body{
-  height: 380px;
-}
-.search-filter{
+
+.search-filter {
   display: grid;
   margin-top: 6em;
   // grid-template-rows:repeat(5, 0.5fr) ;
@@ -40,4 +32,27 @@
 }
 .search-filter > div {
   padding: 2em;
+}
+.button_view_card {
+  background-color: #081e32 !important;
+  color: white !important;
+  margin-top: 190px !important;
+  font-size: 10px !important;
+}
+.search_card {
+  border-radius: 0% !important;
+  background-color: hsl(0, 0%, 90%) !important;
+  transition: background-color 300ms !important;
+  border: none !important;
+  height: 350px;
+}
+
+.card-header {
+  background-color: #1996aa !important;
+  padding: 0.3rem 0.25rem !important;
+  border-radius: 0% !important;
+}
+.button_filter {
+  color: white;
+  font-size: 12px !important;
 }
