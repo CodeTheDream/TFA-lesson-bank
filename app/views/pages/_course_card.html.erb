@@ -1,11 +1,16 @@
-<div class="card   " style=" width: 18rem;">
-  <div class="card-body ">
-    I'm a Course card
-    <div class="card-title">
-      <div><h3><%= course.title %></h3></div>
-      <br>
-      <div class="mb-4"><h4><%= course.description %></h4></div>
+<div class="col mb-4 mx-auto">
+  <div class="card h-100 search_card " style=" width: 18rem;">
+    <div class="card-header"></div> 
+    <div class= "text-right">
+      <div id="circle"><h4 class="text-center">C</h4></div>
+    </div> 
+    <div class="card-body">
+      
+      <h3 class="card-title"><%= course.title %></h3>      
+      <p class="card-text " style="  height: 25vh;"><%= course.description %></p>
     </div>
-    <a href='/courses/<%="#{course.searchable_id}"%>' class="btn btn-outline-primary">View Course</a>
+    <div class="text-center card_footer ">
+      <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card">VIEW COURSE</a>
+    </div>
   </div>
 </div>

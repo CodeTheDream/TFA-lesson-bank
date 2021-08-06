@@ -15,16 +15,16 @@
   padding-bottom: 2em;
   grid-template-rows: 100px 100px 1fr;
 }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 1em;
-}
+// .cards {
+//   display: grid;
+//   grid-template-columns: repeat(3, 1fr);
+//   grid-gap: 1em;
+// }
 
 .search-filter {
   display: grid;
   margin-top: 6em;
-  // grid-template-rows:repeat(5, 0.5fr) ;
+  grid-template-rows: repeat(5, 0.5fr);
   grid-auto-rows: 4.5em;
   margin-bottom: 1em;
   grid-gap: 1em;
@@ -36,23 +36,37 @@
 .button_view_card {
   background-color: #081e32 !important;
   color: white !important;
-  margin-top: 190px !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
+  margin-bottom: -16px;
+  width: 150px;
 }
+
 .search_card {
   border-radius: 0% !important;
   background-color: hsl(0, 0%, 90%) !important;
   transition: background-color 300ms !important;
   border: none !important;
-  height: 350px;
-}
 
-.card-header {
-  background-color: #1996aa !important;
-  padding: 0.3rem 0.25rem !important;
-  border-radius: 0% !important;
-}
-.button_filter {
-  color: white;
-  font-size: 12px !important;
+  .card-header {
+    background-color: #1996aa !important;
+    padding: 0.3rem 0.25rem !important;
+    border-radius: 0% !important;
+  }
+  .button_filter {
+    color: white !important;
+    font-size: 16px !important;
+  }
+
+  #circle {
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #1996aa;
+    float: right;
+    margin-top: -2%;
+    margin-right: 2%;
+    font: bold 15px;
+    padding: 4px 3px 0 3px;
+  }
 }

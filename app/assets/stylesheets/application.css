@@ -41,11 +41,11 @@ a:hover {
 .btn {
   border-radius: 0% !important;
 }
-a.btn.callout-button {
+/* a.btn.callout-button {
   margin-top: 150px;
   background-color: #563d7c;
   color: #ffffff80;
-}
+} */
 a.btn.callout-button:hover {
   color: #f0f0f0;
 }
@@ -80,11 +80,11 @@ a.btn.callout-button:hover {
 table.table a {
   text-decoration: none;
 }
-.card {
+/* .card {
   box-shadow: -webkit-box-shadow -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
   -moz-box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
   box-shadow: -19px 19px 43px 0px rgba(0, 0, 0, 0.61);
-}
+} */
 
 /* form input[type="submit"] {
    display: inline-block;
@@ -103,7 +103,7 @@ table.table a {
    text-decoration: none;
    box-shadow: none;
  } */
-form input[type="submit"]:hover {
+/* form input[type="submit"]:hover {
   background: #007bff;
   color: white;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
@@ -114,7 +114,7 @@ form input[type="button"]:not(.disabled):hover,
 form button:not(.disabled):hover {
   background-color: #007bff;
   background-image: none;
-}
+} */
 .line {
   width: 100%;
   box-sizing: border-box;
