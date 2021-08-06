@@ -9,6 +9,7 @@
         <h5 class="card-title mt-2">Units covered: <%= lesson.units_covered %> </h5>
         <div>
           <h5 class="card-title mt-2">Download Files for this Lesson:</h5>
+          <%= form_tag download_lesson_path(@lesson), :method => 'get', id: "form-download", enforce_utf8: false do %>       
             <% if lesson.documents.any? %>
               <button class="btn btn-primary btn-sm " type="button" >
               <% lesson.documents.each do |document| %>
@@ -29,45 +30,42 @@
                   </td>
                 </p> 
               <% end %>
+                 <button type="button" class="btn btn-warning" id="btn_download">
+                  <i class="far fa-address-book"></i> Download Documents for Lessons
+                </button>
             <% end %>
           </button>
+        <%end%>
         </div>
       </div>
     </div>
   </div>
 </div>
-       <button type="button" class="btn btn-warning" id="btn_download">
-    <i class="far fa-address-book"></i> Download
-  </button>
 
 
-  <%# <button type="button" class="btn btn-warning" id="btn_download">
-    <i class="far fa-address-book"></i> Download
-  </button> %>
+
 <script>
-  var btn_download = document.getElementById('btn_download');
-  var form = document.getElementById('form-download');
-  
-  
-  btn_download.disabled = true;
-  
+var btn_download = document.getElementById('btn_download');
+var form = document.getElementById('form-download');
+
+  //get the checkboxes
   var checkboxes = document.getElementsByClassName("checkbox");
   for(i=0;i < checkboxes.length; i++){
     checkboxes[i].addEventListener("click", function() {
     var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
     if (checkboxesSelected.length > 0) {
         btn_download.disabled = false;
-      }else{
+      }
+    else{
         btn_download.disabled = true;
       }
     });
   }
-  
-  
-  //cuando hace click en el boton download
-   btn_download.addEventListener("click", function() {
-     form.submit();
-   });
+
+    //when it click to the button download zip
+    btn_download.addEventListener("click", function() {
+       form.submit();
+     });
 </script>
 
 

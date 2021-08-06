@@ -69,7 +69,7 @@
 <%= link_to 'Back (Course)', course_path(@course), :class => "btn btn-primary btn-sm", :style => "color: white" %>
 <%elsif @lesson.present?%>
 <%= link_to 'New Document (Lesson)', new_lesson_document_path, :class => "btn btn-outline-primary btn-sm" %>
-<%= link_to 'Back (Lesson)', course_path(@lesson), :class => "btn btn-primary btn-sm", :style => "color: white" %>
+<%= link_to 'Back (Lesson)', lesson_path(@lesson), :class => "btn btn-primary btn-sm", :style => "color: white" %>
 <%end%>
 </div>
 <br>
