@@ -3,7 +3,7 @@ require 'fileutils'
 class LessonsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
 
   def index
     @lessons = @course.lessons
@@ -74,18 +74,16 @@ class LessonsController < ApplicationController
   end
 
   def download
-    byebug
-    @lessons = @lesson.documents.where(id: params[:document_ids].keys)
-    byebug
+    @documents = @lesson.documents.where(id: params[:selected_documents_ids])
     tmp_user_folder = "tmp/course_#{@lesson.id}"
     begin
       FileUtils.rm_rf(tmp_user_folder)
       File.delete("#{tmp_user_folder}.zip") if File.exist?("#{tmp_user_folder}.zip")
     rescue StandarError
     end
-    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @lessons.length
+    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @documents.length
     FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
-    @lessons.each do |document|
+    @documents.each do |document|
       filename = document.file.blob.filename.to_s
       create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
       #---------- Convert to .zip --------------------------------------- #
@@ -95,6 +93,7 @@ class LessonsController < ApplicationController
     send_file(Rails.root.join("#{tmp_user_folder}.zip"), :type => "application/zip",
                                                          :filename => "Files_for_#{@lesson.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
   end
+
 
   private
 
