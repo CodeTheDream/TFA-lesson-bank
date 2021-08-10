@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 .grid-container {
+  padding-top: 6em;
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-column-gap: 1em;
@@ -11,8 +12,8 @@
 }
 .main-result {
   display: grid;
-  padding-top: 4em;
-  padding-bottom: 2em;
+  padding-top: 6em;
+  padding-bottom: 1em;
   grid-template-rows: 100px 100px 1fr;
 }
 // .cards {
@@ -23,7 +24,7 @@
 
 .search-filter {
   display: grid;
-  margin-top: 6em;
+  margin-top: 17em;
   grid-template-rows: repeat(5, 0.5fr);
   grid-auto-rows: 4.5em;
   margin-bottom: 1em;
@@ -40,7 +41,9 @@
   margin-bottom: -16px;
   width: 150px;
 }
-
+.button_view_card:hover {
+  background-color: #1996aa !important;
+}
 .search_card {
   border-radius: 0% !important;
   background-color: hsl(0, 0%, 90%) !important;
@@ -51,10 +54,6 @@
     background-color: #1996aa !important;
     padding: 0.3rem 0.25rem !important;
     border-radius: 0% !important;
-  }
-  .button_filter {
-    color: white !important;
-    font-size: 16px !important;
   }
 
   #circle {
@@ -68,5 +67,8 @@
     margin-right: 2%;
     font: bold 15px;
     padding: 4px 3px 0 3px;
+  }
+  .results {
+    margin-left: 20px;
   }
 }

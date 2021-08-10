@@ -41,6 +41,14 @@ a:hover {
 .btn {
   border-radius: 0% !important;
 }
+.button_filter {
+  color: white !important;
+  font-size: 12px !important;
+}
+.button_filter:hover {
+  background-color: #212529 !important;
+}
+
 /* a.btn.callout-button {
   margin-top: 150px;
   background-color: #563d7c;
