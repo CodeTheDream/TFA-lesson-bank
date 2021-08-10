@@ -10,6 +10,16 @@ class PagesController < ApplicationController
     @search = search_params[:search].present? ? search_params[:search] : nil
     query = @search
     @results = SearchItemSearch.search(query: query, options: search_params)
+    byebug
+    if params[:favorites] == "true"
+      results_id = @results.pluck :id
+      byebug
+      favorites = FavoriteCourse.where(user_id: current_user.id, course_id: results_id).pluck :course_id
+      byebug
+      # favorites = FavoriteCourse.where(user_id: current_user.id, course_id: results_id).pluck :course_id
+      @results = @results.select {|result| favorites.include? (result.id)}
+      byebug
+    end
   end
 
   private

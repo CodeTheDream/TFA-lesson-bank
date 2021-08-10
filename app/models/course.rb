@@ -1,13 +1,15 @@
 class Course < ApplicationRecord
   include TagList, CourseSearch
   
-
   belongs_to :user
   has_many :lessons, dependent: :destroy
   has_many :documents, dependent: :destroy 
   has_many :key_words, dependent: :destroy
   has_many :tags, through: :key_words 
   has_one :search_item, as: :searchable, dependent: :destroy
+  has_many :favorite_courses  # just the 'relationships'
+  has_many :favorited_by, through: :favorite_courses , source: :user # the actual users favoriting a course
+  # returns the users that favorite a course
 
   validates :description, presence: true
   validates :subject, presence: true

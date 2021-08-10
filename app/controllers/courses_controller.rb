@@ -2,7 +2,7 @@ require "zip"
 require 'fileutils'
 class CoursesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite]
   before_action :verify_role!
 
   def index
@@ -99,6 +99,45 @@ class CoursesController < ApplicationController
     end
   end
 
+  # Add and remove favorite courses
+  # for current_user
+  def favorite
+    # type = params[:type].chomp!
+    
+    # if type == "favorite"
+    #   byebug
+    #   current_user.favorites << @course
+    #   byebug
+    #   redirect_to courses_url, notice: "You favorited #{@course.title}"
+    #   # course_path(id: @course.id)
+
+    # elsif type == "unfavorite"
+    #   current_user.favorites.delete(@course)
+    #   redirect_to courses_url, notice: "Unfavorited #{@course.title}"
+
+    # else
+    #   # Type missing, nothing happens
+    #   redirect_to courses_url, notice: 'Nothing happened.'
+    # end
+    byebug
+    current_user.favorites << @course
+    if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+      redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
+    else
+      redirect_to course_path(id: @course.id), notice: "You can't favorited #{@course.title}"
+    end
+  end
+  def unfavorite
+    byebug
+    current_user.favorites.delete(@course)
+    if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+    else
+      redirect_to course_path(id: @course.id), notice: "You can't unfavorited #{@course.title}"
+    end
+    # redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+  end
+  
 
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
@@ -137,17 +176,21 @@ class CoursesController < ApplicationController
 
 
   def verify_role!
+    byebug
     authorize @course || Course 
+    byebug
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
+    byebug
     @course = Course.find(params[:id])
+    byebug
   end
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :type)
   end
 
   def tags_params
