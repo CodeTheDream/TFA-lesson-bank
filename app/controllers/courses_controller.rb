@@ -101,8 +101,6 @@ class CoursesController < ApplicationController
 
   # Add and remove favorite courses
   # for current_user
-  
-  # CHUCK
   def favorite
     current_user.favorites << @course
     byebug
