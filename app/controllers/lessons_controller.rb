@@ -74,6 +74,7 @@ class LessonsController < ApplicationController
   end
 
   def download
+    # Lesson bulk is working
     @documents = @lesson.documents.where(id: params[:selected_documents_ids])
     tmp_user_folder = "tmp/course_#{@lesson.id}"
     begin
