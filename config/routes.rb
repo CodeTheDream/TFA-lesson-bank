@@ -10,11 +10,7 @@ Rails.application.routes.draw do
     member do
       get :download
     end 
-    resources :lessons do
-      member do
-        get :download
-      end
-    end
+    resources :lessons
     resources :documents do
       collection do
         get :course_index
@@ -22,9 +18,6 @@ Rails.application.routes.draw do
     end
   end
   resources :lessons do
-    #member do
-    #  get :download
-    #end
     resources :documents do
       collection do
         get :lesson_index
