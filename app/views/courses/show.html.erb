@@ -27,7 +27,7 @@
 
     <!-- Course favorites-->
     <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
-      <%byebug%>
+      <%# <%byebug%> 
       <%= link_to "favorite",   favorite_course_path(@course) %>
       <%= link_to "unfavorite", unfavorite_course_path(@course) %>
       <%# , method: :put %>

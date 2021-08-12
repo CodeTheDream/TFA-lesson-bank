@@ -10,14 +10,31 @@ class PagesController < ApplicationController
     @search = search_params[:search].present? ? search_params[:search] : nil
     query = @search
     @results = SearchItemSearch.search(query: query, options: search_params)
-    byebug
-    if params[:favorites] == "true"
+    # byebug
+    if search_params[:favorites] == "true"
+      # byebug
+      # allowed_pages = policy_scope(Pages)
+      # byebug
       results_id = @results.pluck :id
       byebug
-      favorites = FavoriteCourse.where(user_id: current_user.id, course_id: results_id).pluck :course_id
+      # CHUCK FAVORITES
+      # favorites = FavoriteCourse.where(user_id: current_user.id, course_id: results_id).pluck :course_id
+      favorites = FavoriteCourse.where(user_id: current_user.id).distinct.pluck :course_id
       byebug
       # favorites = FavoriteCourse.where(user_id: current_user.id, course_id: results_id).pluck :course_id
-      @results = @results.select {|result| favorites.include? (result.id)}
+      # RESULTS CHUCK
+      # @results = @results.select {|result| favorites.include? (result.id)}
+      # MIO
+      @results = @results.select {|result| ((favorites.include? result.searchable_id) && (result.searchable_type == "Course"))}
+      # @results = @results.select {|result| result['course_id'] == (favorites)}
+#       res = @results.select { |result| favorites.include? (result.course_id)}
+#       res = @results.select { |result| @results.id == favorites }
+# *** NoMethodError Exception: undefined method `id' for #<Searchkick::Results:0x00007fdaa5b38968>
+
+      # OTRO
+      # @results.select { |result| result['course_id'] != "" } ok
+      # @results.select { |result| result['course_id'] == "3" } ok
+      # @results = @results.select {|result| favorites.include? (result.id)}
       byebug
     end
   end
@@ -25,6 +42,6 @@ class PagesController < ApplicationController
   private
 
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district)
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district, :favorites)
   end
 end
