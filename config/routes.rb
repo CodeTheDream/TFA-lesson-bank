@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   resources :courses do
     member do
       get :download
-    end 
+    end
+    collection do
+      get :course_lesson_form
+    end
     resources :lessons do
       member do
         get :download

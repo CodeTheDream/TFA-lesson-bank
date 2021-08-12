@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-sm-6">
+    <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
+  </div>
+  <div class="col-sm-6">
+    <%= render 'lessons/form', lesson: @lesson %>
+  </div>
+<div>

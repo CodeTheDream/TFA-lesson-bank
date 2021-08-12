@@ -121,6 +121,15 @@ class CoursesController < ApplicationController
                                                          :filename => "Files_for_#{@course.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
   end
 
+  def course_lesson_form
+    @lesson = Lesson.new
+    @course = Course.last
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+  end
+
   private
 
   def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)

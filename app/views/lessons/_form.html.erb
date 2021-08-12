@@ -1,5 +1,6 @@
 <%= javascript_pack_tag 'lessons', 'data-turbolinks-track': 'reload' %>
 
+<div class="move-down">
 <%= form_for([@course,@lesson]) do |f| %>
   
   <% if lesson.errors.any? %>
@@ -62,3 +63,4 @@
   </div>
   
 <% end %>
+</div>
