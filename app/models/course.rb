@@ -11,6 +11,7 @@ class Course < ApplicationRecord
   has_many :favorited_by, through: :favorite_courses , source: :user # the actual users favoriting a course
   # returns the users that favorite a course
 
+  validates :title, presence: true
   validates :description, presence: true
   validates :subject, presence: true
   validates :grade_level, presence: true

@@ -17,6 +17,14 @@ class SearchItem < ApplicationRecord
         course_id: "",
         tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
       }
+    # elsif self.searchable_type == 'Lesson'
+    #   relational = {
+    #     title: self.searchable.title,
+    #     description: self.searchable.description,
+    #     units_covered: "",
+    #     course_id: "",
+    #     tags: Lesson.find(self.searchable.id).tags.pluck(:name).join(' '),
+    #   }
     else
         relational = {
         title: self.searchable.title,
