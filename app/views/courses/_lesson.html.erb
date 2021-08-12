@@ -1,6 +1,6 @@
 <div class="row row-cols-1 row-cols-md-3 mt-2">
   <div class="col mb-4">
-    <div class="card h-100 " style="width: 18rem; ">
+    <div class="card h-100 " style="width: 25rem; ">
       
       <div class="card-body">
         
@@ -9,65 +9,61 @@
         <h5 class="card-title mt-2">Units covered: <%= lesson.units_covered %> </h5>
         <div>
           <h5 class="card-title mt-2">Download Files for this Lesson:</h5>
+          <%= form_tag download_course_lesson_path(@course.id, @lesson.id), :method => 'get', id: "form-download", enforce_utf8: false do %>       
             <% if lesson.documents.any? %>
-              <button class="btn btn-primary btn-sm " type="button" >
-              <% lesson.documents.each do |document| %>
-                <p>
-                  <strong>File:</strong>
-                  <td data-title="Document"><br>
-                    <% if document.file.attached? %>
-                      <%= check_box_tag "selected_documents_ids[]", document.id %>
-                      <% document.id %>
-                      <% if document.file.representable? %>
-                      <%= image_tag document.file.preview(resize_to_fit: [75,75])%>
-                      <br>
-                      <%= link_to "View File", document.file %> 
-                      <br>
-                      <%= link_to "Download File", document.file, download: '' %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                </p> 
-              <% end %>
+               <% lesson.documents.each do |document| %>
+                 <div>
+                   <strong>File:</strong>
+                   <td data-title="Document"><br>
+                     <% if document.file.attached? %>
+                       <%= check_box_tag "selected_documents_ids[]", document.id %>
+                       <% document.id %>
+                       <% if document.file.representable? %>
+                         <%= image_tag document.file.preview(resize_to_fit: [75,75])%>
+                         <br>
+                         <%= link_to "View File", document.file %> 
+                         <br>
+                         <%= link_to "Download File", document.file, download: '' %>
+                       <% end %>
+                     <% end %>
+                   </td>
+                 </div>
+               <% end %>
+              <div class="input-group-btn ">
+                <%= submit_tag "Download Documents", :class => 'btn btn-outline-primary my-2 my-sm-0' %>
+              </div>               
             <% end %>
-          </button>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
-       <button type="button" class="btn btn-warning" id="btn_download">
-    <i class="far fa-address-book"></i> Download
-  </button>
 
 
-  <%# <button type="button" class="btn btn-warning" id="btn_download">
-    <i class="far fa-address-book"></i> Download
-  </button> %>
+
 <script>
-  var btn_download = document.getElementById('btn_download');
-  var form = document.getElementById('form-download');
-  
-  
-  btn_download.disabled = true;
-  
+var btn_download = document.getElementById('btn_download');
+var form = document.getElementById('form-download');
+
+  //get the checkboxes
   var checkboxes = document.getElementsByClassName("checkbox");
   for(i=0;i < checkboxes.length; i++){
     checkboxes[i].addEventListener("click", function() {
     var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
     if (checkboxesSelected.length > 0) {
         btn_download.disabled = false;
-      }else{
+      }
+    else{
         btn_download.disabled = true;
       }
     });
   }
-  
-  
-  //cuando hace click en el boton download
-   btn_download.addEventListener("click", function() {
-     form.submit();
-   });
+
+    //when it click to the button download zip
+    btn_download.addEventListener("click", function() {
+       form.submit();
+     });
 </script>
 
 

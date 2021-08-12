@@ -1,7 +1,9 @@
+require "zip"
+require 'fileutils'
 class LessonsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
 
   def index
     @lessons = @course.lessons
@@ -70,8 +72,42 @@ class LessonsController < ApplicationController
     format.json { head :no_content }
     end
   end
-    
+
+  def download
+    @documents = @lesson.documents.where(id: params[:selected_documents_ids])
+    tmp_user_folder = "tmp/course_#{@lesson.id}"
+    begin
+      FileUtils.rm_rf(tmp_user_folder)
+      File.delete("#{tmp_user_folder}.zip") if File.exist?("#{tmp_user_folder}.zip")
+    rescue StandarError
+    end
+    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @documents.length
+    FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
+    @documents.each do |document|
+      filename = document.file.blob.filename.to_s
+      create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
+      #---------- Convert to .zip --------------------------------------- #
+      create_zip_from_tmp_folder(tmp_user_folder, filename) unless directory_length_same_as_documents
+    end
+    # Sends the *.zip file to be download to the client's browser
+    send_file(Rails.root.join("#{tmp_user_folder}.zip"), :type => "application/zip",
+                                                         :filename => "Files_for_#{@lesson.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
+  end
+
+
   private
+
+  def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
+    File.open(File.join(tmp_user_folder, filename), "wb") do |file|
+      document.file.download { |chunk| file.write(chunk) }
+    end
+  end
+
+  def create_zip_from_tmp_folder(tmp_user_folder, filename)
+    Zip::File.open("#{tmp_user_folder}.zip", Zip::File::CREATE) do |zf|
+      zf.add(filename, "#{tmp_user_folder}/#{filename}")
+    end
+  end
 
   def tags_params
     # params.permit(:tag_names)
