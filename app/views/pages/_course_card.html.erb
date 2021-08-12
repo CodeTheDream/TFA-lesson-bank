@@ -1,13 +1,17 @@
 <div class="col mb-4 mx-auto">
-  <div class="card h-100 search_card " style=" width: 18rem;">
+  <div class="card h-100 search_card mx-auto" style=" width: 18rem;">
     <div class="card-header"></div> 
     <div class= "text-right">
       <div id="circle"><h4 class="text-center">C</h4></div>
     </div> 
-    <div class="card-body">
-      
-      <h3 class="card-title"><%= course.title %></h3>      
+    <div class="card-body">      
+      <h3 class="card-title"><%= course.title %></h3>   
+      <div class= "mt-2">
+          <h5>Tags: <%= link_to tag.name, tag_path(tag) %></h5>
+          
+        </div>  
       <p class="card-text " style="  height: 25vh;"><%= course.description %></p>
+      
     </div>
     <div class="text-center card_footer ">
       <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card">VIEW COURSE</a>
