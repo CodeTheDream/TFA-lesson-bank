@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  include TagList, CourseSearch
+  include TagList
   
 
   belongs_to :user

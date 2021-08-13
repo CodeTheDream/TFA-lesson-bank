@@ -99,9 +99,8 @@ class CoursesController < ApplicationController
     end
   end
 
-
   def download
-    @courses = @course.documents.where(id: params[:document_ids])
+    @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
     begin
       FileUtils.rm_rf(tmp_user_folder)

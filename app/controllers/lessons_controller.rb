@@ -1,7 +1,9 @@
+require "zip"
+require 'fileutils'
 class LessonsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
 
   def index
     @lessons = @course.lessons
@@ -14,29 +16,16 @@ class LessonsController < ApplicationController
     
   # GET /lessons/new
   def new
-    @lesson = @course.lessons.new
-    # @course = Course.new
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @lesson = @course.lessons.build
   end
     
   # GET /Lessons/1/edit
   def edit
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
   end
     
   # POST /lessons
   # POST /lessons.json
   def create
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
@@ -53,10 +42,6 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1
   # PATCH/PUT /lessons/1.json
   def update
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
     if @lesson.update(lesson_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -87,8 +72,43 @@ class LessonsController < ApplicationController
     format.json { head :no_content }
     end
   end
-    
+
+  def download
+    # Lesson bulk is working
+    @documents = @lesson.documents.where(id: params[:selected_documents_ids])
+    tmp_user_folder = "tmp/course_#{@lesson.id}"
+    begin
+      FileUtils.rm_rf(tmp_user_folder)
+      File.delete("#{tmp_user_folder}.zip") if File.exist?("#{tmp_user_folder}.zip")
+    rescue StandarError
+    end
+    directory_length_same_as_documents = Dir["#{tmp_user_folder}/*"].length == @documents.length
+    FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
+    @documents.each do |document|
+      filename = document.file.blob.filename.to_s
+      create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
+      #---------- Convert to .zip --------------------------------------- #
+      create_zip_from_tmp_folder(tmp_user_folder, filename) unless directory_length_same_as_documents
+    end
+    # Sends the *.zip file to be download to the client's browser
+    send_file(Rails.root.join("#{tmp_user_folder}.zip"), :type => "application/zip",
+                                                         :filename => "Files_for_#{@lesson.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
+  end
+
+
   private
+
+  def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
+    File.open(File.join(tmp_user_folder, filename), "wb") do |file|
+      document.file.download { |chunk| file.write(chunk) }
+    end
+  end
+
+  def create_zip_from_tmp_folder(tmp_user_folder, filename)
+    Zip::File.open("#{tmp_user_folder}.zip", Zip::File::CREATE) do |zf|
+      zf.add(filename, "#{tmp_user_folder}/#{filename}")
+    end
+  end
 
   def tags_params
     # params.permit(:tag_names)
@@ -119,4 +139,3 @@ class LessonsController < ApplicationController
     redirect_to courses_path
   end
 end
-
