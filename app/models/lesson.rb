@@ -1,6 +1,6 @@
 class Lesson < ApplicationRecord
   include TagList
-  
+
   belongs_to :course 
   has_many :documents, dependent: :destroy 
   has_many :key_words, dependent: :destroy

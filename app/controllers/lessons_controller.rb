@@ -139,4 +139,3 @@ class LessonsController < ApplicationController
     redirect_to courses_path
   end
 end
-

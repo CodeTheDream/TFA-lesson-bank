@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  include TagList, CourseSearch
+  include TagList
   
 
   belongs_to :user
@@ -9,6 +9,7 @@ class Course < ApplicationRecord
   has_many :tags, through: :key_words 
   has_one :search_item, as: :searchable, dependent: :destroy
 
+  validates :title, presence: true
   validates :description, presence: true
   validates :subject, presence: true
   validates :grade_level, presence: true

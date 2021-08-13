@@ -36,7 +36,6 @@
                     <strong>File:</strong>
                     <td data-title="Document"><br>
                       <% if document.file.attached? %>
-                        <%# <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %> 
                         <%= check_box_tag "document_ids[#{document.id}]", document.id, false, class: "checkbox"%>
                         <% document.id %>
                         <% if document.file.representable? %>
