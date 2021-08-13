@@ -103,19 +103,14 @@ class CoursesController < ApplicationController
   # for current_user
   def favorite
     current_user.favorites << @course
-    byebug
     if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      byebug
       redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
-      byebug
     else
-      byebug
       redirect_to course_path(id: @course.id), notice: "You can't favorited #{@course.title}"
-      byebug
     end
   end
+
   def unfavorite
-    byebug
     current_user.favorites.delete(@course)
     if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
       redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
@@ -125,9 +120,8 @@ class CoursesController < ApplicationController
   #   # redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
   end
   
-
   def download
-    @courses = @course.documents.where(id: params[:document_ids])
+    @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
     begin
       FileUtils.rm_rf(tmp_user_folder)
@@ -163,16 +157,12 @@ class CoursesController < ApplicationController
 
 
   def verify_role!
-    # byebug
     authorize @course || Course 
-    # byebug
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    # byebug
     @course = Course.find(params[:id])
-    # byebug
   end
 
   # Only allow a list of trusted parameters through.
