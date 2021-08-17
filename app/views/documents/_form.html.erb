@@ -27,16 +27,17 @@
     <%= f.text_field :kind, class: 'form-control', :required => true %>
   </div>
 
- <div class="form-group center-right pl-4">
-   <label for="course"><%= Course %></label>
-   <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %>
- </div>
+ <%# <div class="form-group center-right pl-4"> %>
+   <%# <label for="course"><%= Course %>
+   <%# </label>  %>
+   <%# <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true %> 
+ <%# </div> %>
 
- <div class="form-group center-right pl-4">
-   <label for="lesson"><%= Lesson %>
-   </label> 
-   <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %>
- </div>
+ <%# <div class="form-group center-right pl-4"> %>
+   <%# <label for="lesson"><%= Lesson %> 
+   <%# </label>  %>
+   <%# <%= f.collection_select :lesson_id, Lesson.all, :id, :title, include_blank: true %> 
+ <%# </div> %>
 
  <div class="form-group center-right pl-4">
    <%= f.label :file %>
