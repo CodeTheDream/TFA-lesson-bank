@@ -81,6 +81,14 @@ a.btn.callout-button:hover {
   max-width: 100px;
 }
 
+.logo_gen img {
+  margin-bottom: -75px !important;
+}
+
+/* .a img {
+  margin-bottom: 5px !important;
+} */
+
 .four_img {
   padding: 10px !important;
 }
