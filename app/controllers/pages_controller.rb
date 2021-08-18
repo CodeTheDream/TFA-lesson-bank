@@ -18,8 +18,8 @@ class PagesController < ApplicationController
     elsif search_params[:mycontent] == "true"
       results_id = @results.pluck :id
       # remove all courses that don't belong to the current user if :mycontent is true
-      mycourses = Course.where(user_id: current_user.id)
       # @results = @results.select {|result| (mycourses.include? result.searchable_id)}
+      mycourses = Course.where(user_id: current_user.id)
       @results = mycourses
     end
   end
