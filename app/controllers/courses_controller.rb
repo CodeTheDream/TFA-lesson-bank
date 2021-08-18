@@ -122,12 +122,31 @@ class CoursesController < ApplicationController
   end
 
   def course_lesson_form
+    byebug
+          @courses = Course.where(user_id: current_user.id)
     @lesson = Lesson.new
-    @course = Course.last
+    @course = @course.present? ? @course : Course.new
     @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    respond_to do |format|
+      format.html { render 'course_lesson_form'}
+      format.js {render layout: false}
+    end
+  end
+
+  def load_course
+    byebug
+    if ajax_params[:course_id].present?
+      @course = Course.find ajax_params[:course_id]
+    else
+      @course = Course.new
+    end
+    respond_to do |format|
+      format.json { render :json => @course }
+      format.js
+    end
   end
 
   private
@@ -156,7 +175,11 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :course_id)
+  end
+
+  def ajax_params
+    params.permit(:course_id)
   end
 
   def tags_params

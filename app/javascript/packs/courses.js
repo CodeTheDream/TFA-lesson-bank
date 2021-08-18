@@ -26,8 +26,5 @@ window.addTagField = function addTagField() {
   //add created <li> element with its child elements 
   //(label and input) to myList (<ul>) element
   document.getElementById("myList").appendChild(li);
-
-
-
-
 }
+

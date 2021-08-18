@@ -1,12 +1,12 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
 <div class="move-down">
-<%= form_for(course) do |f| %>
+<%= form_for(@course) do |f| %>
   
-  <% if course.errors.any? %>
+  <% if @course.errors.any? %>
     <div id="error_explanation" class="my_alert">
-      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
       <ul>
-      <% course.errors.full_messages.each do |message| %>
+      <% @course.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -28,7 +28,7 @@
     </div>
     <br />
     <ul id="myList">
-      <% course.tags.each do |tag| %>	  
+      <% @course.tags.each do |tag| %>	  
         <% time_stamp = Time.now.to_i %>	  
         <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
       <% end %>
@@ -40,21 +40,21 @@
   <div class="form-row center-right pl-4">
     <div class="form-group col-sm-2 course-dropdown">
       <%= f.label :state, :class => "course-dropdown" %>
-      <%= f.select :state, options_for_select(states, course.state)  %>
+      <%= f.select :state, options_for_select(@states, @course.state)  %>
     </div>
 
     <div class="form-group col-sm-2 course-dropdown">
       <%= f.label :district, :class => "course-dropdown" %>
-      <%= f.select :district, options_for_select(districts, course.district)  %>
+      <%= f.select :district, options_for_select(@districts, @course.district)  %>
     </div>
 
     <div class="form-group col-sm-2 bump-left course-dropdown">
       <%= f.label :grade_level, :class => "control-label" %>
-      <%= f.select :grade_level, options_for_select(available_grade_levels, course.grade_level)  %>
+      <%= f.select :grade_level, options_for_select(@available_grade_levels, @course.grade_level)  %>
     </div>
     <div class="form-group col-sm-2 nudge-left course-dropdown">
       <%= f.label :subject, :class => "control-label" %>
-      <%= f.select :subject, options_for_select(subjects, course.subject)  %>
+      <%= f.select :subject, options_for_select(@subjects, @course.subject)  %>
     </div>
   </div>
 

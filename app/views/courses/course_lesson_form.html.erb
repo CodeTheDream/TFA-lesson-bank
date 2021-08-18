@@ -1,8 +1,35 @@
+<%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
+
 <div class="row">
   <div class="col-sm-6">
-    <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
+    <div class="col-sm-2" style="top:100px;">
+      <div id="selectedCourseId">
+        <%= select_tag :course, options_from_collection_for_select(@courses, "id", "title"), { include_blank: true, required: true } %>
+        <small class="form-text text-muted">Course</small>
+      </div>
+      <div id="courseForm">
+      </div>
   </div>
   <div class="col-sm-6">
-          <!--<%#= render 'lessons/form', lesson: @lesson %>-->
+    <!--<%#= render 'lessons/form', lesson: @lesson %>-->
   </div>
 <div>
+        
+<script type="text/javascript">
+  $('select').change(courseSelect);
+
+  function courseSelect(){
+    console.log('asd');
+    console.log( $("#course").val());
+    console.log('/courses/load_course?course_id=' + $("#course").val());
+      $.ajax({
+        url: '/courses/load_course?course_id=' + $("#course").val(),
+        type: 'GET',
+        success: function(r) {
+          console.log("success!");
+          $('#courseForm').html(response)
+          //$("#courseForm").html("<%= escape_javascript(render partial: 'form', locals: { course: @course } ) %>");
+        }
+      });
+  }
+</script>

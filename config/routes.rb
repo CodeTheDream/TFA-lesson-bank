@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :course_lesson_form
+      get :load_course
     end
     resources :lessons do
       member do
