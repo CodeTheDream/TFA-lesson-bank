@@ -4,9 +4,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def owner_or_admin?
-    # byebug
     (@user&.role == 'admin') || (@record&.user_id == @user.id) 
-    # byebug
   end
 
   %i(index? new? create? show? download? favorite? unfavorite?).each do |ali|

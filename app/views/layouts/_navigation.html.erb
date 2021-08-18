@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse " id="navbarMenu">  
         <ul class="navbar-nav ml-auto all_nav_items"> 
           <li class='nav-item  '><%= link_to 'Search', search_page_path, class: 'nav-link right_list' %></li>
-          <li class='nav-item  '><%= link_to 'MyContent', search_page_path, class: 'nav-link right_list' %></li>
+          <li class='nav-item  '><%= link_to 'MyContent', search_page_path(mycontent: true), class: 'nav-link right_list' %></li>
           <li class='nav-item  '><%= link_to 'Favorited', search_page_path(favorites: true), class: 'nav-link right_list' %></li>
           <li class='nav-item  '><%= link_to 'About', search_page_path, class: 'nav-link right_list' %></li>     
             <% if current_user && !current_user.role.blank? %>           
