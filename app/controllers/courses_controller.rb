@@ -112,14 +112,12 @@ class CoursesController < ApplicationController
   end
 
   def unfavorite
-    # current_user.favorites.delete(@course)
     if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
       redirect_to course_path(id: @course.id), notice: "You already unfavorited #{@course.title}"
     else
       current_user.favorites.delete(@course)
-      redirect_to course_path(id: @course.id), notice: "You delete #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
     end
-  #   # redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
   end
   
   def download
