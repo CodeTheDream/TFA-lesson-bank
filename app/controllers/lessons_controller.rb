@@ -74,7 +74,8 @@ class LessonsController < ApplicationController
   end
 
   def download
-    @documents = @lesson.documents.where(id: params[:selected_documents_ids])
+    # Lesson bulk is working
+    @documents = @lesson.documents.where(id: params[:selected_documents_ids].keys)
     tmp_user_folder = "tmp/course_#{@lesson.id}"
     begin
       FileUtils.rm_rf(tmp_user_folder)
@@ -138,4 +139,3 @@ class LessonsController < ApplicationController
     redirect_to courses_path
   end
 end
-

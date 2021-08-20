@@ -2,7 +2,7 @@ require "zip"
 require 'fileutils'
 class CoursesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite]
   before_action :verify_role!
 
   def index
@@ -99,7 +99,27 @@ class CoursesController < ApplicationController
     end
   end
 
+  # Add and remove favorite courses
+  # for current_user
+  def favorite
+    current_user.favorites << @course
+    if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+      redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
+    else
+      redirect_to course_path(id: @course.id), notice: "You can't favorited #{@course.title}"
+    end
+  end
 
+  def unfavorite
+    current_user.favorites.delete(@course)
+    if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+    else
+      redirect_to course_path(id: @course.id), notice: "You can't unfavorited #{@course.title}"
+    end
+  #   # redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+  end
+  
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
@@ -122,10 +142,10 @@ class CoursesController < ApplicationController
   end
 
   def course_lesson_form
-    byebug
-          @courses = Course.where(user_id: current_user.id)
+    new_course = Course.new(title: "New")
+    @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
     @lesson = Lesson.new
-    @course = @course.present? ? @course : Course.new
+    @course = new_course
     @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
@@ -137,16 +157,37 @@ class CoursesController < ApplicationController
   end
 
   def load_course
-    byebug
+#    byebug
     if ajax_params[:course_id].present?
       @course = Course.find ajax_params[:course_id]
     else
       @course = Course.new
     end
-    respond_to do |format|
-      format.json { render :json => @course }
-      format.js
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    new_lesson = @course.lessons.new(title: "New")
+    @lessons = @course.lessons.to_a.unshift new_lesson
+    @lesson = new_lesson
+    render "/courses/course_lesson_form.js.erb"
+  end
+
+  def load_lesson
+#    byebug
+    @course = Course.find ajax_params[:course_id]
+    if ajax_params[:lesson_id].present?
+      @lesson = Lesson.find ajax_params[:lesson_id]
+    else
+      @lesson = @course.lessons.new(title: "New") 
     end
+    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    new_lesson = @course.lessons.new(title: "New")
+    @lessons =  @course.lessons.include?(new_lesson) ? @course.lessons : @course.lessons.to_a.unshift(new_lesson)
+    render "/courses/course_lesson_form.js.erb"
   end
 
   private
@@ -175,11 +216,11 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :course_id)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites)
   end
 
   def ajax_params
-    params.permit(:course_id)
+    params.permit(:course_id, :lesson_id)
   end
 
   def tags_params

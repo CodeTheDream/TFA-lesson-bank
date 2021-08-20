@@ -25,6 +25,15 @@
         </p>
       </section>
 
+    <!-- Course favorites-->
+    <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+      <%# <%byebug%> 
+      <%= link_to "favorite",   favorite_course_path(@course) %>
+      <%= link_to "unfavorite", unfavorite_course_path(@course) %>
+      <%# , method: :put %>
+      <%# , type: "favorite" %>
+    <%end%>
+
       <!-- Documents Section-->
       <section class="mb-5">
         <h4>Download the Files for this Course:</h4> 
@@ -36,7 +45,6 @@
                     <strong>File:</strong>
                     <td data-title="Document"><br>
                       <% if document.file.attached? %>
-                        <%# <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %> 
                         <%= check_box_tag "document_ids[#{document.id}]", document.id, false, class: "checkbox"%>
                         <% document.id %>
                         <% if document.file.representable? %>

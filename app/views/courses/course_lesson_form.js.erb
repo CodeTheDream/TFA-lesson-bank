@@ -1,0 +1,7 @@
+$("#courseForm").html("<%= escape_javascript(render partial: 'form', locals: { course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts } ) %>");
+<% if @course.id.present? %>
+  $("#lessonSide").html("<%= escape_javascript(render partial: 'lessonForm', locals: { lessons: @lessons, course: @course, lesson: @lesson } ) %>");
+  //$("#lessonForm").html("<%= escape_javascript(render partial: 'lessons/form', locals: { lesson: @lesson } ) %>");
+<% else %>
+  $("#lessonSide").html("<%= escape_javascript(render partial: 'blankForm') %>");
+<% end %>

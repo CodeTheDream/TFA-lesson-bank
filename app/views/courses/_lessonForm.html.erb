@@ -1,0 +1,34 @@
+<div class="move-down">
+        <!--<%# byebug %>-->      
+  <%= select_tag :lesson, options_from_collection_for_select(@lessons, "id", "title", @lesson.title), { required: true } %>
+  <small class="form-text text-muted">Lesson</small>
+  <div id=lessonForm>
+    <%= render 'lessons/form', lesson: @lesson %>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  $('select').change(lessonSelect);
+
+  function lessonSelect(){
+    console.log('lessonSelect called');
+    console.log( $("#lesson").val());
+    console.log( $("#course").val() );
+    console.log('/courses/load_lesson?course_id=' + $("#course").val() + '&lesson_id=' + $("#lesson").val());
+    $.ajax({
+      url: '/courses/load_lesson?course_id=' + $("#course").val() + '&lesson_id=' + $("#lesson").val(),
+      type: 'GET',
+      success: function(r) {
+//        console.log("lesson ajax success!");
+//        console.log(r);      
+        //$('#courseForm').html(r)
+        //$("#courseForm").html("<%#= escape_javascript(render partial: 'form', locals: { course: @course } ) %>");
+      }
+    });
+
+  }
+</script>
+

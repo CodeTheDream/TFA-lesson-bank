@@ -2,15 +2,16 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <div class="col-sm-2" style="top:100px;">
-      <div id="selectedCourseId">
-        <%= select_tag :course, options_from_collection_for_select(@courses, "id", "title"), { include_blank: true, required: true } %>
-        <small class="form-text text-muted">Course</small>
-      </div>
-      <div id="courseForm">
-      </div>
+    <div id="selectedCourseId" class="move-down" >
+      <%= select_tag :course, options_from_collection_for_select(@courses, "id", "title", "New"), { required: true } %>
+      <small class="form-text text-muted">Course</small>
+    </div>
+    <div id="courseForm">
+      <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
+    </div>
   </div>
-  <div class="col-sm-6">
+
+  <div class="col-sm-6" id="lessonSide">
     <!--<%#= render 'lessons/form', lesson: @lesson %>-->
   </div>
 <div>
@@ -19,17 +20,18 @@
   $('select').change(courseSelect);
 
   function courseSelect(){
-    console.log('asd');
-    console.log( $("#course").val());
-    console.log('/courses/load_course?course_id=' + $("#course").val());
-      $.ajax({
-        url: '/courses/load_course?course_id=' + $("#course").val(),
-        type: 'GET',
-        success: function(r) {
-          console.log("success!");
-          $('#courseForm').html(response)
-          //$("#courseForm").html("<%= escape_javascript(render partial: 'form', locals: { course: @course } ) %>");
-        }
-      });
+    console.log('courseSelect called');
+//    console.log( $("#course").val());
+//    console.log('/courses/load_course?course_id=' + $("#course").val());
+    $.ajax({
+      url: '/courses/load_course?course_id=' + $("#course").val(),
+      type: 'GET',
+      success: function(r) {
+        console.log("course ajax success!");
+//        console.log(r);      
+        //$('#courseForm').html(r)
+        //$("#courseForm").html("<%#= escape_javascript(render partial: 'form', locals: { course: @course } ) %>");
+      }
+    });
   }
 </script>

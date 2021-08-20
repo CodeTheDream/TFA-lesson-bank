@@ -14,12 +14,7 @@
     </div>
   <% end %>
   
-  <div class="form-group center-right pl-4">
-    <label for="course"><%= Course %></label>
-    <%= f.collection_select :course_id, Course.all, :id, :title, include_blank: true, :required => true %>
-  </div>
-
-  <div class="form-row center-right">
+  <div class="form-row">
     <div class="form-group col-sm-4 pl-4">
       <%= f.label :title %>
       <%= f.text_field :title, class: 'form-control', :required => true %>  
@@ -43,17 +38,17 @@
 
   </br>
 
-  <div class="form-group center-right pl-4 fit-width">
+  <div class="form-group pl-4 fit-width">
     <%= f.label :Units%>
     <%= f.text_field :units_covered, class: 'form-control', :required => true %>
   </div>
 
-  <div class="form-group center-right fit-width pl-4">
+  <div class="form-group fit-width pl-4">
     <%= f.label :description %>
     <%= f.text_area :description, class: 'form-control', :required => true %>
   </div>
 
-  <div class="form-group center-right pl-4">
+  <div class="form-group pl-4">
     <div class="actions">
       <%= f.submit %> 
       <% if lesson&.id.present? %>
