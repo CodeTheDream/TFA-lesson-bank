@@ -102,22 +102,22 @@ class CoursesController < ApplicationController
   # Add and remove favorite courses
   # for current_user
   def favorite
-    current_user.favorites << @course
+    # current_user.favorites << @course
     if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You already favorited #{@course.title}"
     else
-      redirect_to course_path(id: @course.id), notice: "You can't favorited #{@course.title}"
+      current_user.favorites << @course
+      redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
     end
   end
 
   def unfavorite
-    current_user.favorites.delete(@course)
     if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You already unfavorited #{@course.title}"
     else
-      redirect_to course_path(id: @course.id), notice: "You can't unfavorited #{@course.title}"
+      current_user.favorites.delete(@course)
+      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
     end
-  #   # redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
   end
   
   def download
