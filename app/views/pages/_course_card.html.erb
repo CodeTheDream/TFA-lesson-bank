@@ -4,15 +4,20 @@
     <div class= "text-right">
       <div id="circle"><h4 class="text-center">C</h4></div>
     </div> 
-    <div class="card-body" style="height: 35vh;">       
+    <div class="card-body" style="height: 39vh;">       
       <h3 class="card-title"><%= course.title %></h3>      
       <div>SUBJECT: <%= course.subject%></div>   
       <div>GRADE: <%= course.grade_level%></div>      
       <h5 class="search_tags">Tags:<%= link_to tag.name, tag_path(tag)  %></h5>
+           
+     
+
       <div class="card-text mb-4" style="height: 15vh;">
         <div>DESCRIPTION: </div>   
-          <%= simple_format truncate(h(course.description), length: 150, separator: ' ') %>   
-          <%= link_to "Read More", course_path(course), class:"card-text mb-4"%>
+          <%= simple_format truncate(h(course.description), length: 150, separator: ' ') %>
+          <% if course.description.length >  150 %>
+           <%= link_to "Read More", course_path(course), class:"card-text mb-4"%>
+          <%end%>
         </div>  
       </div>
     

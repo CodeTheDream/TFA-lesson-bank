@@ -4,15 +4,22 @@
     <div class= "text-right">
       <div id="circle"><h4 class="text-center">L</h4></div>
     </div> 
-    <div class="card-body" style="height: 35vh;" >
+    <div class="card-body" style="height: 39vh;" >
       <h3 class="card-title"><%= lesson.title %></h3>  
       <div>SUBJECT: <%= %></div>    
       <div>Units Covered: <%= lesson.units_covered%></div> 
-      <h5 class="search_tags">Tags:<%= link_to tag.name, tag_path(tag)  %></h5>  
+      <h5 class="search_tags">Tags:<%= link_to tag.name, tag_path(tag)  %></h5>
+      
+
+
       <div class="card-text mb-4" style="height: 15vh;">
       <div>DESCRIPTION: </div>   
         <%= simple_format truncate(h(lesson.description), length: 150, separator: ' ') %>
-        <%= link_to "Read More", lesson_path(lesson)%>
+        <% if lesson.description.length >  150 %>
+          <div class="read_more">
+            <%= link_to "Read More", lesson_path(lesson)%>
+          </div>
+        <%end%>
       </div>
     </div>
     <div class="text-center">

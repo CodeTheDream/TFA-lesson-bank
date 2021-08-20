@@ -19,7 +19,6 @@
                   </div>  
 
                   
-                   
                   <%= hidden_field_tag :search, @search %>
                   <div class="text-center">
                     <%= submit_tag "FILTER RESULTS", :class => 'btn button_filter ' %>
@@ -35,6 +34,8 @@
                 <div class="col mb-4 mx-auto">   
                   <h5 class="results"><b>RESULTS FOR:</b> <%= params[:search].capitalize%></h5>
                 </div>    
+
+                
                 <div class="row row-cols-1 row-cols-md-3 shadow-none">              
                   <% @results.each do |result| %>  
                     <div class="col mb-4 mx-auto">     
