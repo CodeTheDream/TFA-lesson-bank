@@ -19,7 +19,6 @@ Rails.application.routes.draw do
     member do
       get :favorite
       get :unfavorite
-      # put :favorite
     end
     member do
       get :download

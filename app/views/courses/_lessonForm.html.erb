@@ -1,6 +1,6 @@
 <div class="move-down">
-        <!--<%# byebug %>-->      
-  <%= select_tag :lesson, options_from_collection_for_select(@lessons, "id", "title", @lesson.title), { required: true } %>
+  <% byebug %>
+  <%= select_tag :lesson, options_from_collection_for_select(@lessons, "id", "title", @lesson.id), { required: true } %>
   <small class="form-text text-muted">Lesson</small>
   <div id=lessonForm>
     <%= render 'lessons/form', lesson: @lesson %>
@@ -11,7 +11,7 @@
 
 
 <script type="text/javascript">
-  $('select').change(lessonSelect);
+  $('#lesson').change(lessonSelect);
 
   function lessonSelect(){
     console.log('lessonSelect called');

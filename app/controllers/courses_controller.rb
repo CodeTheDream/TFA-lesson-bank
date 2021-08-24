@@ -144,7 +144,7 @@ class CoursesController < ApplicationController
   def course_lesson_form
     new_course = Course.new(title: "New")
     @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
-    @lesson = Lesson.new
+#    @lesson = Lesson.new
     @course = new_course
     @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
     @subjects = %w[Art English Math Music Science Technology]
@@ -157,7 +157,7 @@ class CoursesController < ApplicationController
   end
 
   def load_course
-#    byebug
+    #byebug
     if ajax_params[:course_id].present?
       @course = Course.find ajax_params[:course_id]
     else
@@ -167,26 +167,28 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = @course.lessons.new(title: "New")
+    new_lesson = Lesson.new(title: "New")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = new_lesson
+    @from_load_course = true
     render "/courses/course_lesson_form.js.erb"
   end
 
   def load_lesson
-#    byebug
+    #byebug
     @course = Course.find ajax_params[:course_id]
+    new_lesson = Lesson.new(title: "New")
+    @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"
     if ajax_params[:lesson_id].present?
       @lesson = Lesson.find ajax_params[:lesson_id]
     else
-      @lesson = @course.lessons.new(title: "New") 
+      @lesson = new_lesson 
     end
     @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = @course.lessons.new(title: "New")
-    @lessons =  @course.lessons.include?(new_lesson) ? @course.lessons : @course.lessons.to_a.unshift(new_lesson)
+    @from_load_course = false
     render "/courses/course_lesson_form.js.erb"
   end
 

@@ -1,8 +1,8 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
 
 <div class="row">
-  <div class="col-sm-6">
-    <div id="selectedCourseId" class="move-down" >
+  <div class="col-sm-6 course-form-container">
+    <div id="selectedCourseId" class="move-down ml-4" >
       <%= select_tag :course, options_from_collection_for_select(@courses, "id", "title", "New"), { required: true } %>
       <small class="form-text text-muted">Course</small>
     </div>
@@ -11,13 +11,16 @@
     </div>
   </div>
 
-  <div class="col-sm-6" id="lessonSide">
-    <!--<%#= render 'lessons/form', lesson: @lesson %>-->
+  <div class="col-sm-6">
+    <!--<div id="lessonDropdown">
+    </div>-->
+    <div id="lessonSide">
+    </div>
   </div>
 <div>
         
 <script type="text/javascript">
-  $('select').change(courseSelect);
+  $("#course").change(courseSelect);
 
   function courseSelect(){
     console.log('courseSelect called');
