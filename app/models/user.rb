@@ -7,5 +7,7 @@ class User < ApplicationRecord
   has_many :courses, dependent: :destroy 
   has_many :favorite_courses # just the 'relationships'
   has_many :favorites, through: :favorite_courses, source: :course # the actual courses a user favorites
-
+  
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 end
