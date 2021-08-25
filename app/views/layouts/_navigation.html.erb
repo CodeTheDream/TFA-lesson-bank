@@ -9,15 +9,15 @@
 
       <div class="collapse navbar-collapse " id="navbarMenu">
         <ul class="navbar-nav ml-auto all_nav_items">
-          <li class='nav-item  '><%= link_to 'SEARCH', search_page_path, class: 'nav-link right_list' %></li>
-          <li class='nav-item  '><%= link_to 'ABOUT', search_page_path, class: 'nav-link right_list' %></li>
+          <li class='nav-item  '><%= link_to 'SEARCH', search_page_path, class: 'nav-link right_list position-search' %></li>
+          <li class='nav-item  '><%= link_to 'ABOUT', search_page_path, class: 'nav-link right_list position-about' %></li>
           <% if current_user && !current_user.role.blank? %>
             <div class="user-container">
             <li class="nav-item dropdown">
               <a class="nav-link user-icon-text" style="color:#1996aa;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
               </a>
-              <div class="dropdown-menu ml-4" aria-labelledby="navbarDropdown">
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <%= link_to 'View My Content', search_page_path(mycontent: true), class: 'dropdown-item' %>
                 <%= link_to 'My Favorited Content', search_page_path(favorites: true), class: 'dropdown-item' %>
                 <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>

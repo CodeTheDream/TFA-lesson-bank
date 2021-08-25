@@ -38,6 +38,8 @@
 }
 
 .user-container {
+  position: relative;
+  bottom: .1em;
   height: 50px;
   width: 50px;
   background-color: white;
@@ -46,20 +48,22 @@
 
 .user-icon-text{
   position: relative;
-  right: 1.35em;
+  right: 1.25em;
+  top: .1em;
   color: #1996aa;
 }
 
-.my-dropdown-toggle::after {
-    content: none;
+.dropdown-menu-container{
+  position: relative;
+  left: 2em;
 }
 
-.my-dropdown-toggle::before {
-    content: none;
-}
-.navbar-default .navbar-nav > .dropdown > a .caret {
-    border-top-color: #FFF;
-    border-bottom-color: rgb(255, 255, 255);
-    display: none;
+.position-about {
+  position: relative;
+  left: .1em;
 }
 
+.position-search {
+  position: relative;
+  left: 2em;
+}
