@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 # Use pundit for authorization
 gem "pundit"
-gem 'bootstrap'
+gem 'bootstrap', '~>5.0'
 # Use for validating blobs
 gem 'activestorage-validator'
 # Use for rendering pdfs
