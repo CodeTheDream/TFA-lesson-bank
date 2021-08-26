@@ -20,6 +20,7 @@
 .search_button:hover {
   background-color: #1996aa !important;
 }
+
 .navbar-nav .nav-item .nav-link {
   font-size: 20px;
   color: rgb(73, 69, 69);
@@ -27,6 +28,7 @@
   margin-right: 25px;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   letter-spacing: 1px;
+  position: relative;
 }
 
 .nav-link {
@@ -66,4 +68,36 @@
 .position-search {
   position: relative;
   left: 2em;
+}
+
+.dropdown-menu.show {
+  position: relative !important;
+  left: -8.3em !important;
+  top: 1em;
+  text-align: right;
+  border-radius: 0rem;
+}
+
+.triangle {
+  position: absolute !important;
+  top: -.55em !important;
+  right: -.0em !important;
+  width: 0 !important; 
+  height: 0 !important; 
+  border-top: 10px solid transparent !important;
+  border-bottom: 10px solid transparent !important; 
+  
+  border-right: 10px solid white; 
+}
+
+.triangle-border {
+  position: absolute;
+  top: -.7em;
+  right: -.04em;
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  
+  border-right:10px solid rgba(0,0,0,.15);
 }
