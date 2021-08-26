@@ -9,6 +9,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def index     
+    @users = User.all
+    @users = @users.paginate(page: params[:page], :per_page => 10)
+  end 
+
   # POST /resource
   def create
     @user = User.new configure_sign_up_params
@@ -18,8 +23,59 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       redirect_to root_path, notice: 'User cannot be added'
     end
-
   end
+
+  def new
+    @user = User.new   
+    @users = User.all
+     
+  end
+
+  def show  
+    @user = User.find params[:id]
+  end
+ 
+  def destroy
+    @user = User.find params[:format]
+    if @user.destroy  
+      redirect_to '/users', notice: 'User was successfully destroyed'
+    end
+  end
+
+  def edit    
+    @user = User.find params[:format]
+  end
+
+  def update
+    byebug
+    # @user = User.find params[:id]
+    byebug
+    if @user.role == 'Admin'
+      byebug
+      if @user.update  configure_registration_update_parameters
+        redirect_to '/users', notice: 'User was successfully updated'
+      else
+        redirect_to '/edit', notice: 'User could not be updated'
+      end
+    else
+      byebug
+      if @user.update  configure_registration_update_parameters
+        byebug
+        redirect_to '/', notice: 'User was successfully updated'
+      else
+        byebug
+        redirect_to '/edit', notice: 'User could not be updated'
+      end
+    end
+  end
+#@user.errors.messages
+#@user.update!  configure_registration_update_parameters
+#owner and admin pundit
+#verify role for registration controller
+#admin updating amnother user
+#teacher updating myself
+#record vs user
+
 
   # GET /resource/edit
   # def edit

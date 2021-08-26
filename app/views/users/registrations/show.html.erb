@@ -1,0 +1,26 @@
+<div class="grid-container">
+  <div class="container-mt5">
+    <h4 class="font-weight-light mb-0 align-middle">Show User</h4>
+    <div class="row">
+      <div class="col-sm-6">
+        <br>
+        <div>
+          <strong>Email:</strong>
+          <%= @user.email %>                
+        </div>
+        <div>
+          <strong>Role:</strong>
+          <%= @user.role %>                
+        </div>
+      </div>
+    </div> 
+    <hr class="my-2">    
+    <div class="actions form-group p-3">   
+      <%if current_user == "Admin"%> 
+        <%= link_to 'Edit', edit_users_path %>
+        <%= link_to 'Destroy', users_path(product), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+      <% end %>   
+      <%= link_to 'Back', users_path, :class => "btn btn-outline-primary"  %>           
+    </div>
+  </div>
+</div>
