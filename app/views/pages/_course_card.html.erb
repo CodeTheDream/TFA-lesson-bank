@@ -1,28 +1,28 @@
+
 <div class="col mb-4 mx-auto">
   <div class="card h-100 search_card " style=" width: 18rem;">
     <div class="card-header"></div> 
     <div class= "text-right">
       <div id="circle"><h4 class="text-center">C</h4></div>
     </div> 
-    <div class="card-body" style="height: 39vh;">       
-      <h3 class="card-title"><%= course.title %></h3>      
-      <div>SUBJECT: <%= course.subject%></div>   
-      <div>GRADE: <%= course.grade_level%></div>      
-      <h5 class="search_tags">Tags:<%= link_to tag.name, tag_path(tag)  %></h5>
-           
-     
-
-      <div class="card-text mb-4" style="height: 15vh;">
-        <div>DESCRIPTION: </div>   
-          <%= simple_format truncate(h(course.description), length: 150, separator: ' ') %>
-          <% if course.description.length >  150 %>
-           <%= link_to "Read More", course_path(course), class:"card-text mb-4"%>
+    <div class="card-body" style="height: 40vh;">       
+      <p class="card-title"><%= course.title.titleize %></p>      
+      <div><span style="color: gray">SUBJECT:</span> <%= course.subject%></div>
+      <div class="mb-4"><span style="color: gray">GRADE: </span><%= course.grade_level %></div>  
+      
+    
+      <div class="search_tags"><span style="background-color:white;color: gray;"><%= course.tags %></div> </span>
+      <div class="card-text mb-4 mt-4" style="height: 15vh;">
+        
+          <%= simple_format truncate(h(course.description.capitalize), length: 130, separator: ' ') %>
+          <% if course.description.length >  130 %>
+           <%= link_to "Read More", course_path(course), class:"read_more"%>
           <%end%>
         </div>  
       </div>
     
-      <div class="text-center card_footer ">
-        <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card">VIEW COURSE</a>
+      <div class="text-center ">
+        <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card right-arrow ">VIEW COURSE </a>
       </div>
     </div>
   </div>

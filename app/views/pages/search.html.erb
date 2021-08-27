@@ -32,21 +32,23 @@
                              
      
                 <div class="col mb-4 mx-auto">   
-                  <h5 class="results"><b>RESULTS FOR:</b> <%= params[:search].capitalize%></h5>
+                  <h5 class="results"><b>RESULTS FOR:</b> <span style="color: gray"><%= params[:search].capitalize%></span></h5>
                 </div>    
-
+                 
                 
                 <div class="row row-cols-1 row-cols-md-3 shadow-none">              
                   <% @results.each do |result| %>  
-                    <div class="col mb-4 mx-auto">     
+                    <div class="col mx-auto">     
                       <% if result.searchable_type == "Lesson" %>
                         <%= render 'lesson_card', lesson: result %>
                       <% else %>  
-                        <%= render 'course_card', course: result %>
-                      <% end %> 
-                    </div>        
+                        <%= render 'course_card',  course: result %>
+                      <% end %>               
+                    </div>  
+                    
+                                     
                   <%end%>              
-                </div>
+                </div> 
               </div>
    
             </div>

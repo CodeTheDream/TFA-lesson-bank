@@ -32,6 +32,14 @@ class TagsController < ApplicationController
 
   def show
   end
+  
+  # def show
+  #   if params[:name].present?
+  #     @tag = Tag.find params[:id]
+  #   end
+  # end
+
+
 
   def destroy
     if @tag.destroy

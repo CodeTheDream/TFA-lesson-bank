@@ -15,6 +15,12 @@
  
  @import "import '../stylesheets/application";
  /* @import "bootstrap/dist/css/bootstrap"; */
+@font-face {
+  font-family: "Proxima Nova Font";
+  src: url("Proxima Nova Font.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 html {
   height: 100%;
 }
@@ -23,7 +29,7 @@ body {
   height: 100vh;
   display: flex !important;
   flex-direction: column;
-  font-family: Georgia;
+  font-family: "Proxima Nova Font";
 
   /* overflow-x: hidden; Prevent scroll on narrow devices */
 }
@@ -64,13 +70,11 @@ a.btn.callout-button:hover {
 }
 .header_pillow {
   height: 110px;
-  background-color: hsl(0, 0%, 90%);
-  transition: background-color 300ms;
+  background-color: #f0eeed;
 }
 .logo_end {
   height: 45px;
-  background-color: hsl(0, 0%, 90%);
-  transition: background-color 300ms;
+  background-color: #f0eeed;
 }
 .logo_end img {
   align-items: center;

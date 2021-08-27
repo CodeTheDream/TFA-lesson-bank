@@ -1,6 +1,11 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@font-face {
+  font-family: "GuardianEgyp-Light-Reduced";
+  src: url("GuardianEgyp-Light-Reduced.woff.ttf");
+}
+
 .grid-container {
   padding-top: 6em;
   display: grid;
@@ -46,8 +51,9 @@
 }
 .search_card {
   border-radius: 0% !important;
-  background-color: hsl(0, 0%, 90%) !important;
-  transition: background-color 300ms !important;
+  background-color: #f0eeed !important;
+
+  // transition: background-color 300ms !important;
   border: none !important;
 
   .card-header {
@@ -68,12 +74,40 @@
     font: bold 15px;
     padding: 6px 3px 0 3px;
   }
-
-  .search_tags {
-    background-color: aliceblue;
-    color: red;
+  .right-arrow {
+    display: inline-block;
+    position: relative;
+    background: #1996aa;
+    padding: 10px;
   }
-  .read_more .li {
-    font-weight: bold;
+  .right-arrow:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 80%;
+    top: 67%;
+    margin-top: -10px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #1996aa;
+    margin-left: 7px;
+  }
+
+  .card-title {
+    margin-top: 0%;
+    font-size: 18px;
+  }
+
+  .read_more {
+    color: #1996aa;
+  }
+  .read_more:hover {
+    color: #081e32;
+  }
+  .search_tags {
+    word-spacing: 1em;
   }
 }

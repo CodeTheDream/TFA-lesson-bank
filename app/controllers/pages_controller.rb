@@ -10,11 +10,24 @@ class PagesController < ApplicationController
     @search = search_params[:search].present? ? search_params[:search] : nil
     query = @search
     @results = SearchItemSearch.search(query: query, options: search_params)
+  
+    # @tags_hash = cards_tags(@results)
   end
-
+  
   private
 
+  # def cards_tags(results) 
+  #   tags_hash = {} 
+  #   byebug   
+  #   results.each do |result|
+  #     byebug
+  #     if result.tags.any?
+  #       tags_hash[result] = result.tags.pluck :names
+  #     end
+  #   end
+  # end
+
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district)
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district, :tag_names)
   end
 end
