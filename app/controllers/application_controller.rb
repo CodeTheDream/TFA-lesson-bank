@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_registration_update_parameters
-    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email)
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
   end
   
   # instructions for what to do when user is signed in but does not have the

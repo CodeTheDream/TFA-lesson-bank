@@ -50,7 +50,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     byebug
     # @user = User.find params[:id]
     byebug
-    if @user.role == 'Admin'
+    if @user.role === 'admin'
       byebug
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
