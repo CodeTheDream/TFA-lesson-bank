@@ -47,23 +47,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    byebug
     # @user = User.find params[:id]
-    byebug
     if @user.role === 'admin'
-      byebug
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
       else
         redirect_to '/edit', notice: 'User could not be updated'
       end
     else
-      byebug
       if @user.update  configure_registration_update_parameters
-        byebug
         redirect_to '/', notice: 'User was successfully updated'
       else
-        byebug
         redirect_to '/edit', notice: 'User could not be updated'
       end
     end
