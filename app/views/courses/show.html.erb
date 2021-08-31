@@ -28,8 +28,8 @@
     <!-- Course favorites-->
     <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
       <ul>
-        <li><%= link_to "Favorite",   favorite_course_path(@course) %></li>
-        <li><%= link_to "Unfavorite", unfavorite_course_path(@course) %></li>
+        <li class="favorites"><%= link_to "Favorite",   favorite_course_path(@course) %></li>
+        <li class="favorites"><%= link_to "Unfavorite", unfavorite_course_path(@course) %></li>
       </ul>
     <%end%>
 

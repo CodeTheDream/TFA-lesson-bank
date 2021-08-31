@@ -32,6 +32,6 @@
   right:.7em;
 }
 
-ul li::marker {
+ul li.favorites::marker {
   content: "⭐️";
 }
