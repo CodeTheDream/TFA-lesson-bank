@@ -52,3 +52,7 @@
   height:15px;
   background-color: #1996aa;
 }
+
+ul li.favorites::marker {
+  content: "⭐️";
+}

@@ -43,6 +43,12 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Use gem jquery-turbolinks to allow page reloads
 #gem 'jquery-turbolinks'
 
+# Use will_paginate to paginate information
+gem 'will_paginate', '~> 3.1.0'
+# Use will_paginate_bootstrap as an extention for styling
+gem 'will_paginate-bootstrap4'
+
+
 # Use searchkick to interact with ElastciSearch
 gem 'searchkick'
 
