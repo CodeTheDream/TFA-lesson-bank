@@ -39,6 +39,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.find params[:format]
     if @user.destroy  
       redirect_to '/users', notice: 'User was successfully destroyed'
+    else
+      redirect_to '/users', notice: 'User could not be destroyed'
     end
   end
 
