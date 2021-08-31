@@ -31,3 +31,7 @@
 .nudge-left {
   right:.7em;
 }
+
+ul li::marker {
+  content: "⭐️";
+}
