@@ -9,6 +9,8 @@ class Course < ApplicationRecord
   has_one :search_item, as: :searchable, dependent: :destroy
   has_many :favorite_courses, dependent: :destroy  # just the 'relationships'
   has_many :favorited_by, through: :favorite_courses , source: :user # the actual users favoriting a course
+  has_many :courses_grades, dependant: :destroy
+  has_many :courses, through: :courses_grades, dependant: :destroy
   # returns the users that favorite a course
 
   validates :title, presence: true

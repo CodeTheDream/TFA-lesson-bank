@@ -1,5 +1,4 @@
-<div class="move-down">
-  <% byebug %>
+<div class="">
   <%= select_tag :lesson, options_from_collection_for_select(@lessons, "id", "title", @lesson.id), { required: true } %>
   <small class="form-text text-muted">Lesson</small>
   <div id=lessonForm>

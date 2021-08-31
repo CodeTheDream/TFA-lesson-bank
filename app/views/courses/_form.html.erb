@@ -1,5 +1,4 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
-<div class="move-down">
 <%= form_for(@course) do |f| %>
   
   <% if @course.errors.any? %>
@@ -12,16 +11,21 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="ml-4">
+    <%= f.text_field :title, class: 'form-control', :required => true %>
+  </div>
+
+  <div class="form-group col-sm-2 bump-left course-dropdown">
+    <%= f.label :grade_level, :class => "control-label" %>
+    <%= f.select :grade_level, options_for_select(@available_grade_levels, @course.grade_level) %>
+  </div>
   
-  <div class="form-row ml-4">
-    <div class="col-sm-3" style="background-color:white;">
-      
-    </div>
-          
-          
-    <div class="form-group col-sm-8 pl-4">
-      <%= f.label :title %>
-      <%= f.text_field :title, class: 'form-control', :required => true %>  
+  
+  
+  
+  
+  <div class="form-group col-sm-8 pl-4">
       <div class="">
         <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
       </div>
@@ -39,7 +43,6 @@
     </div>
   </div>
 
-  </br>
 
   <div class="form-row pl-4">
     <div class="form-group col-sm-2 course-dropdown">
@@ -52,10 +55,6 @@
       <%= f.select :district, options_for_select(@districts, @course.district)  %>
     </div>
 
-    <div class="form-group col-sm-2 bump-left course-dropdown">
-      <%= f.label :grade_level, :class => "control-label" %>
-      <%= f.select :grade_level, options_for_select(@available_grade_levels, @course.grade_level)  %>
-    </div>
     <div class="form-group col-sm-2 nudge-left course-dropdown">
       <%= f.label :subject, :class => "control-label" %>
       <%= f.select :subject, options_for_select(@subjects, @course.subject)  %>
@@ -79,4 +78,3 @@
   </div>
   
 <% end %>
-</div>

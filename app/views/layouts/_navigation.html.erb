@@ -1,46 +1,39 @@
-
 <nav class="navbar navbar-expand-md  fixed-top ">
   <div class="container-fluid ">
     <% if params[:action] != 'landing_page' %>
-      <a class="navbar-brand" href="/">Teach for America</a>       
+      <a class="navbar-brand" href="/">Teach for America</a>
     <%end%>
     <button class="navbar-toggler nav-link" data-toggle="collapse" data-target="#navbarMenu">
       <span class="navbar-toggler-icon"></span>
-    </button> 
+    </button>
 
-      <div class="collapse navbar-collapse " id="navbarMenu">  
-        <ul class="navbar-nav ml-auto all_nav_items"> 
-          <li class='nav-item  '><%= link_to 'Search', search_page_path, class: 'nav-link right_list' %></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              MyContent
-            </a>
-            <div class="dropdown-menu ml-4" aria-labelledby="navbarDropdown">
-              <%= link_to 'View My Content', search_page_path(mycontent: true), class: 'dropdown-item' %>
-              <%= link_to 'My Favorited Content', search_page_path(favorites: true), class: 'dropdown-item' %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'Create Content', course_lesson_form_courses_path, class: 'dropdown-item' %>
+      <div class="collapse navbar-collapse " id="navbarMenu">
+        <ul class="navbar-nav ml-auto all_nav_items">
+          <li class='nav-item  '><%= link_to 'SEARCH', search_page_path, class: 'nav-link right_list position-search' %></li>
+          <li class='nav-item  '><%= link_to 'ABOUT', search_page_path, class: 'nav-link right_list position-about' %></li>
+          <% if current_user && !current_user.role.blank? %>
+            <div class="user-container">
+            <li class="nav-item dropdown">
+              <a class="nav-link user-icon-text" style="color:#1996aa;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="triangle-border"></div>
+                <div class="triangle"></div>
+                <%= link_to 'MY MATERIAL', search_page_path(mycontent: true), class: 'dropdown-item' %>
+                <%= link_to 'FAVORITES', search_page_path(favorites: true), class: 'dropdown-item' %>
+                <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
+                <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+              </div>
+            </li>
             </div>
-          </li>
-          <li class='nav-item  '><%= link_to 'About', search_page_path, class: 'nav-link right_list' %></li>     
-            <% if current_user && !current_user.role.blank? %>           
-              <li class="navbar-nav ml-auto">                  
-                <div class='nav-item menu-right justify-content-end right_list'><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %></div>     
-              </li>    
-            <% else %>    
-              <li class="navbar-nav ml-auto right_list">       
-                <div class='nav-item  '><%= link_to 'Login', new_user_session_path, class: 'nav-link' %></div>
-                <div class='nav-item '><%= link_to 'Register', new_user_registration_path, class: 'nav-link' %></div>    
-              </li>  
-            <% end %>    
-        </ul>      
-      </div>     
-  </div> 
-</nav>      
-    
-
-    
-            
-        
-       
-      
+          <% else %>
+            <li class="navbar-nav ml-auto right_list">
+              <div class='nav-item  '><%= link_to 'Login', new_user_session_path, class: 'nav-link' %></div>
+              <div class='nav-item '><%= link_to 'Register', new_user_registration_path, class: 'nav-link' %></div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+  </div>
+</nav>

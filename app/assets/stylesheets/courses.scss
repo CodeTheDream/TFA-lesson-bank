@@ -33,5 +33,22 @@
 }
 
 .course-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.set-size-and-position {
+  position: relative;
+  top: 10em;
   background-color: #f0f0f0;
+  width: 80%;
+}
+
+.set-height {
+  max-height: 50px;
+}
+
+.blue-header {
+  height:15px;
+  background-color: #1996aa;
 }
