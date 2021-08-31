@@ -40,6 +40,12 @@ gem 'image_processing', '~> 1.2'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Use will_paginate to paginate information
+gem 'will_paginate', '~> 3.1.0'
+# Use will_paginate_bootstrap as an extention for styling
+gem 'will_paginate-bootstrap4'
+
+
 # Use searchkick to interact with ElastciSearch
 gem 'searchkick'
 
