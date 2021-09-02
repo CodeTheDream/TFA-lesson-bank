@@ -34,7 +34,7 @@ body {
   /* overflow-x: hidden; Prevent scroll on narrow devices */
 }
 main {
-  padding-top: 30px;
+  padding-top: 40px;
   padding-bottom: 45px;
 }
 a,
@@ -92,7 +92,11 @@ a.btn.callout-button:hover {
 /* .a img {
   margin-bottom: 5px !important;
 } */
-
+.card-header {
+  background-color: #1996aa !important;
+  padding: 0.3rem 0.25rem !important;
+  border-radius: 0% !important;
+}
 .four_img {
   padding: 10px !important;
 }
