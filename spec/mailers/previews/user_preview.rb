@@ -4,4 +4,7 @@ class UserPreview < ActionMailer::Preview
   def welcome_email
     UserMailer.with(user: User.last).welcome_email
   end
+  def new_registration
+    UserMailer.with(user: User.last).new_registration
+  end
 end

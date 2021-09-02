@@ -19,6 +19,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new configure_sign_up_params
     @user.role = 'teacher'
     if @user.save
+      UserMailer.with(user: @user).new_registration.deliver_now
+      UserMailer.with(user: @user).welcome_email.deliver_now
       redirect_to root_path, notice: 'Success! Check your email to confirm your account'
     else
       redirect_to root_path, notice: 'User cannot be added'
@@ -37,8 +39,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
  
   def destroy
     @user = User.find params[:format]
-    if @user.destroy  
+    if @user.destroy
       redirect_to '/users', notice: 'User was successfully destroyed'
+    else
+      redirect_to '/users', notice: 'User could not be destroyed'
     end
   end
 
