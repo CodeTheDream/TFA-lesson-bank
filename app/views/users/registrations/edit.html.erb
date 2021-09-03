@@ -23,8 +23,12 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :role %><br />
-        <%= f.text_field :role, autofocus: true%>
+        <%# <%= f.label :role %>
+        <%# <br /> %> 
+        <%# <%= f. :@roles, autofocus: true%> 
+        <%= "Role:" %>
+        <%# , :class => "course-dropdown" %>
+        <%= select_tag :role, options_for_select(@roles, @user.role)  %>
       </div>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

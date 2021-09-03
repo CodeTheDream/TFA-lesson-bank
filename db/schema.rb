@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_24_205605) do
+ActiveRecord::Schema.define(version: 2021_09_03_162940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,14 @@ ActiveRecord::Schema.define(version: 2021_08_24_205605) do
     t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_roles_on_user_id"
+  end
+
   create_table "search_items", force: :cascade do |t|
     t.string "searchable_type"
     t.bigint "searchable_id"
@@ -123,7 +131,6 @@ ActiveRecord::Schema.define(version: 2021_08_24_205605) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "unconfirmed_email"

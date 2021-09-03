@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
+  
+  before_action :set_user, only: [:index, :show, :edit, :update, :destroy]
+  before_action :verify_role!, only: [:index, :show, :edit, :update, :destroy]
+
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -17,12 +22,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @user = User.new configure_sign_up_params
-    @user.role = 'teacher'
+    byebug
     if @user.save
+      hash = {name: "teacher", user_id: @user.id}
+      byebug
+      @user.role = Role.create hash
+      byebug
       UserMailer.with(user: @user).new_registration.deliver_now
       UserMailer.with(user: @user).welcome_email.deliver_now
       redirect_to root_path, notice: 'Success! Check your email to confirm your account'
     else
+      byebug
       redirect_to root_path, notice: 'User cannot be added'
     end
   end
@@ -48,12 +58,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit    
     @user = User.find params[:format]
+    @roles = ["admin", "teacher"]
   end
 
   def update
     # @user = User.find params[:id]
-    if @user.role === 'admin'
+    if @user.role.name === 'admin'
       if @user.update  configure_registration_update_parameters
+        byebug
+        if role_params[:role].present?
+          role = @user.role
+          role.name = role_params[:role]
+          role.save
+        end
         redirect_to '/users', notice: 'User was successfully updated'
       else
         redirect_to '/edit', notice: 'User could not be updated'
@@ -103,9 +120,32 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+    params.require(:user).permit(:email, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+  end
+  def role_params
+    params.permit(:role, :_method)
   end
 
+private
+
+def verify_role!
+  byebug
+  authorize @user || Role
+  byebug
+end
+
+# # Use callbacks to share common setup or constraints between actions.
+def set_user
+  byebug
+  @user = current_user
+  byebug
+end
+
+def catch_not_found(e)
+  Rails.logger.debug("We had a not found exception.")
+  flash.alert = e.to_s
+  redirect_to courses_path
+end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])

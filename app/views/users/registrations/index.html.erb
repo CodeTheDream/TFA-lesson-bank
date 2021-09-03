@@ -24,7 +24,7 @@
             <td><strong><%= u.first_name %></strong></td>
             <td><strong><%= u.last_name %></strong></td>     
             <td><strong><%= u.email %></strong></td>
-            <td><strong><%= u.role %></strong></td>
+            <td><strong><%= u.role.name %></strong></td>
             <td><%= link_to 'Show', "users/#{u.id}", :class => "btn btn-outline-primary btn-sm" %></td> 
             <td><%= link_to 'Edit', edit_user_registration_path(u), :class => "btn btn-outline-primary btn-sm"%></td>
             
