@@ -16,54 +16,51 @@
     <%= f.text_field :title, class: 'form-control', :required => true %>
   </div>
 
-  <div class="form-group col-sm-2 bump-left course-dropdown">
-    <%= f.label :grade_level, :class => "control-label" %>
-    <%= f.select :grade_level, options_for_select(@available_grade_levels, @course.grade_level) %>
-  </div>
-  
-  
-  
-  
-  
-  <div class="form-group col-sm-8 pl-4">
-      <div class="">
-        <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-      </div>
-      <br />
-      <div id="TagHeader" style="display:none"> 
-        Tag Name: 
-      </div>
-      <br />
-      <ul id="myList">
-        <% @course.tags.each do |tag| %>	  
-          <% time_stamp = Time.now.to_i %>	  
-          <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="form-row pl-4">
-    <div class="form-group col-sm-2 course-dropdown">
-      <%= f.label :state, :class => "course-dropdown" %>
-      <%= f.select :state, options_for_select(@states, @course.state)  %>
-    </div>
-
-    <div class="form-group col-sm-2 course-dropdown">
-      <%= f.label :district, :class => "course-dropdown" %>
+  <div class="form-group ml-4">
+    <div class="">
+      <%= f.label "DISTRICT:", :class => "text-muted form-check-label move-label" %>
       <%= f.select :district, options_for_select(@districts, @course.district)  %>
     </div>
 
-    <div class="form-group col-sm-2 nudge-left course-dropdown">
-      <%= f.label :subject, :class => "control-label" %>
+    <div class="">
+      <%= f.label "SUBJECT:", :class => "text-muted form-check-label move-label" %>
       <%= f.select :subject, options_for_select(@subjects, @course.subject)  %>
     </div>
-  </div>
 
-  <div class="form-group fit-width pl-4">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: 'form-control', :required => true %>
+    <div class="row">      
+      <div class="move-grade-label">      
+        <%= f.label "GRADES:", :class => "text-muted form-check-label" %>
+      </div>
+      <div class="checkboxes">
+        <% for i in 0..13 do %>
+          <% if i % 2 == 0 %>      
+            <%= check_box_tag("grade_levels[#{@available_grade_levels[i].grade_level}", @available_grade_levels[i].id, false) %>
+            <%= f.label "#{@available_grade_levels[i]}",  :class => "text-muted form-check-label move-label" %>
+            <%= check_box_tag("grade_levels[#{@available_grade_levels[i + 1].grade_level}", @available_grade_levels[i + 1].id, false) %>
+            <%= f.label "#{@available_grade_levels[i + 1]}", :class => "text-muted form-check-label move-label" %>
+          <% end %>
+        <% end %>
+      </div>
+      <!--<%#= f.label :grade_level, :class => "control-label" %>
+      <%#= f.select :grade_level, options_for_select(@available_grade_levels, @course.grade_level) %>-->
+      <div class="ml-4 move-description">
+        <div><%= f.label :description, :class => "text-muted form-check-label move-label" %></div>
+        <%= f.text_area :description, cols: 40, rows: 10, class: '', :required => true %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="pl-4">
+      <div class="">
+        <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+        <ul id="myList" class="move-tag-list">
+          <% @course.tags.each do |tag| %>	  
+            <% time_stamp = Time.now.to_i %>	  
+            <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <div class="form-group pl-4">
@@ -71,8 +68,6 @@
       <%= f.submit %>
       <% if @course&.id.present? %>
         | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn btn-outline-primary btn-sm" %>
-        | <%= link_to 'New Lesson', new_course_lesson_path(@course.id), :class => "btn btn-outline-primary btn-sm" %>
-          <%= link_to 'Back to Courses', courses_path, :class => "btn btn-outline-primary btn-sm" %>    
       <% end %>
     </div>
   </div>

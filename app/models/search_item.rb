@@ -6,11 +6,12 @@ class SearchItem < ApplicationRecord
 
   def search_data attrs = attributes.dup
     if self.searchable.class == Course
+        byebug
       relational = {
         title: self.searchable.title,
         description: self.searchable.description,
         subject: self.searchable.subject,
-        grade_level: self.searchable.grade_level,
+        grade_level: self.searchable.grades.pluck(:grade_level).join(' '),
         state: self.searchable.state,
         district: self.searchable.district,
         units_covered: "",
