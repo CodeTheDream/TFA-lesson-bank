@@ -15,12 +15,19 @@
  
  @import "import '../stylesheets/application";
  /* @import "bootstrap/dist/css/bootstrap"; */
-@font-face {
-  font-family: "Proxima Nova Font";
-  src: url("Proxima Nova Font.otf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+/*
+ *= require font-awesome
+ */
+
+@import "font-awesome";
+
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/v4-shims";
+
 html {
   height: 100%;
 }
@@ -29,7 +36,7 @@ body {
   height: 100vh;
   display: flex !important;
   flex-direction: column;
-  font-family: "Proxima Nova Font";
+  font-family: "Montserrat";
 
   /* overflow-x: hidden; Prevent scroll on narrow devices */
 }
