@@ -51,7 +51,7 @@ class CoursesController < ApplicationController
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
 
-      course_tags = @course.tags.pluck(:name).split(' ')
+      course_tags = @course.tags.pluck(:name).join(' ')
       
       hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags} 
       search_item = SearchItem.create(hash)

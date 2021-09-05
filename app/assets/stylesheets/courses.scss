@@ -30,8 +30,6 @@
 }
 .lesson_show_description {
   background-color: white;
-  padding-left: 40px;
-  padding-right: 40px;
 }
 .lesson_show_description p {
   padding: 20px;
@@ -43,10 +41,13 @@
   border-radius: 0% !important;
   width: 100%;
 }
-
+.thead {
+  vertical-align: middle !important;
+}
 .table thead tr th,
 .table tbody tr td {
   border: none !important;
+  vertical-align: middle !important;
 }
 .table td,
 .table th,
@@ -55,10 +56,10 @@
   border-bottom: none !important;
 }
 
-.lesson_clickable {
-  background-color: white;
-  width: 1050px !important;
-}
+// .lesson_clickable {
+//   background-color: white;
+//   width: 1050px !important;
+// }
 .fa-play.icon-play {
   color: #1996aa !important;
   font-size: 18px;
@@ -74,12 +75,9 @@
 .lesson_title_row {
   background-color: white;
   padding: 5px;
-  padding-left: 30px !important;
-  padding-right: 30px !important;
 }
 
 .lesson_title_row h3 {
-  margin-left: 40px;
   margin-top: 10px;
   text-decoration: none !important;
 }
