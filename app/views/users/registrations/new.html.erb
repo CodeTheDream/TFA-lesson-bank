@@ -21,6 +21,11 @@
                     </div> 
 
                     <div class="form-group">
+                      <%= f.label :role %>
+                      <%= f.text_field :role, autofocus: true, autocomplete: "Role", :class=>"form-control"  %>
+                    </div>
+
+                    <div class="form-group">
                       <%= f.label :email %>
                       <%= f.email_field :email, autofocus: true, autocomplete: "email", :class=>"form-control"  %>
                     </div>         

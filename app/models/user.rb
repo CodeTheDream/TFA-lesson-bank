@@ -10,6 +10,14 @@ class User < ApplicationRecord
   
   validates :first_name, presence: true
   validates :last_name, presence: true
+  # validates :role, presence: true
+
+  after_initialize :set_default_role, :if => :new_record?
+
+  def set_default_role
+    self.role ||= :teacher
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

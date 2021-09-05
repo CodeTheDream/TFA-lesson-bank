@@ -6,19 +6,20 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    attributes = [:role, :email, :password, :password_confirmation, :unconfirmed_email]
+    attributes = [:role, :email, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
   end
 
   def configure_sign_up_parameters
-    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email)
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
   end
 
   def configure_registration_parameters
-    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email)
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
   end
 
   def configure_registration_update_parameters
+    byebug
     params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
   end
   

@@ -52,13 +52,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update
     # @user = User.find params[:id]
+    byebug
     if @user.role === 'admin'
+      byebug
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
       else
         redirect_to '/edit', notice: 'User could not be updated'
       end
     else
+      byebug
       if @user.update  configure_registration_update_parameters
         redirect_to '/', notice: 'User was successfully updated'
       else
@@ -66,6 +69,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
   end
+  
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
 #owner and admin pundit
@@ -103,6 +107,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
+    byebug
     params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
   end
 
