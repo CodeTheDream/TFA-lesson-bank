@@ -51,7 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    # @user = User.find params[:id]
+    @user = User.find params[:id]
     if @user.role === 'admin'
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
