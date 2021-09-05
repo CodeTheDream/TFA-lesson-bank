@@ -2,6 +2,8 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
+  before_action :verify_role!
+  before_action :set_user
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -9,7 +11,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  def index     
+  def index
+    #Call to user policy
+    # byebug
+    # authorize @user
+    byebug     
     @users = User.all
     @users = @users.paginate(page: params[:page], :per_page => 10)
   end 
@@ -46,11 +52,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def edit    
+  def edit  
+    byebug
+    #Call to user policy
+    authorize @user
+    byebug  
     @user = User.find params[:format]
   end
 
   def update
+    byebug
+    authorize @user
+    byebug
     @user = User.find params[:id]
     if @user.role === 'admin'
       if @user.update  configure_registration_update_parameters
@@ -104,6 +117,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+  end
+
+private
+  def verify_role!
+    byebug
+    authorize @user || User
+    byebug 
+  end
+  def set_user
+    byebug
+    @user = current_user
+    byebug
   end
 
   # If you have extra params to permit, append them to the sanitizer.
