@@ -115,16 +115,16 @@
                   <div class="lesson_show_description"><p><%= lessonshow.description %></div>
                     <div class="panel-body">
                       <% if lessonshow.present? %>
+                        <thead>
+                          <tr>
+                            <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+                            <th scope="col">TYPE</th>
+                            <th class="text-center" scope="col">PREVIEW</th>
+                            <th class="text-center" scope="col">DOWNLOAD</th>
+                          </tr>                        
+                        </thead>
                         <% lessonshow.documents.each do | lessondocument| %>                                        
                           <table class="table ">
-                            <thead>
-                              <tr>
-                                <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
-                                <th scope="col">TYPE</th>
-                                <th class="text-center" scope="col">PREVIEW</th>
-                                <th class="text-center" scope="col">DOWNLOAD</th>
-                              </tr>                        
-                            </thead>
                             <tbody>
                               <tr>
                                 <th scope="row">
