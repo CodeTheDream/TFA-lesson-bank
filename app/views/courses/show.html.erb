@@ -93,6 +93,7 @@
     </div>  
                 
   
+    
     <!-- Lesson Bottom Accordion Section-->  
     <div class="container  mb-5">
       <% if @course.lessons.present? %>
@@ -114,17 +115,8 @@
                 <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                   <div class="lesson_show_description"><p><%= lessonshow.description %></div>
                     <div class="panel-body">
-                      <% if lessonshow.present? %>
-                        <thead>
-                          <tr>
-                            <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
-                            <th scope="col">TYPE</th>
-                            <th class="text-center" scope="col">PREVIEW</th>
-                            <th class="text-center" scope="col">DOWNLOAD</th>
-                          </tr>                        
-                        </thead>
-                        <% lessonshow.documents.each do | lessondocument| %>                                        
-                          <table class="table">
+                    <div class="col-lg-8">  
+                      <table class="table">
                             <thead>
                               <tr>
                                 <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
@@ -133,37 +125,36 @@
                                 <th class="text-center" scope="col">DOWNLOAD</th>
                               </tr>                        
                             </thead>
-                            <% if lessonshow.present? %>
-                              <% lessonshow.documents.each do | lessondocument| %>                            
-                                <tbody class="text-center">
-                                  <tr>
-                                    <th scope="row">
-                                      <%= lessondocument.name.titleize %>
-                                    </th>
-                                    <% if lessondocument.file.attached? %>
-                                      <th scope="row">
-                                      <span style="color: gray"><%= lessondocument.kind.upcase %></span>
-                                      </th>
-                                    <% end %> 
-                                    <% if lessondocument.file.representable? %>
-                                      <th class="text-center" scope="row">                                
-                                        <%= link_to (lessondocument.file) do %>
-                                          <i class=" fa fa-search" style="color:gray;"></i> 
-                                        <% end %>   
-                                      </th>
-                                    <%end%>                        
-                                    <th class="text-center" scope="row">
-                                      <%= link_to(lessondocument.file, download: '') do %>
-                                        <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                                      <% end %>  
-                                    </th>                                
-                                  </tr>
-                                </tbody>  
-                              <% end %>
-                            <% end %>                            
-                          </table>                                    
-                        <% end %>
-                      <% end %>  
+                        <% if lessonshow.present? %>
+                          <% lessonshow.documents.each do | lessondocument| %>                            
+                            <tbody>
+                              <tr>
+                                <th scope="row">
+                                  <%= lessondocument.name.titleize %>
+                                </th>
+                                <% if lessondocument.file.attached? %>
+                                  <th scope="row">
+                                  <span style="color: gray"><%= lessondocument.kind.upcase %></span>
+                                  </th>
+                                <% end %> 
+                                <% if lessondocument.file.representable? %>
+                                  <th class="text-center" scope="row">                                
+                                    <%= link_to (lessondocument.file) do %>
+                                      <i class=" fa fa-search" style="color:gray;"></i> 
+                                    <% end %>   
+                                  </th>
+                                <%end%>                        
+                                <th class="text-center" scope="row">
+                                  <%= link_to(lessondocument.file, download: '') do %>
+                                    <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                                  <% end %>  
+                                </th>                                
+                              </tr>
+                            </tbody>  
+                          <% end %>
+                        <% end %>                            
+                      </table>                     
+                    </div>
                     </div>
                   </div>
                 </div>
