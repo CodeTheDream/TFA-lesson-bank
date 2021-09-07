@@ -16,14 +16,21 @@ class PagesController < ApplicationController
       @results = @results.select {|result| ((favorites.include? result.searchable_id) && (result.searchable_type == "Course"))}
     # end
     elsif search_params[:mycontent] == "true"
-      results_id = @results.pluck :id
-      # remove all courses that don't belong to the current user if :mycontent is true
-      # @results = @results.select {|result| (mycourses.include? result.searchable_id)}
-      mycourses = Course.where(user_id: current_user.id)
-      @results = mycourses
+      @results = @results.select {|result| result.user_id == current_user.id}
     end
   end
   private
+
+  # def cards_tags(results) 
+  #   tags_hash = {} 
+  #   byebug   
+  #   results.each do |result|
+  #     byebug
+  #     if result.tags.any?
+  #       tags_hash[result] = result.tags.pluck :names
+  #     end
+  #   end
+  # end
 
   def search_params
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district, :favorites, :mycontent)

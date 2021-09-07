@@ -16,6 +16,7 @@ class SearchItem < ApplicationRecord
         units_covered: "",
         course_id: "",
         tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
+        user_id: Course.find(self.searchable.id).user.id
       }
     else
         relational = {
@@ -28,6 +29,7 @@ class SearchItem < ApplicationRecord
         units_covered: self.searchable.units_covered,
         course_id: self.searchable.course_id.to_s,
         tags: Lesson.find(self.searchable.id).tags.pluck(:name).join(' '),
+        user_id: Lesson.find(self.searchable.id).course.user.id
       }
     end
   end
