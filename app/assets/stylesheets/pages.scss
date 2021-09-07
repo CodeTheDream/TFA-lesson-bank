@@ -9,6 +9,24 @@
   grid-gap: 1em;
   padding: 1em;
 }
+
+.checkbox-format input[type="checkbox"] {
+  height: 20px !important;
+  width: 20px !important;
+}
+.grid-container-filter{
+    display: grid;
+    
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 10px;
+    
+    
+  
+}
+.login-label{
+  font-size: smaller;
+}
+
 .main-result {
   display: grid;
   padding-top: 4em;

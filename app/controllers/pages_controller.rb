@@ -9,6 +9,7 @@ class PagesController < ApplicationController
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @search = search_params[:search].present? ? search_params[:search] : nil
     query = @search
+    @selected_subject  = search_params[:subject].present? ? search_params[:subject] : ''
     @results = SearchItemSearch.search(query: query, options: search_params)
   end
 
