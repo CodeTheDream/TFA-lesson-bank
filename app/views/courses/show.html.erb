@@ -34,12 +34,14 @@
     <div class="col-lg-8 mt-5 mb-2">  
       <!-- Course Description Section-->
     <div class="star">
-      <% if current_user.favorites.include? @course %>
+      <% if current_user.favorites.pluck(:course_id).include? @course.id %>
         <%= link_to(unfavorite_course_path) do %>
-          <i class="fas fa-star" style="color:gray;"></i>
+          <i class="fas fa-star" style="color:yellow;"></i>
         <% end %> 
       <% else %>
-        <%= link_to 'FAVORITE', favorite_course_path, class: '' %>
+        <%= link_to(favorite_course_path) do %>
+          <i class="fas fa-star" style="color:gray;"></i>
+        <% end %> 
       <% end %>
     </div>
     
