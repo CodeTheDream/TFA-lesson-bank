@@ -80,7 +80,7 @@
                       <% if document.file.representable? %>
                         <th class="text-center" scope="row">
                           <%= link_to(document.file) do %>
-                            <i class=" fa fa-solid fa-file-image" style="color:gray;"></i>
+                            <i class=" fa fa-search" style="color:gray;"></i>
                           <% end %> 
                         </th>       
                       <% end %>
@@ -101,6 +101,7 @@
     </div>  
                 
   
+    
     <!-- Lesson Bottom Accordion Section-->  
     <div class="container  mb-5">
       <% if @course.lessons.present? %>
@@ -122,17 +123,18 @@
                 <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                   <div class="lesson_show_description"><p><%= lessonshow.description %></div>
                     <div class="panel-body">
-                      <% if lessonshow.present? %>
-                        <thead>
-                          <tr>
-                            <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
-                            <th scope="col">TYPE</th>
-                            <th class="text-center" scope="col">PREVIEW</th>
-                            <th class="text-center" scope="col">DOWNLOAD</th>
-                          </tr>                        
-                        </thead>
-                        <% lessonshow.documents.each do | lessondocument| %>                                        
-                          <table class="table ">
+                    <div class="col-lg-8">  
+                      <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+                                <th scope="col">TYPE</th>
+                                <th class="text-center" scope="col">PREVIEW</th>
+                                <th class="text-center" scope="col">DOWNLOAD</th>
+                              </tr>                        
+                            </thead>
+                        <% if lessonshow.present? %>
+                          <% lessonshow.documents.each do | lessondocument| %>                            
                             <tbody>
                               <tr>
                                 <th scope="row">
@@ -146,7 +148,7 @@
                                 <% if lessondocument.file.representable? %>
                                   <th class="text-center" scope="row">                                
                                     <%= link_to (lessondocument.file) do %>
-                                      <i class=" fa fa-solid fa-file-image" style="color:gray;"></i> 
+                                      <i class=" fa fa-search" style="color:gray;"></i> 
                                     <% end %>   
                                   </th>
                                 <%end%>                        
@@ -156,10 +158,11 @@
                                   <% end %>  
                                 </th>                                
                               </tr>
-                            </tbody>                            
-                          </table>                     
-                        <% end %>
-                      <% end %>  
+                            </tbody>  
+                          <% end %>
+                        <% end %>                            
+                      </table>                     
+                    </div>
                     </div>
                   </div>
                 </div>
