@@ -72,7 +72,7 @@
                       <% if document.file.representable? %>
                         <th class="text-center" scope="row">
                           <%= link_to(document.file) do %>
-                            <i class=" fa fa-solid fa-file-image" style="color:gray;"></i>
+                            <i class=" fa fa-search" style="color:gray;"></i>
                           <% end %> 
                         </th>       
                       <% end %>
@@ -124,32 +124,44 @@
                           </tr>                        
                         </thead>
                         <% lessonshow.documents.each do | lessondocument| %>                                        
-                          <table class="table ">
-                            <tbody>
+                          <table class="table">
+                            <thead>
                               <tr>
-                                <th scope="row">
-                                  <%= lessondocument.name.titleize %>
-                                </th>
-                                <% if lessondocument.file.attached? %>
-                                  <th scope="row">
-                                  <span style="color: gray"><%= lessondocument.kind.upcase %></span>
-                                  </th>
-                                <% end %> 
-                                <% if lessondocument.file.representable? %>
-                                  <th class="text-center" scope="row">                                
-                                    <%= link_to (lessondocument.file) do %>
-                                      <i class=" fa fa-solid fa-file-image" style="color:gray;"></i> 
-                                    <% end %>   
-                                  </th>
-                                <%end%>                        
-                                <th class="text-center" scope="row">
-                                  <%= link_to(lessondocument.file, download: '') do %>
-                                    <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                                  <% end %>  
-                                </th>                                
-                              </tr>
-                            </tbody>                            
-                          </table>                     
+                                <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+                                <th scope="col">TYPE</th>
+                                <th class="text-center" scope="col">PREVIEW</th>
+                                <th class="text-center" scope="col">DOWNLOAD</th>
+                              </tr>                        
+                            </thead>
+                            <% if lessonshow.present? %>
+                              <% lessonshow.documents.each do | lessondocument| %>                            
+                                <tbody class="text-center">
+                                  <tr>
+                                    <th scope="row">
+                                      <%= lessondocument.name.titleize %>
+                                    </th>
+                                    <% if lessondocument.file.attached? %>
+                                      <th scope="row">
+                                      <span style="color: gray"><%= lessondocument.kind.upcase %></span>
+                                      </th>
+                                    <% end %> 
+                                    <% if lessondocument.file.representable? %>
+                                      <th class="text-center" scope="row">                                
+                                        <%= link_to (lessondocument.file) do %>
+                                          <i class=" fa fa-search" style="color:gray;"></i> 
+                                        <% end %>   
+                                      </th>
+                                    <%end%>                        
+                                    <th class="text-center" scope="row">
+                                      <%= link_to(lessondocument.file, download: '') do %>
+                                        <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                                      <% end %>  
+                                    </th>                                
+                                  </tr>
+                                </tbody>  
+                              <% end %>
+                            <% end %>                            
+                          </table>                                    
                         <% end %>
                       <% end %>  
                     </div>
