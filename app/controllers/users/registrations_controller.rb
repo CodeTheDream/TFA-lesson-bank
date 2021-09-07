@@ -2,7 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  before_action :verify_role!
+  # before_action :verify_role!
   before_action :set_user
   # before_action :configure_account_update_params, only: [:update]
 
@@ -23,10 +23,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @user = User.new configure_sign_up_params
-    @user.role = 'teacher'
     if @user.save
-      UserMailer.with(user: @user).new_registration.deliver_now
-      UserMailer.with(user: @user).welcome_email.deliver_now
+      # UserMailer.with(user: @user).new_registration.deliver_now
+      # UserMailer.with(user: @user).welcome_email.deliver_now
       redirect_to root_path, notice: 'Success! Check your email to confirm your account'
     else
       redirect_to root_path, notice: 'User cannot be added'
@@ -53,19 +52,39 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def edit  
-    byebug
     #Call to user policy
-    authorize @user
-    byebug  
-    @user = User.find params[:format]
+
+    # if authorize @user
+      @user = User.find params[:format]
+    # else
+    #   respond_to do |format|
+    #   format.html { redirect_to '/users', notice: 'User was successfully updated'}
+    #   format.json { head :no_content }
+    # end
+      # format.html { render :edit }
+      # format.json { render json: @user.errors, status: :unprocessable_entity }
+    # end
+    # if @user.edit(@user)
+    #   format.html { redirect_to @user, notice: 'User was successfully edited.' }
+    #   format.json { render :show, status: :ok, location: @user }
+    # else
+    #   format.html { render :edit }
+    #   format.json { render json: @user.errors, status: :unprocessable_entity }
+    # end
+   
+    # byebug  
+    # @user = User.find params[:format]
+    # respond_to do |format|
+    #   format.html { redirect_to '/users', notice: 'User was successfully updated'}
+    #   format.json { head :no_content }
+    # end
+
   end
 
   def update
-    byebug
-    authorize @user
-    byebug
     @user = User.find params[:id]
-    if @user.role === 'admin'
+    authorize @user
+    if @user.role == 'admin'
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
       else
@@ -79,6 +98,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
   end
+
+
+
+  
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
 #owner and admin pundit
@@ -120,11 +143,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
 private
-  def verify_role!
-    byebug
-    authorize @user || User
-    byebug 
-  end
+  # def verify_role!
+  #   @user || User
+  # end
   def set_user
     byebug
     @user = current_user

@@ -1,14 +1,9 @@
-<h1 class="title mt-5 mb-5 display-3" style="text-align: center;">Users</h1>
-<div id="no-more-tables" class="table-responsive card mb-5">
-  <div class="container container-custom rounded-3 container-bg">
+<div class="container container-custom rounded-3 container-bg">
     <div class="row container-header p-3 bg-light">
       <h4 class="font-weight-light mb-0 align-middle">Users List</h4>
     </div>
-    <div class="row text-center">
-      <div class="float-right">
-        <%= will_paginate @users %>
-      </div>    
-    <div class="table-responsive">
+</div>
+<div class="table-responsive">
       <table class="table table-striped table-hover user-table mb-0">
         <thead>
           <tr>      
@@ -26,7 +21,7 @@
             <td><strong><%= u.email %></strong></td>
             <td><strong><%= u.role %></strong></td>
             <td><%= link_to 'Show', "users/#{u.id}", :class => "btn btn-outline-primary btn-sm" %></td> 
-            <td><%= link_to 'Edit', edit_user_registration_path(u), :class => "btn btn-outline-primary btn-sm"%></td>
+            <td><%= link_to 'Edit', edit_user_registration_path, :class => "btn btn-outline-primary btn-sm"%></td>
             
             <% if current_user=="Admin" %>
               <%= link_to 'Destroy',  user, method: :delete, :class => "btn btn-outline-primary btn-sm", data: {confirm: "Are you sure you want to delete this user?"} %>
