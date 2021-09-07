@@ -1,5 +1,3 @@
-
-
 <div class="container mt-5 ">
     
       <!-- Button Back Section-->   
@@ -35,6 +33,16 @@
     <!-- Right Side Course-->
     <div class="col-lg-8 mt-5 mb-2">  
       <!-- Course Description Section-->
+    <div class="star">
+      <% if current_user.favorites.include? @course %>
+        <%= link_to(unfavorite_course_path) do %>
+          <i class="fas fa-star" style="color:gray;"></i>
+        <% end %> 
+      <% else %>
+        <%= link_to 'FAVORITE', favorite_course_path, class: '' %>
+      <% end %>
+    </div>
+    
       <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     

@@ -16,11 +16,7 @@ class PagesController < ApplicationController
       @results = @results.select {|result| ((favorites.include? result.searchable_id) && (result.searchable_type == "Course"))}
     # end
     elsif search_params[:mycontent] == "true"
-      results_id = @results.pluck :id
-      # remove all courses that don't belong to the current user if :mycontent is true
-      # @results = @results.select {|result| (mycourses.include? result.searchable_id)}
-      mycourses = Course.where(user_id: current_user.id)
-      @results = mycourses
+      @results = @results.select {|result| result.user_id == current_user.id}
     end
   end
   private
