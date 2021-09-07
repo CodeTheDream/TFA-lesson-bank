@@ -1,9 +1,112 @@
 // Place all the styles related to the Courses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.show_button_section {
+  margin-top: 120px !important;
+}
+.btn_show_back {
+  border: none;
+  background-color: white !important;
+  font-family: Montserrat;
+  font-size: 12px !important;
+  color: gray !important;
+}
 
+.big_card {
+  background-color: #f0eeed;
+  margin-top: 15px;
+  height: 100%;
+  font-family: Montserrat;
+  width: 100%;
+}
+.show_left {
+  margin-left: 40px;
+}
+.course_show_description {
+  margin-top: 25px;
+}
+.lesson_accordion {
+  background-color: white;
+}
+.lesson_show_description {
+  background-color: white;
+}
+.lesson_show_description p {
+  padding: 20px;
+  margin-top: 0% !important;
+}
+.card-header {
+  background-color: #1996aa !important;
+  height: 2px;
+  border-radius: 0% !important;
+  width: 100%;
+}
+.thead {
+  vertical-align: middle !important;
+}
+.table thead tr th,
+.table tbody tr td {
+  border: none !important;
+  vertical-align: middle !important;
+}
+.table td,
+.table th,
+.table tr {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+// .lesson_clickable {
+//   background-color: white;
+//   width: 1050px !important;
+// }
+.fa-play.icon-play {
+  color: #1996aa !important;
+  font-size: 18px;
+  margin-right: 10px;
+}
 .tag_button {
   height: 10px;
+}
+.courses_tags {
+  color: gray !important;
+  background-color: white;
+}
+.lesson_title_row {
+  background-color: white;
+  padding: 5px;
+}
+
+.lesson_title_row h3 {
+  margin-top: 10px;
+  text-decoration: none !important;
+}
+.lesson_title_row:hover {
+  color: #1996aa !important;
+}
+a {
+  text-decoration: none !important;
+}
+.right_arrow {
+  display: inline-block;
+  position: relative;
+  background: #1996aa;
+  padding: 10px;
+}
+.right_arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 80%;
+  top: 67%;
+  margin-top: -10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #1996aa;
+  margin-left: 7px;
 }
 
 .center-right {
@@ -21,17 +124,21 @@
 }
 
 .move-left {
-  right:6em;
+  right: 6em;
 }
 
 .bump-left {
-  right:1.7em;
+  right: 1.7em;
 }
 
 .nudge-left {
-  right:.7em;
+  right: 0.7em;
 }
 
 ul li.favorites::marker {
   content: "⭐️";
+}
+
+.star {
+  float: right;
 }
