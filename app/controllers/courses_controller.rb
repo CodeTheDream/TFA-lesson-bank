@@ -2,7 +2,7 @@ require "zip"
 require 'fileutils'
 class CoursesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite]
   before_action :verify_role!
 
   def index
@@ -50,7 +50,10 @@ class CoursesController < ApplicationController
     @course.user = current_user
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
+
+      course_tags = @course.tags.pluck(:name).join(' ')
+      
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id} 
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
       flash.notice = "The course record was created successfully."
@@ -77,7 +80,8 @@ class CoursesController < ApplicationController
         tags = existing_tags_params
       end
       @course.tag_list=(tags) if tags.present?
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
+      course_tags = @course.tags.pluck(:name).join(' ')
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, user_id: current_user.id } 
       search_item = SearchItem.find_by(searchable_id: @course.id, searchable_type: 'Course')
       search_item.update hash
       @course.search_item = search_item
@@ -99,6 +103,27 @@ class CoursesController < ApplicationController
     end
   end
 
+  # Add and remove favorite courses
+  # for current_user
+  def favorite
+    # current_user.favorites << @course
+    if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+      redirect_to course_path(id: @course.id), notice: "You already favorited #{@course.title}"
+    else
+      current_user.favorites << @course
+      redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
+    end
+  end
+
+  def unfavorite
+    if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+      redirect_to course_path(id: @course.id), notice: "You already unfavorited #{@course.title}"
+    else
+      current_user.favorites.delete(@course)
+      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+    end
+  end
+  
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
@@ -146,7 +171,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites)
   end
 
   def tags_params

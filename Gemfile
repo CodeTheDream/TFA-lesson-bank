@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 # Use pundit for authorization
 gem "pundit"
-gem 'bootstrap'
+gem 'bootstrap', '~>5.0'
 # Use for validating blobs
 gem 'activestorage-validator'
 # Use for rendering pdfs
@@ -36,9 +36,16 @@ gem 'rack-cors'
 gem 'ffmpeg'
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
+gem "font-awesome-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+
+# Use will_paginate to paginate information
+gem 'will_paginate', '~> 3.1.0'
+# Use will_paginate_bootstrap as an extention for styling
+gem 'will_paginate-bootstrap4'
+
 
 # Use searchkick to interact with ElastciSearch
 gem 'searchkick'

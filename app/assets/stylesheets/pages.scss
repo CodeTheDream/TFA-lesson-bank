@@ -1,7 +1,13 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@font-face {
+  font-family: "GuardianEgyp-Light-Reduced";
+  src: url("GuardianEgyp-Light-Reduced.woff.ttf");
+}
+
 .grid-container {
+  padding-top: 6em;
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-column-gap: 1em;
@@ -29,20 +35,20 @@
 
 .main-result {
   display: grid;
-  padding-top: 4em;
-  padding-bottom: 2em;
+  padding-top: 6em;
+  padding-bottom: 1em;
   grid-template-rows: 100px 100px 1fr;
 }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 1em;
-}
+// .cards {
+//   display: grid;
+//   grid-template-columns: repeat(3, 1fr);
+//   grid-gap: 1em;
+// }
 
 .search-filter {
   display: grid;
-  margin-top: 6em;
-  // grid-template-rows:repeat(5, 0.5fr) ;
+  margin-top: 17em;
+  grid-template-rows: repeat(5, 0.5fr);
   grid-auto-rows: 4.5em;
   margin-bottom: 1em;
   grid-gap: 1em;
@@ -54,23 +60,72 @@
 .button_view_card {
   background-color: #081e32 !important;
   color: white !important;
-  margin-top: 190px !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
+  margin-bottom: -16px;
+  width: 150px;
+}
+.button_view_card:hover {
+  background-color: #1996aa !important;
 }
 .search_card {
   border-radius: 0% !important;
-  background-color: hsl(0, 0%, 90%) !important;
-  transition: background-color 300ms !important;
-  border: none !important;
-  height: 350px;
-}
+  background-color: #f0eeed !important;
 
-.card-header {
-  background-color: #1996aa !important;
-  padding: 0.3rem 0.25rem !important;
-  border-radius: 0% !important;
-}
-.button_filter {
-  color: white;
-  font-size: 12px !important;
+  // transition: background-color 300ms !important;
+  border: none !important;
+
+  .card-header {
+    background-color: #1996aa !important;
+    padding: 0.3rem 0.25rem !important;
+    border-radius: 0% !important;
+  }
+
+  #circle {
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #1996aa;
+    float: right;
+    margin-top: -2%;
+    margin-right: 2%;
+    font: bold 15px;
+    padding: 6px 3px 0 3px;
+  }
+  .right-arrow {
+    display: inline-block;
+    position: relative;
+    background: #1996aa;
+    padding: 10px;
+  }
+  .right-arrow:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 80%;
+    top: 67%;
+    margin-top: -10px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #1996aa;
+    margin-left: 7px;
+  }
+
+  .card-title {
+    margin-top: 0%;
+    font-size: 22px;
+  }
+
+  .read_more {
+    color: #1996aa;
+  }
+  .read_more:hover {
+    color: #081e32;
+  }
+  .search_tags {
+    word-spacing: 1em;
+  }
 }
