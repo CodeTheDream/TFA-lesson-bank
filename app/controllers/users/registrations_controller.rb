@@ -13,9 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def index
     #Call to user policy
-    # byebug
     # authorize @user
-    byebug     
     @users = User.all
     @users = @users.paginate(page: params[:page], :per_page => 10)
   end 
@@ -72,7 +70,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #   format.json { render json: @user.errors, status: :unprocessable_entity }
     # end
    
-    # byebug  
     # @user = User.find params[:format]
     # respond_to do |format|
     #   format.html { redirect_to '/users', notice: 'User was successfully updated'}
@@ -147,9 +144,7 @@ private
   #   @user || User
   # end
   def set_user
-    byebug
     @user = current_user
-    byebug
   end
 
   # If you have extra params to permit, append them to the sanitizer.
