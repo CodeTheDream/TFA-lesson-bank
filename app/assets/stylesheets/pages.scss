@@ -1,6 +1,8 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+
 @font-face {
   font-family: "GuardianEgyp-Light-Reduced";
   src: url("GuardianEgyp-Light-Reduced.woff.ttf");
@@ -14,23 +16,42 @@
   height: 100vh;
   grid-gap: 1em;
   padding: 1em;
+  
 }
 
 .checkbox-format input[type="checkbox"] {
-  height: 20px !important;
-  width: 20px !important;
+  
+  
+  height: 1.1rem !important;
+  width: 1.3rem !important;
+  margin:auto;
+  
+  
+}
+
+.checkbox-format label{
+  font-size:0.7rem;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .grid-container-filter{
     display: grid;
-    
+    height: fit-content;
+    width: 70%;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    row-gap: 10px;
+    row-gap: 0.7em;
     
-    
-  
 }
+.show-more{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 40%;
+  row-gap: 0.7em;
+}
+
 .login-label{
   font-size: smaller;
+  
 }
 
 .main-result {

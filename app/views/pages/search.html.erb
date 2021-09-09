@@ -11,18 +11,29 @@
                     <small class="form-text text-muted">DISTRICT</small>
                     <%= select_tag :district, options_for_select(@districts), { include_blank: true, class: 'form-control' } %>
                   </div>
-              ​ <h6 class="form-text text-bold mb-2">Grade Level:</h6>
+              ​ <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
                     <div class='grid-container-filter mb-2 checkbox-format '>
                     
                       <% @available_grade_levels.each do |grade_level|%>
-                          
+                       
                         <%= check_box_tag "available_grade_levels[#{grade_level}]", grade_level %>
                         <%= label_tag "available_grade_levels[#{grade_level}]", grade_level  %>
+                        
                       <%end%>
                     </div>
+                    <h6 class="form-text text-bold mt-4  mb-4">SHOW ME:</h6>
+                    <div class='show-more checkbox-format'>
+                      
+                        <%= check_box_tag 'courses', 'courses'%>
+                        <%= label_tag 'courses', 'COURSES'  %>
+                        <%= check_box_tag 'lessons', 'lessons'%>
+                        <%= label_tag 'lessons', 'LESSONS'  %>
+                      
+                    </div>
+                   
                   
                   <%= hidden_field_tag :search, @search %>
-                  <div class="text-center">
+                  <div class="mt-4">
                     <%= submit_tag "FILTER RESULTS", :class => 'btn button_filter ' %>
                   </div>
                 <% end %>
