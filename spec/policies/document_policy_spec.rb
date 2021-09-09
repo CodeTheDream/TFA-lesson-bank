@@ -8,7 +8,7 @@ describe DocumentPolicy do
     course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}
     @course = Course.create(course_hash)
     lesson_hash = {title: "test lesson1", description: "test lesson1",
-         created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
     @lesson = Lesson.create(lesson_hash)
     lesson_document_hash = {name: "Doc1 for RonR", description: "Doc1 for RonR", kind: "type1", created_at: "2021-06-01 03:25:33", updated_at: "2021-06-01 03:25:33",     lesson_id: @lesson.id, course_id: nil}
     @lesson_document = Document.create(lesson_document_hash)

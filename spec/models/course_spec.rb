@@ -48,7 +48,7 @@ RSpec.describe Course, type: :model do
       @tag = FactoryBot.create(:tag)
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
-      hash = {course_id: @course.id, tag_id: @tag.id, frequency: 1}
+      hash = {course_id: @course.id, tag_id: @tag.id}
       KeyWord.find_or_create_by(hash)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Course, type: :model do
       @tag = FactoryBot.create(:tag)
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
-      hash = {course_id: @course.id, tag_id: @tag.id, frequency: 1}
+      hash = {course_id: @course.id, tag_id: @tag.id}
       KeyWord.find_or_create_by(hash)
     end
 

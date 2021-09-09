@@ -13,7 +13,6 @@ class SearchItem < ApplicationRecord
         grade_level: self.searchable.grade_level,
         state: self.searchable.state,
         district: self.searchable.district,
-        units_covered: "",
         course_id: "",
         tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
         user_id: Course.find(self.searchable.id).user.id
@@ -26,7 +25,6 @@ class SearchItem < ApplicationRecord
         grade_level: "",
         state: "",
         district: "",
-        units_covered: self.searchable.units_covered,
         course_id: self.searchable.course_id.to_s,
         tags: Lesson.find(self.searchable.id).tags.pluck(:name).join(' '),
         user_id: Lesson.find(self.searchable.id).course.user.id

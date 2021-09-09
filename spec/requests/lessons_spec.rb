@@ -20,7 +20,7 @@ RSpec.describe "Lessons", type: :request do
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         # tags: @tag.id, ?
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       # ?tags
       @lesson = Lesson.create(lesson_hash)
       get course_lessons_path(course_id: @course.id)
@@ -37,7 +37,7 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get course_lesson_path(course_id: @course.id, id: @lesson.id)
       expect(response).to render_template(:show)
@@ -50,7 +50,7 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get course_lesson_path(course_id: @course.id, id: 5000)
       expect(response).to redirect_to courses_path
@@ -64,7 +64,7 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get new_course_lesson_path(course_id: @course.id, id: @lesson.id),
         params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
@@ -76,7 +76,7 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get new_course_lesson_path(course_id: @course.id, id: @lesson.id),
         params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
@@ -92,7 +92,7 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get edit_course_lesson_path(course_id: @course.id, id: @lesson.id),
         params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
@@ -109,11 +109,11 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
      expect { post course_lessons_path(course_id: @course.id, id: @lesson.id), 
           params: {lesson: {title: "test lesson1", description: "test lesson1", 
-            created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}}
+            created_at: Time.now, updated_at: Time.now, course_id: @course.id}}
         }.to change(@course.lessons, :count)      
       end
     end
@@ -125,11 +125,11 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
      expect { post course_lessons_path(course_id: 0, id: @lesson.id), 
           params: {lesson: {title: "test lesson1", description: "test lesson1", 
-            created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: 0}}
+            created_at: Time.now, updated_at: Time.now, course_id: 0}}
         }.not_to change(@course.lessons, :count)
         #check redirect here
         # expect(response).to redirect_to new_course_lesson_path(@course_id)
@@ -144,15 +144,15 @@ RSpec.describe "Lessons", type: :request do
         course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
         @course = Course.create(course_hash)
         lesson_hash = {title: "test lesson1", description: "test lesson1", 
-          created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+          created_at: Time.now, updated_at: Time.now, course_id: @course.id}
         @lesson = Lesson.create(lesson_hash)
-        hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id }
+        hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id }
         search_item = SearchItem.create(hash)
         @lesson.search_item = search_item 
 
         put course_lesson_path(course_id: @course.id, id: @lesson.id), 
         params: {lesson: {title: "test lesson1", description: "test lesson1", 
-          created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}}
+          created_at: Time.now, updated_at: Time.now, course_id: @course.id}}
         @lesson.reload  
         expect(@lesson.course_id).to eq(@course.id) 
         expect(@lesson.id).to eq(@lesson.id)   
@@ -168,11 +168,11 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       put course_lesson_path(course_id: 0, id: 0), 
       params: {lesson: {title: "test lesson1", description: "", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: 0}}
+        created_at: Time.now, updated_at: Time.now, course_id: 0}}
       @lesson.reload  
       expect(@lesson.course_id).not_to eq(0)    
       expect(@lesson.id).not_to eq(0)   
@@ -190,7 +190,7 @@ RSpec.describe "Lessons", type: :request do
       course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       @course = @lesson.course
       expect{ delete course_lesson_path(@course, @lesson)}.to change(@course.lessons, :count)

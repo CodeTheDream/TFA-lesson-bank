@@ -22,17 +22,6 @@ class PagesController < ApplicationController
   end
   private
 
-  # def cards_tags(results) 
-  #   tags_hash = {} 
-  #   byebug   
-  #   results.each do |result|
-  #     byebug
-  #     if result.tags.any?
-  #       tags_hash[result] = result.tags.pluck :names
-  #     end
-  #   end
-  # end
-
   def search_params
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district, :favorites, :mycontent)
   end
