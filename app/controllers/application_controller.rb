@@ -34,11 +34,8 @@ class ApplicationController < ActionController::Base
       format.html do
         referrer = request.referrer
         # if not present or matches request url, go to root path
-        byebug
         path = referrer.nil? || referrer == request.url ? root_path : referrer
-        byebug
         redirect_to path, alert: msg
-        byebug
       end
       # format.pdf do
       #   referrer = request.referrer
@@ -47,7 +44,6 @@ class ApplicationController < ActionController::Base
       #   redirect_to path, alert: msg
       # end
       format.json { render json: { message: msg } }
-      byebug
     end
   end
 end
