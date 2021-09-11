@@ -10,6 +10,9 @@ class User < ApplicationRecord
   
   # validates :first_name, presence: true
   # validates :last_name, presence: true
+  # attr_accessor :first_name
+  # attr_accessor :last_name
+
 
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_email_confirmation

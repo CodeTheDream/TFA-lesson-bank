@@ -1,10 +1,13 @@
 class UserPolicy < ApplicationPolicy
   attr_reader :user, :record
   def initialize(user, record)
+    byebug
     @user = user
     @record = record
   end
   
+# if current_user.role == "admin"
+# end
 
   def logged_in?
     byebug

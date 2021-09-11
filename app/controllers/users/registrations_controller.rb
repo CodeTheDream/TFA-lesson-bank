@@ -42,20 +42,33 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.find params[:id]
   end
  
-  def destroy
-    @user = User.find params[:format]
-    if @user.destroy
-      redirect_to '/users', notice: 'User was successfully destroyed'
-    else
-      redirect_to '/users', notice: 'User could not be destroyed'
-    end
-  end
+  # def destroy
+  #   byebug
+  #   @user = User.find params[:format]
+  #   byebug
+  #   if @user.destroy
+  #     redirect_to '/users', notice: 'User was successfully destroyed'
+  #   else
+  #     redirect_to '/users', notice: 'User could not be destroyed'
+  #   end
+  # end
+
+  # def destroy
+  #   byebug
+  #   @user.destroy
+  #   respond_to do |format|
+  #   format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+  #   format.json { head :no_content }
+  #   end
+  # end
 
   def edit  
     #Call to user policy
 
     # if authorize @user
-      @user = User.find params[:format]
+    byebug
+    @user = User.find params[:format]
+
     # else
     #   respond_to do |format|
     #   format.html { redirect_to '/users', notice: 'User was successfully updated'}
@@ -83,7 +96,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update
     @user = User.find params[:id]
-    authorize @user
+    # authorize @user
     if @user.role == 'admin'
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
@@ -154,7 +167,7 @@ private
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
+    # devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   # end
 
   # The path used after sign up.
