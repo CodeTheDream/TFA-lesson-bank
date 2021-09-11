@@ -14,17 +14,17 @@
           </tr>
         </thead>          
         <tbody>
-        <% @users.each do |u| %>           
+        <% @users.each do |user| %>           
           <tr class="apple_pagination" > 
-            <td><strong><%= u.first_name %></strong></td>
-            <td><strong><%= u.last_name %></strong></td>     
-            <td><strong><%= u.email %></strong></td>
-            <td><strong><%= u.role %></strong></td>
-            <td><%= link_to 'Show', "users/#{u.id}", :class => "btn btn-outline-primary btn-sm" %></td> 
-            <td><%= link_to 'Edit', edit_user_registration_path, :class => "btn btn-outline-primary btn-sm" %></td> 
+            <td><strong><%= user.first_name %></strong></td>
+            <td><strong><%= user.last_name %></strong></td>     
+            <td><strong><%= user.email %></strong></td>
+            <td><strong><%= user.role %></strong></td>
+            <td><%= link_to 'Show', "users/#{user.id}", :class => "btn btn-outline-primary btn-sm" %></td> 
+            <td><%= link_to 'Edit', edit_user_path(user), :class => "btn btn-outline-primary btn-sm" %></td> 
 
 
-            <% if current_user=="Admin" %>
+            <% if current_user.role == 'admin'%>
               <%= link_to 'Destroy',  user, method: :delete, :class => "btn btn-outline-primary btn-sm", data: {confirm: "Are you sure you want to delete this user?"} %>
             <%end%>
             <td>

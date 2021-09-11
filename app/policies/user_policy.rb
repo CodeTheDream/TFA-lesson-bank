@@ -5,10 +5,8 @@ class UserPolicy < ApplicationPolicy
     @user = user
     @record = record
   end
-  
 # if current_user.role == "admin"
 # end
-
   def logged_in?
     byebug
     @user.present?
