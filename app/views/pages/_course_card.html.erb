@@ -8,7 +8,9 @@
     <div class="card-body" style="height: 40vh;">       
       <h2 class="card-title"><%= course.title.titleize %></h2>      
       <div><span style="color: gray">SUBJECT:</span> <%= course.subject%></div>
-      <div class="mb-4"><span style="color: gray">GRADE: </span><%= course.grade_level %></div>  
+      <div <span style="color: gray">GRADE: </span><%= course.grade_level %></div>
+      <div <span style="color: gray">AUTHOR: </span><%= current_user.name %></div>
+      
       <% if course.tags.present? %>
         <% course.tags.split(' ').each do |tag| %> 
           <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.capitalize %></span>
@@ -16,14 +18,16 @@
       <%end%>
 
       
-      <div class="card-text mb-4 mt-4" style="height: 15vh;">        
-        <%= simple_format truncate(h(course.description.capitalize), length: 130, separator: ' ') %>
+      <div class="card-text  mt-4 " style="height: 15vh;">        
+        <%= simple_format truncate(h(course.description.capitalize), length: 100, separator: ' ') %>
         <% if course.description.length >  100 %>
           <%= link_to "Read More", course_path(course), class:"read_more"%>
         <%end%>
       </div>  
-    </div>
     
+      <div class="mt-2 text-center"<span style="color: gray;font-size:10px; font-style:italic;">Created by <%= current_user.name%></span></div>
+      <div class="mt-2 text-center"<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
+    </div>
     <div class="text-center ">
       <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card right-arrow ">VIEW COURSE </a>
     </div>

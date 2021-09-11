@@ -13,12 +13,15 @@
           <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.capitalize %></span>
         <%end%>
       <%end%>     
-      <div class="card-text mb-4 mt-4" style="height: 15vh;">      
+      <div class="card-text  mt-4" style="height: 15vh;">      
         <%= simple_format truncate(h(lesson.description.capitalize), length: 100, separator: ' ') %>
         <% if lesson.description.length >  100 %>         
           <%= link_to "Read More", lesson_path(lesson), class:"read_more"%>          
         <%end%>
       </div>
+        <div class="mt-2 text-center"<span style="color: gray;font-size:10px; font-style:italic;">Created by <%= current_user.name%></span></div>
+        <div class="mt-2 text-center"<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= lesson.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
+      
     </div>
 
     <div class="text-center ">
