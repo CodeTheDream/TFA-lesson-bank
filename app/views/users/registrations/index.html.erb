@@ -15,9 +15,11 @@
             <th scope="col">First Name </th>
             <th scope="col">Last Name </th>
             <th scope="col">Email </th>         
-            <th scope="col">Role </th>  
+            <th scope="col">Role </th> 
           </tr>
-        </thead>          
+        </thead>    
+        <%# <%= current_user.role %>  
+        <%# p current_user.role       %>
         <tbody>
         <% @users.each do |u| %>           
           <tr class="apple_pagination" > 
@@ -25,6 +27,11 @@
             <td><strong><%= u.last_name %></strong></td>     
             <td><strong><%= u.email %></strong></td>
             <td><strong><%= u.role %></strong></td>
+            <%# <% if current_user.role.include?("admin")  %> 
+              <%# <th colspan="3" style="background:none;"></th> %>
+            <%# <% else %> 
+              <%# <th colspan="1"></th> %>
+            <%# <% end %>  
             <td><%= link_to 'Show', "users/#{u.id}", :class => "btn btn-outline-primary btn-sm" %></td> 
             <td><%= link_to 'Edit', edit_user_registration_path(u), :class => "btn btn-outline-primary btn-sm"%></td>
             

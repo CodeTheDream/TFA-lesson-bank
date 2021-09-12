@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users' => 'users/registrations#index'
     get '/users/:id' => 'users/registrations#show'
+    # patch '/users' => 'users/registrations#edit'
+    patch '/users/:id/edit', to: 'users#edit'
     post '/users/sign_in' => 'users/sessions#create'
     get '/users/sign_out' => 'devise/sessions#destroy'
   end

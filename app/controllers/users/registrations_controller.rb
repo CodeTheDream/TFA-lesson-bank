@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 class Users::RegistrationsController < Devise::RegistrationsController
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
-  # before_action :set_user
-  before_action :verify_role!
+  before_action :configure_account_update_params, only: [:update]
   # GET /resource/sign_up
   # def new
   #   super
   # end
+
+  before_action :verify_role!
 
   def index    
     @users = User.all
@@ -58,7 +59,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    # @user = User.find params[:id]
+    byebug
+    @user = User.find params[:id]
     # if @user.role === 'admin'
     #   if @user.update  configure_registration_update_parameters
     #     redirect_to '/users', notice: 'User was successfully updated'
@@ -66,12 +68,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #     redirect_to '/edit', notice: 'User could not be updated'
     #   end
     # else
+    if @user.role == 'admin'
       if @user.update  configure_registration_update_parameters
+        byebug
         redirect_to '/users', notice: 'User was successfully updated'
       else
-        redirect_to '/edit', notice: 'User could not be updated'
+        flash.now.alert = @user.errors.full_messages.to_sentence
+        redirect_to '/'#/edit, notice: 'User could not be updated'
       end
-    # end
+    end
   end
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
@@ -115,15 +120,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
  private
 
-  def set_user
-    byebug
-    @user = current_user
-  end
-
   def verify_role!
     authorize @user || User 
   end
 
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    redirect_to root_path
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])

@@ -3,6 +3,7 @@ class UserPolicy < ApplicationPolicy
   def initialize(user, record)
     @user = user
     @record = record
+    byebug
   end
 
   def logged_in?
@@ -10,7 +11,10 @@ class UserPolicy < ApplicationPolicy
   end
     
   def owner_or_admin?
-    (@user&.role == 'admin') #|| (@record&.user_id == @user.id) 
+  #   p " ========>#{@record.name} ========="
+  #  byebug
+    (@user.role == 'admin') || (@record&.id == @user.id)
+   byebug 
   end
     
   %i(index? new? create? show?).each do |ali|
