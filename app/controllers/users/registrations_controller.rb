@@ -3,7 +3,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-
+  before_action :set_user
+  before_action :verify_role!
   # GET /resource/sign_up
   # def new
   #   super
@@ -104,6 +105,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+  end
+
+ private
+
+  def set_user
+    # byebug
+    @user = current_user
+    byebug
+  end
+
+  def verify_role!
+    byebug
+    authorize @user || User 
   end
 
   # If you have extra params to permit, append them to the sanitizer.
