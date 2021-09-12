@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  respond_to :html, :json
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   
@@ -29,7 +30,7 @@ class ApplicationController < ActionController::Base
     # if they requested json, give them access denied json message
     # default pundit message can be overidden by message starting with "warning"
     # raise NotAuthorizedError, "Warning: enter message here" if condition
-    msg = exception.message['Warning'] ? exception.message : 'Access denied.'
+    # msg = exception.message['Warning'] ? exception.message : 'Access denied.'
     respond_to do |format|
       format.html do
         referrer = request.referrer

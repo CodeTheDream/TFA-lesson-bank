@@ -1,16 +1,16 @@
 # frozen_string_literal: true
-
 class Users::RegistrationsController < Devise::RegistrationsController
+  respond_to :html, :json
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  before_action :set_user
+  # before_action :set_user
   before_action :verify_role!
   # GET /resource/sign_up
   # def new
   #   super
   # end
 
-  def index     
+  def index    
     @users = User.all
     @users = @users.paginate(page: params[:page], :per_page => 10)
   end 
@@ -47,25 +47,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def edit    
+  def edit 
+    byebug
     @user = User.find params[:format]
+    # p params[:id]
+    # byebug 
+    # @user = User.find(params[:id])
+    # User.find(params[:id])
+    # byebug
   end
 
   def update
     # @user = User.find params[:id]
-    if @user.role === 'admin'
+    # if @user.role === 'admin'
+    #   if @user.update  configure_registration_update_parameters
+    #     redirect_to '/users', notice: 'User was successfully updated'
+    #   else
+    #     redirect_to '/edit', notice: 'User could not be updated'
+    #   end
+    # else
       if @user.update  configure_registration_update_parameters
         redirect_to '/users', notice: 'User was successfully updated'
       else
         redirect_to '/edit', notice: 'User could not be updated'
       end
-    else
-      if @user.update  configure_registration_update_parameters
-        redirect_to '/', notice: 'User was successfully updated'
-      else
-        redirect_to '/edit', notice: 'User could not be updated'
-      end
-    end
+    # end
   end
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
@@ -110,13 +116,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
  private
 
   def set_user
-    # byebug
-    @user = current_user
     byebug
+    @user = current_user
   end
 
   def verify_role!
-    byebug
     authorize @user || User 
   end
 
