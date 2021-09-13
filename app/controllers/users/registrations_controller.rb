@@ -2,14 +2,16 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
+  before_action :set_user, only: [:show, :update, :delete]
   before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update]
+  # before_action :configure_account_update_params, only: [:update]
+  before_action :verify_role!, only: [:edit, :show, :update, :delete]
+
   # GET /resource/sign_up
   # def new
   #   super
   # end
 
-  before_action :verify_role!
 
   def index    
     @users = User.all
@@ -68,15 +70,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #     redirect_to '/edit', notice: 'User could not be updated'
     #   end
     # else
-    if @user.role == 'admin'
+    # if @user.role == 'admin'
       if @user.update  configure_registration_update_parameters
-        byebug
         redirect_to '/users', notice: 'User was successfully updated'
       else
         flash.now.alert = @user.errors.full_messages.to_sentence
-        redirect_to '/'#/edit, notice: 'User could not be updated'
+        redirect_to '/edit'#/edit, notice: 'User could not be updated'
       end
-    end
+    # end
   end
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
@@ -119,9 +120,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
  private
+  
+  def set_user
+    @user = User.find params[:id]
+    # User.find params[:id]
+  end
 
   def verify_role!
-    authorize @user || User 
+    authorize @user || User
   end
 
   def user_not_authorized(exception)
