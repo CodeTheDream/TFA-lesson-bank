@@ -32,14 +32,16 @@
             <%# <% else %> 
               <%# <th colspan="1"></th> %>
             <%# <% end %>  
-            <td><%= link_to 'Show', "users/#{u.id}", :class => "btn btn-outline-primary btn-sm" %></td> 
-            <td><%= link_to 'Edit', edit_user_registration_path(u), :class => "btn btn-outline-primary btn-sm"%></td>
+            <%# users/#{u.id} %>
+            <td><%= link_to 'Show', user_show_path(u), :class => "btn btn-outline-primary btn-sm" %></td> 
+            <td><%= link_to 'Edit', user_edit_path(u), :class => "btn btn-outline-primary btn-sm"%></td>
             
-            <% if current_user=="Admin" %>
-              <%= link_to 'Destroy',  user, method: :delete, :class => "btn btn-outline-primary btn-sm", data: {confirm: "Are you sure you want to delete this user?"} %>
-            <%end%>
+            <%# <% if current_user=="Admin" %> 
+              <%# <%= link_to 'Destroy',  user, method: :delete, :class => "btn btn-outline-primary btn-sm", data: {confirm: "Are you sure you want to delete this user?"} %> 
+            <%# <%end%> 
             <td>
-              <%= link_to 'Delete',  user_registration_path(u), method: :delete, :class => "btn btn-outline-primary btn-sm", data: { confirm: 'Are you sure?'} %>
+              <%# <%byebug%> 
+              <%= link_to 'Destroy',  user_delete_path(u), method: :delete, :class => "btn btn-outline-primary btn-sm", data: { confirm: 'Are you sure?'} %>
             </td>            
           </tr>    
         <% end %>

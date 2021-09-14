@@ -2,11 +2,11 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
-  before_action :set_current_user, only: [:edit] #:edit,  :update,
-  before_action :set_user, only: [:show, :update] #:delete :#destroy
+  # before_action :set_current_user, only: [:edit, :destroy] #:edit and delete
+  before_action :set_user, only: [:show, :update, :edit, :destroy] # 
 
   before_action :configure_sign_up_params, only: [:create]
-  before_action :verify_role!, only: [:index, :show,  :delete] :edit, :update,
+  before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -44,7 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
  
   def destroy
-    @user = User.find params[:format]
+    # @user = User.find params[:format]
     if current_user.role == 'admin'
       authorize @user
       @user.destroy
@@ -66,7 +66,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit 
     # byebug
-    @user = User.find params[:format]
+    # @user = User.find params[:id]
+    # @user = User.find params[:id]
+
   end
    # p params[:id]
     # byebug 
@@ -75,8 +77,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # byebug
 
   def update
-    # byebug
     # @user = User.find params[:id]
+  # if @user.role === 'admin'
     if @user.update  configure_registration_update_parameters
       redirect_to '/users', notice: 'User was successfully updated'
     else
@@ -84,16 +86,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to '/edit'#/edit, notice: 'User could not be updated'
     end
   end
-    # if @user.role === 'admin'
-    #   if @user.update  configure_registration_update_parameters
-    #     redirect_to '/users', notice: 'User was successfully updated'
-    #   else
-    #     redirect_to '/edit', notice: 'User could not be updated'
-    #   end
-    # else
-    # if @user.role == 'admin'
-     
-    # end
+
+#   @user = User.find params[:id]
+#   if @user.role == 'admin'
+#     if @user.update  configure_registration_update_parameters
+#       redirect_to '/users', notice: 'User was successfully updated'
+#     else
+#       redirect_to '/edit', notice: 'User could not be updated'
+#     end
+#   else
+#     if @user.update  configure_registration_update_parameters
+#       redirect_to '/', notice: 'User was successfully updated'
+#     else
+#       redirect_to '/edit', notice: 'User could not be updated'
+#     end
+#   end
+# end
+
+
+  # byebug
+  # # @user = User.find params[:id]
+  # # if @user.role === 'admin'
+  #   if @user.update  configure_registration_update_parameters
+  #     redirect_to '/users', notice: 'User was successfully updated'
+  #   else
+  #     flash.now.alert = @user.errors.full_messages.to_sentence
+  #     redirect_to '/edit'#/edit, notice: 'User could not be updated'
+  #   end
+  # # end
+
   
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
@@ -144,13 +165,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # User.find params[:id]
   end
 
-  def set_current_user
-    byebug
-    @user = current_user
-    # @user = User.find params[:format] ok works edit
-    #User.find params[:id]
-    # User.find params[:id]
-  end
+  # def set_current_user
+  #   byebug
+  #   @user = current_user
+  #   # @user = User.find params[:format] ok works edit
+  #   #User.find params[:id]
+  #   # User.find params[:id]
+  # end
 
   def verify_role!
     authorize @user || User
