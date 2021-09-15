@@ -1,26 +1,39 @@
-
-            <div class="grid-container">
+ <div class="grid-container">
     
               <div class="search-filter">    
                 <%= form_tag(search_page_path, :method => 'get') do -%>
                   <div class="mb-4">
                     <h5>Filters</h5>
                     <small class="form-text text-muted mt-4">SUBJECT</small>
-                    <%= select_tag :subject, options_for_select(@subjects), { include_blank: true, class: 'form-control' } %>
+                    <%= select_tag :subject, options_for_select(@subjects, @selected_subject), {include_blank: true, class: 'form-control'}  %>
                   </div>
                   <div class="mb-4">
                     <small class="form-text text-muted">DISTRICT</small>
-                    <%= select_tag :district, options_for_select(@districts), { include_blank: true, class: 'form-control' } %>
+                    <%= select_tag :district, options_for_select(@districts, @selected_district), { include_blank: true, class: 'form-control' } %>
                   </div>
-
-                  <div class="mb-4">
-                    <small class="form-text text-muted">GRADE LEVEL</small>
-                    <%= select_tag :grade_level, options_for_select(@available_grade_levels), { include_blank: true, class: 'form-control' } %>
-                  </div>  
-
+              ​ <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
+                    <div class='grid-container-filter mb-2 checkbox-format '>
+                    
+                      <% @available_grade_levels.each do |grade_level|%>
+                       
+                        <%= check_box_tag "available_grade_levels[#{grade_level}]", grade_level %>
+                        <%= label_tag "available_grade_levels[#{grade_level}]", grade_level  %>
+                        
+                      <%end%>
+                    </div>
+                    <h6 class="form-text text-bold mt-4  mb-4">SHOW ME:</h6>
+                    <div class='show-more checkbox-format'>
+                      
+                        <%= check_box_tag 'courses', 'true'%>
+                        <%= label_tag 'courses', 'COURSES'  %>
+                        <%= check_box_tag 'lessons', 'true'%>
+                        <%= label_tag 'lessons', 'LESSONS'  %>
+                      
+                    </div>
+                   
                   
                   <%= hidden_field_tag :search, @search %>
-                  <div class="text-center">
+                  <div class="mt-4">
                     <%= submit_tag "FILTER RESULTS", :class => 'btn button_filter ' %>
                   </div>
                 <% end %>
@@ -53,8 +66,4 @@
    
             </div>
  
-
-
-
-
 
