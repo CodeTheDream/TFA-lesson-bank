@@ -15,19 +15,21 @@ class SearchItem < ApplicationRecord
         district: self.searchable.district,
         course_id: "",
         tags: Course.find(self.searchable.id).tags.pluck(:name).join(' '),
-        user_id: Course.find(self.searchable.id).user.id
+        user_id: Course.find(self.searchable.id).user.id,
+        type: "course_type"
       }
     else
         relational = {
         title: self.searchable.title,
         description: self.searchable.description,
-        subject: "",
-        grade_level: "",
-        state: "",
-        district: "",
+        subject: searchable.course.subject,
+        grade_level: searchable.course.grade_level,
+        state: searchable.course.state,
+        district: searchable.course.district,
         course_id: self.searchable.course_id.to_s,
         tags: Lesson.find(self.searchable.id).tags.pluck(:name).join(' '),
-        user_id: Lesson.find(self.searchable.id).course.user.id
+        user_id: Lesson.find(self.searchable.id).course.user.id,
+        type: "lesson_type"
       }
     end
   end

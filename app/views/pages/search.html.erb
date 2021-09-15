@@ -9,7 +9,7 @@
                   </div>
                   <div class="mb-4">
                     <small class="form-text text-muted">DISTRICT</small>
-                    <%= select_tag :district, options_for_select(@districts), { include_blank: true, class: 'form-control' } %>
+                    <%= select_tag :district, options_for_select(@districts, @selected_district), { include_blank: true, class: 'form-control' } %>
                   </div>
               ​ <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
                     <div class='grid-container-filter mb-2 checkbox-format '>
@@ -24,9 +24,9 @@
                     <h6 class="form-text text-bold mt-4  mb-4">SHOW ME:</h6>
                     <div class='show-more checkbox-format'>
                       
-                        <%= check_box_tag 'courses', 'courses'%>
+                        <%= check_box_tag 'courses', 'true'%>
                         <%= label_tag 'courses', 'COURSES'  %>
-                        <%= check_box_tag 'lessons', 'lessons'%>
+                        <%= check_box_tag 'lessons', 'true'%>
                         <%= label_tag 'lessons', 'LESSONS'  %>
                       
                     </div>

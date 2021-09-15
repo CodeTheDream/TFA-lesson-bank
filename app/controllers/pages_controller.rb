@@ -10,6 +10,7 @@ class PagesController < ApplicationController
     @search = search_params[:search].present? ? search_params[:search] : nil
     query = @search
     @selected_subject  = search_params[:subject].present? ? search_params[:subject] : ''
+    @selected_district  = search_params[:district].present? ? search_params[:district] : ''
     @results = SearchItemSearch.search(query: query, options: search_params)
     if search_params[:favorites] == "true"
       results_id = @results.pluck :id
@@ -23,6 +24,6 @@ class PagesController < ApplicationController
   private
 
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :grade_level, :state, :district, :favorites, :mycontent)
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :available_grade_levels => {} )
   end
 end
