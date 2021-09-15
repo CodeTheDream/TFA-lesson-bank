@@ -48,13 +48,13 @@ class CoursesController < ApplicationController
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @course = Course.new(course_params)
     @course.user = current_user
-    course_owner = @course.User[params]user_id
+    
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
 
       course_tags = @course.tags.pluck(:name).join(' ')
       
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id, course_owner: @course_owner} 
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id} 
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
       flash.notice = "The course record was created successfully."
@@ -72,7 +72,7 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    @course_owner = course_owner
+ 
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -83,7 +83,7 @@ class CoursesController < ApplicationController
       end
       @course.tag_list=(tags) if tags.present?
       course_tags = @course.tags.pluck(:name).join(' ')
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id, course_owner: @course_owner } 
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id} 
       search_item = SearchItem.find_by(searchable_id: @course.id, searchable_type: 'Course')
       search_item.update hash
       @course.search_item = search_item
@@ -161,9 +161,9 @@ class CoursesController < ApplicationController
     end
   end
 
-  def course_owner
-    @course_owner = User.find(params[:id])    
-  end
+  # def course_owner
+  #   @course_owner = User.find(params[:id])    
+  # end
 
   def verify_role!
     authorize @course || Course 
