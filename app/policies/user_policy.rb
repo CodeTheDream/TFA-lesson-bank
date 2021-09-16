@@ -10,34 +10,16 @@ class UserPolicy < ApplicationPolicy
   end
     
   def admin?
-  #   p " ========>#{@record.name} ========="
-   byebug
-    ret = (@user.role == 'admin') || (@record&.id == @user.id)
-   byebug 
-    ret
+    (@user.role == 'admin') || (@record&.id == @user.id)
   end
-
-  # def owner?
-  #   #   p " ========>#{@record.name} ========="
-  #    byebug
-  #     ret2 = (@record&.id == @user.id)
-  #    byebug 
-  #     ret2
-  #   end
     
   %i(index? new? create? show?).each do |ali|
-    # byebug
     alias_method ali, :logged_in?
   end
 
   %i(edit? update? destroy?).each do |ali|
-    # byebug
     alias_method ali, :admin?
   end
 
-  # %i(edit? update?).each do |ali2|
-  #   # byebug
-  #   alias_method ali2, :owner?
-  # end
 end
   
