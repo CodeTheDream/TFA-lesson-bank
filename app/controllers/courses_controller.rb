@@ -42,7 +42,6 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    byebug
     @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
@@ -50,14 +49,12 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     @course.user = current_user
     @course.state = 'NC'
-    byebug
-    grades = Grade.where id: grade_params[:grade_levels].values
-    byebug
-    @course.grades << grades
-    byebug
+    new_grades = Grade.where(grade_level: grade_params[:grade_levels].keys)
+    @course.grades << new_grades
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' ') } 
+      course_tags = @course.tags.pluck(:name).join(' ')
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags } 
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
       flash.notice = "The course record was created successfully."
@@ -75,6 +72,8 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    new_grades = Grade.where(grade_level: grade_params[:grade_levels].keys)
+    @course.grades << new_grades
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -84,7 +83,8 @@ class CoursesController < ApplicationController
         tags = existing_tags_params
       end
       @course.tag_list=(tags) if tags.present?
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
+      course_tags = @course.tags.pluck(:name).join(' ')
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, user_id: current_user.id } 
       search_item = SearchItem.find_by(searchable_id: @course.id, searchable_type: 'Course')
       search_item.update hash
       @course.search_item = search_item
@@ -164,7 +164,6 @@ class CoursesController < ApplicationController
   end
 
   def load_course
-    byebug
     if ajax_params[:course_id].present?
       @course = Course.find ajax_params[:course_id]
     else
@@ -182,7 +181,6 @@ class CoursesController < ApplicationController
   end
 
   def load_lesson
-    #byebug
     @course = Course.find ajax_params[:course_id]
     new_lesson = Lesson.new(title: "New")
     @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"

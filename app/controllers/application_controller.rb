@@ -37,12 +37,12 @@ class ApplicationController < ActionController::Base
         path = referrer.nil? || referrer == request.url ? root_path : referrer
         redirect_to path, alert: msg
       end
-      format.pdf do
-        referrer = request.referrer
-        # if not present or matches request url, go to root path
-        path = referrer.nil? || referrer == request.url ? root_path : referrer
-        redirect_to path, alert: msg
-      end
+      # format.pdf do
+      #   referrer = request.referrer
+      #   # if not present or matches request url, go to root path
+      #   path = referrer.nil? || referrer == request.url ? root_path : referrer
+      #   redirect_to path, alert: msg
+      # end
       format.json { render json: { message: msg } }
     end
   end

@@ -36,10 +36,6 @@ module SearchItemSearch
       where["district"] = @options["district"]
     end
 
-    if @options["units_covered"].present?
-      where["units_covered"] = @options["units_covered"]
-    end
-
     where
   end
 

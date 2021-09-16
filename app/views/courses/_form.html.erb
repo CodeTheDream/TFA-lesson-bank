@@ -28,38 +28,32 @@
     </div>
 
     <div class="row">      
-      <div class="move-grade-label">      
-        <%= f.label "GRADES:", :class => "text-muted form-check-label" %>
+      <h6 class="text-muted form-check-label move-grade-label">GRADE:</h6>
+      <div class='grid-container-filter mb-2 checkbox-format'>
+        <% @available_grade_levels.each do |grade_level|%>
+          <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true %>
+          <%= label_tag grade_level.grade_level, grade_level.grade_level  %>
+        <%end%>
       </div>
-      <div class="checkboxes">
-        <% for i in 0..13 do %>
-          <% if i % 2 == 0 %>      
-            <%= check_box_tag("grade_levels[#{@available_grade_levels[i].grade_level}", @available_grade_levels[i].id, false) %>
-            <%= f.label "#{@available_grade_levels[i]}",  :class => "text-muted form-check-label move-label" %>
-            <%= check_box_tag("grade_levels[#{@available_grade_levels[i + 1].grade_level}", @available_grade_levels[i + 1].id, false) %>
-            <%= f.label "#{@available_grade_levels[i + 1]}", :class => "text-muted form-check-label move-label" %>
-          <% end %>
-        <% end %>
-      </div>
+      
       <!--<%#= f.label :grade_level, :class => "control-label" %>
       <%#= f.select :grade_level, options_for_select(@available_grade_levels, @course.grade_level) %>-->
       <div class="ml-4 move-description">
         <div><%= f.label :description, :class => "text-muted form-check-label move-label" %></div>
-        <%= f.text_area :description, cols: 40, rows: 10, class: '', :required => true %>
+        <%= f.text_area :description, cols: 90, rows: 10, class: '', :required => true %>
       </div>
     </div>
   </div>
   
   <div class="pl-4">
-      <div class="">
-        <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-        <ul id="myList" class="move-tag-list">
-          <% @course.tags.each do |tag| %>	  
-            <% time_stamp = Time.now.to_i %>	  
-            <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="">
+      <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+      <ul id="myList" class="move-tag-list">
+        <% @course.tags.each do |tag| %>	  
+          <% time_stamp = Time.now.to_i %>	  
+          <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
+        <% end %>
+      </ul>
     </div>
   </div>
 

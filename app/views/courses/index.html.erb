@@ -7,7 +7,7 @@
       <th class="h2" style="background:none;">Title</th>
       <th class="h2" style="background:none;">Description</th>
       <th class="h2" style="background:none;">Subject</th>
-      <th class="h2" style="background:none;">Grades>
+      <th class="h2" style="background:none;">Grades</th>
       <th class="h2" style="background:none;">State</th>
       <th class="h2" style="background:none;">District</th>
 
@@ -23,7 +23,6 @@
         <td data-title="Title"><%= course.title %></td>
         <td data-title="Description"><%= course.description %></td>
         <td data-title="Subject"><%= course.subject %></td>
-        <% byebug %>
         <td data-title="Grades"><%= course.grades.pluck(:grade_level).join(', ') %></td>
         <td data-title="State"><%= course.state %></td>
         <td data-title="District"><%= course.district %></td>

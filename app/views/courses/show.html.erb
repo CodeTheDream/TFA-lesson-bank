@@ -1,119 +1,205 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-6">
-      <!-- Course header-->
-      <div  class="mb-2">
-        <h1 class="fw-bolder  mt-5 mb-2"><%= @course.title %></h1>
-        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.subject %></div>
-        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.grade_level %></div>
-        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.state %></div>
-        <div class="badge bg-secondary text-decoration-none link-light"><%= @course.district %></div>
-      
-        <div class= "mt-2">
-          <h5>Tags:</h5>
-            <% @course.tags.each do |tag| %>           
-                <a><%= link_to tag.name, tag_path(tag) %></a>       
-            <% end %>     
-        </div>
-    </div> 
+<div class="container mt-5 ">
+    
+      <!-- Button Back Section-->   
 
-      <!-- Description Section-->
-      <section class="mb-5">
-       <h4>Course Description:</h4>  
-       <p>
-        <%= @course.description %>
-        </p>
-      </section>
-
-    <!-- Course favorites-->
-    <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
-      <ul>
-        <li class="favorites"><%= link_to "Favorite",   favorite_course_path(@course) %></li>
-        <li class="favorites"><%= link_to "Unfavorite", unfavorite_course_path(@course) %></li>
-      </ul>
-    <%end%>
-
-      <!-- Documents Section-->
-      <section class="mb-5">
-        <h4>Download the Files for this Course:</h4> 
-        <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
-          <% if @course.documents.any? %>
-              <div class="row">
-                <% @course.documents.each do |document| %>          
-                  <p>
-                    <strong>File:</strong>
-                    <td data-title="Document"><br>
-                      <% if document.file.attached? %>
-                        <%= check_box_tag "document_ids[#{document.id}]", document.id, false, class: "checkbox"%>
-                        <% document.id %>
-                        <% if document.file.representable? %>
-                        <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
-                        <br>
-                        <%= link_to "View File", document.file %> 
-                        <br>
-                        <%= link_to "Download File", document.file, download: '' %>
-                        <% end %>
-                      <% end %>
-                    </td>
-                  </p> 
-                <% end %>
-              </div>
-          <% end %>
-          <div>
-            <button type="button" class="btn btn-warning" id="btn_download">
-              <i class="far fa-address-book"></i> Download
-            </button>
-          </div>
+      <div class="show_button_section btn btn_show_back">        
+        <%= link_to courses_path do  %>         
+          <i class=" fa fa-caret-left " style="color:gray;"></i>            
+          <span style="color: gray">BACK TO SEARCH RESULTS</span>
         <% end %>
-      </section>
+      </div>
+                       
+    
+  <div class="row big_card">
+    <div class="card-header"></div> 
+
+    <!-- Left Side Course-->
+    <div class="col-lg-4">
+      <!-- Course header-->
+      <div class="show_left">
+        <h1 class="mb-2 mt-4"><%= @course.title %></h1>
+        <div><span style="color: gray">SUBJECT:</span> <b><%= @course.subject%></b></div>
+        <div class="mb-4" ><span style="color: gray">GRADE: </span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
+        <div class= "mt-2">
+        <!-- Tags-->
+          <% @course.tags.each do |tag| %>           
+            <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.name.capitalize %></span>       
+          <% end %>     
+        </div>     
+      </div>      
     </div>
-      <!-- Side Lessons-->
-    <div class="col-lg-6 mt-5 mb-2">           
+
+
+    <!-- Right Side Course-->
+    <div class="col-lg-8 mt-5 mb-2">  
+      <!-- Course Description Section-->
+    <div class="star">
+      <% if current_user.favorites.pluck(:course_id).include? @course.id %>
+        <%= link_to(unfavorite_course_path) do %>
+          <i class="fas fa-star" style="color:yellow;"></i>
+        <% end %> 
+      <% else %>
+        <%= link_to(favorite_course_path) do %>
+          <i class="fas fa-star" style="color:gray;"></i>
+        <% end %> 
+      <% end %>
+    </div>
+    
+      <div class="mb-3 course_show_description">
+        <p>
+          <%= @course.description %>     
+        </p>
+      </div> 
+
+      <!-- Course Right Side Documents Section-->      
       <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
         <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
-          <div class=" mb-4 "> 
-            <h3 class="fw-bolder text-left  ">Lessons for <%= @course.title%> Course:</h3>      
-            <% lesson_titles = @course.lessons.pluck(:title)%>
-            <%= select_tag :lesson_id, options_from_collection_for_select(@course.lessons, :id, :title), :class => 'btn btn-info btn-lg '%> 
-          </div> 
-            <%= submit_tag "Preview", :class => 'btn btn-outline-secondary btn-lg ' %>
-        <% end %>      
-      <% end %>      
-      <!-- Lesson card-->
-      <% if @lesson.present? %>
-        <%= render 'lesson', lesson: @lesson %>
-      <% end %>       
-    </div>  
     
-    <div class="form-group col">
-      <div class="actions">
-        <%= link_to 'Edit', edit_course_path(@course), :class => "btn btn-outline-primary "%> 
-        <%= link_to 'Back', courses_path, :class => "btn btn-outline-primary " %>    
-      </div>
-    </div>      
-  </div>
-</div>  
+          
+          <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col"><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
+                  <th scope="col">TYPE</th>
+                  <th class="text-center" scope="col">PREVIEW</th>
+                  <th class="text-center" scope="col">DOWNLOAD</th>
+                </tr>
+              </thead>
+              
+              <% if @course.documents.any? %>                
+                <% @course.documents.each do |document| %> 
+                  <tbody class="text-center">
+                    <tr>
+                      <th scope="row">
+                        <%=document.name.titleize%>            
+                      </th>             
+                      <% if document.file.attached? %>
+                        <th scope="row">
+                          <span style="color: gray"><%=document.kind.upcase%></span>            
+                        </th> 
+                      <% end %>   
+                      <% if document.file.representable? %>
+                        <th class="text-center" scope="row">
+                          <%= link_to(document.file) do %>
+                            <i class=" fa fa-search" style="color:gray;"></i>
+                          <% end %> 
+                        </th>       
+                      <% end %>
+                     
+                      <th class="text-center" scope="row">                       
+                        <%= link_to(document.file, download: '') do %>
+                          <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                        <% end %>                     
+                      </th>                            
+                    </tr>
+                  </tbody>                   
+                <% end %>             
+              <% end %> 
+            </table>             
+          <% end %>
+        <% end %>         
+      <% end %> 
+    </div>  
+                
+  
+    
+    <!-- Lesson Bottom Accordion Section-->  
+    <div class="container  mb-5">
+      <% if @course.lessons.present? %>
+        <% @course.lessons.each do |lessonshow| %>
+          <div class="col-lg-12  mb-2 lesson_accordion">  
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">              
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
+                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
+                        <div class=" lesson_title_row  ">                                                       
+                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> </h3>                                             
+                        </div>                   
+                      <% end %>            
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="lesson_show_description"><p><%= lessonshow.description %></div>
+                    <div class="panel-body">
+                    <div class="col-lg-8">  
+                      <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+                                <th scope="col">TYPE</th>
+                                <th class="text-center" scope="col">PREVIEW</th>
+                                <th class="text-center" scope="col">DOWNLOAD</th>
+                              </tr>                        
+                            </thead>
+                        <% if lessonshow.present? %>
+                          <% lessonshow.documents.each do | lessondocument| %>                            
+                            <tbody>
+                              <tr>
+                                <th scope="row">
+                                  <%= lessondocument.name.titleize %>
+                                </th>
+                                <% if lessondocument.file.attached? %>
+                                  <th scope="row">
+                                  <span style="color: gray"><%= lessondocument.kind.upcase %></span>
+                                  </th>
+                                <% end %> 
+                                <% if lessondocument.file.representable? %>
+                                  <th class="text-center" scope="row">                                
+                                    <%= link_to (lessondocument.file) do %>
+                                      <i class=" fa fa-search" style="color:gray;"></i> 
+                                    <% end %>   
+                                  </th>
+                                <%end%>                        
+                                <th class="text-center" scope="row">
+                                  <%= link_to(lessondocument.file, download: '') do %>
+                                    <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                                  <% end %>  
+                                </th>                                
+                              </tr>
+                            </tbody>  
+                          <% end %>
+                        <% end %>                            
+                      </table>                     
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                             
+            </div>
+          </div>
+        <%end%>
+      <%end%>
+    </div>
+       
 
-<script>
-var btn_download = document.getElementById('btn_download');
-var form = document.getElementById('form-download');
+  </div> 
 
-  //get the checkboxes
-  var checkboxes = document.getElementsByClassName("checkbox");
-  for(i=0;i < checkboxes.length; i++){
-    checkboxes[i].addEventListener("click", function() {
-    var checkboxesSelected = document.querySelectorAll('input[type=checkbox]:checked')
-    if (checkboxesSelected.length > 0) {
-        btn_download.disabled = false;
-      }
-    else{
-        btn_download.disabled = true;
-      }
-    });
-  }
+</div> 
 
-    //when it click to the button download zip
-    btn_download.addEventListener("click", function() {
-       form.submit();
-     });
-</script>
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

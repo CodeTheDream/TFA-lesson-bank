@@ -29,7 +29,8 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
-      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id } 
+      lesson_tags = @lesson.tags.pluck(:name).join(' ')    
+      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id, tags: lesson_tags, subject: @course.subject, grade_level: @course.grade_level, user_id: current_user.id } 
       @lesson.search_item = SearchItem.create(hash)
       flash.notice = "The lesson record was created successfully."
       redirect_to [@course, @lesson]#course_lessons_path(@lesson)
@@ -51,7 +52,8 @@ class LessonsController < ApplicationController
         tags = existing_tags_params
       end
       @lesson.tag_list=(tags) if tags.present?
-      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, units_covered: @lesson.units_covered, course_id: @lesson.course_id } 
+      lesson_tags = @lesson.tags.pluck(:name).join(' ')
+      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id, tags: lesson_tags, subject: @course.subject, grade_level: @course.grade_level, user_id: current_user.id } 
       search_item = SearchItem.find_by(searchable_id: @lesson.id, searchable_type: 'Lesson')
       search_item.update(hash)
       @lesson.search_item = search_item
@@ -130,7 +132,7 @@ class LessonsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def lesson_params
-    params.require(:lesson).permit(:title, :description, :course_id, :units_covered, :tag_names)
+    params.require(:lesson).permit(:title, :description, :course_id, :tag_names)
   end
 
   def catch_not_found(e)
