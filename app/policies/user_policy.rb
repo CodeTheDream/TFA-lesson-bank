@@ -4,7 +4,7 @@ class UserPolicy < ApplicationPolicy
     @user = user
     @record = record
   end
-
+  
   def logged_in?
     @user.present?
   end

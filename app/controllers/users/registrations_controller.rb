@@ -12,8 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-
-  def index    
+  def index
     @users = User.all
     @users = @users.paginate(page: params[:page], :per_page => 10)
   end 
@@ -34,7 +33,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     @user = User.new   
     @users = User.all
-     
   end
 
   def show  

@@ -1,15 +1,54 @@
-<div class="row row-cols-1 row-cols-md-3 mt-2">
-  <div class="col mb-4">
-    <div class="card h-100 " style="width: 25rem; ">
-      
-      <div class="card-body">
-        
-        <h5 class="card-title"><%= lesson.title %></h5>
-        <li class="card-text"><%= lesson.description %></li>
-        <h5 class="card-title mt-2">Units covered: <%= lesson.units_covered %> </h5>
+<div class="row row-cols-1 row-cols-lg-3 ">
+  <div class="col lesson_clickable">    
+        <li class="card-text"><%= @lesson.description %></li>
+        <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+            <th scope="col">TYPE</th>
+            <th scope="col">PREVIEW</th>
+            <th scope="col">DOWNLOAD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <%=@lesson.title%>            
+            </th>
+            
+            <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+              <% if @course.documents.any? %>                
+                <% @course.documents.each do |document| %>              
+                  <% if document.file.attached? %>
+                    <td>
+                      <%= check_box_tag "document_ids[]", document.id, false, class: "checkbox" %>
+                      <% document.kind %>
+                    </td>
+
+                    <% if document.file.representable? %>
+                      <td>
+                        <%= image_tag document.file.preview(resize_to_fit: [100,100])%>
+                        <%= link_to "View File", document.file %> 
+                      </td>
+                      <td>
+                      <%= link_to "Download File", document.file, download: '' %>
+                      <div>
+                        <button type="button" class="btn btn-warning" id="btn_download">
+                          <i class="far fa-address-book"></i> Download
+                        </button>
+                      </div>
+                      </td>
+                    <% end %>
+                  <% end %>             
+                <% end %>            
+              <% end %>
+            <% end %>         
+          </tr>
+        </tbody>
+      </table>      
+        <!-- Documents Lessons-->
         <div>
-          <h5 class="card-title mt-2">Download Files for this Lesson:</h5>
-          <%= form_tag download_course_lesson_path(@course.id, @lesson.id), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+          
             <% if lesson.documents.any? %>
                <% lesson.documents.each do |document| %>
                  <div>
@@ -35,12 +74,10 @@
             <% end %>
           <% end %>
         </div>
-      </div>
-    </div>
+      
+    
   </div>
 </div>
-
-
 
 <script>
 var btn_download = document.getElementById('btn_download');

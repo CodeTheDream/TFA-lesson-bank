@@ -8,7 +8,6 @@
       <th class="h2" style="background:none;">Course</th>
       <th class="h2" style="background:none;">Lesson Title</th>
       <th class="h2" style="background:none;">Description</th>
-      <th class="h2" style="background:none;">Units</th>
       <th colspan="3"></th>
     </tr>
     </div>
@@ -21,7 +20,6 @@
         <td data-title="Course"><%= lesson.course_id %></td>
         <td data-title="Title"><%= lesson.title %></td>
         <td data-title="Description"><%= lesson.description %></td>
-        <td data-title="Units"><%= lesson.units_covered %></td>
 
 
         <td><%= link_to 'Show', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>

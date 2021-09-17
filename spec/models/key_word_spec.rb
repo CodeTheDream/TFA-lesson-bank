@@ -5,17 +5,17 @@ RSpec.describe KeyWord, type: :model do
       @user = FactoryBot.create(:user)
       @course = FactoryBot.create(:course)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3", course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       @tag = Tag.create(name: 't1')
       @tag2 = Tag.create(name: 't2')
-      course_keyword_hash = {tag_id: @tag.id, course_id: @course.id, frequency: nil, 
+      course_keyword_hash = {tag_id: @tag.id, course_id: @course.id, 
         created_at: Time.now, updated_at: Time.now, lesson_id: nil}
-      course_keyword_hash2 = {tag_id: @tag2.id, course_id: @course.id, frequency: nil, 
+      course_keyword_hash2 = {tag_id: @tag2.id, course_id: @course.id, 
           created_at: Time.now, updated_at: Time.now, lesson_id: nil}
       @keyword_course = KeyWord.create(course_keyword_hash)
       @keyword_course2 = KeyWord.create(course_keyword_hash2)
-      lesson_keyword_hash = {tag_id: @tag.id, course_id: nil, frequency: nil, 
+      lesson_keyword_hash = {tag_id: @tag.id, course_id: nil, 
         created_at: Time.now, updated_at: Time.now, lesson_id: @lesson.id}
       @keyword_lesson = KeyWord.create(lesson_keyword_hash)
     end #end before
