@@ -24,9 +24,9 @@
           <% end %>           
         <%end%>
         
-        <div style="font-size:14px;"><span style="color: gray">SUBJECT:</span> <b><%= @course.subject%></b></div>
-        <div style="font-size:14px;"><span style="color: gray">GRADE: </span><b><%= @course.grade_level %></b></div>  
-        <div style="font-size:14px;"><span style="color: gray">AUTHOR: </span><b><%= @course.user.name.upcase %></b></div>
+        <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
+        <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grade_level.upcase %></b></div>  
+        <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
         <!-- Tags-->
         <div class= "mt-2 mb-4">          
           <% @course.tags.each do |tag| %>           

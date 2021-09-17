@@ -2,12 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-
-@font-face {
-  font-family: "GuardianEgyp-Light-Reduced";
-  src: url("GuardianEgyp-Light-Reduced.woff.ttf");
-}
-
 .grid-container {
   padding-top: 6em;
   display: grid;
@@ -16,55 +10,50 @@
   height: 100vh;
   grid-gap: 1em;
   padding: 1em;
-  
 }
 
 .checkbox-format input[type="checkbox"] {
-  
-  
   height: 1.1rem !important;
   width: 1.3rem !important;
-  margin:auto;
-  
-  
+  margin: auto;
 }
 
-.checkbox-format label{
-  font-size:0.7rem;
+.checkbox-format label {
+  font-size: 0.7rem;
   margin-top: auto;
   margin-bottom: auto;
 }
-.grid-container-filter{
-    display: grid;
-    height: fit-content;
-    width: 70%;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    row-gap: 0.7em;
-    
+.grid-container-filter {
+  display: grid;
+  height: fit-content;
+  width: 70%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 0.7em;
 }
-.show-more{
+.show-more {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 40%;
   row-gap: 0.7em;
 }
 
-.login-label{
+.login-label {
   font-size: smaller;
-  
 }
 
-.main-result {
-  display: grid;
-  padding-top: 6em;
-  padding-bottom: 1em;
-  grid-template-rows: 100px 100px 1fr;
+.search-results {
+  margin-top: 17em;
+  display: flex;
+  flex-wrap: wrap;
 }
-// .cards {
-//   display: grid;
-//   grid-template-columns: repeat(3, 1fr);
-//   grid-gap: 1em;
-// }
+.main-result {
+  margin-top: 7.5em;
+  margin-left: 4em;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .search-filter {
   display: grid;
@@ -74,14 +63,15 @@
   margin-bottom: 1em;
   grid-gap: 1em;
   padding: 1em;
-  
+  margin-left: 2em;
 }
-.search-filter > div {
-  padding: 2em;
-  
-}
+// .search-filter > div {
+//   padding: 2em;
+// }
 
 .button_view_card {
+  // position: relative;
+  // bottom: 25px;
   background-color: #081e32 !important;
   color: white !important;
   font-size: 12px !important;
@@ -94,62 +84,66 @@
 .search_card {
   border-radius: 0% !important;
   background-color: #f0eeed !important;
-
-  // transition: background-color 300ms !important;
   border: none !important;
+  height: 300px;
+  width: 300px;
+  margin: 1em;
+  margin-bottom: 75px;
+}
+.card-header {
+  background-color: #1996aa !important;
+  padding: 0.3rem 0.25rem !important;
+  border-radius: 0% !important;
+}
 
-  .card-header {
-    background-color: #1996aa !important;
-    padding: 0.3rem 0.25rem !important;
-    border-radius: 0% !important;
-  }
+#circle {
+  background: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #1996aa;
+  float: right;
+  margin-top: -2%;
+  margin-right: 2%;
+  font: bold 15px;
+  padding: 6px 3px 0 3px;
+}
+.right-arrow {
+  display: inline-block;
+  position: relative;
+  background: #1996aa;
+  padding: 10px;
+}
+.right-arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 80%;
+  top: 67%;
+  margin-top: -10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #1996aa;
+  margin-left: 7px;
+}
 
-  #circle {
-    background: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    color: #1996aa;
-    float: right;
-    margin-top: -2%;
-    margin-right: 2%;
-    font: bold 15px;
-    padding: 6px 3px 0 3px;
-  }
-  .right-arrow {
-    display: inline-block;
-    position: relative;
-    background: #1996aa;
-    padding: 10px;
-  }
-  .right-arrow:after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 80%;
-    top: 67%;
-    margin-top: -10px;
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 5px solid #1996aa;
-    margin-left: 7px;
-  }
+.card-title {
+  margin-top: 0%;
+  font-size: 22px;
+}
+.card-text {
+  height: 110px;
+}
 
-  .card-title {
-    margin-top: 0%;
-    font-size: 22px;
-  }
-
-  .read_more {
-    color: #1996aa;
-  }
-  .read_more:hover {
-    color: #081e32;
-  }
-  .search_tags {
-    word-spacing: 1em;
-  }
+.read_more {
+  color: #1996aa !important;
+}
+.read_more:hover {
+  color: #081e32;
+}
+.search_tags {
+  word-spacing: 1em;
 }
