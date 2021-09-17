@@ -12,8 +12,6 @@ Rails.application.routes.draw do
     get '/users' => 'users/registrations#index'
     get '/users/:id' => 'users/registrations#show', as: 'user_show'
     get '/users/:id/edit' => 'users/registrations#edit', as: 'user_edit'
-    # patch '/users/:id/update' => 'users/registrations#update', as: 'user_update'
-    # patch '/users' => 'users/registrations#edit'
     put '/users/:id' => 'users/registrations#update', as: 'user_update'
     delete '/users/:id' => 'users/registrations#destroy', as: 'user_delete'
     post '/users/sign_in' => 'users/sessions#create'
