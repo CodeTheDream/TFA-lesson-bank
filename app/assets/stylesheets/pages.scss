@@ -41,13 +41,8 @@
   font-size: smaller;
 }
 
-.search-results {
-  margin-top: 17em;
-  display: flex;
-  flex-wrap: wrap;
-}
 .main-result {
-  margin-top: 7.5em;
+  margin-top: 10.5em;
   margin-left: 4em;
 }
 .card-container {
@@ -57,7 +52,7 @@
 
 .search-filter {
   display: grid;
-  margin-top: 17em;
+  margin-top: 9.5em;
   grid-template-rows: repeat(5, 0.5fr);
   grid-auto-rows: 4.5em;
   margin-bottom: 1em;
