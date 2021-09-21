@@ -1,6 +1,8 @@
 require "zip"
 require 'fileutils'
 class LessonsController < ApplicationController
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course
   before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
@@ -139,5 +141,11 @@ class LessonsController < ApplicationController
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s
     redirect_to courses_path
+  end
+
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    redirect_to root_path
   end
 end
