@@ -10,13 +10,25 @@
 .search_button {
   background-color: #081e32;
   color: white;
-  font-size: 14px !important;
+  font-size: 12px !important;
   border-radius: 0% !important;
   border: none;
 }
 
 .search_button:hover {
   background-color: #1996aa !important;
+  border-radius: 0% !important;
+  border: none !important;
+}
+.search_button:hover,
+button:focus {
+  outline: none;
+}
+.fa-play.yellow-icon-play {
+  color: #fdee6c;
+  font-size: 9px;
+  margin-left: 2px;
+  margin-right: 1px;
 }
 
 .navbar-nav .nav-item .nav-link {
