@@ -24,9 +24,9 @@
     </div> 
     <hr class="my-2">    
     <div class="actions form-group p-3">   
-      <%if current_user == "Admin"%> 
-        <%= link_to 'Edit', edit_users_path %>
-        <%= link_to 'Destroy', users_path(product), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+      <%if current_user == "admin"%> 
+        <%= link_to 'Edit', user_edit_path(@user)%>
+        <%= link_to 'Destroy', user_delete_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
       <% end %>   
       <%= link_to 'Back', users_path, :class => "btn btn-outline-primary"  %>           
     </div>
