@@ -12,7 +12,7 @@
       <div class="collapse navbar-collapse " id="navbarMenu">
         <ul class="navbar-nav ml-auto all_nav_items">
           <li class='nav-item  '><%= link_to 'SEARCH', search_page_path, class: 'nav-link right_list position-search' %></li>
-          <li class='nav-item  '><%= link_to 'ABOUT', search_page_path, class: 'nav-link right_list position-about' %></li>
+          <li class='nav-item  '><%= link_to 'ABOUT', about_page_path, class: 'nav-link right_list position-about' %></li>
           <% if current_user && !current_user.role.blank? %>
             <div class="user-container">
             <li class="nav-item dropdown">
