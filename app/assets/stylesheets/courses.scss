@@ -25,6 +25,15 @@
 .course_show_description {
   margin-top: 25px;
 }
+.fa-pencil-alt.pencil_edit {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-pencil-alt.pencil_edit:hover {
+  color: #081e32 !important;
+  font-size: 20px;
+  cursor: pointer;
+}
 .lesson_accordion {
   background-color: white;
 }

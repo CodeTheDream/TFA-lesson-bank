@@ -14,18 +14,27 @@
     <div class="card-header"></div> 
 
     <!-- Left Side Course-->
-    <div class="col-lg-4">
+    <div class="col-lg-4 mb-5">
       <!-- Course header-->
       <div class="show_left">
-        <h1 class="mb-2 mt-4"><%= @course.title %></h1>
-        <div><span style="color: gray">SUBJECT:</span> <b><%= @course.subject%></b></div>
-        <div class="mb-4" ><span style="color: gray">GRADE: </span><b><%= @course.grade_level %></b></div>  
-        <div class= "mt-2">
+        <h1 class="mb-2 mt-4"><%= @course.title %>        
+        <% if current_user == @course.user || current_user&.role == 'admin'%>
+          <%= link_to(edit_course_path(@course)) do %>
+            <i class=" fa fa-pencil-alt pencil_edit"></i>
+          <% end %>           
+        <%end%>
+        
+        <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
+        <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grade_level.upcase %></b></div>  
+        <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
         <!-- Tags-->
+        <div class= "mt-2 mb-4">          
           <% @course.tags.each do |tag| %>           
             <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.name.capitalize %></span>       
           <% end %>     
-        </div>     
+        </div>  
+        <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Uploaded on <%= @course.created_at.to_date.strftime("%B %d, %Y")%></span></div>
+        <div <span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= @course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
       </div>      
     </div>
 
@@ -114,11 +123,13 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
-                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
-                        <div class=" lesson_title_row  ">                                                       
-                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> </h3>                                             
-                        </div>                   
-                      <% end %>            
+                    <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
+                      <div class=" lesson_title_row  ">                                                       
+                        <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> <i class=" fa fa-pencil-alt pencil_edit"></i></h3>                                             
+                      </div>                   
+                    <% end %>       
+                    
+                          
                     </a>
                   </h4>
                 </div>
