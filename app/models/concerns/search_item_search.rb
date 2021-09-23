@@ -24,10 +24,6 @@ module SearchItemSearch
       where["subject"] = @options["subject"]
     end
 
-    if @options[:available_grade_levels].present? && @options[:available_grade_levels].keys[0].present?
-      where["grade_level"] = @options[:available_grade_levels].keys[0]
-    end
-
     if @options["state"].present?
       where["state"] = @options["state"]
     end
@@ -36,11 +32,11 @@ module SearchItemSearch
       where["district"] = @options["district"]
     end
 
-    if @options["courses"].present?
+    if @options["courses"].present? && !@options["lessons"].present?
       where["type"] = "course_type"
     end
 
-    if @options["lessons"].present?
+    if @options["lessons"].present? && !@options["courses"].present?
       where["type"] = "lesson_type"
     end
 

@@ -14,7 +14,8 @@ class SearchItem < ApplicationRecord
       district: self.district,
       course_id:  (self.searchable.class == Lesson) ? self.searchable.course_id.to_s : "",
       tags: self.tags,
-      user_id: self.user_id
+      user_id: self.user_id,
+      type: self.searchable.class == Lesson ? "lesson_type" : "course_type"
     }
   end
 end
