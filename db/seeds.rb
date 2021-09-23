@@ -36,18 +36,42 @@ end
 puts 'done'
 puts "Created #{success} users with #{errors} failures"
 
+# create Grades
+levels = %w(PRE-K K 1 2 3 4 5 6 7 8 9 10 11 12)
+print "Creating grades"
+errors = 0
+success = 0
+levels.each do |level|
+  if Grade.create(grade_level: level)
+    success += 1
+    print '.'
+  else
+    errors =+ 1
+    print 'x'
+  end
+end
+print " done"
+puts 'done'
+puts "Created #{success} grades with #{errors} failures"
+
 # Create Courses
 user = User.find_by email: "missbliss@jfkhs.com"
 print "Creating Courses"
-course_hash1 = {title: "Ruby", description: "This is an introduction to the Ruby programming language.  It is intended for a student with no prior knowledge", subject: "Technology", state: "NC", district: "Wake", user_id: user.id, grade_level: "10"}
-course_hash2 = {title: "Rails", description: "This course is about the Rails framework.  Students must take Ruby before registering", subject: "Technology", state: "NC", district: "Wake", user_id: user.id, grade_level: "11"}
+course_hash1 = {title: "Ruby", description: "This is an introduction to the Ruby programming language.  It is intended for a student with no prior knowledge", subject: "Technology", state: "NC", district: "Wake", user_id: user.id}
+course_hash2 = {title: "Rails", description: "This course is about the Rails framework.  Students must take Ruby before registering", subject: "Technology", state: "NC", district: "Wake", user_id: user.id}
 course_hashes = []
 course_hashes << course_hash1
 course_hashes << course_hash2
 errors = 0
 success = 0
+grade_10 = Grade.all[-3]
+grade_11 = Grade.all[-2]
 course_hashes.each do |hash|
   if Course.create hash
+    c = Course.last
+    c.grades << grade_10 if c.id % 2 == 1
+    c.grades << grade_11 if c.id % 2 == 1
+    c.grades << grade_11 if c.id % 2 == 0
     success += 1
     print '.'
   else
@@ -156,7 +180,7 @@ user = User.find_by email: "missbliss@jfkhs.com"
 errors = 0
 success = 0
 courses.each do |course|
-  hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grade_level, state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id}
+        hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id}
   search_item = SearchItem.new(hash)
   if search_item.save
     course.search_item = search_item
@@ -167,7 +191,7 @@ courses.each do |course|
     print 'x'
   end
   course.lessons.each do |lesson|
-    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grade_level, user_id: user.id }
+    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id }
     search_item = SearchItem.new hash
     if search_item.save
       lesson.search_item = search_item
@@ -179,6 +203,6 @@ courses.each do |course|
     end
   end
 end
-SearchItem.reindex # up to this
+SearchItem.reindex
 puts 'done'
 puts "Created #{success} search_items with #{errors} failures"

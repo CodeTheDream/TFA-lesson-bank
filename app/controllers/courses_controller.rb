@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   before_action :verify_role!
 
   def index
-    @courses = Course.all
+    @courses = Course.all.includes(:grades)
   end
 
   # GET /courses/1
@@ -26,7 +26,7 @@ class CoursesController < ApplicationController
   # GET /courses/new
   def new
     @course = Course.new
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
@@ -44,37 +44,40 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @course = Course.new(course_params)
     @course.user = current_user
-    
+    @course.state = 'NC'
+    @course.courses_grades.delete_all
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
+    @course.grades << new_grades if new_grades.present?
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
-
       course_tags = @course.tags.pluck(:name).join(' ')
-      
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id} 
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id } 
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
       flash.notice = "The course record was created successfully."
-      redirect_to courses_path
+      redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      render :new  
+      redirect_to course_lesson_form_courses_path  
     end
   end
 
   # PATCH/PUT /courses/1
   # PATCH/PUT /courses/1.json
   def update
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
- 
+    @course.courses_grades.delete_all
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
+    @course.grades << new_grades if new_grades.present?
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -85,15 +88,15 @@ class CoursesController < ApplicationController
       end
       @course.tag_list=(tags) if tags.present?
       course_tags = @course.tags.pluck(:name).join(' ')
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district, tags: course_tags, user_id: current_user.id} 
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id } 
       search_item = SearchItem.find_by(searchable_id: @course.id, searchable_type: 'Course')
       search_item.update hash
       @course.search_item = search_item
       flash.notice = "The course record was updated successfully."
-      redirect_to course_path(id: @course.id)
+      redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      render :edit
+      redirect_to course_lesson_form_courses_path
     end
   end
 
@@ -149,6 +152,55 @@ class CoursesController < ApplicationController
                                                          :filename => "Files_for_#{@course.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
   end
 
+  def course_lesson_form
+    new_course = Course.new(title: "New")
+    @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
+#    @lesson = Lesson.new
+    @course = new_course
+    @available_grade_levels = Grade.all
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    respond_to do |format|
+      format.html { render 'course_lesson_form'}
+      format.js {render layout: false}
+    end
+  end
+
+  def load_course
+    if ajax_params[:course_id].present?
+      @course = Course.find ajax_params[:course_id]
+    else
+      @course = Course.new
+    end
+    @available_grade_levels = Grade.all
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    new_lesson = Lesson.new(title: "New")
+    @lessons = @course.lessons.to_a.unshift new_lesson
+    @lesson = new_lesson
+    @from_load_course = true
+    render "/courses/course_lesson_form.js.erb"
+  end
+
+  def load_lesson
+    @course = Course.find ajax_params[:course_id]
+    new_lesson = Lesson.new(title: "New")
+    @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"
+    if ajax_params[:lesson_id].present?
+      @lesson = Lesson.find ajax_params[:lesson_id]
+    else
+      @lesson = new_lesson 
+    end
+    @available_grade_levels = Grade.all
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @from_load_course = false
+    render "/courses/course_lesson_form.js.erb"
+  end
+
   private
 
   def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
@@ -179,6 +231,14 @@ class CoursesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites)
+  end
+
+  def grade_params
+    params.permit(:grade_levels => {})
+  end
+
+  def ajax_params
+    params.permit(:course_id, :lesson_id)
   end
 
   def tags_params

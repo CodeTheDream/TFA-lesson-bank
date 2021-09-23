@@ -22,8 +22,9 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="triangle-border"></div>
                 <div class="triangle"></div>
-                <%= link_to 'MY CONTENT', search_page_path(mycontent: true), class: 'dropdown-item' %>
+                <%= link_to 'MY MATERIAL', search_page_path(mycontent: true), class: 'dropdown-item' %>
                 <%= link_to 'FAVORITES', search_page_path(favorites: true), class: 'dropdown-item' %>
+                <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
                 <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               </div>
             </li>
@@ -38,4 +39,3 @@
       </div>
   </div>
 </nav>
-
