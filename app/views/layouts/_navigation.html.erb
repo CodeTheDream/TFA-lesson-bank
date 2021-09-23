@@ -12,7 +12,7 @@
       <div class="collapse navbar-collapse " id="navbarMenu">
         <ul class="navbar-nav ml-auto all_nav_items">
           <li class='nav-item  '><%= link_to 'SEARCH', search_page_path, class: 'nav-link right_list position-search' %></li>
-          <li class='nav-item  '><%= link_to 'ABOUT', search_page_path, class: 'nav-link right_list position-about' %></li>
+          <li class='nav-item  '><%= link_to 'ABOUT', about_page_path, class: 'nav-link right_list position-about' %></li>
           <% if current_user && !current_user.role.blank? %>
             <div class="user-container">
             <li class="nav-item dropdown">
@@ -31,8 +31,8 @@
             </div>
           <% else %>
             <li class="navbar-nav ml-auto right_list">
-              <div class='nav-item  '><%= link_to 'Login', new_user_session_path, class: 'nav-link' %></div>
-              <div class='nav-item '><%= link_to 'Register', new_user_registration_path, class: 'nav-link' %></div>
+              <div class='nav-item  '><%= link_to 'LOGIN', new_user_session_path, class: 'nav-link' %></div>
+              <div class='nav-item '><%= link_to 'REGISTER', new_user_registration_path, class: 'nav-link' %></div>
             </li>
           <% end %>
         </ul>

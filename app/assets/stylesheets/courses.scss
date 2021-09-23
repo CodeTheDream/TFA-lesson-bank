@@ -25,6 +25,15 @@
 .course_show_description {
   margin-top: 25px;
 }
+.fa-pencil-alt.pencil_edit {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-pencil-alt.pencil_edit:hover {
+  color: #081e32 !important;
+  font-size: 20px;
+  cursor: pointer;
+}
 .lesson_accordion {
   background-color: white;
 }
@@ -175,6 +184,7 @@ ul li.favorites::marker {
 .move-description {
   position: relative;
   bottom: 3.7em;
+  left: 1em;
 }
 
 #myList li{
@@ -281,18 +291,19 @@ ul li.favorites::marker {
 }
 
 .form-button {
-  height: 2.5em;
-  font-size: 14px !important;
+  height: 2.5em !important;
+  font-size: 12px !important;
   font-family: Montserrat;
 }
 
 .doc-button {
   background-color: #081e32 !important;
   color: white !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   border-radius: 0% !important;
   border: none;
   font-family: Montserrat;
+  max-height: 2.5em !important;
 }
 
 .lesson-title{
@@ -341,4 +352,10 @@ ul li.favorites::marker {
 .move-lessons {
   position: relative;
   bottom: 3em;
+}
+
+.course-checkboxes {
+  max-width: 6em;
+  position: relative;
+  left: 1.3em;
 }
