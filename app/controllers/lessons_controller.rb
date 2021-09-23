@@ -35,10 +35,10 @@ class LessonsController < ApplicationController
       hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id } 
       @lesson.search_item = SearchItem.create(hash)
       flash.notice = "The lesson record was created successfully."
-      redirect_to [@course, @lesson]#course_lessons_path(@lesson)
+      redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
-      render :new  
+      redirect_to course_lesson_form_courses_path
     end
   end
     
@@ -60,10 +60,10 @@ class LessonsController < ApplicationController
       search_item.update(hash)
       @lesson.search_item = search_item
       flash.notice = "The lesson record was updated successfully."
-      redirect_to [@course, @lesson]#course_lessons_path(@course)
+      redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
-      render :edit
+      redirect_to course_lesson_form_courses_path
     end
   end
     

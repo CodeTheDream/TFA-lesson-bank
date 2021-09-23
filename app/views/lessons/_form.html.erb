@@ -40,9 +40,6 @@
                 <% l_id = f.object.id.present? ? f.object.id : 0 %>
                 <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})" %>
                 <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
-                  <% if !f.object.tags.any? %>  
-                    <li><%= text_field :existing_tags, :tag_names["#{Time.now.to_i}"], value: '', class: 'lesson-tag-fields' %></li>      
-                  <% end %>  
                   <% f.object.tags.each do |tag| %>
                     <% time_stamp = Time.now.to_i %>
                     <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields' %></li>

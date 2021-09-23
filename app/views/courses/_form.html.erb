@@ -42,11 +42,8 @@
   </div>
   
   <div class="pl-4 tag-button-container">
-    <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+          <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
     <ul id="myList" class="move-tag-list">
-      <% if !@course.tags.any? %>
-        <li><%= text_field :existing_tags, :tag_names["#{Time.now.to_i}"], value: '', class: 'lesson-tag-fields' %></li>      
-      <% end %>  
       <% @course.tags.each do |tag| %>	  
         <% time_stamp = Time.now.to_i %>	  
         <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'tag-fields' %></li>

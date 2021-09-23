@@ -29,3 +29,11 @@ window.addTagField = function addTagField() {
   document.getElementById("myList").appendChild(li);
 }
 
+window.courseSelect = function courseSelect(){
+    $.ajax({
+      url: '/courses/load_course?course_id=' + $("#course").val(),
+      type: 'GET',
+      success: function(r) {
+      }
+    });
+  }

@@ -193,14 +193,15 @@ ul li.favorites::marker {
 
 .move-tag-list {
   position: relative;
-  left: 2.7em;
-  bottom: 1.9em;
+  left: 5em;
+  bottom: 1.95em;
+  margin-bottom: 0em !important;
 }
 
 .move-lesson-tag-list {
   position: relative;
-  left: 3.5em;
-  bottom: 1.8em;
+  left: 5.4em;
+  bottom: 1.9em;
   list-style-type: none;
 }
 
@@ -282,12 +283,17 @@ ul li.favorites::marker {
 }
 
 .lesson-tag-fields {
-  margin-right: .4em;
+  margin-right: .2em;
+  font-family: Montserrat;
+  position: relative;
+  right: 2em;
 }
 
 .tag-fields {
   margin-right: .2em;
   font-family: Montserrat;
+  position: relative;
+  right: 2em;
 }
 
 .form-button {
@@ -341,17 +347,17 @@ ul li.favorites::marker {
 
 .lesson-buttons-position {
   position: relative;
-  bottom: 2em;
+  bottom: .5em;
 }
 
 .course-buttons-position {
   position: relative;
-  bottom: 2em !important;
+  top: .5em !important;
 }
 
 .move-lessons {
   position: relative;
-  bottom: 3em;
+  bottom: 2em;
 }
 
 .course-checkboxes {

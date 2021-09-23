@@ -12,7 +12,7 @@ class SearchItem < ApplicationRecord
       grade_level: self.grade_level,
       state: self.state,
       district: self.district,
-      course_id: self.searchable.course_id.present? ? self.searchable.course_id.to_s : "",
+      course_id:  (self.searchable.class == Lesson) ? self.searchable.course_id.to_s : "",
       tags: self.tags,
       user_id: self.user_id
     }
