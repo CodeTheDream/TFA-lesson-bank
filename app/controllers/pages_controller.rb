@@ -12,6 +12,7 @@ class PagesController < ApplicationController
     @selected_subject  = search_params[:subject].present? ? search_params[:subject] : ''
     @selected_district  = search_params[:district].present? ? search_params[:district] : ''
     @results = SearchItemSearch.search(query: query, options: search_params)
+   
     if search_params[:favorites] == "true"
       results_id = @results.pluck :id
       favorites = FavoriteCourse.where(user_id: current_user.id).distinct.pluck :course_id

@@ -41,6 +41,15 @@
   font-size: 30px;
   cursor: pointer;
 }
+.fa-pencil-alt.pencil_edit_card {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-pencil-alt.pencil_edit_card:hover {
+  color: #081e32 !important;
+  font-size: 20px;
+  cursor: pointer;
+}
 .lesson_accordion {
   background-color: white;
 }

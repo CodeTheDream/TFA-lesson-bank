@@ -4,7 +4,14 @@
     <div id="circle"><h4 class="text-center">C</h4></div>
   </div> 
   <div class="card-body" >       
-    <h2 class="card-title"><%= course.title.titleize %></h2>      
+    <h2 class="card-title"><%= course.title.titleize %>
+      <%if current_user&.role == 'teacher'%>                   
+        <%= link_to(edit_course_path(course)) do %>          
+          <i class=" fa fa-pencil-alt pencil_edit_card"></i>        
+        <%end%>  
+      <% end %>         
+    </h2>
+    
     <div><span style="color: gray">SUBJECT:</span> <%= course.subject%></div>
     <div class="mb-2"><span style="color: gray">GRADE: </span><%= course.grade_level %></div>
   
