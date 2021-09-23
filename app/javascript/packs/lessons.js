@@ -1,4 +1,4 @@
-window.addTagField = function addTagField() {
+window.addLessonTagField = function addLessonTagField(lessonId) {
   //create Date object 
   var date = new Date();
 
@@ -25,5 +25,5 @@ window.addTagField = function addTagField() {
 
   //add created <li> element with its child elements 
   //(label and input) to myList (<ul>) element
-  document.getElementById("myList").appendChild(li);
+  document.getElementById(`myLessonList${lessonId}`).appendChild(li);
 }

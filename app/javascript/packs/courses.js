@@ -21,6 +21,7 @@ window.addTagField = function addTagField() {
   inputKind.setAttribute("type", "text");
   inputKind.setAttribute("id", idAttribut);
   inputKind.setAttribute("name", nameAttribut);
+  inputKind.setAttribute("class", "tag-fields");
   li.appendChild(inputKind);
 
   //add created <li> element with its child elements 

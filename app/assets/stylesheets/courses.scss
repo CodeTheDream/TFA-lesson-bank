@@ -174,7 +174,7 @@ ul li.favorites::marker {
 
 .move-description {
   position: relative;
-  bottom: 1.7em;
+  bottom: 3.7em;
 }
 
 #myList li{
@@ -183,8 +183,15 @@ ul li.favorites::marker {
 
 .move-tag-list {
   position: relative;
-  left: 2.2em;
+  left: 2.7em;
+  bottom: 1.9em;
+}
+
+.move-lesson-tag-list {
+  position: relative;
+  left: 3.5em;
   bottom: 1.8em;
+  list-style-type: none;
 }
 
 .star {
@@ -194,7 +201,8 @@ ul li.favorites::marker {
 .checkbox-format input[type="checkbox"] {
   height: 1.1rem !important;
   width: 1.3rem !important;
-  margin:auto;
+  margin-left: 1em;
+  
 }
 
 .checkbox-format label{
@@ -214,4 +222,123 @@ ul li.favorites::marker {
 .move-grade-label {
   position: relative;
   right: .3em;
+}
+
+.course-title{
+  border: none !important;
+  background-color: #f0f0f0 !important;
+  font-size: 2.5em;
+  font-family: Montserrat;
+  position: relative;
+  right: .1em;
+}
+
+.district-label {
+  color: gray;
+}
+
+.district-dropdown {
+  width: 7.2em; 
+  border: none;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+}
+
+.subject-label {
+  color: gray;
+}
+
+.subject-dropdown {
+  width: 7.2em; 
+  border: none;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+}
+
+.grade-label {
+  color: gray;
+}
+
+.grade-description-container {
+  position: relative;
+  left: 1em;
+  color: gray;
+}
+
+.tag-button-container {
+  position: relative;
+  bottom: 3em;
+  font-family: Montserrat;
+}
+
+.lesson-tag-fields {
+  margin-right: .4em;
+}
+
+.tag-fields {
+  margin-right: .2em;
+  font-family: Montserrat;
+}
+
+.form-button {
+  height: 2.5em;
+  font-size: 14px !important;
+  font-family: Montserrat;
+}
+
+.doc-button {
+  background-color: #081e32 !important;
+  color: white !important;
+  font-size: 14px !important;
+  border-radius: 0% !important;
+  border: none;
+  font-family: Montserrat;
+}
+
+.lesson-title{
+  border: none !important;
+  background-color: white !important;
+  font-size: 2em;
+  font-family: Montserrat;
+}
+
+.lesson-description-label {
+  color: gray;
+  position: relative;
+  left: .15em;
+}
+
+.course-description-label {
+  color: gray;
+  position: relative;
+  left: .15em;
+}
+
+.course-description-area {
+  border: none !important;
+  background-color: #f0f0f0 !important;
+}
+
+.lesson-description-area {
+  border: none !important;
+}
+
+.lesson-tag-button-container {
+  position: relative;
+  bottom: 0em;
+}
+
+.lesson-buttons-position {
+  position: relative;
+  bottom: 2em;
+}
+
+.course-buttons-position {
+  position: relative;
+  bottom: 2em !important;
+}
+
+.move-lessons {
+  position: relative;
+  bottom: 3em;
 }
