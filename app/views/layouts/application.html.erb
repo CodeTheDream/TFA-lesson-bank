@@ -50,22 +50,10 @@
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </body>
-  <script type="text/javascript" > 
-    function fadeOutEffect() {
-      var fadeTarget = document.getElementById("notice_wrapper");
-      console.log ("fadeTarget"); 
-      var fadeEffect = setInterval(function () {
-          if (!fadeTarget.style.opacity) {
-              fadeTarget.style.opacity = 1;
-          }
-          if (fadeTarget.style.opacity > 0) {
-              fadeTarget.style.opacity -= 0.1;
-          } else {
-              clearInterval(fadeEffect);
-          }
-      }, 200);
-    }
-    document.getElementById("notice_wrapper").addEventListener('click', fadeOutEffect);
-  </script> 
+  <script type="text/javascript" >
+    var s = document.getElementById('notice_wrapper').style;
+    s.opacity = 1;
+    (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,500)})();
+  </script>
 </html>
 
