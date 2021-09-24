@@ -27,6 +27,7 @@
     <main>
       <% if notice %>
         <div id="notice_wrapper">
+        <%# Adjust below the NavBar %>
         <h1>p</h1>
         <h5 class="notice mt-5 mb-5 lead" style ="text-align: center;"><%= notice %></h5>
         </div>
@@ -35,7 +36,6 @@
           <p class="alert"> <%= alert %> </p> 
         </div>
       <% end %>
-
 
       <%= yield %>
     </main class="flex-shrink-0" role="main">
