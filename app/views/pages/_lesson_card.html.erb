@@ -1,30 +1,29 @@
-<div class="col mb-5 mx-auto">  
-  <div class="card h-100 search_card mb-4 " style=" width: 18rem;">
-    <div class="card-header"></div> 
-    <div class= "text-right">
-      <div id="circle"><h4 class="text-center">L</h4></div>
-    </div> 
-    <div class="card-body" style="height: 40vh;" >
-      <h2 class="card-title"><%= lesson.title.titleize %></h2>     
-      <div><span style="color: gray">SUBJECT:</span> <%= lesson.subject %></div>           
-      <div class="mb-4"><span style="color: gray">GRADE:</span> <%= lesson.grade_level%></div>
-      <% if lesson.tags.present? %>
-        <% lesson.tags.split(' ').each do |tag| %> 
-          <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.capitalize %></span>
-        <%end%>
-      <%end%>     
-      <div class="card-text mb-4 mt-4" style="height: 15vh;">      
-        <%= simple_format truncate(h(lesson.description.capitalize), length: 100, separator: ' ') %>
-        <% if lesson.description.length >  100 %>         
-          <%= link_to "Read More", lesson_path(lesson), class:"read_more"%>          
-        <%end%>
-      </div>
-    </div>
-
-    <div class="text-center ">
-      <a href='/courses/<%="#{lesson.searchable_id}"%>' class="btn button_view_card right-arrow ">VIEW LESSON </a>
-    </div>
+<div class="card h-100 search_card" >  
+  <div class="card-header"></div> 
+  <div class= "text-right">
+    <div id="circle"><h4 class="text-center">L</h4></div>
   </div> 
+  <div class="card-body"  >
+    <h2 class="card-title"><%= lesson.title.titleize %></h2>     
+    <div><span style="color: gray">SUBJECT:</span> <%= lesson.subject %></div>           
+    <div class="mb-2"><span style="color: gray">GRADE:</span> <%= lesson.searchable.course.grades.pluck(:grade_level).join(', ') %></div>
+    <% if lesson.tags.present? %>
+      <% lesson.tags.split(' ').each do |tag| %> 
+        <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.capitalize %></span>
+      <%end%>
+    <%end%>     
+    <div class="card-text  mt-3" >      
+      <%= simple_format truncate(h(lesson.description.capitalize), length: 100, separator: ' ') %>
+      <% if lesson.description.length >  100 %>         
+        <%= link_to "Read More", lesson_path(lesson), class:"read_more"%>          
+      <%end%>
+    </div>      
+  </div>
+  <div class="text-center ">
+    <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by <%= lesson.searchable.course.user.name %></span></div>
+    <div class="mt-2 mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= lesson.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
+    <a href='/courses/<%="#{lesson.searchable_id}"%>' class="btn button_view_card right-arrow ">VIEW LESSON </a>
+  </div>  
 </div> 
 
 

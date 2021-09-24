@@ -34,7 +34,12 @@ Rails.application.routes.draw do
     end
     member do
       get :download
-    end 
+    end
+    collection do
+      get :course_lesson_form
+      get :load_course
+      get :load_lesson
+    end
     resources :lessons do
       member do
         get :download

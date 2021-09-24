@@ -36,10 +36,14 @@ gem 'rack-cors'
 gem 'ffmpeg'
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
+# use jquery-rails for jquery
+gem 'jquery-rails'
 gem "font-awesome-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+# Use gem jquery-turbolinks to allow page reloads
+#gem 'jquery-turbolinks'
 
 # Use will_paginate to paginate information
 gem 'will_paginate', '~> 3.1.0'

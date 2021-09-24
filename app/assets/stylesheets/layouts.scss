@@ -10,13 +10,25 @@
 .search_button {
   background-color: #081e32;
   color: white;
-  font-size: 14px !important;
+  font-size: 12px !important;
   border-radius: 0% !important;
   border: none;
 }
 
 .search_button:hover {
   background-color: #1996aa !important;
+  border-radius: 0% !important;
+  border: none !important;
+}
+.search_button:hover,
+button:focus {
+  outline: none;
+}
+.fa-play.yellow-icon-play {
+  color: #fdee6c;
+  font-size: 9px;
+  margin-left: 2px;
+  margin-right: 1px;
 }
 
 .navbar-nav .nav-item .nav-link {
@@ -33,30 +45,33 @@
   color: #1996aa;
 }
 
+.align-dropdown {
+}
+
 .user-container {
   position: relative;
-  bottom: .5em;
+  bottom: 0.5em;
   height: 50px;
   width: 50px;
   background-color: white;
   border-radius: 25px;
 }
 
-.user-icon-text{
+.user-icon-text {
   position: relative;
-  right: .1em;
-  top: .5em;
+  right: 0.1em;
+  top: 0.5em;
   color: #1996aa;
 }
 
-.dropdown-menu-container{
+.dropdown-menu-container {
   position: relative;
   left: 2em;
 }
 
 .position-about {
   position: relative;
-  left: .1em;
+  left: 0.1em;
 }
 
 .position-search {
@@ -74,26 +89,26 @@
 
 .triangle {
   position: absolute !important;
-  top: -.55em !important;
-  right: -.0em !important;
-  width: 0 !important; 
-  height: 0 !important; 
+  top: -0.55em !important;
+  right: -0em !important;
+  width: 0 !important;
+  height: 0 !important;
   border-top: 10px solid transparent !important;
-  border-bottom: 10px solid transparent !important; 
-  
-  border-right: 10px solid white; 
+  border-bottom: 10px solid transparent !important;
+
+  border-right: 10px solid white;
 }
 
 .triangle-border {
   position: absolute;
-  top: -.7em;
-  right: -.04em;
-  width: 0; 
-  height: 0; 
+  top: -0.7em;
+  right: -0.04em;
+  width: 0;
+  height: 0;
   border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent; 
-  
-  border-right:10px solid rgba(0,0,0,.15);
+  border-bottom: 10px solid transparent;
+
+  border-right: 10px solid rgba(0, 0, 0, 0.15);
 }
 
 .fancy-toggler.navbar-toggler .navbar-toggler-icon {

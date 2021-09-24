@@ -16,7 +16,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         # tags: @tag.id, ?
@@ -34,7 +34,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -47,7 +47,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -61,25 +61,25 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get new_course_lesson_path(course_id: @course.id, id: @lesson.id),
-        params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
+        params: {lesson: {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       expect(response).to render_template(:new)
     end
     it "redirects to the new_user_session_path if a user is not confirm" do
       @user = FactoryBot.create(:user)
       sign_in @user
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get new_course_lesson_path(course_id: @course.id, id: @lesson.id),
-        params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
+        params: {lesson: {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       #response 300 checkit
       expect(response).to redirect_to new_user_session_path
     end
@@ -89,13 +89,13 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       @lesson = Lesson.create(lesson_hash)
       get edit_course_lesson_path(course_id: @course.id, id: @lesson.id),
-        params: {lesson: {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
+        params: {lesson: {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       expect(response.status).to eq(200)
       expect(response).to render_template(:edit)
     end
@@ -106,7 +106,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -122,7 +122,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -141,7 +141,7 @@ RSpec.describe "Lessons", type: :request do
         @user = FactoryBot.create(:user)
         sign_in @user
         @user.confirm
-        course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+        course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
         @course = Course.create(course_hash)
         lesson_hash = {title: "test lesson1", description: "test lesson1", 
           created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -157,7 +157,7 @@ RSpec.describe "Lessons", type: :request do
         expect(@lesson.course_id).to eq(@course.id) 
         expect(@lesson.id).to eq(@lesson.id)   
         expect(@lesson.description).to eq("test lesson1") 
-        expect(response).to redirect_to [@course, @lesson]
+        expect(response).to redirect_to course_lesson_form_courses_path
       end
     end
   describe "put course_lesson_path with valid data" do
@@ -165,7 +165,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -187,7 +187,7 @@ RSpec.describe "Lessons", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}

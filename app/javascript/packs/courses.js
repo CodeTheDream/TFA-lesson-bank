@@ -21,13 +21,19 @@ window.addTagField = function addTagField() {
   inputKind.setAttribute("type", "text");
   inputKind.setAttribute("id", idAttribut);
   inputKind.setAttribute("name", nameAttribut);
+  inputKind.setAttribute("class", "tag-fields");
   li.appendChild(inputKind);
 
   //add created <li> element with its child elements 
   //(label and input) to myList (<ul>) element
   document.getElementById("myList").appendChild(li);
-
-
-
-
 }
+
+window.courseSelect = function courseSelect(){
+    $.ajax({
+      url: '/courses/load_course?course_id=' + $("#course").val(),
+      type: 'GET',
+      success: function(r) {
+      }
+    });
+  }

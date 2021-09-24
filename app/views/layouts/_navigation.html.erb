@@ -22,20 +22,20 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="triangle-border"></div>
                 <div class="triangle"></div>
-                <%= link_to 'MY CONTENT', search_page_path(mycontent: true), class: 'dropdown-item' %>
+                <%= link_to 'MY MATERIAL', search_page_path(mycontent: true), class: 'dropdown-item' %>
                 <%= link_to 'FAVORITES', search_page_path(favorites: true), class: 'dropdown-item' %>
+                <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
                 <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               </div>
             </li>
             </div>
           <% else %>
             <li class="navbar-nav ml-auto right_list">
-              <div class='nav-item  '><%= link_to 'Login', new_user_session_path, class: 'nav-link' %></div>
-              <div class='nav-item '><%= link_to 'Register', new_user_registration_path, class: 'nav-link' %></div>
+              <div class='nav-item  '><%= link_to 'LOGIN', new_user_session_path, class: 'nav-link' %></div>
+              <div class='nav-item '><%= link_to 'REGISTER', new_user_registration_path, class: 'nav-link' %></div>
             </li>
           <% end %>
         </ul>
       </div>
   </div>
 </nav>
-

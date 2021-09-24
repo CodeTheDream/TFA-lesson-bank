@@ -25,6 +25,15 @@
 .course_show_description {
   margin-top: 25px;
 }
+.fa-pencil-alt.pencil_edit {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-pencil-alt.pencil_edit:hover {
+  color: #081e32 !important;
+  font-size: 20px;
+  cursor: pointer;
+}
 .lesson_accordion {
   background-color: white;
 }
@@ -114,11 +123,6 @@ a {
   left: 15em;
 }
 
-.fit-width {
-  width: 66%;
-  height: 125px;
-}
-
 .course-dropdown {
   font-size: 24px;
 }
@@ -135,10 +139,229 @@ a {
   right: 0.7em;
 }
 
+.course-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.set-size-and-position {
+  position: relative;
+  top: 10em;
+  background-color: #f0f0f0;
+  width: 80%;
+}
+
+.set-height {
+  max-height: 50px;
+}
+
+.blue-header {
+  height:15px;
+  background-color: #1996aa;
+}
+
 ul li.favorites::marker {
   content: "⭐️";
 }
 
+.move-label {
+  position: relative;
+  right: 1.25em;
+}
+
+.move-grade-label {
+  position: relative;
+  right: 0.3em;
+}
+
+.checkboxes {
+  position: relative;
+  right: 1em;
+  bottom: 0em;
+  max-width: 15em;
+}
+
+.move-description {
+  position: relative;
+  bottom: 3.7em;
+  left: 1em;
+}
+
+#myList li{
+  display: inline;
+}
+
+.move-tag-list {
+  position: relative;
+  left: 5em;
+  bottom: 1.95em;
+  margin-bottom: 0em !important;
+}
+
+.move-lesson-tag-list {
+  position: relative;
+  left: 5.4em;
+  bottom: 1.9em;
+  list-style-type: none;
+}
+
 .star {
   float: right;
+}
+
+.checkbox-format input[type="checkbox"] {
+  height: 1.1rem !important;
+  width: 1.3rem !important;
+  margin-left: 1em;
+  
+}
+
+.checkbox-format label{
+  font-size:0.7rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.grid-container-filter{
+  display: grid;
+  height: fit-content;
+  width: 10%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 0.7em;
+}
+
+.move-grade-label {
+  position: relative;
+  right: .3em;
+}
+
+.course-title{
+  border: none !important;
+  background-color: #f0f0f0 !important;
+  font-size: 2.5em;
+  font-family: Montserrat;
+  position: relative;
+  right: .1em;
+}
+
+.district-label {
+  color: gray;
+}
+
+.district-dropdown {
+  width: 7.2em; 
+  border: none;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+}
+
+.subject-label {
+  color: gray;
+}
+
+.subject-dropdown {
+  width: 7.2em; 
+  border: none;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+}
+
+.grade-label {
+  color: gray;
+}
+
+.grade-description-container {
+  position: relative;
+  left: 1em;
+  color: gray;
+}
+
+.tag-button-container {
+  position: relative;
+  bottom: 3em;
+  font-family: Montserrat;
+}
+
+.lesson-tag-fields {
+  margin-right: .2em;
+  font-family: Montserrat;
+  position: relative;
+  right: 2em;
+}
+
+.tag-fields {
+  margin-right: .2em;
+  font-family: Montserrat;
+  position: relative;
+  right: 2em;
+}
+
+.form-button {
+  height: 2.5em !important;
+  font-size: 12px !important;
+  font-family: Montserrat;
+}
+
+.doc-button {
+  background-color: #081e32 !important;
+  color: white !important;
+  font-size: 12px !important;
+  border-radius: 0% !important;
+  border: none;
+  font-family: Montserrat;
+  max-height: 2.5em !important;
+}
+
+.lesson-title{
+  border: none !important;
+  background-color: white !important;
+  font-size: 2em;
+  font-family: Montserrat;
+}
+
+.lesson-description-label {
+  color: gray;
+  position: relative;
+  left: .15em;
+}
+
+.course-description-label {
+  color: gray;
+  position: relative;
+  left: .15em;
+}
+
+.course-description-area {
+  border: none !important;
+  background-color: #f0f0f0 !important;
+}
+
+.lesson-description-area {
+  border: none !important;
+}
+
+.lesson-tag-button-container {
+  position: relative;
+  bottom: 0em;
+}
+
+.lesson-buttons-position {
+  position: relative;
+  bottom: .5em;
+}
+
+.course-buttons-position {
+  position: relative;
+  top: .5em !important;
+}
+
+.move-lessons {
+  position: relative;
+  bottom: 2em;
+}
+
+.course-checkboxes {
+  max-width: 6em;
+  position: relative;
+  left: 1.3em;
 }
