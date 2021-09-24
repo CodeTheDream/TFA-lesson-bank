@@ -161,10 +161,10 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    respond_to do |format|
-      format.html { render 'course_lesson_form'}
-      format.js {render layout: false}
-    end
+    # respond_to do |format|
+    #   format.html { render 'course_lesson_form'}
+    #   format.js {render layout: false}
+    # end
   end
 
   def load_course
