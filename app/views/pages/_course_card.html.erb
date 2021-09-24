@@ -13,7 +13,7 @@
     </h2>
     
     <div><span style="color: gray">SUBJECT:</span> <%= course.subject%></div>
-    <div class="mb-2"><span style="color: gray">GRADE: </span><%= course.grade_level %></div>
+    <div class="mb-2"><span style="color: gray">GRADE: </span><%= course.searchable.grades.pluck(:grade_level).join(', ') %></div>
   
     
     <% if course.tags.present? %>
@@ -36,5 +36,3 @@
     <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card right-arrow ">VIEW COURSE </a>
   </div>
 </div>
-
-  

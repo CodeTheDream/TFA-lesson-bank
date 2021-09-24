@@ -1,6 +1,8 @@
 require "zip"
 require 'fileutils'
 class LessonsController < ApplicationController
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course
   before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
@@ -30,13 +32,13 @@ class LessonsController < ApplicationController
     if @lesson.save
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
       lesson_tags = @lesson.tags.pluck(:name).join(' ')    
-      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id, tags: lesson_tags, subject: @course.subject, grade_level: @course.grade_level, user_id: current_user.id } 
+      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id } 
       @lesson.search_item = SearchItem.create(hash)
       flash.notice = "The lesson record was created successfully."
-      redirect_to [@course, @lesson]#course_lessons_path(@lesson)
+      redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
-      render :new  
+      redirect_to course_lesson_form_courses_path
     end
   end
     
@@ -53,15 +55,15 @@ class LessonsController < ApplicationController
       end
       @lesson.tag_list=(tags) if tags.present?
       lesson_tags = @lesson.tags.pluck(:name).join(' ')
-      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id, tags: lesson_tags, subject: @course.subject, grade_level: @course.grade_level, user_id: current_user.id } 
+      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id } 
       search_item = SearchItem.find_by(searchable_id: @lesson.id, searchable_type: 'Lesson')
       search_item.update(hash)
       @lesson.search_item = search_item
       flash.notice = "The lesson record was updated successfully."
-      redirect_to [@course, @lesson]#course_lessons_path(@course)
+      redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
-      render :edit
+      redirect_to course_lesson_form_courses_path
     end
   end
     
@@ -139,5 +141,11 @@ class LessonsController < ApplicationController
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s
     redirect_to courses_path
+  end
+
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    redirect_to root_path
   end
 end

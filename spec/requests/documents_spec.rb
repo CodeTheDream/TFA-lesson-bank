@@ -14,7 +14,7 @@ RSpec.describe "Documents", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}
@@ -30,7 +30,7 @@ RSpec.describe "Documents", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         created_at: Time.now, updated_at: Time.now, course_id: @course.id}

@@ -45,8 +45,16 @@ ActiveRecord::Schema.define(version: 2021_09_09_005446) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
-    t.string "grade_level"
     t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "courses_grades", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "grade_id"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_courses_grades_on_course_id"
+    t.index ["grade_id"], name: "index_courses_grades_on_grade_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -68,6 +76,12 @@ ActiveRecord::Schema.define(version: 2021_09_09_005446) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["course_id"], name: "index_favorite_courses_on_course_id"
     t.index ["user_id"], name: "index_favorite_courses_on_user_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string "grade_level"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "key_words", force: :cascade do |t|
