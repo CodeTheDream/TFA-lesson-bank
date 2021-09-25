@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   
   root to: 'pages#landing_page'
   
-  # devise_scope :user do
-  #   get '/users/sign_out' => 'devise/sessions#destroy'
-  # end
+  devise_scope :user do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
   devise_scope :user do
     get '/users' => 'users/registrations#index'
     get '/users/:id' => 'users/registrations#show', as: 'user_show'
