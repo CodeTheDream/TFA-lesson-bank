@@ -22,12 +22,9 @@
           <%= link_to(edit_course_path(@course)) do %>
             <i class=" fa fa-pencil-alt pencil_edit"></i>
           <% end %> 
-        <%= link_to(courses_delete_path(@course)) do %> 
-        <%# <%= link_to 'Delete Course', courses_delete_path, method: :delete do %> 
-        <%# <%= link_to 'Delete',{ :course_id => @course.id}, :method => :delete, :confirm => 'Are you sure?' do %> 
-            <%byebug%>
+          <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
             <i class=" fa fa-trash-alt trash_delete"></i>
-        <% end %>       
+          <% end %>       
         <%end%>
  
         <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>

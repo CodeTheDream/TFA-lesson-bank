@@ -53,11 +53,6 @@ Rails.application.routes.draw do
     
   end
 
-  get 'courses/:id/delete' => 'courses#destroy'
-  delete 'courses/:id/delete' => 'courses#destroy', as: 'courses_delete'
-
-
-
   resources :lessons do
     #member do
     #  get :download
