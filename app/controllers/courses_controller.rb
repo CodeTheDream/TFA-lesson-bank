@@ -156,7 +156,7 @@ class CoursesController < ApplicationController
     new_course = Course.new(title: "New")
     @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
 #    @lesson = Lesson.new
-    @course = new_course
+    @course = params[:course_id].present? ? Course.find(params[:course_id]) : new_course
     @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
