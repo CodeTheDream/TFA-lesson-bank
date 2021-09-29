@@ -100,8 +100,8 @@ class CoursesController < ApplicationController
     end
   end
 
-  # DELETE /lessons/1
-  # DELETE /lessons/1.json
+  # DELETE /courses/1
+  # DELETE /courses/1.json
   def destroy
     @course.destroy
     respond_to do |format|
