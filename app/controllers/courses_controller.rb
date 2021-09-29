@@ -115,19 +115,19 @@ class CoursesController < ApplicationController
   def favorite
     # current_user.favorites << @course
     if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      redirect_to course_path(id: @course.id), notice: "You already favorited #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You Already Favorited #{@course.title}"
     else
       current_user.favorites << @course
-      redirect_to course_path(id: @course.id), notice: "You favorited #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You Favorited #{@course.title}"
     end
   end
 
   def unfavorite
     if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      redirect_to course_path(id: @course.id), notice: "You already unfavorited #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You Already Unfavorited #{@course.title}"
     else
       current_user.favorites.delete(@course)
-      redirect_to course_path(id: @course.id), notice: "You unfavorited #{@course.title}"
+      redirect_to course_path(id: @course.id), notice: "You Unfavorited #{@course.title}"
     end
   end
   
