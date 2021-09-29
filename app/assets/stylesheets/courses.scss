@@ -25,6 +25,15 @@
 .course_show_description {
   margin-top: 25px;
 }
+.fa-trash-alt.trash_delete {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-trash-alt.trash_delete:hover {
+  color: #081e32 !important;
+  font-size: 20px;
+  cursor: pointer;
+}
 .fa-pencil-alt.pencil_edit {
   color: #1996aa !important;
   font-size: 20px;
