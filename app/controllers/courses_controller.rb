@@ -156,15 +156,18 @@ class CoursesController < ApplicationController
     new_course = Course.new(title: "New")
     @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
 #    @lesson = Lesson.new
-    @course = new_course
+    @course = params[:course_id].present? ? Course.find(params[:course_id]) : new_course
     @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    respond_to do |format|
-      format.html { render 'course_lesson_form'}
-      format.js {render layout: false}
-    end
+    new_lesson = Lesson.new(title: "New")
+    @lessons = @course.lessons.to_a.unshift new_lesson
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    # respond_to do |format|
+    #   format.html { render 'course_lesson_form'}
+    #   format.js {render layout: false}
+    # end
   end
 
   def load_course
@@ -179,7 +182,7 @@ class CoursesController < ApplicationController
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     new_lesson = Lesson.new(title: "New")
     @lessons = @course.lessons.to_a.unshift new_lesson
-    @lesson = new_lesson
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     @from_load_course = true
     render "/courses/course_lesson_form.js.erb"
   end
@@ -191,7 +194,7 @@ class CoursesController < ApplicationController
     if ajax_params[:lesson_id].present?
       @lesson = Lesson.find ajax_params[:lesson_id]
     else
-      @lesson = new_lesson 
+      @lesson = nil 
     end
     @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
