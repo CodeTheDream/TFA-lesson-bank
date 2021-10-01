@@ -11,7 +11,14 @@
   font-size: 12px !important;
   color: gray !important;
 }
-
+.top_session {
+  margin-top: 120px !important;
+}
+.pencil_session {
+  float: right !important;
+  margin-top: 120px !important;
+  margin-right: 30px;
+}
 .big_card {
   background-color: #f0eeed;
   margin-top: 15px;
@@ -36,9 +43,18 @@
 }
 .fa-pencil-alt.pencil_edit {
   color: #1996aa !important;
-  font-size: 20px;
+  font-size: 30px;
 }
 .fa-pencil-alt.pencil_edit:hover {
+  color: #081e32 !important;
+  font-size: 30px;
+  cursor: pointer;
+}
+.fa-pencil-alt.pencil_edit_card {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-pencil-alt.pencil_edit_card:hover {
   color: #081e32 !important;
   font-size: 20px;
   cursor: pointer;

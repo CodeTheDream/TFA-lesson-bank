@@ -29,6 +29,8 @@ button:focus {
   font-size: 9px;
   margin-left: 2px;
   margin-right: 1px;
+  vertical-align: middle !important;
+  margin-bottom: 2px;
 }
 
 .navbar-nav .nav-item .nav-link {
@@ -119,4 +121,9 @@ button:focus {
 }
 .fancy-toggler.navbar-toggler:focus {
   outline-color: #081e32;
+}
+
+.notice {
+  position: absolute;
+  right: 50%;
 }

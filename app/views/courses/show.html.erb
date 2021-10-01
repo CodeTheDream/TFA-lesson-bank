@@ -1,15 +1,25 @@
-<div class="container mt-5 ">
-    
-      <!-- Button Back Section-->   
-
+<div class="container mt-5 ">    
+  <!-- Button Back Section & Pencil-->   
+  <div class="row top_session">
+    <div class="col-8">
       <div class="show_button_section btn btn_show_back">        
-        <%= link_to courses_path do  %>         
-          <i class=" fa fa-caret-left " style="color:gray;"></i>            
-          <span style="color: gray">BACK TO SEARCH RESULTS</span>
-        <% end %>
-      </div>
-                       
-    
+        <%= link_to courses_path do  %>                
+          <i class=" fa fa-caret-left " style="color:gray;"></i>                
+          <span style="color: gray">BACK TO SEARCH RESULTS </span>
+        <% end %>   
+      </div> 
+    </div> 
+    <div class="col-4 ">
+      <% if current_user == @course.user || current_user&.role == 'admin'%>                   
+        <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %> 
+          <div class="pencil_session">
+            <i class=" fa fa-pencil-alt pencil_edit"></i> 
+          </div> 
+        <%end%>  
+      <% end %>             
+    </div> 
+  </div>        
+     
   <div class="row big_card">
     <div class="card-header"></div> 
 
@@ -17,19 +27,7 @@
     <div class="col-lg-4 mb-5">
       <!-- Course header-->
       <div class="show_left">
-        <h1 class="mb-2 mt-4"><%= @course.title %>        
-        <% if current_user == @course.user || current_user&.role == 'admin'%>
-          <%= link_to(edit_course_path(@course)) do %>
-            <i class=" fa fa-pencil-alt pencil_edit"></i>
-          <% end %> 
-        <%= link_to(courses_delete_path(@course)) do %> 
-        <%# <%= link_to 'Delete Course', courses_delete_path, method: :delete do %> 
-        <%# <%= link_to 'Delete',{ :course_id => @course.id}, :method => :delete, :confirm => 'Are you sure?' do %> 
-            <%byebug%>
-            <i class=" fa fa-trash-alt trash_delete"></i>
-        <% end %>       
-        <%end%>
- 
+        <h1 class="mb-2 mt-4"><%= @course.title %></h1>       
         <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
         <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
@@ -44,21 +42,20 @@
       </div>      
     </div>
 
-
     <!-- Right Side Course-->
     <div class="col-lg-8 mt-5 mb-2">  
       <!-- Course Description Section-->
-    <div class="star">
-      <% if current_user.favorites.pluck(:course_id).include? @course.id %>
-        <%= link_to(unfavorite_course_path) do %>
-          <i class="fas fa-star" style="color:yellow;"></i>
-        <% end %> 
-      <% else %>
-        <%= link_to(favorite_course_path) do %>
-          <i class="fas fa-star" style="color:gray;"></i>
-        <% end %> 
-      <% end %>
-    </div>
+      <div class="star">
+        <% if current_user.favorites.pluck(:course_id).include? @course.id %>
+          <%= link_to(unfavorite_course_path) do %>
+            <i class="fas fa-star" style="color:yellow;"></i>
+          <% end %> 
+        <% else %>
+          <%= link_to(favorite_course_path) do %>
+            <i class="fas fa-star" style="color:gray;"></i>
+          <% end %> 
+        <% end %>
+      </div>
     
       <div class="mb-3 course_show_description">
         <p>
@@ -129,13 +126,11 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
-                    <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
-                      <div class=" lesson_title_row  ">                                                       
-                        <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> <i class=" fa fa-pencil-alt pencil_edit"></i></h3>                                             
-                      </div>                   
-                    <% end %>       
-                    
-                          
+                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
+                        <div class=" lesson_title_row  ">                                                       
+                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> </h3>                                             
+                        </div>                   
+                      <% end %>                         
                     </a>
                   </h4>
                 </div>
