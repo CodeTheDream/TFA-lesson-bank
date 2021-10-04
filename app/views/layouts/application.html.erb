@@ -51,9 +51,12 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </body>
   <script type="text/javascript" >
+  if (document.getElementById("notice_wrapper") != null){
     var s = document.getElementById('notice_wrapper').style;
     s.opacity = 1;
     (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,200)})();
+
+  }
   </script>
 </html>
 
