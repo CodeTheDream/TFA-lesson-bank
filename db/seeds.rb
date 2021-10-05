@@ -110,6 +110,39 @@ end
 puts 'done'
 puts "Created #{success} lessons with #{errors} failures"
 
+#Create documents
+print "Creating Documents"
+methods_lesson = Lesson.find_by title: "Methods"
+variables_lesson = Lesson.find_by title: "Variables"
+ruby_syllabus_hash = { name: "Ruby Syllabus", description: "This is a comprehensive list of requirements for the course", kind: "reference", course_id: ruby_course.id }
+ruby_calendar_hash = { name: "Ruby Calendar", description: "This is a calendar for the Ruby course", kind: "reference", course_id: ruby_course.id }
+methods_assessment_hash = { name: "Methods Assessment", description: "This is an assessment", kind: "evaluation", lesson_id: methods_lesson.id }
+methods_handout_hash = { name: "Methods Handout", description: "This is a Handout", kind: "classwork", lesson_id: methods_lesson.id }
+variables_assessment_hash = { name: "Variables Assessment", description: "This is an assessment", kind: "evaluation", lesson_id: variables_lesson.id }
+variables_calendar_hash = { name: "Variables Calendar", description: "This is a calendar", kind: "reference", lesson_id: variables_lesson.id }
+
+documents_array = [ ruby_syllabus_hash, ruby_calendar_hash, methods_assessment_hash, methods_handout_hash, variables_assessment_hash, variables_calendar_hash ]
+file_array = ["public/RubyCourseDoc.pdf", "public/RubyCourseCalendar.pdf", "public/MethodsAssessment.pdf", "public/MethodsHandout.pdf", "public/VariablesPreAssessment.pdf", "public/VariablesCalendar.pdf"]
+documents_hash = documents_array.zip(file_array).to_h
+
+errors = 0
+success = 0
+documents_hash.keys.each do |doc|
+  path = documents_hash[doc]
+  file = path.split('/')[-1]
+  d = ruby_course.documents.build doc
+  d.file.attach(io: File.open("#{path}"), filename: "#{file}")
+  if d.save
+    success += 1
+    print '.'
+  else
+    errors =+ 1
+    print 'x'
+  end
+end
+puts 'done'
+puts "Created #{success} documents with #{errors} failures"
+
 
 # Create Tags
 print "Creating Tags"
