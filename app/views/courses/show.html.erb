@@ -81,31 +81,33 @@
               
               <% if @course.documents.any? %>                
                 <% @course.documents.each do |document| %> 
-                  <tbody class="text-center">
-                    <tr>
-                      <th scope="row">
-                        <%=document.name.titleize%>            
-                      </th>             
-                      <% if document.file.attached? %>
+                  <% if document.lesson_id.nil? %>      
+                    <tbody class="text-center">
+                      <tr>
                         <th scope="row">
-                          <span style="color: gray"><%=document.kind.upcase%></span>            
-                        </th> 
-                      <% end %>   
-                      <% if document.file.representable? %>
-                        <th class="text-center" scope="row">
-                          <%= link_to(document.file) do %>
-                            <i class=" fa fa-search" style="color:gray;"></i>
-                          <% end %> 
-                        </th>       
-                      <% end %>
-                     
-                      <th class="text-center" scope="row">                       
-                        <%= link_to(document.file, download: '') do %>
-                          <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                        <% end %>                     
-                      </th>                            
-                    </tr>
-                  </tbody>                   
+                          <%=document.name.titleize%>            
+                        </th>             
+                        <% if document.file.attached? %>
+                          <th scope="row">
+                            <span style="color: gray"><%=document.kind.upcase%></span>            
+                          </th> 
+                        <% end %>   
+                        <% if document.file.representable? %>
+                          <th class="text-center" scope="row">
+                            <%= link_to(document.file) do %>
+                              <i class=" fa fa-search" style="color:gray;"></i>
+                            <% end %> 
+                          </th>       
+                        <% end %>
+                       
+                        <th class="text-center" scope="row">                       
+                          <%= link_to(document.file, download: '') do %>
+                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                          <% end %>                     
+                        </th>                            
+                      </tr>
+                    </tbody>
+                  <% end %>
                 <% end %>             
               <% end %> 
             </table>             
