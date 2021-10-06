@@ -1,15 +1,25 @@
-<div class="container mt-5 ">
-    
-      <!-- Button Back Section-->   
-
+<div class="container mt-5 ">    
+  <!-- Button Back Section & Pencil-->   
+  <div class="row top_session">
+    <div class="col-8">
       <div class="show_button_section btn btn_show_back">        
-        <%= link_to courses_path do  %>         
-          <i class=" fa fa-caret-left " style="color:gray;"></i>            
-          <span style="color: gray">BACK TO SEARCH RESULTS</span>
-        <% end %>
-      </div>
-                       
-    
+        <%= link_to courses_path do  %>                
+          <i class=" fa fa-caret-left " style="color:gray;"></i>                
+          <span style="color: gray">BACK TO SEARCH RESULTS </span>
+        <% end %>   
+      </div> 
+    </div> 
+    <div class="col-4 ">
+      <% if current_user == @course.user || current_user&.role == 'admin'%>                   
+        <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %> 
+          <div class="pencil_session">
+            <i class=" fa fa-pencil-alt pencil_edit"></i> 
+          </div> 
+        <%end%>  
+      <% end %>             
+    </div> 
+  </div>        
+     
   <div class="row big_card">
     <div class="card-header"></div> 
 
@@ -45,17 +55,17 @@
     <!-- Right Side Course-->
     <div class="col-lg-8 mt-5 mb-2">  
       <!-- Course Description Section-->
-    <div class="star">
-      <% if current_user.favorites.pluck(:course_id).include? @course.id %>
-        <%= link_to(unfavorite_course_path) do %>
-          <i class="fas fa-star" style="color:yellow;"></i>
-        <% end %> 
-      <% else %>
-        <%= link_to(favorite_course_path) do %>
-          <i class="fas fa-star" style="color:gray;"></i>
-        <% end %> 
-      <% end %>
-    </div>
+      <div class="star">
+        <% if current_user.favorites.pluck(:course_id).include? @course.id %>
+          <%= link_to(unfavorite_course_path) do %>
+            <i class="fas fa-star" style="color:yellow;"></i>
+          <% end %> 
+        <% else %>
+          <%= link_to(favorite_course_path) do %>
+            <i class="fas fa-star" style="color:gray;"></i>
+          <% end %> 
+        <% end %>
+      </div>
     
       <div class="mb-3 course_show_description">
         <p>
@@ -81,31 +91,33 @@
               
               <% if @course.documents.any? %>                
                 <% @course.documents.each do |document| %> 
-                  <tbody class="text-center">
-                    <tr>
-                      <th scope="row">
-                        <%=document.name.titleize%>            
-                      </th>             
-                      <% if document.file.attached? %>
+                  <% if document.lesson_id.nil? %>      
+                    <tbody class="text-center">
+                      <tr>
                         <th scope="row">
-                          <span style="color: gray"><%=document.kind.upcase%></span>            
-                        </th> 
-                      <% end %>   
-                      <% if document.file.representable? %>
-                        <th class="text-center" scope="row">
-                          <%= link_to(document.file) do %>
-                            <i class=" fa fa-search" style="color:gray;"></i>
-                          <% end %> 
-                        </th>       
-                      <% end %>
-                     
-                      <th class="text-center" scope="row">                       
-                        <%= link_to(document.file, download: '') do %>
-                          <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                        <% end %>                     
-                      </th>                            
-                    </tr>
-                  </tbody>                   
+                          <%=document.name.titleize%>            
+                        </th>             
+                        <% if document.file.attached? %>
+                          <th scope="row">
+                            <span style="color: gray"><%=document.kind.upcase%></span>            
+                          </th> 
+                        <% end %>   
+                        <% if document.file.representable? %>
+                          <th class="text-center" scope="row">
+                            <%= link_to(document.file) do %>
+                              <i class=" fa fa-search" style="color:gray;"></i>
+                            <% end %> 
+                          </th>       
+                        <% end %>
+                       
+                        <th class="text-center" scope="row">                       
+                          <%= link_to(document.file, download: '') do %>
+                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                          <% end %>                     
+                        </th>                            
+                      </tr>
+                    </tbody>
+                  <% end %>
                 <% end %>             
               <% end %> 
             </table>             
@@ -126,13 +138,11 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
-                    <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
-                      <div class=" lesson_title_row  ">                                                       
-                        <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> <i class=" fa fa-pencil-alt pencil_edit"></i></h3>                                             
-                      </div>                   
-                    <% end %>       
-                    
-                          
+                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
+                        <div class=" lesson_title_row  ">                                                       
+                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> </h3>                                             
+                        </div>                   
+                      <% end %>                         
                     </a>
                   </h4>
                 </div>

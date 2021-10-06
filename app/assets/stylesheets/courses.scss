@@ -11,7 +11,14 @@
   font-size: 12px !important;
   color: gray !important;
 }
-
+.top_session {
+  margin-top: 120px !important;
+}
+.pencil_session {
+  float: right !important;
+  margin-top: 120px !important;
+  margin-right: 30px;
+}
 .big_card {
   background-color: #f0eeed;
   margin-top: 15px;
@@ -26,19 +33,36 @@
   margin-top: 25px;
 }
 .fa-trash-alt.trash_delete {
+  position: relative;
+  bottom: 6px;
   color: #1996aa !important;
-  font-size: 20px;
+  font-size: 22px;
 }
 .fa-trash-alt.trash_delete:hover {
+  position: relative;
+  bottom: 6px;
   color: #081e32 !important;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
 }
 .fa-pencil-alt.pencil_edit {
+  position: relative;
+  bottom: 3px;
+  color: #1996aa !important;
+  font-size: 28px;
+}
+.fa-pencil-alt.pencil_edit:hover {
+  position: relative;
+  bottom: 3px;
+  color: #081e32 !important;
+  font-size: 28px;
+  cursor: pointer;
+}
+.fa-pencil-alt.pencil_edit_card {
   color: #1996aa !important;
   font-size: 20px;
 }
-.fa-pencil-alt.pencil_edit:hover {
+.fa-pencil-alt.pencil_edit_card:hover {
   color: #081e32 !important;
   font-size: 20px;
   cursor: pointer;
@@ -215,6 +239,8 @@ ul li.favorites::marker {
 }
 
 .star {
+  position: relative;
+  bottom: 2.5em;
   float: right;
 }
 

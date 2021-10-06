@@ -4,11 +4,16 @@
     <div id="circle"><h4 class="text-center">C</h4></div>
   </div> 
   <div class="card-body" >       
-    <h2 class="card-title"><%= course.title.titleize %></h2>      
+    <h2 class="card-title"><%= course.title.titleize %>
+      <% if current_user == course.searchable.user || current_user&.role == 'admin'%>              
+        <%=link_to course_lesson_form_courses_path(course_id: course.searchable_id) do %>          
+          <i class=" fa fa-pencil-alt pencil_edit_card"></i>        
+        <%end%>  
+      <% end %>         
+    </h2>
+    
     <div><span style="color: gray">SUBJECT:</span> <%= course.subject%></div>
     <div class="mb-2"><span style="color: gray">GRADE: </span><%= course.searchable.grades.pluck(:grade_level).join(', ') %></div>
-  
-    
     <% if course.tags.present? %>
       <% course.tags.split(' ').each do |tag| %> 
         <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.capitalize %></span>
