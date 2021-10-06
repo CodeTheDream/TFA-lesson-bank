@@ -27,7 +27,16 @@
     <div class="col-lg-4 mb-5">
       <!-- Course header-->
       <div class="show_left">
-        <h1 class="mb-2 mt-4"><%= @course.title %></h1>       
+        <h1 class="mb-2 mt-4"><%= @course.title %>        
+        <% if current_user == @course.user || current_user&.role == 'admin'%>
+          <%= link_to(edit_course_path(@course)) do %>
+            <i class=" fa fa-pencil-alt pencil_edit"></i>
+          <% end %> 
+          <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
+            <i class=" fa fa-trash-alt trash_delete"></i>
+          <% end %>       
+        <%end%>
+ 
         <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
         <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
@@ -81,31 +90,33 @@
               
               <% if @course.documents.any? %>                
                 <% @course.documents.each do |document| %> 
-                  <tbody class="text-center">
-                    <tr>
-                      <th scope="row">
-                        <%=document.name.titleize%>            
-                      </th>             
-                      <% if document.file.attached? %>
+                  <% if document.lesson_id.nil? %>      
+                    <tbody class="text-center">
+                      <tr>
                         <th scope="row">
-                          <span style="color: gray"><%=document.kind.upcase%></span>            
-                        </th> 
-                      <% end %>   
-                      <% if document.file.representable? %>
-                        <th class="text-center" scope="row">
-                          <%= link_to(document.file) do %>
-                            <i class=" fa fa-search" style="color:gray;"></i>
-                          <% end %> 
-                        </th>       
-                      <% end %>
-                     
-                      <th class="text-center" scope="row">                       
-                        <%= link_to(document.file, download: '') do %>
-                          <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                        <% end %>                     
-                      </th>                            
-                    </tr>
-                  </tbody>                   
+                          <%=document.name.titleize%>            
+                        </th>             
+                        <% if document.file.attached? %>
+                          <th scope="row">
+                            <span style="color: gray"><%=document.kind.upcase%></span>            
+                          </th> 
+                        <% end %>   
+                        <% if document.file.representable? %>
+                          <th class="text-center" scope="row">
+                            <%= link_to(document.file) do %>
+                              <i class=" fa fa-search" style="color:gray;"></i>
+                            <% end %> 
+                          </th>       
+                        <% end %>
+                       
+                        <th class="text-center" scope="row">                       
+                          <%= link_to(document.file, download: '') do %>
+                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                          <% end %>                     
+                        </th>                            
+                      </tr>
+                    </tbody>
+                  <% end %>
                 <% end %>             
               <% end %> 
             </table>             
