@@ -37,6 +37,25 @@
                 <div class="">
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
                 </div>
+                <%# HERE %>
+                <% if f.object.id.present? %>
+                  <div class="star" >
+                  <%byebug%>
+                  <% if current_user.favorites.pluck(:favoritable_type == "lesson")%>
+                  <%# . & favorite.id include? @lessonshow.id %>
+                  <%# . & favorite include? @.id  %>
+                  <%# <% if current_user.favorites.pluck(:favoritable_type == "lesson"). & favorites include? @.id %> 
+                    <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: lessonshow.id)) do %>
+                    <i class="fas fa-star" style="color:yellow;"></i>
+                    <% end  %>
+                   <% else %> 
+                   <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: lessonshow.id)) do  %>
+                    <i class="fas fa-star" onclick="changeStart()" style="color:gray;"></i>
+                    <% end  %>
+                  <% end %>
+                  </div>
+                <%end%>
+
                 <div class="">
                   <div class="lesson-description-label">Description:</div>
                   <%= f.text_area :description, cols: 110, rows: 3, class: 'lesson-description-area', :required => true %>

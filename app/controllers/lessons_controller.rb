@@ -77,6 +77,27 @@ class LessonsController < ApplicationController
     end
   end
 
+  def favorite
+    redirect_to root
+    # current_user.favorites << @course
+    # if FavoriteLesson.find_by(lesson_id: @lesson.id, lesson_id: current_user.id).present?
+    #   redirect_to course_path(id: @course.id), notice: "You Already Favorited #{@course.title}"
+    # else
+    #   current_user.favorites << @course
+    #   redirect_to course_path(id: @course.id), notice: "You Favorited #{@course.title}"
+    # end
+  end
+
+  def unfavorite
+    redirect_to root
+    # if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
+    #   redirect_to course_path(id: @course.id), notice: "You Already Unfavorited #{@course.title}"
+    # else
+    #   current_user.favorites.delete(@course)
+    #   redirect_to course_path(id: @course.id), notice: "You Unfavorited #{@course.title}"
+    # end
+  end
+
   def download
     # Lesson bulk is working
     @documents = @lesson.documents.where(id: params[:selected_documents_ids].keys)
