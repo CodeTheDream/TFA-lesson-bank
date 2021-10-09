@@ -29,7 +29,7 @@
       <div class="show_left">
         <h1 class="mb-2 mt-4"><%= @course.title %>        
         <% if current_user == @course.user || current_user&.role == 'admin'%>
-          <%= link_to(edit_course_path(@course)) do %>
+          <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %>
             <i class=" fa fa-pencil-alt pencil_edit"></i>
           <% end %> 
           <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
