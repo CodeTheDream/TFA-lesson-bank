@@ -78,18 +78,24 @@ class LessonsController < ApplicationController
   end
 
   def favorite
-    redirect_to root
-    # current_user.favorites << @course
-    # if FavoriteLesson.find_by(lesson_id: @lesson.id, lesson_id: current_user.id).present?
-    #   redirect_to course_path(id: @course.id), notice: "You Already Favorited #{@course.title}"
-    # else
-    #   current_user.favorites << @course
-    #   redirect_to course_path(id: @course.id), notice: "You Favorited #{@course.title}"
-    # end
+    hash = { start: true, favoritable_type: "Lesson", favoritable_id: params[:lesson_id], user_id: current_user.id }
+    @favorite = Favorite.new(hash)
+    if @favorite.save
+      byebug
+      flash.now.alert = "Success"
+      redirect_to course_lesson_form_courses_path(@course_id)  
+    # byebug
+    # hash = { start: true, user_id: current_user, favoritable_id: lessonshow.id, favoritable_type: "Lesson" }
+    # favorite = Favorite.create(hash)
+    else
+      flash.now.alert = @course.errors.full_messages.to_sentence
+      redirect_to course_lesson_form_courses_path(@course_id)  
+    end
   end
 
   def unfavorite
-    redirect_to root
+    byebug
+    redirect_to root_path
     # if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
     #   redirect_to course_path(id: @course.id), notice: "You Already Unfavorited #{@course.title}"
     # else
