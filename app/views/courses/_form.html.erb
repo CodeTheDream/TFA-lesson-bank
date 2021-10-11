@@ -16,7 +16,7 @@
     <%= f.text_field :title, class: 'course-title', :required => true %>
   </div>
 
-  <div class="ml-4 mt-1">
+  <div class="district-position">
     <div class="district-label">
       DISTRICT: <%= f.select :district, options_for_select(@districts, @course.district), {}, {:class => 'district-dropdown'} %>
     </div>
@@ -35,8 +35,50 @@
       </div>
       
       <div class="ml-4 move-description">
-        <div class="course-description-label">DESCRIPTION:</div>
-        <%= f.text_area :description, cols: 90, rows: 10, class: 'course-description-area', :required => true %>
+        <%= f.text_area :description, cols: 66, rows: (((f.object.description&.length || 0)/66) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
+        <div class="doc-form">
+          <table class="table">
+            <thead>
+              <tr>
+                <th><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
+                <th style="color: #212529;">TYPE</th>
+                <th class="text-center" style="color: #212529;">PREVIEW</th>
+                <th class="text-center" style="color: #212529;">DOWNLOAD</th>
+              </tr>
+            </thead>
+      
+            <% if f.object.id.present? && f.object.documents.any? %>
+              <% f.object.documents.each do |document| %>
+                <% if document.lesson_id.nil? %>
+                  <tbody class="text-center">
+                      <tr>
+                        <th>
+                          <span style="color: #212529;"><%=document.name.titleize%>            
+                        </th>             
+                        <% if document.file.attached? %>
+                          <th>
+                            <span style="color: gray"><%=document.kind.upcase%></span>            
+                          </th> 
+                        <% end %>   
+                        <% if document.file.representable? %>
+                          <th class="text-center">
+                            <%= link_to(document.file) do %>
+                              <i class=" fa fa-search" style="color:gray;"></i>
+                            <% end %> 
+                          </th>       
+                        <% end %>
+                        <th class="text-center">                       
+                          <%= link_to(document.file, download: '') do %>
+                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                          <% end %>                     
+                        </th>                            
+                      </tr>
+                    </tbody>
+                <% end %>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
       </div>
     </div>
   </div>
