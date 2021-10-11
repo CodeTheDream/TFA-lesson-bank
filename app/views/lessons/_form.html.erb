@@ -32,23 +32,27 @@
                     </ul>
                   </div>
                 <% end %>
-
                 <div class="">
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
                 </div>
                 <%# HERE %>
-                <% if f.object.id.present? %>
-                  <div class="star" >
+                <%# <% if f.object.id.present? %> 
+                  <div class="">
                   <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                  <%# <%less_fav= Favorite.all.select {|result| ((fav_lesson.include? result.favoritable_id) && (result.favoritable_type == "Lesson"))} %> %>
+                  <%# <%less_fav= Favorite.all.select {|result| ((fav_lesson.include? result.favoritable_id) && (result.favoritable_type == "Lesson"))} %>
                     <% if fav_lesson.include? lessonshow.id %>
                     <%byebug%>
-                      <i class="fas fa-star" style="color:red;"></i>
+                      <%= link_to(root_path) do %>
+                        <i class="fas fa-star" style="color:yellow;"></i>
+                      <% end %> 
                     <% else %> 
+                    <%= link_to(root_path) do %>
+                   <%# <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: lessonshow.id)) do  %> 
                       <i class="fas fa-star" style="color:gray;"></i>
+                    <% end %> 
                     </div>
                     <%end %>
-                <%end%>
+                <%# <%end%> 
                 <div class="">
                   <div class="lesson-description-label">Description:</div>
                   <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>

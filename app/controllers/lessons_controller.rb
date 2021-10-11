@@ -84,9 +84,6 @@ class LessonsController < ApplicationController
       byebug
       flash.now.alert = "Success"
       redirect_to course_lesson_form_courses_path(@course_id)  
-    # byebug
-    # hash = { start: true, user_id: current_user, favoritable_id: lessonshow.id, favoritable_type: "Lesson" }
-    # favorite = Favorite.create(hash)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
       redirect_to course_lesson_form_courses_path(@course_id)  
@@ -94,15 +91,19 @@ class LessonsController < ApplicationController
   end
 
   def unfavorite
-    byebug
-    redirect_to root_path
-    # if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-    #   redirect_to course_path(id: @course.id), notice: "You Already Unfavorited #{@course.title}"
-    # else
-    #   current_user.favorites.delete(@course)
-    #   redirect_to course_path(id: @course.id), notice: "You Unfavorited #{@course.title}"
-    # end
+    # byebug
+    # @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
+    # # current_user.Favorite.delete(@unfavorite)
+    # @unfavorite.destroy
+    redirect_to course_lesson_form_courses_path(@course_id)  
   end
+    # if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
+    # redirect_to course_lesson_form_courses_path(@course_id)  
+    # else
+    # @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
+    # current_user.Favorite.delete(@unfavorite)
+    # redirect_to course_lesson_form_courses_path(@course_id)  
+    # end
 
   def download
     # Lesson bulk is working
