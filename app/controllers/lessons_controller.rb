@@ -90,20 +90,23 @@ class LessonsController < ApplicationController
     end
   end
 
+  # def unfavorite
+  #   byebug
+  #   @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
+  #   Favorite.delete(@unfavorite)
+  #   # @unfavorite.destroy
+  #   redirect_to course_lesson_form_courses_path(@course_id)  
+  # end
   def unfavorite
-    # byebug
-    # @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
-    # # current_user.Favorite.delete(@unfavorite)
-    # @unfavorite.destroy
-    course_lesson_form_courses_path(@course_id)  
+    byebug
+    if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
+    redirect_to course_lesson_form_courses_path(@course_id)  
+    else
+    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
+    Favorite.delete(@unfavorite)
+    redirect_to course_lesson_form_courses_path(@course_id)  
+    end
   end
-    # if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
-    # redirect_to course_lesson_form_courses_path(@course_id)  
-    # else
-    # @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
-    # current_user.Favorite.delete(@unfavorite)
-    # redirect_to course_lesson_form_courses_path(@course_id)  
-    # end
 
   def download
     # Lesson bulk is working
