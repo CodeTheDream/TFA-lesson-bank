@@ -40,7 +40,6 @@
                 <% if f.object.id.present? %>
                   <div class="star" >
                   <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                  <%# <%less_fav= Favorite.all.select {|result| ((fav_lesson.include? result.favoritable_id) && (result.favoritable_type == "Lesson"))} %> %>
                     <% if fav_lesson.include? lessonshow.id %>
                     <%byebug%>
                       <i class="fas fa-star" style="color:red;"></i>
