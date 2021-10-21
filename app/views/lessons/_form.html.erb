@@ -16,14 +16,18 @@
                 </a>
               </h4>
             </div>
-            <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <%if lessonshow.title == @lesson&.title %>
+              <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+            <% else %>
+              <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <% end %>
               <%= form_for([@course,lessonshow]) do |f| %>
 
-                <% if lesson.errors.any? %>
+                <% if lessonshow.errors.any? %>
                   <div id="error_explanation" class="my_alert">
-                    <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+                    <h2><%= pluralize(lessonshow.errors.count, "error") %> prohibited this lesson from being saved:</h2>
                     <ul>
-                    <% lesson.errors.full_messages.each do |message| %>
+                    <% lessonshow.errors.full_messages.each do |message| %>
                       <li><%= message %></li>
                     <% end %>
                     </ul>
@@ -35,7 +39,7 @@
                 </div>
                 <div class="">
                   <div class="lesson-description-label">Description:</div>
-                  <%= f.text_area :description, cols: 110, rows: 3, class: 'lesson-description-area', :required => true %>
+                  <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
                 </div>
                 <% l_id = f.object.id.present? ? f.object.id : 0 %>
                 <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})" %>

@@ -6,7 +6,7 @@
   <div class="card-body" >       
     <h2 class="card-title"><%= course.title.titleize %>
       <% if current_user == course.searchable.user || current_user&.role == 'admin'%>              
-        <%=link_to course_lesson_form_courses_path do %>          
+        <%=link_to course_lesson_form_courses_path(course_id: course.searchable_id) do %>          
           <i class=" fa fa-pencil-alt pencil_edit_card"></i>        
         <%end%>  
       <% end %>         

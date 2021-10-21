@@ -12,7 +12,7 @@
   color: gray !important;
 }
 .top_session {
-  margin-top: 120px !important;
+  margin-top: 72px !important;
 }
 .pencil_session {
   float: right !important;
@@ -20,6 +20,7 @@
   margin-right: 30px;
 }
 .big_card {
+  position: relative;
   background-color: #f0eeed;
   margin-top: 15px;
   height: 100%;
@@ -32,13 +33,30 @@
 .course_show_description {
   margin-top: 25px;
 }
-.fa-pencil-alt.pencil_edit {
+.fa-trash-alt.trash_delete {
+  position: relative;
+  bottom: 6px;
   color: #1996aa !important;
-  font-size: 30px;
+  font-size: 22px;
+}
+.fa-trash-alt.trash_delete:hover {
+  position: relative;
+  bottom: 6px;
+  color: #081e32 !important;
+  font-size: 22px;
+  cursor: pointer;
+}
+.fa-pencil-alt.pencil_edit {
+  position: relative;
+  bottom: 3px;
+  color: #1996aa !important;
+  font-size: 28px;
 }
 .fa-pencil-alt.pencil_edit:hover {
+  position: relative;
+  bottom: 3px;
   color: #081e32 !important;
-  font-size: 30px;
+  font-size: 28px;
   cursor: pointer;
 }
 .fa-pencil-alt.pencil_edit_card {
@@ -162,17 +180,21 @@ a {
 
 .set-size-and-position {
   position: relative;
-  top: 10em;
+  top: 15em;
+  right: 1em;
   background-color: #f0f0f0;
-  width: 80%;
+  width: 73%;
 }
 
-.set-height {
+.set-height-and-position {
+  position: relative;
+  bottom: 3.5em;
+  left: 0em;
   max-height: 50px;
 }
 
 .blue-header {
-  height:15px;
+  height:11px;
   background-color: #1996aa;
 }
 
@@ -199,8 +221,8 @@ ul li.favorites::marker {
 
 .move-description {
   position: relative;
-  bottom: 3.7em;
-  left: 1em;
+  bottom: 2.5em;
+  left: 9em;
 }
 
 #myList li{
@@ -222,6 +244,8 @@ ul li.favorites::marker {
 }
 
 .star {
+  position: relative;
+  bottom: 2.5em;
   float: right;
 }
 
@@ -257,44 +281,65 @@ ul li.favorites::marker {
   font-size: 2.5em;
   font-family: Montserrat;
   position: relative;
-  right: .1em;
+  left: .75em;
+  bottom: .25em;
 }
 
 .district-label {
   color: gray;
+  font-family: Montserrat;
+  font-size: 14px;
 }
 
 .district-dropdown {
-  width: 7.2em; 
+  width: 9em; 
   border: none;
   background-color: #f0eeed !important;
   font-family: Montserrat;
+  font-weight: bolder;
+}
+
+.district-position {
+  position: relative;
+  left: 3.7em;
+  bottom: .8em;
 }
 
 .subject-label {
+  position: relative;
+  bottom: .5em;
   color: gray;
+  font-family: Montserrat;
+  font-size: 14px;
 }
 
 .subject-dropdown {
-  width: 7.2em; 
+  width: 9em; 
   border: none;
   background-color: #f0eeed !important;
   font-family: Montserrat;
+  font-weight: bolder;
+  position: relative;
+  left: .2em;
 }
 
 .grade-label {
   color: gray;
+  font-family: Montserrat;
+  font-size: 14px;
 }
 
 .grade-description-container {
   position: relative;
   left: 1em;
+  bottom: .9em;
   color: gray;
 }
 
 .tag-button-container {
   position: relative;
-  bottom: 3em;
+  bottom: 2.5em;
+  left: 2.4em;
   font-family: Montserrat;
 }
 
@@ -350,6 +395,10 @@ ul li.favorites::marker {
 .course-description-area {
   border: none !important;
   background-color: #f0f0f0 !important;
+  font-family: Montserrat;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .lesson-description-area {
@@ -368,7 +417,7 @@ ul li.favorites::marker {
 
 .course-buttons-position {
   position: relative;
-  top: .5em !important;
+  bottom: .8em !important;
 }
 
 .move-lessons {
@@ -380,4 +429,9 @@ ul li.favorites::marker {
   max-width: 6em;
   position: relative;
   left: 1.3em;
+  top: .2em;
+}
+
+.doc-form {
+  font-family: Montserrat;
 }

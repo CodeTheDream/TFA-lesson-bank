@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     end
     
   end
+
   resources :lessons do
     #member do
     #  get :download
