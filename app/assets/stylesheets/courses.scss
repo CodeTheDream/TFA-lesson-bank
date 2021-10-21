@@ -284,6 +284,31 @@ ul li.favorites::marker {
   left: .75em;
   bottom: .25em;
 }
+.course-favorite{
+  border: none !important;
+  background-color: #f0f0f0 !important;
+  position: relative;
+  right: .75em;
+  width: 600px;
+  border: 1px;
+  bottom: .25em;
+}
+
+// .container {
+//   position:relative;
+//   width: 600px;
+//   border: 1px solid blue;
+// }
+
+.inlineLeft, .inlineRight {
+  position:absolute;
+  display: inline;
+}
+
+.inlineRight {
+  right: 0;
+}
+
 
 .district-label {
   color: gray;

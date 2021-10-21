@@ -52,19 +52,37 @@
     </div>
 
     <!-- Right Side Course-->
+<%# favorite_course_lesson GET    /courses/:course_id/lessons/:id/favorite(.:format) lessons#favorite
+unfavorite_course_lesson GET    /courses/:course_id/lessons/:id/unfavorite(.:format) lessons#unfavorite %>
     <div class="col-lg-8 mt-5 mb-2">  
       <!-- Course Description Section-->
-      <div class="star">
-        <% if current_user.favorites.pluck(:course_id).include? @course.id %>
-          <%= link_to(unfavorite_course_path) do %>
+      <%# CHECK Favorites Course in show view (R only?)%>
+      <div> 
+        <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
+        <% if fav_course.include? @course.id %>
+          <%# <%= link_to(unfavorite_course_path) do  %>  %>
+            <%# <%byebug%> %>
             <i class="fas fa-star" style="color:yellow;"></i>
-          <% end %> 
-        <% else %>
-          <%= link_to(favorite_course_path) do %>
+          <%# <% end %>  %>
+        <% else %> 
+          <%# <%= link_to(favorite_course_path) do  %>  %>
+            <%# <%byebug%> %>
             <i class="fas fa-star" style="color:gray;"></i>
-          <% end %> 
-        <% end %>
+          <%# <% end %>                      %>
+        <%end %>
       </div>
+    </div>
+      <%# CHUCK %>
+        <%# <% if current_user.favorites.pluck(:course_id).include? @course.id %> 
+          <%# <%= link_to(unfavorite_course_path) do %> 
+            <%# <i class="fas fa-star" style="color:yellow;"></i> %>
+          <%# <% end %>  
+        <%# <% else %> 
+          <%# <%= link_to(favorite_course_path) do %> 
+            <%# <i class="fas fa-star" style="color:gray;"></i> %>
+          <%# <% end %>  
+        <%# <% end %> 
+      
     
       <div class="mb-3 course_show_description">
         <p>
