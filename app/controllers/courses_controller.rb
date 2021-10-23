@@ -132,13 +132,11 @@ class CoursesController < ApplicationController
   # end
 
   def favorite
-    byebug
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = { start: true, favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
     if @favorite.save
-      flash.now.alert = "Success"
-      byebug
+      flash.now.alert = "You favorite this course"
       redirect_to course_lesson_form_courses_path(@course.id)  
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
@@ -147,17 +145,15 @@ class CoursesController < ApplicationController
   end
 
   # def unfavorite
-  #   byebug
   #   @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
   #   Favorite.delete(@unfavorite)
   #   # @unfavorite.destroy
   #   redirect_to course_lesson_form_courses_path(@course.id)  
   # end
   def unfavorite
-    byebug
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
-    redirect_to course_lesson_form_courses_path(@course_id)  
+    redirect_to course_lesson_form_courses_path(@course.id)  
     else
     @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
     Favorite.delete(@unfavorite)

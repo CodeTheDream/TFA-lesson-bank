@@ -82,7 +82,6 @@ class LessonsController < ApplicationController
     hash = { start: true, favoritable_type: "Lesson", favoritable_id: params[:lesson_id], user_id: current_user.id }
     @favorite = Favorite.new(hash)
     if @favorite.save
-      byebug
       flash.now.alert = "Success"
       redirect_to course_lesson_form_courses_path(@course_id)  
     else
@@ -92,7 +91,6 @@ class LessonsController < ApplicationController
   end
 
   # def unfavorite
-  #   byebug
   #   @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
   #   Favorite.delete(@unfavorite)
   #   # @unfavorite.destroy
@@ -100,7 +98,6 @@ class LessonsController < ApplicationController
   # end
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    byebug
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
     redirect_to course_lesson_form_courses_path(@course_id)  
     else

@@ -32,21 +32,16 @@
                     </ul>
                   </div>
                 <% end %>
-                <div class="">
+                <div class="row justify-content-between">
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
-                </div>
                 <%# Lesson Favorites %>
-                <div>
                 <% if f.object.id.present?%>
-                <%byebug%>
                   <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
                   <% if fav_lesson.include? lessonshow.id %>
-                    <%byebug%>
                     <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: f.object.id)) do  %> 
                       <i class="fas fa-star" style="color:yellow;"></i>
                     <% end %> 
                   <% else %> 
-                    <%byebug%>
                     <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: f.object.id)) do  %> 
                       <i class="fas fa-star" style="color:gray;"></i>
                     <% end %>                     

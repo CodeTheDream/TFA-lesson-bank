@@ -36,6 +36,7 @@
             <i class=" fa fa-trash-alt trash_delete"></i>
           <% end %>       
         <%end%>
+        
  
         <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
@@ -52,38 +53,31 @@
     </div>
 
     <!-- Right Side Course-->
-<%# favorite_course_lesson GET    /courses/:course_id/lessons/:id/favorite(.:format) lessons#favorite
-unfavorite_course_lesson GET    /courses/:course_id/lessons/:id/unfavorite(.:format) lessons#unfavorite %>
-    <div class="col-lg-8 mt-5 mb-2">  
+    <div class="col-lg-8 mt-5 mb-2 mr-auto">  
       <!-- Course Description Section-->
       <%# CHECK Favorites Course in show view (R only?)%>
-      <div> 
+      <div class="container">
+      <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-md-auto">
+      </div>
+      <div class="col-mr-4-col-lg-2"> 
         <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
         <% if fav_course.include? @course.id %>
-          <%# <%= link_to(unfavorite_course_path) do  %>  %>
-            <%# <%byebug%> %>
+          <%= link_to(unfavorite_course_path) do  %> 
             <i class="fas fa-star" style="color:yellow;"></i>
-          <%# <% end %>  %>
+          <% end %> 
         <% else %> 
-          <%# <%= link_to(favorite_course_path) do  %>  %>
-            <%# <%byebug%> %>
+          <%= link_to(favorite_course_path) do  %> 
             <i class="fas fa-star" style="color:gray;"></i>
-          <%# <% end %>                      %>
+          <% end %>                     
         <%end %>
       </div>
+      </div>
+      </div>
     </div>
-      <%# CHUCK %>
-        <%# <% if current_user.favorites.pluck(:course_id).include? @course.id %> 
-          <%# <%= link_to(unfavorite_course_path) do %> 
-            <%# <i class="fas fa-star" style="color:yellow;"></i> %>
-          <%# <% end %>  
-        <%# <% else %> 
-          <%# <%= link_to(favorite_course_path) do %> 
-            <%# <i class="fas fa-star" style="color:gray;"></i> %>
-          <%# <% end %>  
-        <%# <% end %> 
-      
-    
+
       <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     
