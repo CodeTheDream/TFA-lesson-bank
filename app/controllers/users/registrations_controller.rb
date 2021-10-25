@@ -54,6 +54,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     if @user.update  configure_registration_update_parameters
       redirect_to '/users', notice: 'User was successfully updated'
+      byebug
+      UserMailer.with(user: @user).update_user.deliver_now
     else
       flash.now.alert = @user.errors.full_messages.to_sentence
       redirect_to '/edit', notice: 'User could not be updated'

@@ -17,6 +17,8 @@ class User < ApplicationRecord
   def send_email_confirmation
     UserMailer.with(user: self).new_registration.deliver_now
     UserMailer.with(user: self).welcome_email.deliver_now
+    # Send email everytime the user update his/her account
+    UserMailer.with(user: self).update_user.deliver_now
   end
 
   def set_default_role
