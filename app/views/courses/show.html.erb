@@ -59,9 +59,7 @@
       <div class="container">
       <div class="row">
       <div class="col">
-      </div>
       <div class="col-md-auto">
-      </div>
       <div class="col-mr-4-col-lg-2"> 
         <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
         <% if fav_course.include? @course.id %>
