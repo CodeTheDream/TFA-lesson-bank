@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_024522) do
+ActiveRecord::Schema.define(version: 2021_10_27_020846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2021_10_08_024522) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.boolean "start"
     t.bigint "user_id", null: false
     t.integer "favoritable_id"
     t.string "favoritable_type"

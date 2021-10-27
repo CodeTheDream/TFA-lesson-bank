@@ -79,7 +79,7 @@ class LessonsController < ApplicationController
 
   def favorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    hash = { start: true, favoritable_type: "Lesson", favoritable_id: params[:lesson_id], user_id: current_user.id }
+    hash = { favoritable_type: "Lesson", favoritable_id: params[:lesson_id], user_id: current_user.id }
     @favorite = Favorite.new(hash)
     if @favorite.save
       flash.now.alert = "Success"
