@@ -109,27 +109,6 @@ class CoursesController < ApplicationController
     format.json { head :no_content }
     end
   end
-#OLD FAVORITE FOR COURSES
-  # Add and remove favorite courses
-  # for current_user
-  # def favorite
-  #   # current_user.favorites << @course
-  #   if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-  #     redirect_to course_path(id: @course.id), notice: "You Already Favorited #{@course.title}"
-  #   else
-  #     current_user.favorites << @course
-  #     redirect_to course_path(id: @course.id), notice: "You Favorited #{@course.title}"
-  #   end
-  # end
-#OLD UNFAVORITE FOR COURSES
-  # def unfavorite
-  #   if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-  #     redirect_to course_path(id: @course.id), notice: "You Already Unfavorited #{@course.title}"
-  #   else
-  #     current_user.favorites.delete(@course)
-  #     redirect_to course_path(id: @course.id), notice: "You Unfavorited #{@course.title}"
-  #   end
-  # end
 
   def favorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
@@ -137,7 +116,6 @@ class CoursesController < ApplicationController
     @favorite = Favorite.new(hash)
     if @favorite.save
       flash.now.alert = "You favorited this course"
-      byebug
       redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
@@ -145,12 +123,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  # def unfavorite
-  #   @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
-  #   Favorite.delete(@unfavorite)
-  #   # @unfavorite.destroy
-  #   redirect_to course_lesson_form_courses_path(@course.id)  
-  # end
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?

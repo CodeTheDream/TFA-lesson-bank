@@ -90,12 +90,6 @@ class LessonsController < ApplicationController
     end
   end
 
-  # def unfavorite
-  #   @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
-  #   Favorite.delete(@unfavorite)
-  #   # @unfavorite.destroy
-  #   redirect_to course_lesson_form_courses_path(@course_id)  
-  # end
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
