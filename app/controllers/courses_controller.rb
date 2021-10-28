@@ -136,11 +136,12 @@ class CoursesController < ApplicationController
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
     if @favorite.save
-      flash.now.alert = "You favorite this course"
-      redirect_to course_lesson_form_courses_path(@course.id)  
+      flash.now.alert = "You favorited this course"
+      byebug
+      redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path(@course.id)  
+      redirect_to course_lesson_form_courses_path(course_id: @course.id)
     end
   end
 

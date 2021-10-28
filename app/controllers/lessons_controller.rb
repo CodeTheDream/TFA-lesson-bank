@@ -83,10 +83,10 @@ class LessonsController < ApplicationController
     @favorite = Favorite.new(hash)
     if @favorite.save
       flash.now.alert = "Success"
-      redirect_to course_lesson_form_courses_path(@course_id)  
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path(@course_id)  
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     end
   end
 
@@ -99,11 +99,11 @@ class LessonsController < ApplicationController
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
-    redirect_to course_lesson_form_courses_path(@course_id)  
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     else
-    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
-    Favorite.delete(@unfavorite)
-    redirect_to course_lesson_form_courses_path(@course_id)  
+      @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
+      Favorite.delete(@unfavorite)
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     end
   end
 
