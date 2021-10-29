@@ -43,6 +43,8 @@ Rails.application.routes.draw do
     resources :lessons do
       member do
         get :download
+        get :favorite
+        get :unfavorite
       end
     end
     resources :documents do

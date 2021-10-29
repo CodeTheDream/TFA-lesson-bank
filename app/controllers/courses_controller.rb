@@ -110,26 +110,49 @@ class CoursesController < ApplicationController
     end
   end
 
-  # Add and remove favorite courses
-  # for current_user
   def favorite
-    # current_user.favorites << @course
-    if FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      redirect_to course_path(id: @course.id), notice: "You Already Favorited #{@course.title}"
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
+    @favorite = Favorite.new(hash)
+    if @favorite.save
+      if favorite_params[:source] == "course_edit"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_path(course_id: @course.id)
+      end
     else
-      current_user.favorites << @course
-      redirect_to course_path(id: @course.id), notice: "You Favorited #{@course.title}"
+      if favorite_params[:source] == "course_edit"
+        flash.now.alert = @course.errors.full_messages.to_sentence
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_path(course_id: @course.id)
+      end
     end
   end
 
   def unfavorite
-    if !FavoriteCourse.find_by(course_id: @course.id, user_id: current_user.id).present?
-      redirect_to course_path(id: @course.id), notice: "You Already Unfavorited #{@course.title}"
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
+      if favorite_params[:source] == "course_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        redirect_to course_path(course_id: @course.id)
+      end
     else
-      current_user.favorites.delete(@course)
-      redirect_to course_path(id: @course.id), notice: "You Unfavorited #{@course.title}"
+    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
+    Favorite.delete(@unfavorite)
+      if favorite_params[:source] == "course_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        redirect_to course_path(course_id: @course.id)
+      end
     end
   end
+
+
   
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
@@ -231,11 +254,18 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
+  end
+
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites)
   end
 
+  def favorite_params
+    params.permit(:source)
+  end
   def grade_params
     params.permit(:grade_levels => {})
   end

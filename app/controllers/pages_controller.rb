@@ -19,10 +19,14 @@ class PagesController < ApplicationController
       @results =  @results.select {|x| (x.grade_level.split(' ') - (search_params[:available_grade_levels].keys)) != x.grade_level.split(' ')}
     end
     if search_params[:favorites] == "true"
-      results_id = @results.pluck :id
-      favorites = FavoriteCourse.where(user_id: current_user.id).distinct.pluck :course_id
-      @results = @results.select {|result| ((favorites.include? result.searchable_id) && (result.searchable_type == "Course"))}
-    # end
+      favorites = Favorite.where(user_id: current_user.id)
+      results = []
+      favorites.each do |favorite|
+        @results.each do |result|
+          results << result if (result.searchable_type == favorite.favoritable_type) && (result.searchable_id == favorite.favoritable_id)
+        end
+      end
+      @results = results
     elsif search_params[:mycontent] == "true"
       @results = @results.select {|result| result.user_id == current_user.id}
     end
