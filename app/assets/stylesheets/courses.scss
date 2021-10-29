@@ -249,6 +249,12 @@ ul li.favorites::marker {
   float: right;
 }
 
+.lesson-star {
+  position: relative;
+  bottom: 1.6em;
+  float: right;
+}
+
 .checkbox-format input[type="checkbox"] {
   height: 1.1rem !important;
   width: 1.3rem !important;

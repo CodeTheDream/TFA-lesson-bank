@@ -115,22 +115,40 @@ class CoursesController < ApplicationController
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
     if @favorite.save
-      flash.now.alert = "You favorited this course"
-      redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      if favorite_params[:source] == "course_edit"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_path(course_id: @course.id)
+      end
     else
-      flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      if favorite_params[:source] == "course_edit"
+        flash.now.alert = @course.errors.full_messages.to_sentence
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_path(course_id: @course.id)
+      end
     end
   end
 
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
-    redirect_to course_lesson_form_courses_path(@course.id)  
+      if favorite_params[:source] == "course_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        redirect_to course_path(course_id: @course.id)
+      end
     else
     @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
     Favorite.delete(@unfavorite)
-    redirect_to course_lesson_form_courses_path(@course.id)  
+      if favorite_params[:source] == "course_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        redirect_to course_path(course_id: @course.id)
+      end
     end
   end
 
@@ -245,6 +263,9 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites)
   end
 
+  def favorite_params
+    params.permit(:source)
+  end
   def grade_params
     params.permit(:grade_levels => {})
   end

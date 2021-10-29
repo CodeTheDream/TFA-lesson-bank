@@ -83,21 +83,37 @@ class LessonsController < ApplicationController
     @favorite = Favorite.new(hash)
     if @favorite.save
       flash.now.alert = "Success"
-      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      if favorite_params[:source] == "lesson_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      elsif favorite_params[:source] == "lesson_show"
+        redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+      end
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      if favorite_params[:source] == "lesson_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      elsif favorite_params[:source] == "lesson_show"
+        redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+      end
     end
   end
 
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
-      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      if favorite_params[:source] == "lesson_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      elsif favorite_params[:source] == "lesson_show"
+        redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+      end
     else
       @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
       Favorite.delete(@unfavorite)
-      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      if favorite_params[:source] == "lesson_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      elsif favorite_params[:source] == "lesson_show"
+        redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+      end
     end
   end
 
@@ -161,6 +177,9 @@ class LessonsController < ApplicationController
     params.require(:lesson).permit(:title, :description, :course_id, :tag_names)
   end
 
+  def favorite_params
+    params.permit(:source)
+  end
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s

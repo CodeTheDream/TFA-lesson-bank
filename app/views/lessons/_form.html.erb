@@ -12,6 +12,21 @@
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
                     <div class=" lesson_title_row  ">
                       <h3><i class="fa fa-solid fa-play icon-play" ></i> Lesson: <%= lessonshow.title.titleize%> </h3>
+                      <%# Lesson Favorites %>
+                      <div class="lesson-star">
+                       <% if lessonshow.title != "New"%>
+                         <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
+                         <% if fav_lesson.include? lessonshow.id %>
+                           <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                             <i class="fas fa-star fa-xs" style="color:yellow;"></i>
+                           <% end %> 
+                         <% else %> 
+                           <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                             <i class="fas fa-star fa-xs" style="color:gray;"></i>
+                           <% end %>                     
+                         <%end %>
+                       <%end%>
+                      <div>
                     </div>
                 </a>
               </h4>
@@ -34,19 +49,6 @@
                 <% end %>
                 <div class="row justify-content-between">
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
-                <%# Lesson Favorites %>
-                <% if f.object.id.present?%>
-                  <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                  <% if fav_lesson.include? lessonshow.id %>
-                    <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: f.object.id)) do  %> 
-                      <i class="fas fa-star" style="color:yellow;"></i>
-                    <% end %> 
-                  <% else %> 
-                    <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: f.object.id)) do  %> 
-                      <i class="fas fa-star" style="color:gray;"></i>
-                    <% end %>                     
-                  <%end %>
-                <%end%>
                 </div> 
                 
                 <div class="">
