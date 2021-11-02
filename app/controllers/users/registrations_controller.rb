@@ -52,14 +52,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    byebug
     if configure_registration_update_parameters[:email] != @user.email
-      byebug
+      @newemail = configure_registration_update_parameters[:email]
       UserMailer.with(user: @user).update_email.deliver_now
+      UserMailer.with(user: @user, email: @newemail).new_email.deliver_now
       # send a method with confirmation to both emails
       # user account will be pending until confirmation
     end
-    # .except(:email)
     if @user.update configure_registration_update_parameters
       redirect_to '/users', notice: 'User was successfully updated'
     else
