@@ -110,6 +110,30 @@ end
 puts 'done'
 puts "Created #{success} lessons with #{errors} failures"
 
+#Create course favorite and lesson favorite
+user = User.find_by email: "missbliss@jfkhs.com"
+print "Creating Favorites"
+ruby_course = Course.find_by title: 'Ruby'
+methods_lesson = Lesson.find_by title: "Methods"
+fav_course_hash1 ={user_id: user.id, favoritable_id: ruby_course.id, favoritable_type: "Course"}
+fav_lesson_hash1 ={user_id: user.id, favoritable_id: methods_lesson.id, favoritable_type: "Lesson"}
+favorite_hashes = []
+favorite_hashes << fav_course_hash1
+favorite_hashes << fav_lesson_hash1
+errors = 0
+success = 0
+favorite_hashes.each do |hash|
+  if Favorite.create hash
+    success += 1
+    print '.'
+  else
+    errors =+ 1
+    print 'x'
+  end
+end
+puts 'done'
+puts "Created #{success} favorites with #{errors} failures"
+
 #Create documents
 print "Creating Documents"
 methods_lesson = Lesson.find_by title: "Methods"
