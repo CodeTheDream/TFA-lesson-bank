@@ -1,42 +1,49 @@
+
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
-<%= form_for(@course) do |f| %>
-  
-  <% if @course.errors.any? %>
-    <div id="error_explanation" class="my_alert">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-      <ul>
-      <% @course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="container mt-5 ">     
+  <%= form_for(@course) do |f| %>
+    
+      <% if @course.errors.any? %>
+        <div id="error_explanation" class="my_alert">
+          <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+          <ul>
+          <% @course.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="row big_card">
+        
+        <!-- Left Side Course-->
+        <div class="col-lg-4 mb-5">
+          <div class="show_left">
+            <div>
+              <%= f.text_field :title, class: 'course-title', :required => true %>
+            </div>    
+            <div>
+              DISTRICT: <%= f.select :district, options_for_select(@districts, @course.district), {}, {:class => 'district-dropdown'} %>
+            </div>
+            <div>
+              SUBJECT: <%= f.select :subject, options_for_select(@subjects, @course.subject), {}, {:class => 'subject-dropdown'}  %>
+            </div>
+            <div>GRADE:</div>
+            <div class='grid-container-filter mb-2 checkbox-format course-checkboxes'>
+              <% @available_grade_levels.each do |grade_level|%>
+                <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true, f.object.grades.pluck(:grade_level).include?(grade_level.grade_level)%>
+                <%= label_tag grade_level.grade_level, grade_level.grade_level  %>
+              <%end%>
+            </div>
+          </div>
+        </div>
+        <!-- Right Side Course-->
+        <div class="col-lg-8 mt-5 mb-2"> 
+          <!-- Course Description Section-->
+          <div class="mb-3 course_show_description">
+            <%= f.text_area :description, cols: 66, rows: (((f.object.description&.length || 0)/66) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
+          </div> 
 
-  <div class="ml-4">
-    <%= f.text_field :title, class: 'course-title', :required => true %>
-  </div>
-
-  <div class="district-position">
-    <div class="district-label">
-      DISTRICT: <%= f.select :district, options_for_select(@districts, @course.district), {}, {:class => 'district-dropdown'} %>
-    </div>
-
-    <div class="subject-label mt-1">
-      SUBJECT: <%= f.select :subject, options_for_select(@subjects, @course.subject), {}, {:class => 'subject-dropdown'}  %>
-    </div>
-
-    <div class="row grade-description-container mt-1">      
-      <div class="grade-label">GRADE:</div>
-      <div class='grid-container-filter mb-2 checkbox-format course-checkboxes'>
-          <% @available_grade_levels.each do |grade_level|%>
-          <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true, f.object.grades.pluck(:grade_level).include?(grade_level.grade_level)%>
-          <%= label_tag grade_level.grade_level, grade_level.grade_level  %>
-        <%end%>
-      </div>
-      
-      <div class="ml-4 move-description">
-        <%= f.text_area :description, cols: 66, rows: (((f.object.description&.length || 0)/66) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
-        <div class="doc-form">
+          <!-- Course Right Side Documents Section-->  
           <table class="table">
             <thead>
               <tr>
@@ -45,8 +52,7 @@
                 <th class="text-center" style="color: #212529;">PREVIEW</th>
                 <th class="text-center" style="color: #212529;">DOWNLOAD</th>
               </tr>
-            </thead>
-      
+            </thead>  
             <% if f.object.id.present? && f.object.documents.any? %>
               <% f.object.documents.each do |document| %>
                 <% if document.lesson_id.nil? %>
@@ -79,25 +85,35 @@
             <% end %>
           </table>
         </div>
+        <div class="container  mb-5">      
+                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+          <ul id="myList" class="move-tag-list">
+            <% @course.tags.each do |tag| %>	  
+              <% time_stamp = Time.now.to_i %>	  
+              <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'tag-fields' %></li>
+            <% end %>
+          </ul>
+          <div class="actions course-buttons-position">
+            <% if @course&.id.present? %>
+              <%= f.submit "Update Course", {:class => 'search_button form-button'} %>
+              | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn doc-button" %>
+            <% else %>
+              <%= f.submit "Create Course", {:class => 'search_button form-button'} %>
+            <% end %>
+          </div>
+        </div>
+      
       </div>
-    </div>
-  </div>
-  
-  <div class="pl-4 tag-button-container">
-          <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-    <ul id="myList" class="move-tag-list">
-      <% @course.tags.each do |tag| %>	  
-        <% time_stamp = Time.now.to_i %>	  
-        <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'tag-fields' %></li>
-      <% end %>
-    </ul>
-    <div class="actions course-buttons-position">
-      <% if @course&.id.present? %>
-        <%= f.submit "Update Course", {:class => 'search_button form-button'} %>
-        | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn doc-button" %>
-      <% else %>
-        <%= f.submit "Create Course", {:class => 'search_button form-button'} %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+
+            
+        
+          
+            
+            
+          
+      
+      
+    
+    
+  <% end %>
+</div>  
