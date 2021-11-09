@@ -17,6 +17,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: db
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -24,6 +25,8 @@ default: &default
 development:
   <<: *default
   database: tfa_lesson_bank_development
+  username: tfa_lesson_bank
+  password: Zxcv!234 
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -82,4 +85,4 @@ production:
   <<: *default
   database: tfa_lesson_bank_production
   username: tfa_lesson_bank
-  password: <%= ENV['TFA_LESSON_BANK_DATABASE_PASSWORD'] %>
+  password: Zxcv!234
