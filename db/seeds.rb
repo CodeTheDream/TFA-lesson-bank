@@ -17,9 +17,13 @@
 print "Creating users"
 user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: '111111'}
 user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: '111111'}
+user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: '111111'}
+user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: '111111'}
 user_hashes = []
 user_hashes << user_hash1
 user_hashes << user_hash2
+user_hashes << user_admin1
+user_hashes << user_admin2
 errors = 0
 success = 0
 user_hashes.each do |hash|

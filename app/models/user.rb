@@ -14,10 +14,10 @@ class User < ApplicationRecord
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_email_confirmation
 
-  # def send_email_confirmation
-  #   UserMailer.with(user: self).new_registration.deliver_now
-  #   UserMailer.with(user: self).welcome_email.deliver_now
-  # end
+  def send_email_confirmation
+    UserMailer.with(user: self).new_registration.deliver_now
+    UserMailer.with(user: self).welcome_email.deliver_now
+  end
 
   def set_default_role
     self.role ||= :teacher
