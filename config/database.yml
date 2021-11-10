@@ -24,8 +24,6 @@ default: &default
 development:
   <<: *default
   database: tfa_lesson_bank_development
-  username: tfa_lesson_bank
-  password: Zxcv!234 
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
