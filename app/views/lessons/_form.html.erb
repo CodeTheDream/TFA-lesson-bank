@@ -52,7 +52,7 @@
                 </div> 
                 
                 <div class="">
-                  <div class="lesson-description-label">Description:</div>
+                  <div class="lesson-description-label"><i class="fas fa-plus"></i> Description:</div>
                   <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
                 </div>
                 <% l_id = f.object.id.present? ? f.object.id : 0 %>
