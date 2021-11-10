@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      database: tfa_lesson_bank_development
+      username: tfa_lesson_bank
+#      POSTGRES_PASSWORD: <%= Rails.application.credentials.TFA_LESSON_BANK_DATABASE_PASSWORD %>
+      POSTGRES_PASSWORD: Zxcv!234
+#    ports:
+#      - 15432:5432
+    container_name: db
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/TFA-lesson-bank
+    environment:
+      database: tfa_lesson_bank_development
+      username: tfa_lesson_bank
+#      POSTGRES_PASSWORD: <%= Rails.application.credentials.TFA_LESSON_BANK_DATABASE_PASSWORD %>
+      POSTGRES_PASSWORD: Zxcv!234
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    container_name: web
+
