@@ -62,6 +62,4 @@ Rails.application.configure do
 
   # default URL options for the Devise mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
-  config.hosts << "tfa-lesson-bank-2nhhr.ondigitalocean.app"
 end

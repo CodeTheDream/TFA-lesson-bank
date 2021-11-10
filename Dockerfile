@@ -5,6 +5,8 @@ COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
 RUN bundle install
 
+ENV RAILS_ENV production
+
 COPY . /TFA-lesson-bank
 
 # Add a script to be executed every time the container starts.
