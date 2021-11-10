@@ -27,7 +27,7 @@
             <div>
               SUBJECT: <%= f.select :subject, options_for_select(@subjects, @course.subject), {}, {:class => 'subject-dropdown'}  %>
             </div>
-            <div>GRADE:</div>
+            GRADE:
             <div class='grid-container-filter mb-2 checkbox-format course-checkboxes'>
               <% @available_grade_levels.each do |grade_level|%>
                 <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true, f.object.grades.pluck(:grade_level).include?(grade_level.grade_level)%>
@@ -40,7 +40,9 @@
         <div class="col-lg-8 mt-5 mb-2"> 
           <!-- Course Description Section-->
           <div class="mb-3 course_show_description">
-            <%= f.text_area :description, cols: 66, rows: (((f.object.description&.length || 0)/66) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
+            <p>
+              <%= f.text_area :description, cols: 66, rows: (((f.object.description&.length || 0)/66) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
+            </p>
           </div> 
 
           <!-- Course Right Side Documents Section-->  
