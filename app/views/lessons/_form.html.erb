@@ -18,11 +18,11 @@
                          <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
                          <% if fav_lesson.include? lessonshow.id %>
                            <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
-                             <i class="fas fa-star fa-xs" style="color:yellow;"></i>
+                             <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
                            <% end %> 
                          <% else %> 
                            <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
-                             <i class="fas fa-star fa-xs" style="color:gray;"></i>
+                             <i class="fas fa-heart fa-xs" style="color:gray;"></i>
                            <% end %>                     
                          <%end %>
                        <%end%>
@@ -52,7 +52,7 @@
                 </div> 
                 
                 <div class="">
-                  <div class="lesson-description-label"><i class="fas fa-plus"></i> Description:</div>
+                  <div class="lesson-description-label"><i class="fas fa-plus"></i> Description</div>
                   <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
                 </div>
                 <% l_id = f.object.id.present? ? f.object.id : 0 %>
