@@ -51,12 +51,12 @@
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
                 </div> 
                 
-                <div class="">
+                <div class="mb-2">
                   <div class="lesson-description-label"><i class="fas fa-plus"></i> Description</div>
                   <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
                 </div>
                 <% l_id = f.object.id.present? ? f.object.id : 0 %>
-                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})" %>
+                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
                 <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
                   <% f.object.tags.each do |tag| %>
                     <% time_stamp = Time.now.to_i %>
@@ -66,7 +66,7 @@
                 <div class="actions lesson-buttons-position">
                   <% if f.object.id.present? %>
                   <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
-                    | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn doc-button" %>
+                    | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
                 <% else %>
                     <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
                 <% end %>
