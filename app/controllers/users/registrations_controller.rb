@@ -2,6 +2,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
+  rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
   before_action :set_user, only: [:show, :update, :edit, :destroy]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
@@ -50,25 +51,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit 
   end
+  # if @lesson.update(lesson_params.except(:documents_less))
+  # redirect_to user_edit_path(@user), notice: 'User could not be updated'
 
   def update
-    if configure_registration_update_parameters[:email] != @user.email
-      @newemail = configure_registration_update_parameters[:email]
-      @previous_email = @user.email
-      @user.update_attribute(:previous_email, @previous_email)
-      UserMailer.with(user: @user).update_email.deliver_now
-      UserMailer.with(user: @user, email: @newemail).new_email.deliver_now
-      # send a method with confirmation to both emails
-      # user account will be pending until confirmation
-      sign_out @user
-    end
     if @user.update configure_registration_update_parameters
-      redirect_to '/users', notice: 'User was successfully updated'
+      if configure_registration_update_parameters[:email] != @user.email
+        @newemail = configure_registration_update_parameters[:email]
+        @previous_email = @user.email
+        @user.update_attribute(:previous_email, @previous_email)
+        UserMailer.with(user: @user).update_email.deliver_now
+        UserMailer.with(user: @user, email: @newemail).new_email.deliver_now
+        # send a method with confirmation to both emails
+        # user account will be pending until confirmation
+        # redirect_to users_sign_out
+        redirect_to sign_out @user
+      else
+      redirect_to users_path, notice: 'User was successfully updated'
+      end
     else
       flash.now.alert = @user.errors.full_messages.to_sentence
-      redirect_to '/edit', notice: 'User could not be updated'
+      redirect_to user_edit_path(@user), notice: 'User could not be updated'
     end
-  end
+  end      
+      
+    # else
+    #   flash.now.alert = @user.errors.full_messages.to_sentence
+    #   redirect_to user_edit_path(@user), notice: 'User could not be updated'
+    # end
+
   
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
@@ -108,6 +119,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+    # devise_parameter_sanitizer.permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name) 
   end
 
  private
@@ -124,6 +136,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
     policy_name = exception.policy.class.to_s.underscore
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
+  end
+
+  def catch_not_found(e)
+    Rails.logger.debug("We had a not found exception.")
+    flash.alert = e.to_s
+    redirect_to courses_path
+  end
+
+  def minimum_password_length
+    if devise_mapping.validatable?
+      @minimum_password_length = resource_class.password_length.min
+    end
   end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

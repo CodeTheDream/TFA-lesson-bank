@@ -2,7 +2,7 @@
   <div class="col-md-9 col-lg-8 mx-auto">
   <h2 class="title mt-5 mb-5 display-3" style="text-align:center">Edit Users</h2>
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
-    <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { method: :put }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { method: :put }) do |f| %>    
       <%= render "users/shared/error_messages", resource: resource %>
       <%= hidden_field_tag "id", f.object.id %>    
       <div class="form-group">
@@ -17,7 +17,7 @@
 
       <div class="form-group">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", :required => true %>
       </div>
 <% if current_user.role.include?("admin") %>
       <div class="form-group">
@@ -33,21 +33,26 @@
       <% end %>
 
       <div class="field">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-        <%= f.password_field :password, autocomplete: "new-password" %>
+        <%= f.label :password %> <i>(Enter the Password to confirm changes or enter a New Password)</i><br />
+        <%= f.password_field :password, id: "password", autocomplete: "new-password", :required => true %>
+        <%# <% if f.password.value.lenght < @minimum_password_length %> 
         <% if @minimum_password_length %>
           <br />
-          <em><%= @minimum_password_length %> characters minimum</em>
+          <em>(<%= @minimum_password_length %> characters minimum)</em><br>  
         <% end %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        <%= f.password_field :password_confirmation, id: "passwordconfirmation", :required => true, autocomplete: "new-password" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em>(<%= @minimum_password_length %> characters minimum)</em><br>  
+        <% end %>
       </div>
 
       <div class="actions">
-        <%= f.submit "Update" %>
+        <%= f.submit "Update", id: 'submit_button' %>
       </div>
 
 <%end%>
@@ -58,5 +63,6 @@
     <%# </p> %> 
 
     <%= link_to "Back", :back, :class => "btn btn-outline-primary btn-sm" %>
+
   </div>
 </div>
