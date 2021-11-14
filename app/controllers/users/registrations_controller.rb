@@ -15,7 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def index
     @users = User.all
-    @users = @users.paginate(page: params[:page], :per_page => 10)
+    @users = @users.paginate(page: params[:page], :per_page => 3)
   end 
 
   # POST /resource
@@ -65,7 +65,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # send a method with confirmation to both emails
         # user account will be pending until confirmation
         # redirect_to users_sign_out
-        redirect_to sign_out @user
+        redirect_to root_path #sign_out @user
       else
       redirect_to users_path, notice: 'User was successfully updated'
       end
