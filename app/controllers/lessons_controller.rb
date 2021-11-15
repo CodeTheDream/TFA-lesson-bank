@@ -178,8 +178,9 @@ class LessonsController < ApplicationController
   end
 
   def favorite_params
-    params.permit(:source)
+    params.permit(:source, :lesson_id, :course_id, :id)
   end
+  
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s

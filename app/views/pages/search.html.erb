@@ -42,16 +42,19 @@
                         <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
                       </div> 
                        
+                    <div class="center">
+                      <% if @results.present? %><%= will_paginate @results %><% end %>
+                    </div>    
                     <div class="card-container shadow-none">          
-                    <% @results.each do |result| %>                       
-                      <% if result.searchable_type == "Lesson" %>
-                        <%= render 'lesson_card', lesson: result %>
-                      <% else %>  
-                        <%= render 'course_card',  course: result %>
-                      <% end %>                               
-                    <%end%>              
-                  </div>        
-                </div> 
+                      <% @results.each do |result| %>                       
+                        <% if result.searchable_type == "Lesson" %>
+                          <%= render 'lesson_card', lesson: result %>
+                        <% else %>  
+                          <%= render 'course_card',  course: result %>
+                        <% end %>                               
+                      <%end%>              
+                    </div>        
+                  </div> 
                 
               
   

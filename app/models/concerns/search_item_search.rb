@@ -1,7 +1,7 @@
 module SearchItemSearch
   attr_reader :query, :options
 
-  PER_PAGE = 20
+  PER_PAGE = 18
 
   def self.search(query:nil, options: {})
     @query = query.presence || "*"
