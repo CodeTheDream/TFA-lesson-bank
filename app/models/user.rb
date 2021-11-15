@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_email_confirmation
-
+# email notification
   def send_email_confirmation
     UserMailer.with(user: self).new_registration.deliver_now
     UserMailer.with(user: self).welcome_email.deliver_now

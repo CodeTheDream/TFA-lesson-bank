@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    attributes = [:role, :email, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name]
+    attributes = [:role, :email, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name, :previous_email]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
   end
 
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_registration_update_parameters
-    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name, :previous_email)
   end
   
   # instructions for what to do when user is signed in but does not have the

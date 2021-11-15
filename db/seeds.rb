@@ -15,11 +15,15 @@
 
 # Create Users
 print "Creating users"
-user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: '111111'}
-user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: '111111'}
+user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111'}
+user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111'}
+user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111'}
+user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111'}
 user_hashes = []
 user_hashes << user_hash1
 user_hashes << user_hash2
+user_hashes << user_admin1
+user_hashes << user_admin2
 errors = 0
 success = 0
 user_hashes.each do |hash|
@@ -109,6 +113,30 @@ lesson_hashes.each do |hash|
 end
 puts 'done'
 puts "Created #{success} lessons with #{errors} failures"
+
+#Create course favorite and lesson favorite
+user = User.find_by email: "missbliss@jfkhs.com"
+print "Creating Favorites"
+ruby_course = Course.find_by title: 'Ruby'
+methods_lesson = Lesson.find_by title: "Methods"
+fav_course_hash1 ={user_id: user.id, favoritable_id: ruby_course.id, favoritable_type: "Course"}
+fav_lesson_hash1 ={user_id: user.id, favoritable_id: methods_lesson.id, favoritable_type: "Lesson"}
+favorite_hashes = []
+favorite_hashes << fav_course_hash1
+favorite_hashes << fav_lesson_hash1
+errors = 0
+success = 0
+favorite_hashes.each do |hash|
+  if Favorite.create hash
+    success += 1
+    print '.'
+  else
+    errors =+ 1
+    print 'x'
+  end
+end
+puts 'done'
+puts "Created #{success} favorites with #{errors} failures"
 
 #Create documents
 print "Creating Documents"

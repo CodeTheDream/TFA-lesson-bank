@@ -16,6 +16,22 @@ class UserMailer < ApplicationMailer
       subject: "New User Signup: #{@user.email}")
       # subject: 'Welcome to Teach for America')
   end
+  def update_email
+    @user = params[:user]
+    @url  = 'http://tfa.org/login'
+    mail(
+      from: "Teach for America team",
+      to: @user.email,
+      subject: "You Update your email: #{@user.email}")
+  end
+  def new_email
+    @user = params[:user]
+    @url  = 'http://tfa.org/login'
+    mail(
+      from: "Teach for America team",
+      to: @user,
+      subject: "You Update your email: #{@user.email}")
+  end
   # def password_reset_action
   #   @user = params[:user]
   #   @url  = 'http://tfa.org/login'
