@@ -13,9 +13,6 @@
     <div class="card-text  mt-3" >         
       <%= simple_format truncate(h(user.role.capitalize), length: 100, separator: ' ') %>
     </div>
-    <div class="float-right">
-      <%= will_paginate @users %>
-    </div>    
   </div>
   <div class="text-center ">
     <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= user.name %></span></div>
