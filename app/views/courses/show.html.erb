@@ -59,11 +59,11 @@
         <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
         <% if fav_course.include? @course.id %>
           <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
-            <i class="fas fa-heart fa-lg mt-4" style="color:#d13139;"></i>
+            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
         <% else %> 
           <%= link_to(favorite_course_path(source: "course_show")) do  %> 
-            <i class="fas fa-heart fa-lg mt-4" style="color:gray;"></i>
+            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
           <% end %>                     
         <%end %>
       </div>

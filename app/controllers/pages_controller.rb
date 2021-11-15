@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class PagesController < ApplicationController
   def landing_page
   end 
@@ -30,6 +32,7 @@ class PagesController < ApplicationController
     elsif search_params[:mycontent] == "true"
       @results = @results.select {|result| result.user_id == current_user.id}
     end
+    @results = @results.paginate(page: params[:page], :per_page => 18) if @results.class == Array
   end
   private
 
