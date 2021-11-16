@@ -36,6 +36,7 @@
             <i class=" fa fa-trash-alt trash_delete"></i>
           <% end %>       
         <%end%>
+        
  
         <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
@@ -52,20 +53,21 @@
     </div>
 
     <!-- Right Side Course-->
-    <div class="col-lg-8 mt-5 mb-2">  
+    <div class="col-lg-8 mt-5 mb-2 mr-auto">  
       <!-- Course Description Section-->
-      <div class="star">
-        <% if current_user.favorites.pluck(:course_id).include? @course.id %>
-          <%= link_to(unfavorite_course_path) do %>
-            <i class="fas fa-star" style="color:yellow;"></i>
+      <div class="star"> 
+        <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
+        <% if fav_course.include? @course.id %>
+          <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
-        <% else %>
-          <%= link_to(favorite_course_path) do %>
-            <i class="fas fa-star" style="color:gray;"></i>
-          <% end %> 
-        <% end %>
+        <% else %> 
+          <%= link_to(favorite_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
+          <% end %>                     
+        <%end %>
       </div>
-    
+
       <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     
@@ -140,6 +142,18 @@
                       <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
                         <div class=" lesson_title_row  ">                                                       
                           <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lessonshow.title.titleize%> </h3>                                             
+                          <div class="lesson-star">
+                            <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
+                            <% if fav_lesson.include? lessonshow.id %>
+                              <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
+                              <% end %>
+                            <% else %>
+                              <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                              <% end %>
+                            <%end %>
+                          </div>
                         </div>                   
                       <% end %>                         
                     </a>

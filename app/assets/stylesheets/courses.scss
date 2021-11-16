@@ -109,6 +109,7 @@
   font-size: 18px;
   margin-right: 10px;
 }
+
 .tag_button {
   height: 10px;
 }
@@ -250,6 +251,12 @@ ul li.favorites::marker {
   float: right;
 }
 
+.lesson-star {
+  position: relative;
+  bottom: 1.6em;
+  float: right;
+}
+
 .checkbox-format input[type="checkbox"] {
   height: 1.1rem !important;
   width: 1.3rem !important;
@@ -282,6 +289,7 @@ ul li.favorites::marker {
   font-size: 2.5em;
   font-family: Montserrat;
   position: relative;
+  left: 0.75em;
   bottom: 0.25em;
 }
 
@@ -348,6 +356,7 @@ ul li.favorites::marker {
   font-family: Montserrat;
   position: relative;
   right: 2em;
+  border-color: #1996aa;
 }
 
 .tag-fields {
@@ -403,7 +412,7 @@ ul li.favorites::marker {
 }
 
 .lesson-description-area {
-  border: none !important;
+  border-color: #1996aa;
 }
 
 .lesson-tag-button-container {
@@ -434,4 +443,9 @@ ul li.favorites::marker {
 
 .doc-form {
   font-family: Montserrat;
+}
+
+.move-heart {
+  margin-right: 3.3rem !important;
+  margin-top: .45rem !important;
 }

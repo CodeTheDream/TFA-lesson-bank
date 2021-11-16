@@ -12,6 +12,21 @@
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
                     <div class=" lesson_title_row  ">
                       <h3><i class="fa fa-solid fa-play icon-play" ></i> Lesson: <%= lessonshow.title.titleize%> </h3>
+                      <%# Lesson Favorites %>
+                      <div class="lesson-star">
+                       <% if lessonshow.title != "New"%>
+                         <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
+                         <% if fav_lesson.include? lessonshow.id %>
+                           <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                             <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
+                           <% end %> 
+                         <% else %> 
+                           <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                             <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                           <% end %>                     
+                         <%end %>
+                       <%end%>
+                      <div>
                     </div>
                 </a>
               </h4>
@@ -22,7 +37,6 @@
               <div id="collapseOne_<%=lessonshow.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <% end %>
               <%= form_for([@course,lessonshow]) do |f| %>
-
                 <% if lessonshow.errors.any? %>
                   <div id="error_explanation" class="my_alert">
                     <h2><%= pluralize(lessonshow.errors.count, "error") %> prohibited this lesson from being saved:</h2>
@@ -33,16 +47,16 @@
                     </ul>
                   </div>
                 <% end %>
-
-                <div class="">
-                  <%#= f.text_field :title, class: 'lesson-title', :required => true %>
-                </div>
-                <div class="">
-                  <div class="lesson-description-label">Description:</div>
+                <div class="row justify-content-between">
+                  <%= f.text_field :title, class: 'lesson-title', :required => true %>
+                </div> 
+                
+                <div class="mb-2">
+                  <div class="lesson-description-label"><i class="fas fa-plus"></i> Description</div>
                   <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
                 </div>
                 <% l_id = f.object.id.present? ? f.object.id : 0 %>
-                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})" %>
+                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
                 <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
                   <% f.object.tags.each do |tag| %>
                     <% time_stamp = Time.now.to_i %>
@@ -52,7 +66,7 @@
                 <div class="actions lesson-buttons-position">
                   <% if f.object.id.present? %>
                   <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
-                    | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn doc-button" %>
+                    | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
                 <% else %>
                     <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
                 <% end %>
