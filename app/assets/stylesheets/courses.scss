@@ -32,6 +32,7 @@
 }
 .course_show_description {
   margin-top: 25px;
+  max-width: 60px !important;
 }
 .fa-trash-alt.trash_delete {
   position: relative;
@@ -259,7 +260,7 @@ ul li.favorites::marker {
 .checkbox-format input[type="checkbox"] {
   height: 1.1rem !important;
   width: 1.3rem !important;
-  margin-left: 1em;
+  margin-left: 1em !important;
 }
 
 .checkbox-format label {
@@ -271,9 +272,10 @@ ul li.favorites::marker {
 .grid-container-filter {
   display: grid;
   height: fit-content;
-  width: 10%;
+  width: 20%;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  row-gap: 0.7em;
+  row-gap: 0.9em;
+  margin-left: 4em !important;
 }
 
 .move-grade-label {
@@ -406,6 +408,7 @@ ul li.favorites::marker {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+  // min-width: 250px;
 }
 
 .lesson-description-area {
@@ -433,9 +436,8 @@ ul li.favorites::marker {
 }
 
 .course-checkboxes {
-  max-width: 6em;
-  position: relative;
-  left: 1.3em;
+  max-width: 9em;
+  // position: relative;
   top: 0.2em;
 }
 
