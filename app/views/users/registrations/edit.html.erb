@@ -2,7 +2,7 @@
   <div class="col-md-9 col-lg-8 mx-auto">
   <h2 class="title mt-5 mb-5 display-3" style="text-align:center">Edit Users</h2>
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
-    <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { method: :put }) do |f| %>    
+    <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { :onsubmit => 'return checkEmail();', method: :put }) do |f| %>    
       <%= render "users/shared/error_messages", resource: resource %>
       <%= hidden_field_tag "id", f.object.id %>    
       <div class="form-group">
@@ -17,16 +17,17 @@
 
       <div class="form-group">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", :required => true %>
+        <%= f.email_field :email, autofocus: true, :required => true, autocomplete: "email", id:"email"%>
+      <%# autocomplete: "email", %>
       </div>
-<% if current_user.role.include?("admin") %>
-      <div class="form-group">
-        <%= f.label :role %><br />
-        <%= f.select :role, options_for_select(["admin", "teacher"], f.object.role), { include_blank: true }%>
-      </div>
-  <%else%>
+      <% if current_user.role.include?("admin") %>
+        <div class="form-group">
+          <%= f.label :role %><br />
+          <%= f.select :role, options_for_select(["admin", "teacher"], f.object.role), { include_blank: true }%>
+        </div>
+      <%else%>
         <% current_user.role %>
-  <% end %>
+      <% end %>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
@@ -66,3 +67,15 @@
 
   </div>
 </div>
+<script type="text/javascript">
+function checkEmail() {
+        var email = document.getElementById('email');
+        var filter = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!filter.test(email.value)) {
+            alert('Please provide a valid email address');
+            email.focus;
+            return false;
+        }
+    }
+}
+</script>
