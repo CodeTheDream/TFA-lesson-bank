@@ -45,6 +45,10 @@
             </p>
           </div> 
 
+          
+          
+          
+          
           <!-- Course Right Side Documents Section-->  
           <table class="table">
             <thead>
@@ -52,20 +56,21 @@
                 <th><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
                 <th style="color: #212529;">TYPE</th>
                 <th class="text-center" style="color: #212529;">PREVIEW</th>
-                <th class="text-center" style="color: #212529;">DOWNLOAD</th>
               </tr>
             </thead>  
             <% if f.object.id.present? && f.object.documents.any? %>
               <% f.object.documents.each do |document| %>
-                <% if document.lesson_id.nil? %>
+                <% if document.lesson_id.nil? && document.id.present? %>
                   <tbody class="text-center">
                       <tr>
                         <th>
-                          <span style="color: #212529;"><%=document.name.titleize%>            
+                          <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize %>      
+                          <!--<span style="color: #212529;"><%#=document.name.titleize%>-->            
                         </th>             
                         <% if document.file.attached? %>
                           <th>
-                            <span style="color: gray"><%=document.kind.upcase%></span>            
+                            <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase %>      
+                            <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->            
                           </th> 
                         <% end %>   
                         <% if document.file.representable? %>
@@ -75,17 +80,15 @@
                             <% end %> 
                           </th>       
                         <% end %>
-                        <th class="text-center">                       
-                          <%= link_to(document.file, download: '') do %>
-                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                          <% end %>                     
-                        </th>                            
                       </tr>
                     </tbody>
                 <% end %>
               <% end %>
             <% end %>
           </table>
+          <%= link_to "#newDocument", data: { toggle: "modal" } do %>
+            <i class="fa fa-plus"></i> Document
+          <% end %>
         </div>
         <div class="container  mb-5">      
                 <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
@@ -104,18 +107,61 @@
             <% end %>
           </div>
         </div>
-      
       </div>
-
-            
-        
-          
-            
-            
-          
-      
-      
-    
-    
   <% end %>
 </div>  
+
+<div id="newDocument" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Document</h4>
+      </div>
+      <div class="modal-body">
+        <% obj = @course.present? ? @course : @lesson %>
+        <% if @document.present? %>
+          <%= form_for([obj,@document]) do |f| %>
+            <% if @document.errors.any? %>
+              <div id="error_explanation" class="my_alert">
+                <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+                <ul>
+                <% @document.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="form-group pl-4 fit-width">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control', :required => true %>  
+            </div>
+            <div class="form-group fit-width pl-4">
+              <%= f.label :description %>
+              <%= f.text_area :description, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group pl-4 fit-width">
+              <%= f.label :type %>
+              <%= f.text_field :kind, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group pl-4">
+              <%= f.label :file %>
+              <%= f.file_field :file %>
+            </div>
+            <div class="form-group pl-4">
+              <div class="actions">
+                <%= f.submit %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          You must create the course before uploading and documents
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

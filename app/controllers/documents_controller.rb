@@ -61,7 +61,7 @@ class DocumentsController < ApplicationController
     if @document.save
       flash.notice = "The document record was created successfully."
       if @course.present?
-        redirect_to [@course, @document] #course_index_course_documents_path(@course)
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
       elsif @lesson.present?
        redirect_to [@lesson, @document] #lesson_index_lesson_documents_path(@lesson)
       else
