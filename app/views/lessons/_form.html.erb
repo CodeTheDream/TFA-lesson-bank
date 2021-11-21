@@ -51,11 +51,11 @@
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
                 </div> 
                 
-                <div class="mb-2">
+                <div >
                   <div class="lesson-description-label "> Description</div>
                   <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area ', :required => true %>
                 </div>
-                <div class="container  mb-2">    
+                <div class="container  mb-5">    
                   <% l_id = f.object.id.present? ? f.object.id : 0 %>
                   <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
                   <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
