@@ -52,25 +52,28 @@
                 </div> 
                 
                 <div class="mb-2">
-                  <div class="lesson-description-label"><i class="fas fa-plus"></i> Description</div>
-                  <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
+                  <div class="lesson-description-label "> Description</div>
+                  <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area ', :required => true %>
                 </div>
-                <% l_id = f.object.id.present? ? f.object.id : 0 %>
-                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
-                <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
-                  <% f.object.tags.each do |tag| %>
-                    <% time_stamp = Time.now.to_i %>
-                    <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields' %></li>
-                  <% end %>
-                </ul>
-                <div class="actions lesson-buttons-position">
-                  <% if f.object.id.present? %>
-                  <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
-                    | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
-                <% else %>
-                    <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
-                <% end %>
+                <div class="container  mb-2">    
+                  <% l_id = f.object.id.present? ? f.object.id : 0 %>
+                  <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
+                  <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
+                    <% f.object.tags.each do |tag| %>
+                      <% time_stamp = Time.now.to_i %>
+                      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields' %></li>
+                    <% end %>
+                  </ul>
+                  <div class="actions lesson-buttons-position">
+                    <% if f.object.id.present? %>
+                      <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
+                      | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
+                    <% else %>
+                      <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
+                    <% end %>
+                  </div>
                 </div>
+                  
               <% end %>
             </div>
           </div>

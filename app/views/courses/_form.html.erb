@@ -38,13 +38,8 @@
         </div>
         <!-- Right Side Course-->
         <div class="col-lg-8 mt-5 mb-2"> 
-          <!-- Course Description Section-->
-          <div class="mb-3 course_show_description">
-            <p>
-              <%= f.text_area :description, cols: 55, rows: (((f.object.description&.length || 0)/46) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
-            </p>
-          </div> 
-
+          <!-- Course Description Section-->    
+          <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
           <!-- Course Right Side Documents Section-->  
           <table class="table">
             <thead>
@@ -89,16 +84,16 @@
         </div>
         <div class="container  mb-5">      
                 <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-          <ul id="myList" class="move-tag-list">
+          <ul id="myList" class="row move-tag-list">
             <% @course.tags.each do |tag| %>	  
               <% time_stamp = Time.now.to_i %>	  
-              <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'tag-fields' %></li>
+              <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields' %></li>
             <% end %>
           </ul>
           <div class="actions course-buttons-position">
             <% if @course&.id.present? %>
               <%= f.submit "Update Course", {:class => 'search_button form-button'} %>
-              | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn doc-button" %>
+              | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn search_button doc-button" %>
             <% else %>
               <%= f.submit "Create Course", {:class => 'search_button form-button'} %>
             <% end %>
