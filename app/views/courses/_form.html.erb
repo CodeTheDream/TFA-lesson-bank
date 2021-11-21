@@ -83,7 +83,7 @@
           </table>
         </div>
         <div class="container  mb-5">      
-                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+                <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
           <ul id="myList" class="row move-tag-list">
             <% @course.tags.each do |tag| %>	  
               <% time_stamp = Time.now.to_i %>	  
