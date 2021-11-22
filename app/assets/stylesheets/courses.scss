@@ -123,9 +123,10 @@
   margin-top: 10px;
   text-decoration: none !important;
 }
-.lesson_title_row:hover {
-  color: #1996aa !important;
+.lesson_title_row h3:hover {
+  color: #1996aa;
 }
+
 a {
   text-decoration: none !important;
 }
@@ -289,6 +290,9 @@ ul li.favorites::marker {
   position: relative;
   left: 0.75em;
   bottom: 0.25em;
+}
+.course-title:hover {
+  color: #1996aa !important;
 }
 
 .district-label {
