@@ -1,5 +1,6 @@
 FROM ruby:2.7.0
 RUN echo "${MASTER_KEY}" > master.key && apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN puts "${MASTER_KEY}"
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
