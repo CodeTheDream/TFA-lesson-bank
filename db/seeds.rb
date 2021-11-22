@@ -15,10 +15,10 @@
 
 # Create Users
 print "Creating users"
-user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111'}
-user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111'}
-user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111'}
-user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111'}
+user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111', status: 'Approved'}
+user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111', status: 'Approved'}
+user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
+user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
 user_hashes = []
 user_hashes << user_hash1
 user_hashes << user_hash2
