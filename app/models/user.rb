@@ -5,12 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
   has_many :courses, dependent: :destroy 
-  # has_many :favorite_courses, dependent: :destroy  # just the 'relationships'
-  # has_many :favorites, through: :favorite_courses, source: :course # the actual courses a user favorites
   has_many :favorites, dependent: :destroy
 
-  after_initialize :set_default_role, :set_default_status, :if => :new_record?
-  # after_initialize :set_default_status, :if => :new_record?
+  before_create :set_default_role, :set_default_status
   after_create :send_email_confirmation
 # email notification
   def send_email_confirmation
