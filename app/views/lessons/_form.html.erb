@@ -64,10 +64,10 @@
                 <div class="container  mb-5">    
                   <% l_id = f.object.id.present? ? f.object.id : 0 %>
                   <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
-                  <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
+                  <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list ">
                     <% f.object.tags.each do |tag| %>
                       <% time_stamp = Time.now.to_i %>
-                      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields' %></li>
+                      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields ' %></li>
                     <% end %>
                   </ul>
                   <div class="actions lesson-buttons-position">
