@@ -1,6 +1,7 @@
 class CoursePolicy < ApplicationPolicy
   def logged_in?
-    @user.present?
+    (@user.present?) && (@user.status == 'Approved')
+    # @user.present?
   end
 
   def owner_or_admin?
