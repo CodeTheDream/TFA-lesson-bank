@@ -184,7 +184,7 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = Lesson.new(title: "New")
+    new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     # respond_to do |format|
