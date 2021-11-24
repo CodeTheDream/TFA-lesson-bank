@@ -6,11 +6,11 @@ class UserPolicy < ApplicationPolicy
   end
   
   def logged_in?
-    @user.present?
+    (@user.present?) && (@user.status == 'Approved')
   end
     
   def admin?
-    (@user.role == 'admin') || (@record&.id == @user.id)
+    ((@user.role == 'admin') || (@record&.id == @user.id)) && (@user.status == 'Approved')
   end
     
   %i(index? new? create? show?).each do |ali|
