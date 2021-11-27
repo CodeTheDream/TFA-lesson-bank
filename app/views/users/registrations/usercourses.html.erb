@@ -1,0 +1,51 @@
+<h1 class="title mt-5 mb-5 display-3" style="text-align: center;">User's Courses</h1>
+<div id="no-more-tables" class="table-responsive card mb-5">
+  <div class="container container-custom rounded-3 container-bg">
+  </div>
+</div>
+<div class="grid-container">
+  <div class="container-mt5">
+    <h4 class="font-weight-light mb-0 align-middle">Show User</h4>
+    <div class="row">
+      <div class="col-sm-6">
+  
+    <table >
+      <thead class="cf">
+        <div class="row">
+          <tr>
+            <th class="h2" >Title</th> 
+          </tr>
+        </div>
+      </thead>
+      <tbody>
+        <% @user.courses.each do |course| %>
+          <div class="row">
+            <tr>
+              <td><%= course.title %></td>
+              <td>
+            </tr>
+            <% course.lessons.each do |lesson| %>
+          <div class="row">
+            <tr>
+              <td><%= lesson.title %></td>
+              <td>
+            </tr>
+          </div>
+        <% end %>
+          </div>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+
+
+
+    <div class="actions form-group p-3">   
+      <%if current_user == "admin"%> 
+        <%= link_to 'Edit', user_edit_path(@user)%>
+        <%= link_to 'Destroy', user_delete_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+      <% end %>   
+      <%= link_to 'Back', users_path, :class => "btn btn-outline-primary"  %>           
+    </div>
+  </div>
+</div>

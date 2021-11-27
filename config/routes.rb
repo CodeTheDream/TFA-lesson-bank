@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     delete '/users/:id' => 'users/registrations#destroy', as: 'user_delete'
     post '/users/sign_in' => 'users/sessions#create'
     get '/users/sign_out' => 'devise/sessions#destroy'
+    get '/users/:id/usercourses' => 'users/registrations#usercourses', as: 'user_courses'
   end
   # resources :courses do
   #   put :favorite, on: :member

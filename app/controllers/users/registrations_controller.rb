@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
-  before_action :set_user, only: [:show, :update, :edit, :destroy]  
+  before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
 
@@ -16,6 +16,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def index
     @users = User.all
     @users = @users.paginate(page: params[:page], :per_page => 3)
+  end 
+
+  def usercourses
+    # @users = User.all
+    @courses = @user.courses
+    # byebug
+    # @lessons = @course.lessons
+    @lessons = @lessons.select {|lesson| lesson.course_id == @course_id}
+    # @results = @results.select {|result| result.user_id == current_user.id}
+
+    # courses_id = @courses.pluck :id
+    # mylessons = Course.where(course_id: courses_id)
+    # @lessons = mylessons
   end 
 
   # POST /resource
@@ -126,6 +139,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def set_user
     @user = User.find params[:id]
+  end
+
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
   end
 
   def verify_role!
