@@ -376,7 +376,7 @@ ul li.favorites::marker {
 //   position: relative;
 //   right: 2em;
 // }
-
+// ----Buttons----
 .form-button {
   height: 2.5em !important;
   font-size: 12px !important;
@@ -392,9 +392,21 @@ ul li.favorites::marker {
   font-family: Montserrat;
   max-height: 2.5em !important;
 }
-
+.input_tags_buttons {
+  margin-right: 0.2em;
+  padding: 8px 12px;
+  font-family: Montserrat;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  border-color: #1996aa !important;
+}
 .lesson-title {
-  border: none !important;
+  border: transparent;
   background-color: white !important;
   font-size: 2em;
   font-family: Montserrat;
@@ -413,7 +425,6 @@ ul li.favorites::marker {
 }
 
 .course-description-area {
-  border: none !important;
   background-color: #f0f0f0 !important;
   font-family: Montserrat;
   font-size: 1rem;
@@ -422,6 +433,7 @@ ul li.favorites::marker {
   margin-top: 10px;
   // max-width: 750px;
   text-align: justify;
+  border: none;
 }
 
 .lesson-tag-button-container {

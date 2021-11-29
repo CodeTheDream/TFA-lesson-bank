@@ -67,7 +67,7 @@
                   <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list ">
                     <% f.object.tags.each do |tag| %>
                       <% time_stamp = Time.now.to_i %>
-                      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'dropdowns_inputs' %></li>
+                      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'input_tags_buttons' %></li>
                     <% end %>
                   </ul>
                   <div class="actions lesson-buttons-position">
