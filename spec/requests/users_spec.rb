@@ -56,7 +56,31 @@ RSpec.describe "Users", type: :request do
       @user.confirm
       get user_show_path(id: @user.id)
       expect(response.status).to render_template(:show)
-      # redirect_to user_show_path
+      redirect_to user_show_path
+    end
+    it "it won't render the :show user template if your user is sign_in and your status is Pending" do
+      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(userpending)
+      sign_in @user
+      @user.confirm
+      get user_show_path(id: @user.id)
+      expect(response.status).not_to render_template(:show)
+      redirect_to root_path
+    end
+    it "won't renders the :show user template if your user is NOT sign_in and status is pending" do
+      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(userpending)
+      # We do not sign in the user
+      get user_show_path(id: @user.id)
+      expect(response.status).not_to render_template(:show)
+      redirect_to users_sign_in_path
+      # expect(response).to redirect_to users_sign_in_path
+    end
+    it "it won't render the :index template if your user is not sign_in (user status is Approved)" do
+      @user = FactoryBot.create(:user)
+      get user_show_path(id: @user.id)
+      expect(response.status).not_to render_template(:show)
+      redirect_to root_path
     end
   end
   describe "get edit_user_path" do
@@ -83,7 +107,40 @@ RSpec.describe "Users", type: :request do
       get user_edit_path(id: @user.id)
       expect(response).not_to render_template(:edit)
       redirect_to users_sign_in_path
-      # expect(response).to redirect_to users_sign_in_path
+    end
+  end
+  describe "delete user according to your status" do
+    it "deletes a user record if your user (adminsitrator) is sign_in and your status is Approved" do
+      useradmin = {email: 'test@test.com', role: 'admin', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      @user = User.create(useradmin)
+      sign_in @user
+      @user.confirm
+      expect {delete user_delete_path(id: @user.id)}.to change(User, :count)
+      expect(response).to redirect_to users_path
+    end
+    it "it won't delete the user record if your user (adminsitrator) is sign_in and your status is Pending" do
+      useradmin = {email: 'test@test.com', role: 'admin', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(useradmin)
+      sign_in @user
+      @user.confirm
+      expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
+      expect(response).to redirect_to root_path
+    end
+    it "it won't delete the user record if your user (teacher) is sign_in and your status is Approved" do
+      userteacher = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      @user = User.create(userteacher)
+      sign_in @user
+      @user.confirm
+      expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
+      expect(response).to redirect_to users_path
+    end
+    it "it won't delete the user record if your user (teacher) is sign_in and your status is Pending" do
+      userteacher = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(userteacher)
+      sign_in @user
+      @user.confirm
+      expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
+      expect(response).to redirect_to users_path
     end
   end
 end
