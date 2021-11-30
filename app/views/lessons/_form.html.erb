@@ -11,7 +11,13 @@
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
                     <div class=" lesson_title_row  ">
-                      <h3><i class="fa fa-solid fa-play icon-play" ></i> Lesson: <%= lessonshow.title.titleize%> </h3>
+                      
+                      <% if lessonshow.title == "Add Lesson"%>
+                        <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
+                      <%else%>
+                        <h3><i class="fa fa-solid fa-play icon-play" ></i>  Lesson:  <%= lessonshow.title.titleize%> </h3>
+                      <%end%>
+                      
                       <%# Lesson Favorites %>
                       <div class="lesson-star">
                        <% if lessonshow.title != "New"%>
@@ -51,25 +57,68 @@
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
                 </div> 
                 
-                <div class="mb-2">
-                  <div class="lesson-description-label"><i class="fas fa-plus"></i> Description</div>
-                  <%= f.text_area :description, cols: 70, rows: 3, class: 'lesson-description-area', :required => true %>
+                <div >
+                  <div class="lesson-description-label "> Description</div>
+                  <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area ', :required => true %>
                 </div>
-                <% l_id = f.object.id.present? ? f.object.id : 0 %>
-                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
-                <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list">
-                  <% f.object.tags.each do |tag| %>
-                    <% time_stamp = Time.now.to_i %>
-                    <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'lesson-tag-fields' %></li>
+                <div class="lesson-document-container">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
+                        <th style="color: #212529;">TYPE</th>
+                        <th class="text-center" style="color: #212529;">PREVIEW</th>
+                      </tr>
+                    </thead>
+                    <% if f.object.id.present? && f.object.documents.any? %>
+                      <% f.object.documents.each do |document| %>
+                        <% if document.lesson_id.present? && document.id.present? %>
+                          <tbody class="text-center">
+                              <tr>
+                                <th>
+                                  <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'lesson-document-name' %>
+                                  <!--<span style="color: #212529;"><%#=document.name.titleize%>-->
+                                </th>
+                                <% if document.file.attached? %>
+                                  <th>
+                                    <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'lesson-document-kind' %>
+                                    <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
+                                  </th>
+                                <% end %>
+                                <% if document.file.representable? %>
+                                  <th class="text-center">
+                                    <%= link_to(document.file) do %>
+                                      <i class=" fa fa-search" style="color:gray;"></i>
+                                    <% end %>
+                                  </th>
+                                <% end %>
+                              </tr>
+                            </tbody>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </table>
+                  <%= link_to "#newLessonDocument", data: { toggle: "modal" } do %>
+                    <i class="fa fa-plus ml-4 mb-4"></i> Document
                   <% end %>
-                </ul>
-                <div class="actions lesson-buttons-position">
-                  <% if f.object.id.present? %>
-                  <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
-                    | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
-                <% else %>
-                    <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
-                <% end %>
+                </div>
+                <div class="container  mb-5">    
+                  <% l_id = f.object.id.present? ? f.object.id : 0 %>
+                  <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
+                  <ul id=<%="myLessonList#{l_id}"%> class="row move-lesson-tag-list ">
+                    <% f.object.tags.each do |tag| %>
+                      <% time_stamp = Time.now.to_i %>
+                      <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'dropdowns_inputs' %></li>
+                    <% end %>
+                  </ul>
+                  <div class="actions lesson-buttons-position">
+                    <% if f.object.id.present? %>
+                      <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
+                      | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
+                    <% else %>
+                      <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
+                    <% end %>
+                  </div>
                 </div>
               <% end %>
             </div>
@@ -80,4 +129,56 @@
   <%end%>
 </div>
 
-
+<div id="newLessonDocument" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
+      </div>
+      <div class="modal-body">
+        <% if @document.present? %>
+          <%= form_for([@lesson,@document]) do |f| %>
+            <% if @document.errors.any? %>
+              <div id="error_explanation" class="my_alert">
+                <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+                <ul>
+                <% @document.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="form-group pl-4 fit-width">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control', :required => true %>  
+            </div>
+            <div class="form-group fit-width pl-4">
+              <%= f.label :description %>
+              <%= f.text_area :description, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group pl-4 fit-width">
+              <%= f.label :type %>
+              <%= f.text_field :kind, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group pl-4">
+              <%= f.label :file %>
+              <%= f.file_field :file %>
+            </div>
+            <div class="form-group pl-4">
+              <div class="actions">
+                <%= f.submit %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          You must create the lesson before uploading and documents
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

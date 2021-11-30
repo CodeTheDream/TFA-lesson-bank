@@ -65,6 +65,19 @@ a:hover {
 a.btn.callout-button:hover {
   color: #f0f0f0;
 }
+.dropdowns_inputs {
+  margin-right: 0.2em;
+  padding: 8px 12px;
+  font-family: Montserrat;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  border-color: #1996aa !important;
+}
 .header_nav {
   background-color: hsl(0, 0%, 90%);
   transition: background-color 300ms;
@@ -224,4 +237,3 @@ form button:not(.disabled):hover {
   display: flex;
   justify-content: center;
 }
-

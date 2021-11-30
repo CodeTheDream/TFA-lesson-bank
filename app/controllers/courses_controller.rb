@@ -191,13 +191,14 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = Lesson.new(title: "New")
+    new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    # respond_to do |format|
-    #   format.html { render 'course_lesson_form'}
-    #   format.js {render layout: false}
-    # end
+    if @course&.id.present?
+      @document = @course.documents.new
+    elsif @lesson&.id.present?
+      @document = @lesson.documents.new
+    end
   end
 
   def load_course
@@ -210,28 +211,11 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = Lesson.new(title: "New")
+    new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     @from_load_course = true
     @document = @course.documents.new if @course.id.present?
-    render "/courses/course_lesson_form.js.erb"
-  end
-
-  def load_lesson
-    @course = Course.find ajax_params[:course_id]
-    new_lesson = Lesson.new(title: "New")
-    @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"
-    if ajax_params[:lesson_id].present?
-      @lesson = Lesson.find ajax_params[:lesson_id]
-    else
-      @lesson = nil 
-    end
-    @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    @from_load_course = false
     render "/courses/course_lesson_form.js.erb"
   end
 

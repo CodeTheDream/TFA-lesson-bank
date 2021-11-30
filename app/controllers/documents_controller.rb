@@ -38,12 +38,6 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   def new
     @document = Document.new
-    # if @document
-    #   @document = @course.documents.build
-    # elsif @lessson
-    #   @document = @lesson.documents.build
-    # end
-    # @document = Document.new
   end
       
   # GET /documents/1/edit
@@ -58,6 +52,7 @@ class DocumentsController < ApplicationController
     elsif @lesson
       @document = @lesson.documents.build(document_params)
     end
+    byebug
     if @document.save
       flash.notice = "The document record was created successfully."
       if @course.present?

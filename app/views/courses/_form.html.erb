@@ -38,17 +38,8 @@
         </div>
         <!-- Right Side Course-->
         <div class="col-lg-8 mt-5 mb-2"> 
-          <!-- Course Description Section-->
-          <div class="mb-3 course_show_description">
-            <p>
-              <%= f.text_area :description, cols: 66, rows: (((f.object.description&.length || 0)/66) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
-            </p>
-          </div> 
-
-          
-          
-          
-          
+          <!-- Course Description Section-->    
+          <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
           <!-- Course Right Side Documents Section-->  
           <table class="table">
             <thead>
@@ -64,12 +55,12 @@
                   <tbody class="text-center">
                       <tr>
                         <th>
-                          <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize %>      
+                          <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'document-name' %>      
                           <!--<span style="color: #212529;"><%#=document.name.titleize%>-->            
                         </th>             
                         <% if document.file.attached? %>
                           <th>
-                            <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase %>      
+                            <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'document-kind' %>      
                             <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->            
                           </th> 
                         <% end %>   
@@ -91,17 +82,16 @@
           <% end %>
         </div>
         <div class="container  mb-5">      
-                <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-          <ul id="myList" class="move-tag-list">
+          <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+          <ul id="myList" class="row move-lesson-tag-list">
             <% @course.tags.each do |tag| %>	  
               <% time_stamp = Time.now.to_i %>	  
-              <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'tag-fields' %></li>
+              <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'dropdowns_inputs' %></li>
             <% end %>
           </ul>
           <div class="actions course-buttons-position">
             <% if @course&.id.present? %>
-              <%= f.submit "Update Course", {:class => 'search_button form-button'} %>
-              | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn doc-button" %>
+              <%= f.submit "Save Changes", {:class => 'search_button form-button'} %>
             <% else %>
               <%= f.submit "Create Course", {:class => 'search_button form-button'} %>
             <% end %>
@@ -117,7 +107,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Document</h4>
+        <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
       </div>
       <div class="modal-body">
         <% obj = @course.present? ? @course : @lesson %>
