@@ -8,6 +8,7 @@ RUN bundle install
 ENV RAILS_ENV production
 
 COPY . /TFA-lesson-bank
+RUN RAILS_ENV=production rails assets:precompile
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
