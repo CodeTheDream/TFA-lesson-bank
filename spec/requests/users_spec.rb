@@ -143,5 +143,25 @@ RSpec.describe "Users", type: :request do
       expect(response).to redirect_to users_path
     end
   end
+  describe "create the new_user with status pending" do
+    it "won't create the new_user with no email" do
+      userteacher = {email: '', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(userteacher)
+      expect(@user.errors[:email]).to include("can't be blank")
+      #it won't create the user and it will send error message
+    end
+    it "won't create the new_user without a valid email" do
+      userteacher = {email: 'testdotcom', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(userteacher)
+      expect(@user.errors[:email]).to include("is invalid")
+      #it won't create the user and it will send error message
+    end
+    it "create the new_user teacher with role pendig and will redirect to the root page and wait for confirmation and an admin to chenge status to Approved" do
+      userteacher = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(userteacher)
+      @user.save
+      get root_path
+    end
+  end
 end
 
