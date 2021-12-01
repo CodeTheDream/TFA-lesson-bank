@@ -101,6 +101,60 @@
                   <%= link_to "#newLessonDocument", data: { toggle: "modal" } do %>
                     <i class="fa fa-plus ml-4 mb-4"></i> Document
                   <% end %>
+                  <div id="newLessonDocument" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
+                        </div>
+                        <div class="modal-body">
+                          <% if @document.present? %>
+                            <%= form_for([@lesson,@document]) do |f| %>
+                              <% if @document.errors.any? %>
+                                <div id="error_explanation" class="my_alert">
+                                  <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+                                  <ul>
+                                  <% @document.errors.full_messages.each do |message| %>
+                                    <li><%= message %></li>
+                                  <% end %>
+                                  </ul>
+                                </div>
+                              <% end %>
+                              <%= hidden_field_tag :lesson_id, lessonshow.id %>
+                              <div class="form-group pl-4 fit-width">
+                                <%= f.label :name %>
+                                <%= f.text_field :name, class: 'form-control', :required => true %>  
+                              </div>
+                              <div class="form-group fit-width pl-4">
+                                <%= f.label :description %>
+                                <%= f.text_area :description, class: 'form-control', :required => true %>
+                              </div>
+                              <div class="form-group pl-4 fit-width">
+                                <%= f.label :type %>
+                                <%= f.text_field :kind, class: 'form-control', :required => true %>
+                              </div>
+                              <div class="form-group pl-4">
+                                <%= f.label :file %>
+                                <%= f.file_field :file %>
+                              </div>
+                              <div class="form-group pl-4">
+                                <div class="actions">
+                                  <%= f.submit %>
+                                </div>
+                              </div>
+                            <% end %>
+                          <% else %>
+                            You must create the lesson before uploading and documents
+                          <% end %>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="container  mb-5">    
                   <% l_id = f.object.id.present? ? f.object.id : 0 %>
@@ -129,56 +183,3 @@
   <%end%>
 </div>
 
-<div id="newLessonDocument" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
-      </div>
-      <div class="modal-body">
-        <% if @document.present? %>
-          <%= form_for([@lesson,@document]) do |f| %>
-            <% if @document.errors.any? %>
-              <div id="error_explanation" class="my_alert">
-                <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
-                <ul>
-                <% @document.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-                </ul>
-              </div>
-            <% end %>
-            <div class="form-group pl-4 fit-width">
-              <%= f.label :name %>
-              <%= f.text_field :name, class: 'form-control', :required => true %>  
-            </div>
-            <div class="form-group fit-width pl-4">
-              <%= f.label :description %>
-              <%= f.text_area :description, class: 'form-control', :required => true %>
-            </div>
-            <div class="form-group pl-4 fit-width">
-              <%= f.label :type %>
-              <%= f.text_field :kind, class: 'form-control', :required => true %>
-            </div>
-            <div class="form-group pl-4">
-              <%= f.label :file %>
-              <%= f.file_field :file %>
-            </div>
-            <div class="form-group pl-4">
-              <div class="actions">
-                <%= f.submit %>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          You must create the lesson before uploading and documents
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>

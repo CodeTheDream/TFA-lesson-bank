@@ -51,8 +51,10 @@ class DocumentsController < ApplicationController
       @document = @course.documents.build(document_params)
     elsif @lesson
       @document = @lesson.documents.build(document_params)
+    elsif params[:lesson_id].present?
+      @lesson = Lesson.find params[:lesson_id]
+      @document = @lesson.documents.build(document_params)
     end
-    byebug
     if @document.save
       flash.notice = "The document record was created successfully."
       if @course.present?
