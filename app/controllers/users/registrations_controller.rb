@@ -21,14 +21,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def usercourses
     # @users = User.all
     @courses = @user.courses
-    # byebug
-    # @lessons = @course.lessons
-    @lessons = @lessons.select {|lesson| lesson.course_id == @course_id}
-    # @results = @results.select {|result| result.user_id == current_user.id}
-
-    # courses_id = @courses.pluck :id
-    # mylessons = Course.where(course_id: courses_id)
-    # @lessons = mylessons
+    
   end 
 
   # POST /resource
