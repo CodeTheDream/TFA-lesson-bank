@@ -441,14 +441,31 @@ ul li.favorites::marker {
   bottom: 0em;
 }
 
-.lesson-buttons-position {
+.buttons-position {
   position: relative;
-  bottom: 0.5em;
+  bottom: 0.8em;
 }
 .lesson-description-area {
   border: none;
 }
 
+.lesson-title {
+  border-color: transparent !important;
+}
+.lesson-description-area {
+  border-color: transparent !important;
+}
+
+.lesson-title:focus {
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+}
+.lesson-description-area:focus {
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+}
 .course-buttons-position {
   position: relative;
   bottom: 0.8em !important;

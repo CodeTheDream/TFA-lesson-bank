@@ -53,14 +53,14 @@
                     </ul>
                   </div>
                 <% end %>
-                <div class="row justify-content-between">
+                <div class="row justify-content-between ">
                   <%= f.text_field :title, class: 'lesson-title', :required => true %>
                 </div> 
                 
-                <div >
-                  <div class="lesson-description-label "> Description</div>
-                  <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area ', :required => true %>
-                </div>
+                
+                  <div class="lesson-description-label  "> Description</div>
+                  <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
+                
                 <div class="container  mb-5">    
                   <% l_id = f.object.id.present? ? f.object.id : 0 %>
                   <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
@@ -70,7 +70,7 @@
                       <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'input_tags_buttons' %></li>
                     <% end %>
                   </ul>
-                  <div class="actions lesson-buttons-position">
+                  <div class="actions buttons-position">
                     <% if f.object.id.present? %>
                       <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
                       | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>

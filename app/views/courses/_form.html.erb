@@ -38,7 +38,7 @@
         </div>
         <!-- Right Side Course-->
         <div class="col-lg-8 mt-5 mb-2"> 
-          <!-- Course Description Section-->    
+          <!-- Course Description Section-->              
           <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
           <!-- Course Right Side Documents Section-->  
           <table class="table">
@@ -83,14 +83,14 @@
           </table>
         </div>
         <div class="container  mb-5">      
-          <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-          <ul id="myList" class="row move-lesson-tag-list">
+          <%= button_tag 'Add Tag', class: " search_button form-button mb-2", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+          <ul id="myList" class="row move-lesson-tag-list ">
             <% @course.tags.each do |tag| %>	  
               <% time_stamp = Time.now.to_i %>	  
               <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'input_tags_buttons' %></li>
             <% end %>
           </ul>
-          <div class="actions course-buttons-position">
+          <div class="actions buttons-position">
             <% if @course&.id.present? %>
               <%= f.submit "Update Course", {:class => 'search_button form-button'} %>
               | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn search_button doc-button" %>
