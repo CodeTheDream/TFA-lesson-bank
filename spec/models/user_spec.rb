@@ -18,6 +18,11 @@ RSpec.describe User, type: :model do
       @user.email = nil
       expect(@user).to_not be_valid
     end
+    #Test Method send_email_confirmation
+    #It changed the count by 2 beacuse it send two emails (new_registration and new_email)
+    it "sends an email" do
+      expect { @user.send_email_confirmation }.to change { ActionMailer::Base.deliveries.count }.by(2)
+    end
   end
   describe "Associations" do
     before do
