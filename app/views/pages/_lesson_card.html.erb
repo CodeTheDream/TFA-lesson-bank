@@ -29,14 +29,14 @@
   <div class="text-center ">
     <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by <%= lesson.searchable.course.user.name %></span></div>
     <div class="mt-2 mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= lesson.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
-    <a href='/courses/<%="#{lesson.searchable_id}"%>' class="btn button_view_card right-arrow" onclick= 'checkUser();'>VIEW LESSON </a>
+    <a href='/courses/<%="#{lesson.searchable_id}"%>' class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW LESSON </a>
   </div>  
 </div> 
 <script type="text/javascript">
   function checkUser(){
-    let usernil = "<%= @current_user.nil? %>";
+    let usernil = <%= @current_user.nil? %>;
     if (usernil === true){
-      alert ("You need to login if you want to get access to the content");
+      alert ("You need to login to get access to the content");
     }else{
       return; 
     }
