@@ -406,16 +406,16 @@ ul li.favorites::marker {
   border-color: #1996aa !important;
 }
 .lesson-title {
-  border: transparent;
   background-color: white !important;
-  font-size: 2em;
+  font-size: 1.5em;
   font-family: Montserrat;
 }
 
 .lesson-description-label {
-  color: gray;
   position: relative;
   left: 0.15em;
+  font-size: 1.5em;
+  font-family: Montserrat;
 }
 
 .course-description-label {
@@ -449,23 +449,20 @@ ul li.favorites::marker {
   border: none;
 }
 
-.lesson-title {
-  border-color: transparent !important;
-}
 .lesson-description-area {
   border-color: transparent !important;
 }
+.lesson-title,
+.lesson-description-area {
+  border-color: transparent !important;
+}
+.lesson-title:hover,
+.lesson-description-area:hover {
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+}
 
-.lesson-title:focus {
-  outline: none !important;
-  border-color: #1996aa;
-  box-shadow: 0 0 3px #1996aa;
-}
-.lesson-description-area:focus {
-  outline: none !important;
-  border-color: #1996aa;
-  box-shadow: 0 0 3px #1996aa;
-}
 .course-buttons-position {
   position: relative;
   bottom: 0.8em !important;
