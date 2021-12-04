@@ -15,7 +15,7 @@
                       <% if lessonshow.title == "Add Lesson"%>
                         <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
                       <%else%>
-                        <h3><i class="fa fa-solid fa-play icon-play" ></i>  Lesson:  <%= lessonshow.title.titleize%> </h3>
+                        <h3><i class="fa fa-solid fa-play icon-play lesson-title" ></i>  Lesson:  <%= lessonshow.title.titleize%> </h3>
                       <%end%>
                       
                       <%# Lesson Favorites %>
@@ -75,7 +75,7 @@
                       <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
                       | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
                     <% else %>
-                      <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
+                      <%= f.submit "Create Lesson", {:class => 'search_button form-button mt-4'} %>
                     <% end %>
                   </div>
                 </div>

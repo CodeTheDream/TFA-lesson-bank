@@ -286,17 +286,16 @@ ul li.favorites::marker {
 }
 
 .course-title {
-  border: none !important;
-  background-color: #f0f0f0 !important;
+  background-color: transparent;
   font-size: 2.5em;
   font-family: Montserrat;
   position: relative;
-  left: 0.75em;
+  // left: 0.75em;
   bottom: 0.25em;
 }
-.course-title:hover {
-  color: #1996aa !important;
-}
+// .course-title:hover {
+//   color: #1996aa !important;
+// }
 
 .district-label {
   color: gray;
@@ -356,20 +355,6 @@ ul li.favorites::marker {
   font-family: Montserrat;
 }
 
-.lesson-tag-fields {
-  margin-right: 0.2em;
-  font-family: Montserrat;
-  position: relative;
-  right: 2em;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #495057;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-  background-clip: padding-box;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-
 // .tag-fields {
 //   margin-right: 0.2em;
 //   font-family: Montserrat;
@@ -405,18 +390,6 @@ ul li.favorites::marker {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   border-color: #1996aa !important;
 }
-.lesson-title {
-  background-color: white !important;
-  font-size: 1.5em;
-  font-family: Montserrat;
-}
-
-.lesson-description-label {
-  position: relative;
-  left: 0.15em;
-  font-size: 1.5em;
-  font-family: Montserrat;
-}
 
 .course-description-label {
   color: gray;
@@ -433,39 +406,60 @@ ul li.favorites::marker {
   margin-top: 10px;
   // max-width: 750px;
   text-align: justify;
-  border: none;
+}
+
+.course-buttons-position {
+  position: relative;
+  bottom: 0.8em !important;
+}
+.lesson-title {
+  background-color: white !important;
+  font-size: 1.5em;
+  font-family: Montserrat;
+}
+.lesson-title,
+.course-title,
+.lesson-description-area,
+.course-description-area {
+  border-color: transparent !important;
+}
+.lesson-title:hover,
+.course-title:hover,
+.lesson-description-area:hover,
+.course-description-area:hover {
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+  cursor: pointer;
+}
+.lesson-description-label {
+  position: relative;
+  left: 0.15em;
+  font-size: 1.5em;
+  font-family: Montserrat;
 }
 
 .lesson-tag-button-container {
   position: relative;
   bottom: 0em;
 }
+.lesson-tag-fields {
+  margin-right: 0.2em;
+  font-family: Montserrat;
+  position: relative;
+  right: 2em;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
 
 .buttons-position {
   position: relative;
   bottom: 0.8em;
-}
-.lesson-description-area {
-  border: none;
-}
-
-.lesson-description-area {
-  border-color: transparent !important;
-}
-.lesson-title,
-.lesson-description-area {
-  border-color: transparent !important;
-}
-.lesson-title:hover,
-.lesson-description-area:hover {
-  outline: none !important;
-  border-color: #1996aa;
-  box-shadow: 0 0 3px #1996aa;
-}
-
-.course-buttons-position {
-  position: relative;
-  bottom: 0.8em !important;
 }
 
 .move-lessons {

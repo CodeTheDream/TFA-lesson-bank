@@ -18,7 +18,7 @@
         <!-- Left Side Course-->
         <div class="col-lg-4 mb-5">
           <div class="show_left">
-            <div>
+            <div class="row justify-content-between ">
               <%= f.text_field :title, class: 'course-title', :required => true %>
             </div>    
             <div>
@@ -40,6 +40,7 @@
         <div class="col-lg-8 mt-5 mb-2"> 
           <!-- Course Description Section-->              
           <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: "Description", class: 'course-description-area', :required => true %>
+         
           <!-- Course Right Side Documents Section-->  
           <table class="table">
             <thead>
