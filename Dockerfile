@@ -1,5 +1,5 @@
 FROM ruby:2.7.0
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y nodejs yarn postgresql-client
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
@@ -8,6 +8,7 @@ RUN bundle install
 ENV RAILS_ENV production
 
 COPY . /TFA-lesson-bank
+RUN rails webpacker:compile
 #RUN RAILS_ENV=production rails assets:precompile
 
 # Add a script to be executed every time the container starts.
