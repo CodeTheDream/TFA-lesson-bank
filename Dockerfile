@@ -1,5 +1,5 @@
 FROM ruby:2.7.0
-RUN echo "${MASTER_KEY}" > master.key && apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
@@ -8,7 +8,7 @@ RUN bundle install
 ENV RAILS_ENV production
 
 COPY . /TFA-lesson-bank
-RUN RAILS_ENV=production rails assets:precompile
+#RUN RAILS_ENV=production rails assets:precompile
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
