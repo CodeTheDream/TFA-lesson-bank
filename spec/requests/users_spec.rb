@@ -108,6 +108,32 @@ RSpec.describe "Users", type: :request do
       expect(response).not_to render_template(:edit)
       redirect_to users_sign_in_path
     end
+    it "won't renders the :edit template if your role is teacher and you try to edit another teacher's account" do
+      tecaher1 = {email: 'test1@test.com', role: 'teacher', first_name: 'Test1', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      tecaher2 = {email: 'test2@test.com', role: 'teacher', first_name: 'Test2', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      @user1 = User.create(tecaher1)
+      @user2 = User.create(tecaher2)
+      #signin teacher1
+      sign_in @user1
+      @user1.confirm
+      # We do not sign in the user
+      get user_edit_path(id: @user2.id)
+      expect(response).not_to render_template(:edit)
+      redirect_to users_sign_in_path
+    end
+    it "will render the :edit template if your role is admin with status approved and you try to edit a teacher's account with status Approved" do
+      useradmin1 = {email: 'admin1@test.com', role: 'admin', first_name: 'Admin1', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      teacher = {email: 'teacher@test.com', role: 'teacher', first_name: 'Teacher', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      @admin1 = User.create(useradmin1)
+      @teacher1 = User.create(teacher)
+      #signin admin with status Approved
+      sign_in @admin1
+      @admin1.confirm
+      #Admin try to edit teacher with status Approved
+      get user_edit_path(id: @teacher1.id)
+      expect(response).to render_template(:edit)
+      expect(response.status).to render_template(:edit)
+    end
   end
   describe "delete user according to your status" do
     it "deletes a user record if your user (adminsitrator) is sign_in and your status is Approved" do
