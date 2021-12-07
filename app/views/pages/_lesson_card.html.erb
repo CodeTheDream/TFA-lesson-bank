@@ -32,15 +32,6 @@
     <a href='/courses/<%="#{lesson.searchable_id}"%>' class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW LESSON </a>
   </div>  
 </div> 
-<script type="text/javascript">
-  function checkUser(){
-    let usernil = <%= @current_user.nil? %>;
-    if (usernil === true){
-      alert ("You need to login to get access to the content");
-    }else{
-      return; 
-    }
-  }
-</script>
+
 
 
