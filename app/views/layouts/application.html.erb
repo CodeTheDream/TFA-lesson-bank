@@ -57,7 +57,6 @@
   }
   function checkUser(){
     let usernil = <%= @current_user.nil?.to_json %> ;
-    console.log(usernil);
     if (usernil === true){
       alert ("You need to login to get access to the content");
     }else{
