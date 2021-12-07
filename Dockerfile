@@ -1,5 +1,5 @@
 FROM ruby:2.7.0
-RUN echo $MASTER_KEY
+RUN echo "${MASTER_KEY}"
 RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client
 RUN npm install -g yarn
 WORKDIR /TFA-lesson-bank
