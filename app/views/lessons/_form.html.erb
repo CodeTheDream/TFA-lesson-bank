@@ -98,8 +98,10 @@
                       <% end %>
                     <% end %>
                   </table>
-                  <%= link_to "#newLessonDocument", data: { toggle: "modal" } do %>
-                    <i class="fa fa-plus ml-4 mb-4"></i> Document
+                  <% if lessonshow.id.present? %>
+                    <%= link_to "#newLessonDocument#{lessonshow.id}", data: { toggle: "modal" } do %>
+                      <i class="fa fa-plus ml-4 mb-4"></i> Document
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="container  mb-5">    
@@ -114,7 +116,6 @@
                   <div class="actions lesson-buttons-position">
                     <% if f.object.id.present? %>
                       <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
-                      | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
                     <% else %>
                       <%= f.submit "Create Lesson", {:class => 'search_button form-button'} %>
                     <% end %>
@@ -125,11 +126,8 @@
           </div>
         </div>
       </div>
-    <%end%>
-  <%end%>
-</div>
-
-<div id="newLessonDocument" class="modal fade" role="dialog">
+      <% modalId = "newLessonDocument#{lessonshow.id}" %>
+      <div id= <%=modalId%> class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -138,8 +136,8 @@
         <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
       </div>
       <div class="modal-body">
-        <% if @document.present? %>
-          <%= form_for([@lesson,@document]) do |f| %>
+        <% if lessonshow.id.present? %>
+          <%= form_for([lessonshow,@document]) do |f| %>
             <% if @document.errors.any? %>
               <div id="error_explanation" class="my_alert">
                 <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
@@ -181,4 +179,7 @@
       </div>
     </div>
   </div>
+</div>
+    <%end%>
+  <%end%>
 </div>

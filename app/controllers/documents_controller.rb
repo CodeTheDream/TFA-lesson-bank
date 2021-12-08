@@ -51,14 +51,16 @@ class DocumentsController < ApplicationController
       @document = @course.documents.build(document_params)
     elsif @lesson
       @document = @lesson.documents.build(document_params)
+    elsif params[:lesson_id].present?
+      @lesson.find params[:lesson_id]
+      @document = @lesson.documents.build(document_params)
     end
-    byebug
     if @document.save
       flash.notice = "The document record was created successfully."
       if @course.present?
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
       elsif @lesson.present?
-       redirect_to [@lesson, @document] #lesson_index_lesson_documents_path(@lesson)
+        redirect_to course_lesson_form_courses_path(course_id: @lesson.course.id)
       else
         redirect_to "/"
       end

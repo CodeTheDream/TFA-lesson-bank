@@ -30,10 +30,16 @@ window.addTagField = function addTagField() {
 }
 
 window.courseSelect = function courseSelect(){
-    $.ajax({
-      url: '/courses/load_course?course_id=' + $("#course").val(),
-      type: 'GET',
-      success: function(r) {
-      }
-    });
-  }
+  $.ajax({
+    url: '/courses/load_course?course_id=' + $("#course").val(),
+    type: 'GET',
+    success: function(r) {
+    }
+  });
+}
+
+window.addDocument = function addDocument(lessonId){
+  console.log("addDocument called lesson_id = ${lessonId}");  
+  console.log(lessonId);  
+  $(".modal-body #lessonIdNum").val( lessonId );
+}
