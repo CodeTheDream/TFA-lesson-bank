@@ -407,6 +407,7 @@ ul li.favorites::marker {
   margin-top: 10px;
   // max-width: 750px;
   text-align: justify;
+  padding: 10px;
 }
 
 .course-buttons-position {
@@ -424,12 +425,6 @@ ul li.favorites::marker {
 .course-description-area {
   border-color: transparent !important;
 }
-// .course-title {
-//   outline: none !important;
-//   border-color: #1996aa;
-//   box-shadow: 0 0 3px #1996aa;
-//   cursor: pointer;
-// }
 
 .lesson-title:hover,
 .course-title:hover,
