@@ -7,7 +7,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
-
   # GET /resource/sign_up
   # def new
   #   super
@@ -73,20 +72,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # redirect_to users_sign_out
         redirect_to root_path #sign_out @user
       else
-      redirect_to users_path, notice: 'User was successfully updated'
+        searchitemstoupdate = SearchItem.where(user_id: @user.id).distinct.pluck :id
+        @newlast_name = configure_registration_update_parameters[:last_name]
+        @newstatus = configure_registration_update_parameters[:status]
+        hash = { last_name: @newlast_name, status: @newstatus}
+        searchitemstoupdate.each do |sui|
+          SearchItem.where(id: sui).update(hash) 
+        end
+        redirect_to users_path, notice: 'User was successfully updated'
       end
     else
       flash.now.alert = @user.errors.full_messages.to_sentence
       redirect_to user_edit_path(@user), notice: 'User could not be updated'
     end
   end      
-      
-    # else
-    #   flash.now.alert = @user.errors.full_messages.to_sentence
-    #   redirect_to user_edit_path(@user), notice: 'User could not be updated'
-    # end
-
-  
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
 #owner and admin pundit
