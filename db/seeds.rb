@@ -241,7 +241,7 @@ user = User.find_by email: "missbliss@jfkhs.com"
 errors = 0
 success = 0
 courses.each do |course|
-        hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id}
+  hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id, last_name: user.last_name}
   search_item = SearchItem.new(hash)
   if search_item.save
     course.search_item = search_item
@@ -252,7 +252,7 @@ courses.each do |course|
     print 'x'
   end
   course.lessons.each do |lesson|
-    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id }
+    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id, last_name: user.last_name }
     search_item = SearchItem.new hash
     if search_item.save
       lesson.search_item = search_item
