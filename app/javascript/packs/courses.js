@@ -37,9 +37,3 @@ window.courseSelect = function courseSelect(){
     }
   });
 }
-
-window.addDocument = function addDocument(lessonId){
-  console.log("addDocument called lesson_id = ${lessonId}");  
-  console.log(lessonId);  
-  $(".modal-body #lessonIdNum").val( lessonId );
-}
