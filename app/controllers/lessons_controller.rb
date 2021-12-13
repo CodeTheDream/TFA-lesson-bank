@@ -28,6 +28,7 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
+    byebug
     @lesson = @course.lessons.build(lesson_params)
     if @lesson.save
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?

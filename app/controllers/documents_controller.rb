@@ -52,7 +52,7 @@ class DocumentsController < ApplicationController
     elsif @lesson
       @document = @lesson.documents.build(document_params)
     elsif params[:lesson_id].present?
-      @lesson.find params[:lesson_id]
+      @lesson = Lesson.find params[:lesson_id]
       @document = @lesson.documents.build(document_params)
     end
     if @document.save
