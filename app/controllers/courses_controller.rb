@@ -64,7 +64,7 @@ class CoursesController < ApplicationController
       redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path  
+      redirect_to course_lesson_form_lessons_path  
     end
   end
 

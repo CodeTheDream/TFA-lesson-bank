@@ -13,7 +13,7 @@
       <% end %>      
     </h2>     
     <div><span style="color: gray">SUBJECT:</span> <%= lesson.subject %></div>           
-    <div class="mb-2"<span style="color: gray">GRADE:</span> <%= lesson.searchable.course.grades.pluck(:grade_level).join(', ') %></div>
+    <div class="mb-2"><span style="color: gray">GRADE: </span> <%= lesson.searchable.course.grades.pluck(:grade_level).join(', ') %></div>
     <% if lesson.tags.present? %>
       <% lesson.tags.split(' ').each do |tag| %> 
         <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.capitalize %></span>
