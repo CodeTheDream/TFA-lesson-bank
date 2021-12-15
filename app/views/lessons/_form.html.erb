@@ -1,5 +1,4 @@
 <%= javascript_pack_tag 'lessons', 'data-turbolinks-track': 'reload' %>
-
 <!-- Lesson Bottom Accordion Section-->
 <div class="container mb-5 move-lessons">
   <% if @lessons.present? %>
@@ -10,30 +9,28 @@
             <div class="panel-heading" role="tab" id="headingOne">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lessonshow.id%>" aria-expanded="true" aria-controls="collapseOne">
-                    <div class=" lesson_title_row  ">
-                      
-                      <% if lessonshow.title == "Add Lesson"%>
-                        <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
-                      <%else%>
-                        <h3><i class="fa fa-solid fa-play icon-play lesson-title" ></i>  Lesson:  <%= lessonshow.title.titleize%> </h3>
-                      <%end%>
-                      
-                      <%# Lesson Favorites %>
-                      <div class="lesson-star">
-                       <% if lessonshow.title != "New"%>
-                         <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                         <% if fav_lesson.include? lessonshow.id %>
-                           <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
-                             <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
-                           <% end %> 
-                         <% else %> 
-                           <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
-                             <i class="fas fa-heart fa-xs" style="color:gray;"></i>
-                           <% end %>                     
-                         <%end %>
-                       <%end%>
-                      <div>
+                  <div class=" lesson_title_row  ">
+                    <% if lessonshow.title == "Add Lesson"%>
+                      <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
+                    <%else%>
+                      <h3><i class="fa fa-solid fa-play icon-play lesson-title" ></i>  Lesson:  <%= lessonshow.title.titleize%> </h3>
+                    <%end%>
+                    <%# Lesson Favorites %>
+                    <div class="lesson-star">
+                     <% if lessonshow.title != "New"%>
+                       <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
+                       <% if fav_lesson.include? lessonshow.id %>
+                         <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                           <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
+                         <% end %> 
+                       <% else %> 
+                         <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                           <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                         <% end %>                     
+                       <% end %>
+                     <% end %>
                     </div>
+                  </div>
                 </a>
               </h4>
             </div>
@@ -47,20 +44,109 @@
                   <div id="error_explanation" class="my_alert">
                     <h2><%= pluralize(lessonshow.errors.count, "error") %> prohibited this lesson from being saved:</h2>
                     <ul>
-                    <% lessonshow.errors.full_messages.each do |message| %>
-                      <li><%= message %></li>
-                    <% end %>
+                      <% lessonshow.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
                     </ul>
                   </div>
                 <% end %>
                 <div class="row justify-content-between ">
                   <%= f.text_field :title, class: 'lesson-title ', :required => true %>
                 </div> 
-                
-                
-                  <div class="lesson-description-label  mt-2"> Add Description</div>
-                  <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
-                
+                <div class="lesson-description-label  mt-2"> Add Description</div>
+                <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
+                <div class="lesson-document-container">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
+                        <th style="color: #212529;">TYPE</th>
+                        <th class="text-center" style="color: #212529;">PREVIEW</th>
+                      </tr>
+                    </thead>
+                    <% if f.object.id.present? && f.object.documents.any? %>
+                      <% f.object.documents.each do |document| %>
+                        <% if document.lesson_id.present? && document.id.present? %>
+                          <tbody class="text-center">
+                            <tr>
+                              <th>
+                                <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'lesson-document-name' %>
+                              </th>
+                              <% if document.file.attached? %>
+                                <th>
+                                  <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'lesson-document-kind' %>
+                                </th>
+                              <% end %>
+                              <% if document.file.representable? %>
+                                <th class="text-center">
+                                  <%= link_to(document.file) do %>
+                                    <i class=" fa fa-search" style="color:gray;"></i>
+                                  <% end %>
+                                </th>
+                              <% end %>
+                            </tr>
+                          </tbody>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </table>
+                  <% if lessonshow.id.present? %>
+                    <%= link_to "#newLessonDocument#{lessonshow.id}", data: { toggle: "modal" } do %>
+                      <i class="fa fa-plus ml-4 mb-4"></i> Document
+                    <% end %>
+                  <% end %>
+                  <div id="newLessonDocument" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
+                        </div>
+                        <div class="modal-body">
+                          <% if @document.present? %>
+                            <%= form_for([@lesson,@document]) do |f| %>
+                              <% if @document.errors.any? %>
+                                <div id="error_explanation" class="my_alert">
+                                  <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+                                  <ul>
+                                  <% @document.errors.full_messages.each do |message| %>
+                                    <li><%= message %></li>
+                                  <% end %>
+                                  </ul>
+                                </div>
+                              <% end %>
+                              <%= hidden_field_tag :lesson_id, lessonshow.id %>
+                              <div class="form-group pl-4 fit-width">
+                                <%= f.label :name %>
+                                <%= f.text_field :name, class: 'form-control', :required => true %>
+                              </div>
+                              <div class="form-group fit-width pl-4">
+                                <%= f.label :description %>
+                                <%= f.text_area :description, class: 'form-control', :required => true %>
+                              </div>
+                              <div class="form-group pl-4 fit-width">
+                                <%= f.label :type %>
+                                <%= f.text_field :kind, class: 'form-control', :required => true %>
+                              </div>
+                              <div class="form-group pl-4">
+                                <%= f.label :file %>
+                                <%= f.file_field :file %>
+                              </div>
+                              <div class="form-group pl-4">
+                                <div class="actions">
+                                  <%= f.submit %>
+                                </div>
+                              </div>
+                            <% end %>
+                          <% else %>
+                            You must create the lesson before uploading and documents
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="container  mb-5">    
                   <% l_id = f.object.id.present? ? f.object.id : 0 %>
                   <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>
@@ -79,7 +165,6 @@
                     <% end %>
                   </div>
                 </div>
-                  
               <% end %>
             </div>
           </div>
@@ -88,5 +173,3 @@
     <%end%>
   <%end%>
 </div>
-
-

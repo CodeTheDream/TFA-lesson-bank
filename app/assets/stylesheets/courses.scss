@@ -484,3 +484,43 @@ ul li.favorites::marker {
   margin-right: 3.3rem !important;
   margin-top: 0.45rem !important;
 }
+
+.center-modal-title {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+}
+
+.document-name {
+  border: none !important;
+  background-color: #f0f0f0 !important;
+  font-family: Montserrat;
+  color: #212529;
+  font-weight: 600;
+}
+
+.document-kind {
+  border: none !important;
+  background-color: #f0f0f0 !important;
+  font-family: Montserrat;
+  color: gray;
+  font-weight: 600;
+}
+
+.lesson-document-name {
+  border: none !important;
+  font-family: Montserrat;
+  color: #212529;
+  font-weight: 600;
+}
+
+.lesson-document-kind {
+  border: none !important;
+  font-family: Montserrat;
+  color: gray;
+  font-weight: 600;
+}
+
+.lesson-document-container {
+  width: 50%;
+}
