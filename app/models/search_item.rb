@@ -2,7 +2,7 @@ class SearchItem < ApplicationRecord
   include SearchItemSearch
   belongs_to :searchable, polymorphic: true
 
-  searchkick word_middle: [ :title, :description, :tags, :last_name], merge_mappings: true
+  searchkick word_middle: [ :title, :description, :tags, :last_name, :status], merge_mappings: true
 
   def search_data attrs = attributes.dup
     relational = {
@@ -16,6 +16,7 @@ class SearchItem < ApplicationRecord
       tags: self.tags,
       user_id: self.user_id,
       last_name: self.last_name,
+      status: self.status,
       type: self.searchable.class == Lesson ? "lesson_type" : "course_type"
     }
   end

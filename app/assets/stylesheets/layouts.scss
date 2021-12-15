@@ -127,3 +127,17 @@ button:focus {
   position: absolute;
   right: 50%;
 }
+
+#notice_wrapper {
+  position: relative;
+  width: 100%;
+  background-color: #f0eeed !important;
+  .alert,
+  .notice {
+    position: relative;
+    right: 1em;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+}

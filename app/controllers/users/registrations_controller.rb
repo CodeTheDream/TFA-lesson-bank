@@ -7,7 +7,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
-
   # GET /resource/sign_up
   # def new
   #   super
@@ -61,8 +60,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # redirect_to user_edit_path(@user), notice: 'User could not be updated'
 
   def update
+    user_lastname = @user.last_name
+    user_status = @user.status
     if @user.update configure_registration_update_parameters
-      if configure_registration_update_parameters[:email] != @user.email
+      #update user_status and last_name in SearchItem
+      if (@user.last_name != user_lastname) || (@user.status != user_status)
+        searchitemstoupdate = SearchItem.where(user_id: @user.id).distinct.pluck :id
+        @newlast_name = configure_registration_update_parameters[:last_name]
+        @newstatus = configure_registration_update_parameters[:status]
+        hash = {last_name: @newlast_name, status: @newstatus}
+        query = searchitemstoupdate.each {|sui| SearchItem.where(id: sui).update(hash)}
+        redirect_to users_path, notice: 'User was successfully updated' 
+      elsif configure_registration_update_parameters[:email] != @user.email
         @newemail = configure_registration_update_parameters[:email]
         @previous_email = @user.email
         @user.update_attribute(:previous_email, @previous_email)
@@ -70,23 +79,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
         UserMailer.with(user: @user, email: @newemail).new_email.deliver_now
         # send a method with confirmation to both emails
         # user account will be pending until confirmation
-        # redirect_to users_sign_out
         redirect_to root_path #sign_out @user
-      else
-      redirect_to users_path, notice: 'User was successfully updated'
+      else 
+        redirect_to users_path, notice: 'User was successfully updated'
       end
-    else
-      flash.now.alert = @user.errors.full_messages.to_sentence
-      redirect_to user_edit_path(@user), notice: 'User could not be updated'
-    end
-  end      
-      
-    # else
-    #   flash.now.alert = @user.errors.full_messages.to_sentence
-    #   redirect_to user_edit_path(@user), notice: 'User could not be updated'
-    # end
+  else
+    flash.now.alert = @user.errors.full_messages.to_sentence
+    redirect_to user_edit_path(@user), notice: 'User could not be updated'
+  end
+end      
 
-  
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
 #owner and admin pundit
