@@ -56,15 +56,15 @@
                 <div class="lesson-description-label  mt-2"> Add Description</div>
                 <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
                 <div class="lesson-document-container">
-                  <table class="table mb-0">
-                    <thead>
-                      <tr>
-                        <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
-                        <th style="color: #212529;">TYPE</th>
-                        <th class="text-center" style="color: #212529;">PREVIEW</th>
-                      </tr>
-                    </thead>
-                    <% if f.object.id.present? && f.object.documents.any? %>
+                  <% if f.object.id.present? && f.object.documents.any? %>
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
+                          <th style="color: #212529;">TYPE</th>
+                          <th class="text-center" style="color: #212529;">PREVIEW</th>
+                        </tr>
+                      </thead>
                       <% f.object.documents.each do |document| %>
                         <% if document.lesson_id.present? && document.id.present? %>
                           <tbody class="text-center">
