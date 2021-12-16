@@ -44,7 +44,7 @@ module SearchItemSearch
       where["user_id"] = @current_user.id
     end
   
-    where["status"] = "Approved"
+    where["user_status"] = "Approved"
 
     where
   end
