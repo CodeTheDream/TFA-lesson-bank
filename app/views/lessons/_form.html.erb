@@ -20,16 +20,16 @@
                      <% if lessonshow.title != "New"%>
                        <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
                        <% if fav_lesson.include? lessonshow.id %>
-                         <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                         <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %>
                            <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
                          <% end %> 
                        <% else %> 
-                         <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %> 
+                         <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lessonshow.id, id: @course.id, source: "lesson_edit")) do  %>
                            <i class="fas fa-heart fa-xs" style="color:gray;"></i>
-                         <% end %>                     
-                       <% end %>
-                     <% end %>
-                    </div>
+                         <% end %>
+                       <%end %>
+                     <%end%>
+                    <div>
                   </div>
                 </a>
               </h4>
@@ -44,9 +44,9 @@
                   <div id="error_explanation" class="my_alert">
                     <h2><%= pluralize(lessonshow.errors.count, "error") %> prohibited this lesson from being saved:</h2>
                     <ul>
-                      <% lessonshow.errors.full_messages.each do |message| %>
-                        <li><%= message %></li>
-                      <% end %>
+                    <% lessonshow.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
                     </ul>
                   </div>
                 <% end %>
@@ -55,6 +55,7 @@
                 </div> 
                 <div class="lesson-description-label  mt-2"> Add Description</div>
                 <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
+                
                 <div class="lesson-document-container">
                   <table class="table mb-0">
                     <thead>
@@ -71,10 +72,12 @@
                             <tr>
                               <th>
                                 <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'lesson-document-name' %>
+                                <!--<span style="color: #212529;"><%#=document.name.titleize%>-->
                               </th>
                               <% if document.file.attached? %>
                                 <th>
                                   <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'lesson-document-kind' %>
+                                  <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
                                 </th>
                               <% end %>
                               <% if document.file.representable? %>
@@ -119,7 +122,7 @@
                               <%= hidden_field_tag :lesson_id, lessonshow.id %>
                               <div class="form-group pl-4 fit-width">
                                 <%= f.label :name %>
-                                <%= f.text_field :name, class: 'form-control', :required => true %>
+                                <%= f.text_field :name, class: 'form-control', :required => true %>  
                               </div>
                               <div class="form-group fit-width pl-4">
                                 <%= f.label :description %>
@@ -143,10 +146,15 @@
                             You must create the lesson before uploading and documents
                           <% end %>
                         </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+
                 <div class="container  mb-5">    
                   <% l_id = f.object.id.present? ? f.object.id : 0 %>
                   <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: "addLessonTagField(#{l_id})"%>

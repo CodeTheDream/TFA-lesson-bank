@@ -1,5 +1,6 @@
 require "zip"
 require 'fileutils'
+#this is a comment
 class CoursesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json

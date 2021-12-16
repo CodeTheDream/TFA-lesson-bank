@@ -36,12 +36,11 @@
           <p class="alert"> <%= alert %> </p> 
         </div>
       <% end %>
-
       <%= yield %>
     </main class="flex-shrink-0" role="main">
 
     <footer class="fixed-bottom d-flex justify-content-center">
-      <%#= render 'layouts/footer' %>
+<%#= render 'layouts/footer' %>
     </footer>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -55,7 +54,14 @@
     var s = document.getElementById('notice_wrapper').style;
     s.opacity = 1;
     (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,200)})();
-
+  }
+  function checkUser(){
+    let usernil = <%= @current_user.nil?.to_json %> ;
+    if (usernil === true){
+      alert ("You need to login to get access to the content");
+    }else{
+      return; 
+    }
   }
   </script>
 </html>
