@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_214440) do
+ActiveRecord::Schema.define(version: 2021_12_09_001518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_11_30_214440) do
     t.string "tags"
     t.integer "user_id"
     t.string "last_name"
+    t.string "user_status"
     t.index ["searchable_type", "searchable_id"], name: "index_search_items_on_searchable_type_and_searchable_id"
   end
 

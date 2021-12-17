@@ -7,7 +7,6 @@ module SearchItemSearch
     @query = query.presence || "*"
     @options = options
     @current_user = current_user if current_user.present?
-
     constraints = {
       page: options[:page],
       per_page: PER_PAGE
@@ -44,6 +43,8 @@ module SearchItemSearch
     if @options["mycontent"].present? && @options["mycontent"] == "true"
       where["user_id"] = @current_user.id
     end
+  
+    where["user_status"] = "Approved"
 
     where
   end

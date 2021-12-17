@@ -59,14 +59,14 @@ class CoursesController < ApplicationController
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
       course_tags = @course.tags.pluck(:name).join(' ')
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id, last_name: current_user.last_name }
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
       flash.notice = "The course record was created successfully."
       redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_lessons_path
+      redirect_to course_lesson_form_courses_path
     end
   end
 
@@ -96,7 +96,7 @@ class CoursesController < ApplicationController
       end
       @course.tag_list=(tags) if tags.present?
       course_tags = @course.tags.pluck(:name).join(' ')
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id, last_name: current_user.last_name }
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
       search_item = SearchItem.find_by(searchable_id: @course.id, searchable_type: 'Course')
       search_item.update hash
       @course.search_item = search_item
