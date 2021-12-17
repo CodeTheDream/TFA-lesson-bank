@@ -62,21 +62,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     user_lastname = @user.last_name
     user_status = @user.status
+    @previous_email = @user.email
     if @user.update configure_registration_update_parameters
       #update user_status and last_name in SearchItem
       if (@user.last_name != user_lastname) || (@user.status != user_status)
-        searchitemstoupdate = SearchItem.where(user_id: @user.id).distinct.pluck :id
-        @newlast_name = configure_registration_update_parameters[:last_name]
-        @newstatus = configure_registration_update_parameters[:status]
-        hash = {last_name: @newlast_name, status: @newstatus}
-        query = searchitemstoupdate.each {|sui| SearchItem.where(id: sui).update(hash)}
+        search_items_to_update = SearchItem.where(user_id: @user.id)
+        @new_last_name = @user.last_name
+        @new_status = @user.status
+        hash = {last_name: @new_last_name, user_status: @new_status}
+        search_items_to_update.each {|sui| sui.update(hash)}
         redirect_to users_path, notice: 'User was successfully updated' 
-      elsif configure_registration_update_parameters[:email] != @user.email
-        @newemail = configure_registration_update_parameters[:email]
-        @previous_email = @user.email
+      elsif @previous_email != @user.email
+        @new_email = configure_registration_update_parameters[:email]
         @user.update_attribute(:previous_email, @previous_email)
         UserMailer.with(user: @user).update_email.deliver_now
-        UserMailer.with(user: @user, email: @newemail).new_email.deliver_now
+        UserMailer.with(user: @user, email: @new_email).new_email.deliver_now
         # send a method with confirmation to both emails
         # user account will be pending until confirmation
         redirect_to root_path #sign_out @user
