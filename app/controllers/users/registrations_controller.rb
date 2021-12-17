@@ -67,12 +67,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
       #update user_status and last_name in SearchItem
       if (@user.last_name != user_lastname) || (@user.status != user_status)
         search_items_to_update = SearchItem.where(user_id: @user.id)
-        @new_last_name = configure_registration_update_parameters[:last_name]
-        @new_status = configure_registration_update_parameters[:status]
+        @new_last_name = @user.last_name
+        @new_status = @user.status
         hash = {last_name: @new_last_name, user_status: @new_status}
         search_items_to_update.each {|sui| sui.update(hash)}
         redirect_to users_path, notice: 'User was successfully updated' 
-      elsif configure_registration_update_parameters[:email] != @user.email
+      elsif @previous_email != @user.email
         @new_email = configure_registration_update_parameters[:email]
         @user.update_attribute(:previous_email, @previous_email)
         UserMailer.with(user: @user).update_email.deliver_now
