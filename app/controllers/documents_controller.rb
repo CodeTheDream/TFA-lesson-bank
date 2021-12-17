@@ -38,12 +38,6 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   def new
     @document = Document.new
-    # if @document
-    #   @document = @course.documents.build
-    # elsif @lessson
-    #   @document = @lesson.documents.build
-    # end
-    # @document = Document.new
   end
       
   # GET /documents/1/edit
@@ -57,13 +51,16 @@ class DocumentsController < ApplicationController
       @document = @course.documents.build(document_params)
     elsif @lesson
       @document = @lesson.documents.build(document_params)
+    elsif params[:lesson_id].present?
+      @lesson = Lesson.find params[:lesson_id]
+      @document = @lesson.documents.build(document_params)
     end
     if @document.save
       flash.notice = "The document record was created successfully."
       if @course.present?
-        redirect_to [@course, @document] #course_index_course_documents_path(@course)
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
       elsif @lesson.present?
-       redirect_to [@lesson, @document] #lesson_index_lesson_documents_path(@lesson)
+        redirect_to course_lesson_form_courses_path(course_id: @lesson.course.id)
       else
         redirect_to "/"
       end
@@ -144,5 +141,4 @@ class DocumentsController < ApplicationController
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
   end
-
 end

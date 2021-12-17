@@ -27,6 +27,7 @@ class CoursesController < ApplicationController
   # GET /courses/new
   def new
     @course = Course.new
+    @document = @course.documents.build
     @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
@@ -65,7 +66,7 @@ class CoursesController < ApplicationController
       redirect_to course_lesson_form_courses_path
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path  
+      redirect_to course_lesson_form_courses_path
     end
   end
 
@@ -79,6 +80,12 @@ class CoursesController < ApplicationController
     @course.courses_grades.delete_all
     new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
     @course.grades << new_grades if new_grades.present?
+    if document_params[:documents].present?
+      document_params[:documents].each do |document_param|
+        doc = Document.find document_param[0].to_i
+        doc.update document_param[1]
+      end
+    end
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -94,7 +101,7 @@ class CoursesController < ApplicationController
       search_item.update hash
       @course.search_item = search_item
       flash.notice = "The course record was updated successfully."
-      redirect_to course_lesson_form_courses_path
+      redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
       redirect_to course_lesson_form_courses_path
@@ -179,19 +186,19 @@ class CoursesController < ApplicationController
   def course_lesson_form
     new_course = Course.new(title: "New")
     @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
-#    @lesson = Lesson.new
     @course = params[:course_id].present? ? Course.find(params[:course_id]) : new_course
     @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = Lesson.new(title: "New")
+    new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    # respond_to do |format|
-    #   format.html { render 'course_lesson_form'}
-    #   format.js {render layout: false}
-    # end
+    if @course&.id.present?
+      @document = @course.documents.new
+    elsif @lesson&.id.present?
+      @document = @lesson.documents.new
+    end
   end
 
   def load_course
@@ -204,10 +211,11 @@ class CoursesController < ApplicationController
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    new_lesson = Lesson.new(title: "New")
+    new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     @from_load_course = true
+    @document = @course.documents.new if @course.id.present?
     render "/courses/course_lesson_form.js.erb"
   end
 
@@ -264,6 +272,9 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites, :id)
   end
 
+  def document_params
+    params.permit(:documents => {})
+  end
   def favorite_params
     params.permit(:source, :id)
   end

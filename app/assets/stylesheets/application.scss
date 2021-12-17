@@ -65,11 +65,25 @@ a:hover {
 a.btn.callout-button:hover {
   color: #f0f0f0;
 }
-.header_nav {
-  background-color: hsl(0, 0%, 90%);
-  transition: background-color 300ms;
-  min-height: 100px;
+.dropdowns_inputs {
+  margin-right: 0.2em;
+  padding: 8px 12px;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.25;
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  background-color: #1996aa !important;
 }
+// .header_nav {
+//   background-color: hsl(0, 0%, 90%);
+//   transition: background-color 300ms;
+//   min-height: 100px;
+// }
 .header_pillow {
   height: 110px;
   background-color: #f0eeed;
@@ -224,4 +238,3 @@ form button:not(.disabled):hover {
   display: flex;
   justify-content: center;
 }
-
