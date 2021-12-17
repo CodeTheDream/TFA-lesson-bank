@@ -114,7 +114,7 @@ RSpec.describe "Courses", type: :request do
   end
 
   describe "put course_path with valid data" do
-    it "updates an entry and redirects to the show path for the course" do
+    it "updates an entry and redirects to the edit path for the course" do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
@@ -127,7 +127,7 @@ RSpec.describe "Courses", type: :request do
         state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       @course.reload
       expect(@course.title).to eq("React")
-      expect(response).to redirect_to course_lesson_form_courses_path
+      expect(response).to redirect_to course_lesson_form_courses_path(course_id: @course.id)
     end
   end
 
