@@ -12,7 +12,7 @@ RUN echo $MASTER_KEY
 COPY . /TFA-lesson-bank
 #RUN rails webpacker:compile
 RUN rails assets:precompile
-RUN yarn add popper.js 
+RUN yarn add jquery
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
