@@ -5,7 +5,6 @@ WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
 RUN bundle install
-RUN yarn add bootstrap
 
 RUN echo $MASTER_KEY >> /TFA-lesson-bank/master.key
 RUN echo $MASTER_KEY
@@ -13,6 +12,7 @@ RUN echo $MASTER_KEY
 COPY . /TFA-lesson-bank
 #RUN rails webpacker:compile
 RUN rails assets:precompile
+RUN yarn add popper.js 
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
