@@ -5,6 +5,7 @@ WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
 RUN bundle install
+RUN yarn add bootstrap
 
 RUN echo $MASTER_KEY >> /TFA-lesson-bank/master.key
 RUN echo $MASTER_KEY
