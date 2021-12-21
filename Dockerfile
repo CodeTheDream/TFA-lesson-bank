@@ -1,6 +1,6 @@
 FROM ruby:2.7.0
 RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client
-RUN npm install -g yarn
+RUN npm install -g yarn bootstrap jquery popper.js
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
@@ -12,7 +12,6 @@ RUN echo $MASTER_KEY
 COPY . /TFA-lesson-bank
 #RUN rails webpacker:compile
 RUN rails assets:precompile
-RUN yarn add jquery
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
