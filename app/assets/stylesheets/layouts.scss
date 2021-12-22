@@ -36,7 +36,7 @@ button:focus {
 .navbar-nav .nav-item .nav-link {
   font-size: 14px;
   color: rgb(73, 69, 69);
-  padding-left: 15px !important;
+  // padding-left: 15px !important;
   margin-right: 25px;
   font-family: Montserrat;
   letter-spacing: 1px;
@@ -57,6 +57,7 @@ button:focus {
   width: 50px;
   background-color: white;
   border-radius: 25px;
+  padding-left: 15px !important;
 }
 
 .user-icon-text {
@@ -73,12 +74,12 @@ button:focus {
 
 .position-about {
   position: relative;
-  left: 0.1em;
+  // left: 0.1em;
 }
 
 .position-search {
   position: relative;
-  left: 2em;
+  // left: 0.1em;
 }
 
 .dropdown-menu.show {
@@ -122,7 +123,9 @@ button:focus {
 .fancy-toggler.navbar-toggler:focus {
   outline-color: #081e32;
 }
-
+// .navbar-toggler {
+//   margin-bottom: 5px;
+// }
 .notice {
   position: absolute;
   right: 50%;

@@ -1,16 +1,17 @@
 <nav class="navbar navbar-expand-md  fixed-top ">
   <div class="container-fluid ">
+  <button class="fancy-toggler navbar-toggler nav-link" data-toggle="collapse" data-target="#navbarMenu">
+  <span class="navbar-toggler-icon "></span>
+</button>
     <% if params[:action] != 'landing_page' %>
       <div class="logo_end">
         <a class="navbar-brand logo_gen" href="/"><img src="/assets/LessonPlanLibrary-Logo.png"> </a>
       </div>             
     <%end%>
-    <button class="fancy-toggler navbar-toggler nav-link" data-toggle="collapse" data-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  
 
       <div class="collapse navbar-collapse " id="navbarMenu">
-        <ul class="navbar-nav ml-auto all_nav_items">
+        <ul class="navbar-nav ml-auto">
           <li class='nav-item  '><%= link_to 'SEARCH', search_page_path, class: 'nav-link right_list position-search' %></li>
           <li class='nav-item  '><%= link_to 'ABOUT', about_page_path, class: 'nav-link right_list position-about' %></li>
           <% if current_user && !current_user.role.blank? %>
