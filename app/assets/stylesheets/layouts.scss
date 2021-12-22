@@ -62,9 +62,10 @@ button:focus {
 
 .user-icon-text {
   position: relative;
-  right: 0.1em;
+  // right: 0.1em;
   top: 0.5em;
   color: #1996aa;
+  padding-left: 2px !important;
 }
 
 .dropdown-menu-container {
