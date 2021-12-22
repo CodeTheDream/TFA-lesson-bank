@@ -72,7 +72,7 @@
                   </ul>
                   <div class="actions buttons-position">
                     <% if f.object.id.present? %>
-                      <%= f.submit "Update Lesson", {:class => 'search_button form-button'} %>
+                      <%= f.submit "Update Lesson", {:class => 'search_button form-button mt-4'} %>
                       | <%= link_to 'New Document (Lesson)', new_lesson_document_path(f.object.id), :class => "btn search_button doc-button" %>
                     <% else %>
                       <%= f.submit "Create Lesson", {:class => 'search_button form-button mt-4'} %>
