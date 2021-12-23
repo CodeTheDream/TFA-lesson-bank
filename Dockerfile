@@ -1,6 +1,6 @@
 FROM ruby:2.7.0
-RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client node-sass
-RUN npm install -g yarn
+RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client
+RUN npm install -g yarn node-sass
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
