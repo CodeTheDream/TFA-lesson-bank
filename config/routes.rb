@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
     member do
       get :download
+      get :log #create log
     end
     collection do
       get :course_lesson_form
