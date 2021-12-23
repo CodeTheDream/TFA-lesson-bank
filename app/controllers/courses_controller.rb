@@ -285,7 +285,7 @@ class CoursesController < ApplicationController
   end
 
   def set_document
-    @document = Document.find(params[:id])
+    @document = Document.find(params[:document_id])
   end
 
   # Only allow a list of trusted parameters through.
