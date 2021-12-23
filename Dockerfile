@@ -1,7 +1,7 @@
 FROM ruby:2.7.0
 RUN apt-get update -qq && apt-get install -y npm postgresql-client
 RUN npm install -g yarn n
-RUN n latest
+RUN n stable 
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
