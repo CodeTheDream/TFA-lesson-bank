@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_064627) do
+ActiveRecord::Schema.define(version: 2021_12_24_073128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 2021_12_21_064627) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "document_id", null: false
+    t.index ["document_id"], name: "index_logs_on_document_id"
     t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
@@ -165,5 +167,6 @@ ActiveRecord::Schema.define(version: 2021_12_21_064627) do
   add_foreign_key "favorites", "users"
   add_foreign_key "key_words", "lessons"
   add_foreign_key "lessons", "courses"
+  add_foreign_key "logs", "documents"
   add_foreign_key "logs", "users"
 end

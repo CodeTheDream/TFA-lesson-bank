@@ -166,7 +166,7 @@ class CoursesController < ApplicationController
     @name = @current_user.last_name
     @filename = @document.name
     @fileid = @document.id
-    hash = { description: "The user #{@name} downloaded the file #{@filename}", user_id: current_user.id }
+    hash = { description: "The user #{@name} downloaded the file #{@filename}", user_id: current_user.id, document_id: @document.id  }
     @log = Log.create(hash)
     if @log.save
       flash[:notice] = "Log created!"
