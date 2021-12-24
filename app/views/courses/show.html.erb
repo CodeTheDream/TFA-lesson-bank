@@ -112,13 +112,8 @@
                         <% end %>
                        
                         <th class="text-center" scope="row"> 
-                          <%# the original %>
-                          <%# <%= link_to(document.file, download: '') do %> %>
-                          <%# this insert the record with bad id %>
                            <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
-                          <%# other tries %>
-                          <%# <%= link_to(document.file,:onclick => remote_function(:controller => 'courses', :action => "log(#{@course.id})"), download: '') do %> %>
-                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                           <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
                           <% end %>                     
                         </th>                            
                       </tr>
