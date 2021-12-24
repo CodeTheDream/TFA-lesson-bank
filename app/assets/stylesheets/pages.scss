@@ -143,7 +143,8 @@
   min-height: 50px;
 }
 .card-text {
-  height: 110px;
+  // height: 110px;
+  max-height: 10px;
 }
 
 .read_more {
