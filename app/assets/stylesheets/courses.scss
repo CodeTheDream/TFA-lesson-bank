@@ -104,11 +104,8 @@
 .fa-play.icon-play,
 .fa-plus.plus-lesson {
   color: #1996aa !important;
-  font-size: 18px;
-  margin-right: 10px;
-}
-.fa-plus.plus-lesson {
   font-size: 25px;
+  margin-right: 10px;
 }
 
 .tag_button {
@@ -505,6 +502,24 @@ ul li.favorites::marker {
   font-family: Montserrat;
   color: gray;
   font-weight: 600;
+}
+.document_row h4 {
+  font-family: Montserrat;
+  padding: 10px;
+  padding-left: 0;
+}
+.document_row h4:hover {
+  color: #1996aa;
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+  cursor: pointer;
+}
+.fa-plus.plus-document {
+  color: #1996aa !important;
+  font-size: 25px;
+  margin-right: 3px;
+  margin-left: 5px;
 }
 
 .lesson-document-name {
