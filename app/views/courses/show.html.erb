@@ -113,7 +113,27 @@
                        
                         <th class="text-center" scope="row"> 
                            <%# CREATE THE LOG %>
-                           <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
+                          
+                          <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
+                          
+                          <%# <%= link_to(document.file, download: '') do %> 
+                          <%# <%= link_to(document.file, onclick: remote_function(:controller => 'courses', :action => "log(#{@course.id, document.id})", download: '')) do %> 
+                          <%# <%= link_to(document.file, onclick: 'docs(); ', download: '', id: "item", remote: true ) do %> %>
+                          <%# <%= link_to(document.file, download: '', id: "item", remote: true ) do %> %>
+
+                          <%# OTROS INTENTOS %>
+                          <%# <%= link_to(document.file, :onclick => remote_function(:url => log_course_path(id: @course.id, document_id: document.id)), download: '') do %>  
+                          <%# <%= link_to(:onclick => remote_function(:url => log_course_path(id: @course.id, document_id: document.id)), download: '') do  %> 
+<%# <%= link_to(document.file, log_course_path(id: @course.id, document_id: document.id), download: '') do %> 
+<%# <%= link_to(document.file, :controller => 'courses', :action => "log(#{@course.id, document.id})", download: '') do %> 
+<%# <%= link_to cell.to_s, :controller => 'car', :action => 'addcar', :car => cell.to_s %> 
+
+                          <%# <%= link_to(document.file, download: ''), log_course_path(id: @course.id, document_id: document.id)  do %> 
+                          <%# <%= link_to(document.file, :onclick => @course.send("log",(id: @course.id, document_id: document.id)), download: '') do %> 
+                          <%# <%= link_to(document.file, :onclick => log_course_path(id: @course.id, document_id: document.id), download: '') do %> 
+                          <%# undefined method `log' ??? %>
+                          <%# <%= link_to(document.file, download: '', :onclick => {:action => 'log'})  do %> %>
+                          <%# # download: '' %>
                            <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
                           <% end %>                     
                         </th>                            
@@ -217,9 +237,70 @@
   </div> 
 
 </div> 
+<script type="text/javascript" >
+// function docs() {
+  
+// alert("calling request_stations");
+// <%# <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %> 
+    // document.getElementById("#course.id");
+    // document.getElementById("#document.id");
+    //  alert("#@course.id");
+    //  alert("#document.id");
+
+// $("#document.file").click(function() {
+//     let url = "/courses/log" + $("#course.id,document.id").val(),
+//     $.ajax({
+//         url: url,
+//         success: function(data) {
+//             console.log('success')
+//         },
+//         error: function() {
+//             console.log('failure')
+//         }
+//     });
+// }
+
+
+// Rails.ajax({
+//      url: "/courses/log" + $("#course.id,document.id").val(),
+//      type: "POST",
+//      data: course, document,
+//      success: function (r) {},
+//      error: function(data) {
+//     alert("Error");
+//      }
+
+// }); 
+// };
+</script>
+
+  <%# // url: "/courses/log",
+  //   type: 'post',
+  //   data: <%= @course.id %>,
+    //  <%# success: function (r) {}, %>
+  
+   <%# <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %> 
+  <%# //  $.ajax({ %>
+    <%# // url: "/courses/load_course?course_id=" + $("#course").val(), %> %>
 
 
 
+// <%# params = { amount: 900 }
+// Rails.ajax({
+//   url: '/donations',
+//     type: 'post',
+//     data: params
+// }) %>
+
+//     <%# url: "/courses/load_course?course_id=" + $("#course").val(), %>
+
+ <%# <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %> 
+  <%# // $.ajax({
+  //   url: "/courses/log=" + $("#@course.id, document.id").val(),
+  //   type: "POST",
+  //   success: function (r) {},
+  // });
+// params = { amount: 900 } %>
 
 
  
