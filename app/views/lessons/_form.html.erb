@@ -94,7 +94,9 @@
                   </table>
                   <% if lesson_show.id.present? %>
                     <%= link_to "#newLessonDocument#{lesson_show.id}", data: { toggle: "modal" } do %>
-                      <i class="fa fa-plus ml-4 mb-4"></i> Document
+                    <div class=" document_row  col-5 mt-2">
+                      <h4><i class="fa fa-plus plus-document "></i> Document</h4>
+                    </div>  
                     <% end %>
                   <% end %>
                 </div>
