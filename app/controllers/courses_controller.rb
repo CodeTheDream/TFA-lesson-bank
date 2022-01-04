@@ -163,32 +163,21 @@ class CoursesController < ApplicationController
 
 
   def log
-    byebug
-    # redirect_to rails_blob_path(@document.name, disposition: "attachment")
-    # https://github.com/rails/rails/issues/31676
-    # send_data @document.name.download, filename: @document.name.filename, content_type: @document.filename.content_type
-    # send_data @user.avatar.download, filename: @user.avatar.filename, content_type: @user.avatar.content_type
-    byebug
-    # redirect_to @document.name.service_url
     @name = @current_user.last_name
     @filename = @document.name
     @fileid = @document.id
-    byebug
-    # @filetodownload = ActiveStorage::Blob.service.send(:path_for, @document.file.blob.key) + "/" +@document.file_blob.filename.to_s
-    send_file @document.file.filename.to_s 
-
-    # @filetodownload = ActiveStorage::Blob.service.send(:path_for, @document.file.blob.key)
-    # @filetodownload.download
-    # @filename.download
     hash = { description: "The user #{@name} downloaded the file #{@filename}", user_id: current_user.id, document_id: @document.id  }
     @log = Log.create(hash)
-    byebug
     if @log.save
-      flash[:notice] = "Log created!"
-      redirect_to course_path(course_id: @course.id)
+      if @document.file.present?
+        send_data @document.file.download, filename: @document.file.filename.to_s, content_type: @document.file.content_type
+      else 
+        flash.now.alert = "File could not be found"
+        redirect_to course_path(course_id: @course.id)
+      end
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path
+      redirect_to course_path(course_id: @course.id)
     end     
   end
 
