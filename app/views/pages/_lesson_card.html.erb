@@ -20,8 +20,8 @@
       <%end%>
     <%end%>     
     <div class="card-text  mt-3" >      
-      <%= simple_format truncate(h(lesson.description.capitalize), length: 100, separator: ' ') %>
-      <% if lesson.description.length >  100 %>         
+      <%= simple_format truncate(h(lesson.description.capitalize), length: 70, separator: ' ') %>
+      <% if lesson.description.length >  70 %>         
         <%= link_to "Read More", lesson_path(lesson), class:"read_more"%>          
       <%end%>
     </div>      
