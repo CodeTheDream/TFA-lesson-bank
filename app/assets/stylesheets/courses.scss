@@ -221,6 +221,7 @@ ul li.favorites::marker {
   position: relative;
   bottom: 1.6em;
   float: right;
+  margin-right: 0%;
 }
 
 .checkbox-format input[type="checkbox"] {
@@ -484,4 +485,5 @@ a {
 .move-heart {
   margin-right: 3.3rem !important;
   margin-top: 0.45rem !important;
+  float: right;
 }
