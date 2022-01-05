@@ -169,8 +169,9 @@ class CoursesController < ApplicationController
     @log = Log.create(hash)
     if @log.save
       if @document.file.present?
-        send_file @document.file.filename.to_s
-        redirect_to course_path(course_id: @course.id)
+        send_data @document.file.download, filename: @document.file.filename.to_s, content_type: @document.file.content_type
+        # send_file @document.file.filename.to_s
+        # redirect_to course_path(course_id: @course.id)
       else 
         flash.now.alert = "File could not be found"
         redirect_to course_path(course_id: @course.id)
