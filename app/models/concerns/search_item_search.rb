@@ -3,10 +3,10 @@ module SearchItemSearch
 
   PER_PAGE = 18
 
-  def self.search(query:nil, options: {})
+  def self.search(query:nil, options: {}, current_user:nil)
     @query = query.presence || "*"
     @options = options
-
+    @current_user = current_user if current_user.present?
     constraints = {
       page: options[:page],
       per_page: PER_PAGE
@@ -39,6 +39,12 @@ module SearchItemSearch
     if @options["lessons"].present? && !@options["courses"].present?
       where["type"] = "lesson_type"
     end
+
+    if @options["mycontent"].present? && @options["mycontent"] == "true"
+      where["user_id"] = @current_user.id
+    end
+  
+    where["user_status"] = "Approved"
 
     where
   end

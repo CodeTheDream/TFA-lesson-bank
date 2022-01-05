@@ -4,10 +4,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
-  before_action :set_user, only: [:show, :update, :edit, :destroy]  
+  before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
-
   # GET /resource/sign_up
   # def new
   #   super
@@ -16,6 +15,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def index
     @users = User.all
     @users = @users.paginate(page: params[:page], :per_page => 3)
+  end 
+
+  def usercourses
+    # @users = User.all
+    @courses = @user.courses
+    
   end 
 
   # POST /resource
@@ -55,32 +60,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # redirect_to user_edit_path(@user), notice: 'User could not be updated'
 
   def update
+    user_lastname = @user.last_name
+    user_status = @user.status
+    @previous_email = @user.email
     if @user.update configure_registration_update_parameters
-      if configure_registration_update_parameters[:email] != @user.email
-        @newemail = configure_registration_update_parameters[:email]
-        @previous_email = @user.email
+      #update user_status and last_name in SearchItem
+      if (@user.last_name != user_lastname) || (@user.status != user_status)
+        search_items_to_update = SearchItem.where(user_id: @user.id)
+        @new_last_name = @user.last_name
+        @new_status = @user.status
+        hash = {last_name: @new_last_name, user_status: @new_status}
+        search_items_to_update.each {|sui| sui.update(hash)}
+        redirect_to users_path, notice: 'User was successfully updated' 
+      elsif @previous_email != @user.email
+        @new_email = configure_registration_update_parameters[:email]
         @user.update_attribute(:previous_email, @previous_email)
         UserMailer.with(user: @user).update_email.deliver_now
-        UserMailer.with(user: @user, email: @newemail).new_email.deliver_now
+        UserMailer.with(user: @user, email: @new_email).new_email.deliver_now
         # send a method with confirmation to both emails
         # user account will be pending until confirmation
-        # redirect_to users_sign_out
         redirect_to root_path #sign_out @user
-      else
-      redirect_to users_path, notice: 'User was successfully updated'
+      else 
+        redirect_to users_path, notice: 'User was successfully updated'
       end
-    else
-      flash.now.alert = @user.errors.full_messages.to_sentence
-      redirect_to user_edit_path(@user), notice: 'User could not be updated'
-    end
-  end      
-      
-    # else
-    #   flash.now.alert = @user.errors.full_messages.to_sentence
-    #   redirect_to user_edit_path(@user), notice: 'User could not be updated'
-    # end
+  else
+    flash.now.alert = @user.errors.full_messages.to_sentence
+    redirect_to user_edit_path(@user), notice: 'User could not be updated'
+  end
+end      
 
-  
 #@user.errors.messages
 #@user.update!  configure_registration_update_parameters
 #owner and admin pundit
@@ -118,7 +126,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name)
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name, :status)
     # devise_parameter_sanitizer.permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name) 
   end
 
@@ -126,6 +134,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def set_user
     @user = User.find params[:id]
+  end
+
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
   end
 
   def verify_role!

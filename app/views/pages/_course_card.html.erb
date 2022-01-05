@@ -31,6 +31,8 @@
   <div class="text-center ">
     <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= course.searchable.user.name %></span></div>
     <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
-    <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card right-arrow ">VIEW COURSE </a>
+    <a href='/courses/<%="#{course.searchable_id}"%>' class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW COURSE </a>
   </div>
 </div>
+
+

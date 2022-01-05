@@ -3,6 +3,7 @@ FactoryBot.define do
       f.id { 1000 }
       f.first_name {"name"}
       f.last_name {"lastname"}
+      f.status {"Approved"}
       f.email  {Faker::Internet.email}
       f.role { "teacher" }
       f.created_at { Time.now }

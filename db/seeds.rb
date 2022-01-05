@@ -15,10 +15,10 @@
 
 # Create Users
 print "Creating users"
-user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111'}
-user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111'}
-user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111'}
-user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111'}
+user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111', status: 'Approved'}
+user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111', status: 'Approved'}
+user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
+user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
 user_hashes = []
 user_hashes << user_hash1
 user_hashes << user_hash2
@@ -241,7 +241,7 @@ user = User.find_by email: "missbliss@jfkhs.com"
 errors = 0
 success = 0
 courses.each do |course|
-        hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id}
+  hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id, last_name: user.last_name, user_status: user.status}
   search_item = SearchItem.new(hash)
   if search_item.save
     course.search_item = search_item
@@ -252,7 +252,7 @@ courses.each do |course|
     print 'x'
   end
   course.lessons.each do |lesson|
-    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id }
+    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id, last_name: user.last_name, user_status: user.status }
     search_item = SearchItem.new hash
     if search_item.save
       lesson.search_item = search_item

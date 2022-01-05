@@ -16,7 +16,7 @@ class PagesController < ApplicationController
     @selected_types = []
     @selected_types << "courses" if params[:courses] == "true"
     @selected_types << "lessons" if params[:lessons] == "true"
-    @results = SearchItemSearch.search(query: query, options: search_params)
+    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
     if search_params[:available_grade_levels].present?
       @results =  @results.select {|x| (x.grade_level.split(' ') - (search_params[:available_grade_levels].keys)) != x.grade_level.split(' ')}
     end
@@ -29,14 +29,12 @@ class PagesController < ApplicationController
         end
       end
       @results = results
-    elsif search_params[:mycontent] == "true"
-      @results = @results.select {|result| result.user_id == current_user.id}
     end
     @results = @results.paginate(page: params[:page], :per_page => 18) if @results.class == Array
   end
   private
 
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :available_grade_levels => {} )
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :available_grade_levels => {} )
   end
 end
