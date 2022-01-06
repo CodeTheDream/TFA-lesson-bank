@@ -163,15 +163,10 @@ class CoursesController < ApplicationController
 
 
   def log
-    @name = @current_user.last_name
-    @filename = @document.name
-    hash = { description: "The user #{@name} downloaded the file #{@filename}", user_id: current_user.id, document_id: @document.id  }
-    @log = Log.create(hash)
-    if @log.save
+    log = Log.find_or_create_by( user_id: current_user.id, document_id: @document.id )
+    if log.present?
       if @document.file.present?
         send_data @document.file.download, filename: @document.file.filename.to_s, content_type: @document.file.content_type
-        # send_file @document.file.filename.to_s
-        # redirect_to course_path(course_id: @course.id)
       else 
         flash.now.alert = "File could not be found"
         redirect_to course_path(course_id: @course.id)
