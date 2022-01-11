@@ -66,7 +66,7 @@ class LessonsController < ApplicationController
       search_item.update(hash)
       @lesson.search_item = search_item
       flash.notice = "The lesson record was updated successfully."
-      redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       redirect_to course_lesson_form_courses_path(course_id: @course.id)
