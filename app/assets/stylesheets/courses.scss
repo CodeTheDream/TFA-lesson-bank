@@ -115,43 +115,6 @@
   color: gray !important;
   background-color: white;
 }
-.lesson_title_row {
-  background-color: white;
-  padding: 5px;
-}
-
-.lesson_title_row h3 {
-  margin-top: 10px;
-  text-decoration: none !important;
-}
-.lesson_title_row h3:hover {
-  color: #1996aa;
-}
-
-a {
-  text-decoration: none !important;
-}
-.right_arrow {
-  display: inline-block;
-  position: relative;
-  background: #1996aa;
-  padding: 10px;
-}
-.right_arrow:after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 80%;
-  top: 67%;
-  margin-top: -10px;
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid #1996aa;
-  margin-left: 7px;
-}
 
 .center-right {
   position: relative;
@@ -238,10 +201,11 @@ ul li.favorites::marker {
 
 .move-lesson-tag-list {
   position: relative;
-  left: 5.4em;
+  left: 4em;
   bottom: 1.9em;
   list-style-type: none;
   margin-bottom: 0em !important;
+  width: calc(100% - 86px);
 }
 
 .star {
@@ -254,6 +218,7 @@ ul li.favorites::marker {
   position: relative;
   bottom: 1.6em;
   float: right;
+  margin-right: 0%;
 }
 
 .checkbox-format input[type="checkbox"] {
@@ -290,9 +255,6 @@ ul li.favorites::marker {
   // left: 0.75em;
   bottom: 0.25em;
 }
-// .course-title:hover {
-//   color: #1996aa !important;
-// }
 
 .district-label {
   color: gray;
@@ -406,7 +368,6 @@ ul li.favorites::marker {
   text-align: justify;
   padding: 10px;
 }
-
 .course-buttons-position {
   position: relative;
   bottom: 0.8em !important;
@@ -415,6 +376,46 @@ ul li.favorites::marker {
   background-color: white !important;
   font-size: 1.5em;
   font-family: Montserrat;
+}
+
+.lesson_title_row {
+  background-color: white;
+  padding: 5px;
+}
+.lesson_title_row h3 {
+  margin-top: 10px;
+  text-decoration: none !important;
+}
+.lesson_title_row h3:hover {
+  color: #1996aa;
+}
+a {
+  text-decoration: none !important;
+}
+.right_arrow {
+  display: inline-block;
+  position: relative;
+  background: #1996aa;
+  padding: 10px;
+}
+.right_arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 80%;
+  top: 67%;
+  margin-top: -10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #1996aa;
+  margin-left: 7px;
+}
+.lesson-description-area,
+.course-description-area {
+  width: calc(100% - 86px);
 }
 .lesson-title,
 .course-title,
@@ -426,7 +427,6 @@ ul li.favorites::marker {
 .lesson-document-kind {
   border-color: transparent !important;
 }
-
 .lesson-title:hover,
 .course-title:hover,
 .lesson-description-area:hover,
@@ -439,6 +439,7 @@ ul li.favorites::marker {
   border-color: #1996aa;
   box-shadow: 0 0 3px #1996aa;
   cursor: pointer;
+  width: calc(100% - 86px);
 }
 .lesson-description-label {
   position: relative;
@@ -446,7 +447,6 @@ ul li.favorites::marker {
   font-size: 1.5em;
   font-family: Montserrat;
 }
-
 .lesson-tag-button-container {
   position: relative;
   bottom: 0em;
@@ -488,6 +488,7 @@ ul li.favorites::marker {
 .move-heart {
   margin-right: 3.3rem !important;
   margin-top: 0.45rem !important;
+  float: right;
 }
 
 .center-modal-title {
