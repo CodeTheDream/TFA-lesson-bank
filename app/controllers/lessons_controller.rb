@@ -35,7 +35,7 @@ class LessonsController < ApplicationController
       hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
       @lesson.search_item = SearchItem.create(hash)
       flash.notice = "The lesson record was created successfully."
-      redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       redirect_to course_lesson_form_courses_path(course_id: @course.id)
