@@ -86,7 +86,7 @@
         </ul>
         <div class="actions buttons-position">
           <% if @course&.id.present? %>
-            <%= f.submit "Save Changes", {:class => 'search_button form-button'} %>
+            <%= f.submit "Save Changes", {:class => 'search_button form-button mt-2'} %>
           <% else %>
             <%= f.submit "Create Course", {:class => 'search_button form-button mt-4'} %>
           <% end %>
@@ -140,7 +140,7 @@
             </div>
           <% end %>
         <% else %>
-          You must create the course before uploading and documents
+          You must create the course before uploading documents
         <% end %>
       </div>
     </div>
