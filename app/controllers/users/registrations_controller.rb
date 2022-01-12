@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
-  before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses]  
+  before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :userlogs]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
   # GET /resource/sign_up
@@ -19,9 +19,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def usercourses
     # @users = User.all
-    @courses = @user.courses
-    
-  end 
+    @courses = @user.courses 
+  end
+  
+  def userlogs
+    # @logs = @user.logs 
+      @logs = Log.order(:id)
+      respond_to do |format|
+        format.html
+        format.csv { send_data @logs.to_csv }
+        format.xls #{ send_data @logs.to_csv(col_sep: "\t") }
+      end
+  end
 
   # POST /resource
   def create
@@ -140,6 +149,14 @@ end
     @lesson = Lesson.find(params[:id])
   end
 
+  def set_log
+    @log = Log.find(params[:id])
+  end
+
+  def set_document
+    @document = Document.find(params[:document_id])
+  end
+  
   def verify_role!
     authorize @user || User
   end

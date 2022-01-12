@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     post '/users/sign_in' => 'users/sessions#create'
     get '/users/sign_out' => 'devise/sessions#destroy'
     get '/users/:id/usercourses' => 'users/registrations#usercourses', as: 'user_courses'
+    get '/users/:id/userlogs' => 'users/registrations#userlogs', as: 'user_logs'
   end
   # resources :courses do
   #   put :favorite, on: :member
@@ -69,5 +70,6 @@ Rails.application.routes.draw do
   end
   resources :tags
   resources :key_words
+  resources :logs
 
 end
