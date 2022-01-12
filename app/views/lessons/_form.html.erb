@@ -10,14 +10,16 @@
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
                   <div class=" lesson_title_row  ">
-                    <% if lesson_show.title == "Add Lesson"%>
-                      <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
-                    <%else%>
-                      <h3><i class="fa fa-solid fa-play icon-play lesson-title" ></i>  Lesson:  <%= lesson_show.title.titleize%> </h3>
+                    <% if @course.id.present? %>
+                      <% if lesson_show.title == "Add Lesson"%>
+                        <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
+                      <%else%>
+                        <h3><i class="fa fa-solid fa-play icon-play lesson-title" ></i>  Lesson:  <%= lesson_show.title.titleize%> </h3>
+                      <%end%>
                     <%end%>
                     <%# Lesson Favorites %>
                     <div class="lesson-star">
-                     <% if lesson_show.title != "New"%>
+                     <% if lesson_show.title != "Add Lesson"%>
                        <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
                        <% if fav_lesson.include? lesson_show.id %>
                          <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
@@ -39,6 +41,7 @@
             <% else %>
               <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <% end %>
+            <% if @course.id.present? %>
               <%= form_for([@course,lesson_show]) do |f| %>
                 <% if lesson_show.errors.any? %>
                   <div id="error_explanation" class="my_alert">
@@ -116,6 +119,7 @@
                   </div>
                 </div>
               <% end %>
+            <% end %>
             </div>
           </div>
         </div>
