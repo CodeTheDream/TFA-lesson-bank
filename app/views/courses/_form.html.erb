@@ -11,11 +11,26 @@
         </ul>
       </div>
     <% end %>
-    <div class="row big_card">
+    <div class="row big_card">  
+      <!-- Course Favorites Section-->       
+      <div class="col-lg-12 ">        
+        <% if @course.id.present?%>
+          <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
+          <% if fav_course.include? @course.id %>
+            <%= link_to(unfavorite_course_path(id: @course.id, source: "course_edit")) do %>  
+              <i class="fas fa-heart fa-lg move-heart" style="color:#d13139;"></i>
+            <% end %> 
+          <% else %> 
+            <%= link_to(favorite_course_path(id: @course.id, source: "course_edit")) do %> 
+              <i class="fas fa-heart fa-lg move-heart" style="color:gray;"></i>
+            <% end %>                     
+          <%end %>
+        <%end%>
+      </div>      
       <!-- Left Side Course-->
       <div class="col-lg-4 mb-5">
         <div class="show_left">
-          <div class="row justify-content-between ">
+          <div class="row justify-content-between ">        
             <%= f.text_field :title, class: 'course-title', placeholder: "Add Title", :required => true %>
           </div>    
           <div>
@@ -34,9 +49,10 @@
         </div>
       </div>
       <!-- Right Side Course-->
-      <div class="col-lg-8 mt-5 mb-2"> 
+      <div class="col-lg-8 mt-2 mb-2">           
         <!-- Course Description Section-->              
-        <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: "Add Description", class: 'course-description-area', :required => true %>
+        <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: 'Add Description', class: 'course-description-area', :required => true %>
+        
         <!-- Course Right Side Documents Section-->  
         <table class="table">
           <thead>
@@ -73,7 +89,9 @@
           <% end %>
         </table>
         <%= link_to "#newDocument", data: { toggle: "modal" } do %>
-          <i class="fa fa-plus"></i> Document
+          <div class=" document_row col-4 ">
+            <h4><i class="fa fa-plus plus-document"></i> Document</h4>
+          </div>
         <% end %>
       </div>
       <div class="container  mb-5">      
