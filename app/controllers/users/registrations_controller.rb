@@ -5,6 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
   before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :userlogs]  
+  # before_action :set_document, only: [:userlogs]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
   # GET /resource/sign_up
@@ -25,6 +26,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def userlogs
     # @logs = @user.logs 
       @logs = Log.order(:id)
+      byebug
+      # Documents downloaded by this user
+      @documentsid = Log.where(user_id: @user.id).distinct.pluck :document_id
+      byebug
+      #Find the creator
+      @documentsid.each do |creator|
+        byebug
+        @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
+      end
+      # # @creatordoccursos = Document.find(2).course.user
+      # @creatordoc = Document.find(2).lesson_id.present? ? Document.find(2).lesson.course.user : Document.find(2).course.user
+      # @creatordoc = Document.find(7).lesson_id.present? ? Document.find(7).lesson.course.user : Document.find(7).course.user
+
       respond_to do |format|
         format.html
         format.csv { send_data @logs.to_csv }
