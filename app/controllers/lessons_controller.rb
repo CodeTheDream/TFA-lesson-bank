@@ -69,7 +69,7 @@ class LessonsController < ApplicationController
       redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     end
   end
     
