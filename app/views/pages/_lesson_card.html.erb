@@ -6,11 +6,11 @@
   <div class="card-body"  >
     <h2 class="card-title"><%= lesson.title.titleize %>
     
-    <% if current_user == lesson.searchable.course.user || current_user&.role == 'admin'%>              
-        <%=link_to course_lesson_form_courses_path(course_id: lesson.searchable.course.id, lesson_id: lesson.searchable_id) do %>          
-          <i class=" fa fa-pencil-alt pencil_edit_card"></i>        
-        <%end%>  
-      <% end %>      
+    <% if current_user == lesson.searchable.course.user || current_user&.role == 'admin'%>    
+      <%=link_to "/courses/course_lesson_form?course_id=#{lesson.course_id}&lesson_id=#{lesson.searchable_id}#lesson#{lesson.searchable_id}" do %>        
+        <i class=" fa fa-pencil-alt pencil_edit_card"></i>        
+      <%end%>  
+    <% end %>      
     </h2>     
     <div><span style="color: gray">SUBJECT:</span> <%= lesson.subject %></div>           
     <div class="mb-2"><span style="color: gray">GRADE: </span> <%= lesson.searchable.course.grades.pluck(:grade_level).join(', ') %></div>
