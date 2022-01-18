@@ -13,6 +13,8 @@
           <%= link_to "CSV", user_logs_path(format: "csv"),  :class => "btn button_user_card" %> |
           <%= link_to "Excel", user_logs_path(format: "xls"), :class => "btn button_user_card" %>
         </p>
+        <%=@mylogs%>
+        <%=@creator%>
         <% mylogs = Log.where(creator_id: @user.id)%>
         <table class="table table-striped table-hover user-table mb-0">
         <thead>
@@ -29,7 +31,7 @@
         </thead>
 
         <tbody>
-            <% mylogs.each do |log| %>
+            <% @mylogs.each do |log| %>
             <div class="row">
                 <tr>
                 <td data-title="User Email"><%= @user.email %></td>
