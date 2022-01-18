@@ -163,7 +163,9 @@ class CoursesController < ApplicationController
 
 
   def log
-    log = Log.find_or_create_by( user_id: current_user.id, document_id: @document.id )
+    @document_creator = Document.find(@document.id).lesson_id.present? ? Document.find(@document.id).lesson.course.user : Document.find(@document.id).course.user
+    @creator_id = @document_creator.id
+    log = Log.find_or_create_by( user_id: current_user.id, document_id: @document.id, creator_id: @creator_id)
     if log.present?
       if @document.file.present?
         send_data @document.file.download, filename: @document.file.filename.to_s, content_type: @document.file.content_type

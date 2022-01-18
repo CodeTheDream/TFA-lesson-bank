@@ -26,13 +26,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def userlogs
     # @logs = @user.logs 
       @logs = Log.order(:id)
-      byebug
       # Documents downloaded by this user
-      @documentsid = Log.where(user_id: @user.id).distinct.pluck :document_id
-      byebug
+      @documentsid = Log.where(creator_id: @user.id).distinct.pluck :document_id
       #Find the creator
       @documentsid.each do |creator|
-        byebug
         @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
       end
       # # @creatordoccursos = Document.find(2).course.user
