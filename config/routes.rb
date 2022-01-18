@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'
     get '/users/:id/usercourses' => 'users/registrations#usercourses', as: 'user_courses'
     get '/users/:id/userlogs' => 'users/registrations#userlogs', as: 'user_logs'
+    get '/users/:id/userlogs2' => 'users/registrations#userlogs2', as: 'user_logs2'
+
   end
   # resources :courses do
   #   put :favorite, on: :member
