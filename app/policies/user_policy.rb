@@ -14,7 +14,6 @@ class UserPolicy < ApplicationPolicy
   end
     
   %i(index? new? create? show? userlogs? userlogs2?).each do |ali|
-    byebug
     alias_method ali, :logged_in_and_approved?
   end
 
