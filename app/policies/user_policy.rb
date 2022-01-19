@@ -13,7 +13,8 @@ class UserPolicy < ApplicationPolicy
     ((@user.role == 'admin') || (@record&.id == @user.id)) && (@user.status == 'Approved')
   end
     
-  %i(index? new? create? show?).each do |ali|
+  %i(index? new? create? show? userlogs? userlogs2?).each do |ali|
+    byebug
     alias_method ali, :logged_in_and_approved?
   end
 
