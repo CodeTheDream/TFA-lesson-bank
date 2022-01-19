@@ -19,7 +19,7 @@
                     <% end %>
                     <%# Lesson Favorites %>
                     <div class="lesson-star">
-                     <% if lesson_show.title != "Add Lesson"%>
+                      <% if lesson_show.title != "Add Lesson"%>
                        <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
                        <% if fav_lesson.include? lesson_show.id %>
                          <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
@@ -30,7 +30,7 @@
                            <i class="fas fa-heart fa-xs" style="color:gray;"></i>
                          <% end %>
                        <%end %>
-                     <%end%>
+                      <%end%>
                     <div>
                   </div>
                 </a>
@@ -54,7 +54,7 @@
                     </div>
                   <% end %>
                   
-                  <div class="row justify-content-between ">
+                  <div>
                     <%= f.text_field :title, class: 'lesson-title ', :required => true %>
                   </div> 
                   <div class="lesson-description-label  mt-2"> Add Description</div>
