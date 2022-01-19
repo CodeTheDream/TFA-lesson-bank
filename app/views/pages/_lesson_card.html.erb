@@ -22,7 +22,7 @@
     <div class="card-text  mt-3" >      
       <%= simple_format truncate(h(lesson.description.capitalize), length: 70, separator: ' ') %>
       <% if lesson.description.length >  70 %>         
-        <%= link_to "Read More", lesson_path(lesson), class:"read_more"%>          
+        <%= link_to "Read More", "/courses/course_lesson_form?course_id=#{lesson.course_id}&lesson_id=#{lesson.searchable_id}#lesson#{lesson.searchable_id}", class:"read_more"%>          
       <%end%>
     </div>      
   </div>
