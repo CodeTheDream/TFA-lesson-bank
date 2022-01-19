@@ -133,15 +133,15 @@
     <div class="container  mb-5">
       <% if @course.lessons.present? %>
         <% @course.lessons.each do |lesson_show| %>
-          <div class="col-lg-12  mb-2 lesson_accordion">  
+          <div class="col-lg-12  mb-2 lesson_accordion" id="lesson<%=lesson_show.id%>">  
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">              
               <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
-                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>                
-                        <div class=" lesson_title_row  ">                                                       
-                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%> </h3>                                             
+                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+                        <div class=" lesson_title_row  ">
+                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
                           <div class="lesson-star">
                             <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
                             <% if fav_lesson.include? lesson_show.id %>
@@ -154,12 +154,16 @@
                               <% end %>
                             <%end %>
                           </div>
-                        </div>                   
-                      <% end %>                         
+                        </div>
+                      <% end %>
                     </a>
                   </h4>
                 </div>
-                <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <%if lesson_show.title == @lesson&.title %>
+                  <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+                <% else %>  
+                  <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <% end %>
                   <div class="lesson_show_description"><p><%= lesson_show.description %></div>
                     <div class="panel-body">
                     <div class="col-lg-8">  
