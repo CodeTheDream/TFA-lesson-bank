@@ -17,12 +17,14 @@
           <% if current_user && !current_user.role.blank? %>
             <div class="user-container">
             <li class="nav-item dropdown">
-              <a class="nav-link user-icon-text" style="color:#1996aa;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
-              </a>
+              
+                <a class="nav-link user-icon-text"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
+                </a>
+              
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="triangle-border"></div>
-                <div class="triangle"></div>
+                <div class="triangle" ></div>
                 <%= link_to 'MY MATERIAL', search_page_path(mycontent: true), class: 'dropdown-item' %>
                 <%= link_to 'FAVORITES', search_page_path(favorites: true), class: 'dropdown-item' %>
                 <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
