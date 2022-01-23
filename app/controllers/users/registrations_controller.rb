@@ -32,36 +32,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @documentsid.each do |creator|
         @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
       end
-      @mylogs.each do |log| 
-        @user.email
-        @docname = log.document.name
-        log.creator_id
-        @creator = User.find(log.creator_id)
-        @creatoremail = @creator.email
-        @downloadedbyemail = log.user.email
-        @downloadedbyname = log.user.name
-      end
- 
-      respond_to do |format|
-        format.html
-        format.csv { send_data @mylogs.to_csv }
-        format.xls { send_data @mylogs.to_csv(col_sep: "\t") }
-      end
   end
 
   def i_downloaded
-      @logs = Log.order(:id)
-      # Documents downloaded by this user
-      @documentsid = Log.where(creator_id: @user.id).distinct.pluck :document_id
-      #Find the creator
-      @documentsid.each do |creator|
-        @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
-      end
-      respond_to do |format|
-        format.html
-        format.csv { send_data @logs.to_csv }
-        format.xls { send_data @logs.to_csv(col_sep: "\t") }
-      end
+    @logs = Log.order(:id)
+    # Documents downloaded by this user
+    @documentsid = Log.where(creator_id: @user.id).distinct.pluck :document_id
+    #Find the creator
+    @documentsid.each do |creator|
+      @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
+    end
   end
 
   # POST /resource
