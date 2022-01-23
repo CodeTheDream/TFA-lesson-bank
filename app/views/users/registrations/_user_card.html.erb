@@ -23,8 +23,8 @@
     <%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn button_user_card", data: { confirm: 'Are you sure?'} %>       
     <%# <%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn button_user_card", data: { confirm: 'Are you sure?'} %>        
     <a href='/users/<%="#{user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
-    <a href='/users/<%="#{user.id}"%>/userlogs' class="btn button_user_card">WHO DOWNLOADED</a>
-    <a href='/users/<%="#{user.id}"%>/userlogs2' class="btn button_user_card">I DOWNLOADED </a>
+    <a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
+    <a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
 
 
   </div>

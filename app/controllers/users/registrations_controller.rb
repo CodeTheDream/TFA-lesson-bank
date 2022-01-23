@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
-  before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :userlogs, :userlogs2]  
+  before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :who_downloaded, :i_downloaded]  
   # before_action :set_document, only: [:userlogs]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
@@ -23,7 +23,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @courses = @user.courses 
   end
   
-  def userlogs
+  def who_downloaded
       @logs = Log.order(:id)
       @mylogs = Log.where(creator_id: @user.id)
       # Documents downloaded by this user
@@ -49,7 +49,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
   end
 
-  def userlogs2
+  def i_downloaded
       @logs = Log.order(:id)
       # Documents downloaded by this user
       @documentsid = Log.where(creator_id: @user.id).distinct.pluck :document_id

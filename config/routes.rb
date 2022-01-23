@@ -17,8 +17,8 @@ Rails.application.routes.draw do
     post '/users/sign_in' => 'users/sessions#create'
     get '/users/sign_out' => 'devise/sessions#destroy'
     get '/users/:id/usercourses' => 'users/registrations#usercourses', as: 'user_courses'
-    get '/users/:id/userlogs' => 'users/registrations#userlogs', as: 'user_logs'
-    get '/users/:id/userlogs2' => 'users/registrations#userlogs2', as: 'user_logs2'
+    get '/users/:id/who_downloaded' => 'users/registrations#who_downloaded', as: 'who_downloaded'
+    get '/users/:id/i_downloaded' => 'users/registrations#i_downloaded', as: 'i_downloaded'
 
   end
   # resources :courses do
