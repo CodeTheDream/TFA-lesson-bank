@@ -64,7 +64,7 @@ class CoursesController < ApplicationController
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
       flash.notice = "The course record was created successfully."
-      redirect_to course_lesson_form_courses_path
+      redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
       redirect_to course_lesson_form_courses_path
