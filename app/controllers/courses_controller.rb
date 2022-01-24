@@ -5,7 +5,8 @@ class CoursesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log]
+  before_action :set_document, only: [:log]
   before_action :verify_role!
 
   def index
@@ -161,6 +162,23 @@ class CoursesController < ApplicationController
   end
 
 
+  def log
+    @document_creator = Document.find(@document.id).lesson_id.present? ? Document.find(@document.id).lesson.course.user : Document.find(@document.id).course.user
+    @creator_id = @document_creator.id
+    log = Log.find_or_create_by( user_id: current_user.id, document_id: @document.id, creator_id: @creator_id)
+    if log.present?
+      if @document.file.present?
+        send_data @document.file.download, filename: @document.file.filename.to_s, content_type: @document.file.content_type
+      else 
+        flash.now.alert = "File could not be found"
+        redirect_to course_path(course_id: @course.id)
+      end
+    else
+      flash.now.alert = @course.errors.full_messages.to_sentence
+      redirect_to course_path(course_id: @course.id)
+    end     
+  end
+
   
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
@@ -174,6 +192,7 @@ class CoursesController < ApplicationController
     FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
     @courses.each do |document|
       filename = document.file.blob.filename.to_s
+
       create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
       #---------- Convert to .zip --------------------------------------- #
       create_zip_from_tmp_folder(tmp_user_folder, filename) unless directory_length_same_as_documents
@@ -265,6 +284,10 @@ class CoursesController < ApplicationController
 
   def set_lesson
     @lesson = Lesson.find(params[:id])
+  end
+
+  def set_document
+    @document = Document.find(params[:document_id])
   end
 
   # Only allow a list of trusted parameters through.
