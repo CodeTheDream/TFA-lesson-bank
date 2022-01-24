@@ -5,7 +5,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
   before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :who_downloaded, :i_downloaded]  
-  # before_action :set_document, only: [:userlogs]  
   before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
 # before_action :configure_account_update_params, only: [:update]
   # GET /resource/sign_up
@@ -24,22 +23,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def who_downloaded
-      @logs = Log.order(:id)
-      @mylogs = Log.where(creator_id: @user.id)
-      # Documents downloaded by this user
-      @documentsid = Log.where(creator_id: @user.id).distinct.pluck :document_id
-      #Find the creator
-      @documentsid.each do |creator|
-        @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
-      end
+    @logs = Log.order(:id)
+    @mylogs = Log.where(creator_id: @user.id)
+    # Documents downloaded by this user
+    @document_ids = Log.where(creator_id: @user.id).distinct.pluck :document_id
+    #Find the creator
+    @document_ids.each do |creator|
+      @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
+    end
   end
 
   def i_downloaded
     @logs = Log.order(:id)
     # Documents downloaded by this user
-    @documentsid = Log.where(creator_id: @user.id).distinct.pluck :document_id
+    @document_ids = Log.where(creator_id: @user.id).distinct.pluck :document_id
     #Find the creator
-    @documentsid.each do |creator|
+    @document_ids.each do |creator|
       @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
     end
   end
@@ -157,18 +156,6 @@ end
     @user = User.find params[:id]
   end
 
-  def set_lesson
-    @lesson = Lesson.find(params[:id])
-  end
-
-  def set_log
-    @log = Log.find(params[:id])
-  end
-
-  def set_document
-    @document = Document.find(params[:document_id])
-  end
-  
   def verify_role!
     authorize @user || User
   end
