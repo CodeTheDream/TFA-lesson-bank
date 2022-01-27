@@ -2,12 +2,20 @@
   <!-- Button Back Section & Pencil-->   
   <div class="row top_session">
     <div class="col-8">
-      <div class="show_button_section btn btn_show_back">        
-        <%= link_to courses_path do  %>                
-          <i class=" fa fa-caret-left " style="color:gray;"></i>                
-          <span style="color: gray">BACK TO SEARCH RESULTS </span>
-        <% end %>   
-      </div> 
+        <div class="show_button_section btn btn_show_back">  
+        
+          <% if @search.present? %>       
+            <%= link_to search_page_path(search: @search) do  %> 
+              <i class=" fa fa-caret-left " style="color:gray;"></i>                
+              <span style="color: gray">BACK TO SEARCH RESULTS </span>
+            <%end%>
+          <%else%>
+            <%= link_to search_page_path do  %> 
+              <i class=" fa fa-caret-left " style="color:gray;"></i>                
+              <span style="color: gray">BACK TO SEARCH RESULTS </span>
+            <% end %>  
+          <% end %>   
+        </div> 
     </div> 
     <div class="col-4 ">
       <% if current_user == @course.user || current_user&.role == 'admin'%>                   
