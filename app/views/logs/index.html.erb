@@ -1,0 +1,31 @@
+<h2 class="title mt-5 mb-5 display-3" style="text-align: center;">Logs</h2>
+    <div id="no-more-tables" class="table-responsive card mb-5">
+<table class="table table-hover">
+
+  <thead>
+    <div class="row">
+    <tr>
+      <th class="h2" style="background:none;">Log Id</th>
+      <th class="h2" style="background:none;">Doc Id</th>
+      <th class="h2" style="background:none;">User Id</th>
+      <th colspan="3"></th>
+    </tr>
+    </div>
+  </thead>
+
+  <tbody>
+    <% @logs.each do |log| %>
+      <div class="row">
+      <tr>
+        <td data-title="Log Id"><%= log.id %></td>
+        <td data-title="Doc Id"><%= log.document_id %></td>
+        <td data-title="User Id"><%= log.user_id %></td>
+
+
+      </tr>
+    </div>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
