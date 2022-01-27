@@ -32,10 +32,10 @@ class LessonsController < ApplicationController
     if @lesson.save
       @lesson.tag_list=(tags_params.values) if params[:tag_names].present?
       lesson_tags = @lesson.tags.pluck(:name).join(' ')    
-      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
+      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status, course_id: @course.id } 
       @lesson.search_item = SearchItem.create(hash)
       flash.notice = "The lesson record was created successfully."
-      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      redirect_to "/courses/course_lesson_form?course_id=#{@course.id}&lesson_id=#{@lesson.id}#lesson#{@lesson.id}"
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
       redirect_to course_lesson_form_courses_path(course_id: @course.id)
@@ -61,15 +61,15 @@ class LessonsController < ApplicationController
       end
       @lesson.tag_list=(tags) if tags.present?
       lesson_tags = @lesson.tags.pluck(:name).join(' ')
-      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
+      hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: lesson_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status, course_id: @course.id } 
       search_item = SearchItem.find_by(searchable_id: @lesson.id, searchable_type: 'Lesson')
       search_item.update(hash)
       @lesson.search_item = search_item
       flash.notice = "The lesson record was updated successfully."
-      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
+      redirect_to "/courses/course_lesson_form?course_id=#{@course.id}&lesson_id=#{@lesson.id}#lesson#{@lesson.id}"
     else
       flash.now.alert = @lesson.errors.full_messages.to_sentence
-      redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
     end
   end
     

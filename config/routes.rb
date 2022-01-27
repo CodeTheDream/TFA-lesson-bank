@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     post '/users/sign_in' => 'users/sessions#create'
     get '/users/sign_out' => 'devise/sessions#destroy'
     get '/users/:id/usercourses' => 'users/registrations#usercourses', as: 'user_courses'
+    get '/users/:id/who_downloaded' => 'users/registrations#who_downloaded', as: 'who_downloaded'
+    get '/users/:id/i_downloaded' => 'users/registrations#i_downloaded', as: 'i_downloaded'
+
   end
   # resources :courses do
   #   put :favorite, on: :member
@@ -35,6 +38,7 @@ Rails.application.routes.draw do
     end
     member do
       get :download
+      get :log #create log
     end
     collection do
       get :course_lesson_form
@@ -68,5 +72,6 @@ Rails.application.routes.draw do
   end
   resources :tags
   resources :key_words
+  resources :logs
 
 end
