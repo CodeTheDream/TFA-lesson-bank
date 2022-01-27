@@ -420,18 +420,26 @@ a {
 .lesson-title,
 .course-title,
 .lesson-description-area,
-.course-description-area {
+.course-description-area,
+.document-name,
+.document-kind,
+.lesson-document-name,
+.lesson-document-kind {
   border-color: transparent !important;
 }
 .lesson-title:hover,
 .course-title:hover,
 .lesson-description-area:hover,
-.course-description-area:hover {
+.course-description-area:hover,
+.document-name:hover,
+.document-kind:hover,
+.lesson-document-name:hover,
+.lesson-document-kind:hover {
   outline: none !important;
   border-color: #1996aa;
   box-shadow: 0 0 3px #1996aa;
   cursor: pointer;
-  width: calc(100% - 86px);
+  width: calc(100%);
 }
 .lesson-description-label {
   position: relative;
