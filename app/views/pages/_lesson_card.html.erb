@@ -29,7 +29,7 @@
   <div class="text-center ">
     <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by <%= lesson.searchable.course.user.name %></span></div>
     <div class="mt-2 mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= lesson.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
-    <a href='/courses/<%="#{lesson.course_id}"%>?lesson_id=<%="#{lesson.searchable_id}"%>#lesson<%="#{lesson.searchable_id}"%>?search=<%="#{search}"%>' class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW LESSON </a>
+    <a href='/courses/<%="#{lesson.course_id}"%>?lesson_id=<%="#{lesson.searchable_id}"%>&search=<%="#{search}"%>#lesson<%="#{lesson.searchable_id}"%>' class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW LESSON </a>
   </div>  
 </div> 
 
