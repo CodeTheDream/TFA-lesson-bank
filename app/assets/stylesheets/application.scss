@@ -89,10 +89,14 @@ a.btn.callout-button:hover {
   background-color: #f0eeed;
 }
 .logo_end {
-  height: 45px;
+  width: 100;
+  height: auto;
+  // height: 45px;
   background-color: #f0eeed;
 }
 .logo_end img {
+  width: 100;
+  height: auto;
   align-items: center;
   margin-bottom: 165px !important;
   height: 70px;
