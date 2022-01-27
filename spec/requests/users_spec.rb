@@ -187,7 +187,7 @@ RSpec.describe "Users", type: :request do
       @user = User.create(userteacher)
       @user.save
       #Call the method from the model and send email confirmation 
-      expect { @user.send_email_confirmation }.to change { ActionMailer::Base.deliveries.count }.by(2)
+      expect { @user.send_email_confirmation }.to change { ActionMailer::Base.deliveries.count }.by(1)
       get root_path
     end
   end
