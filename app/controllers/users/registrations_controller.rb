@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def index
     @users = User.all
-    @users = @users.paginate(page: params[:page], :per_page => 3)
+    @users = @users.paginate(page: params[:page], :per_page => 4)
   end 
 
   def usercourses
