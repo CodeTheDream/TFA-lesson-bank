@@ -110,6 +110,9 @@ RSpec.describe "Courses", type: :request do
       expect { post courses_path, params: {course: course_attributes}
     }.to_not change(Course, :count)
       expect(response).to redirect_to course_lesson_form_courses_path
+      # course_lesson_form_courses_path
+      # expect(response).to redirect_to course_lesson_form_courses_path(course_id: @course.id)
+
     end
   end
 
