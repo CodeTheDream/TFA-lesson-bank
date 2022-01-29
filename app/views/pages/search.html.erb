@@ -48,9 +48,9 @@
                     <div class="card-container shadow-none">          
                       <% @results.each do |result| %>                       
                         <% if result.searchable_type == "Lesson" %>
-                          <%= render 'lesson_card', lesson: result, search: params[:search] %>
+                          <%= render 'lesson_card', lesson: result, search: params[:search], subject: params[:subject], district: params[:district], available_grade_levels: params[:available_grade_levels]  %>
                         <% else %>  
-                          <%= render 'course_card',  course: result, search: params[:search] %>
+                          <%= render 'course_card',  course: result, search: params[:search], subject: params[:subject], district: params[:district], available_grade_levels: params[:available_grade_levels]  %>
                         <% end %>                               
                       <%end%>              
                     </div>        

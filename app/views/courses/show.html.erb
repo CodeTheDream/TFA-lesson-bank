@@ -4,8 +4,8 @@
     <div class="col-8">
         <div class="show_button_section btn btn_show_back">  
         
-          <% if @search.present? %>       
-            <%= link_to search_page_path(search: @search) do  %> 
+          <% if @search || @subject || @district || @available_grade_levels.present? %>       
+            <%= link_to search_page_path(search: @search, subject: @subject, district: @district, available_grade_levels: @available_grade_levels ) do  %> 
               <i class=" fa fa-caret-left " style="color:gray;"></i>                
               <span style="color: gray">BACK TO SEARCH RESULTS </span>
             <%end%>

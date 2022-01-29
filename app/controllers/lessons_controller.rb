@@ -13,8 +13,11 @@ class LessonsController < ApplicationController
     
   # GET /lessons/1
   # GET /lessons/1.json
-  def show
+  def show    
     @search = search_params[:search]
+    @subject = search_params[:subject]
+    @district = search_params[:district]
+    @available_grade_levels = search_params[:available_grade_levels]
   end
     
   # GET /lessons/new
