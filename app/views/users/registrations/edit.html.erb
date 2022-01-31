@@ -2,11 +2,14 @@
   <div class="set-size-and-position">
     <div class="blue-header"></div>  
       <div class="container mt-5 ">     
-        <div class="row big_card">  
-          <div class="col-lg-12 ">  
-            <div class="row">
+        <div class="row big_card center">  
+          <div class="col-lg-12 center">  
+            <div class="row ">
               <div class="col-md-9 col-lg-8 mx-auto">
-                <h2>Edit <%= resource_name.to_s.humanize %></h2>
+                <h4 class="font-weight-light mb-0 align-middle">Edit User</h4>
+
+                <%# <h2 class="center"> Edit User </h2> %>
+                <%# <h2>Edit <%= resource_name.to_s.humanize %>
 
                 <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { :onsubmit => 'return checkEmail();', method: :put }) do |f| %>    
                   <%= render "users/shared/error_messages", resource: resource %>
@@ -60,7 +63,7 @@
               <%# <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
               <%# </p> %> 
 
-              <%= link_to "Back", :back, :class => "btn btn-outline-primary btn-sm" %>
+              <%= link_to "Back", :back, :class => "center btn btn-outline-primary btn-sm" %>
               </div>
             </div>
           </div>
