@@ -3,11 +3,17 @@
   </div>
   
   <div class="main-result">  
-    <div class="center"><%= will_paginate @users %></div>
 
     <div class="col  mx-auto ">   
       <%= render 'layouts/search_user' %>
-    </div>                      
+    </div> 
+ 
+    <div class="col mx-auto pagination li center">
+      <%= will_paginate @users %>
+    </div>
+ 
+
+
     <div class="col mb-4 mx-auto">   
       <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
     </div> 
