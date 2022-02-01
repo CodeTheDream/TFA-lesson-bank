@@ -94,7 +94,7 @@ a.btn.callout-button:hover {
 }
 .logo_end img {
   align-items: center;
-  margin-bottom: 165px !important;
+  // margin-bottom: 165px !important;
   height: 70px;
 }
 .original_logo {
@@ -237,4 +237,13 @@ form button:not(.disabled):hover {
 .center {
   display: flex;
   justify-content: center;
+}
+@media (max-width: 767px) {
+  .logo_end img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .logo_gen img {
+    margin-bottom: -45px !important;
+  }
 }
