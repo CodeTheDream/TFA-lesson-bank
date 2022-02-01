@@ -246,4 +246,11 @@ form button:not(.disabled):hover {
   .logo_gen img {
     margin-bottom: -45px !important;
   }
+
+  .dropdown-menu.show {
+    left: 0em !important;
+  }
+  .triangle {
+    left: 0em !important;
+  }
 }
