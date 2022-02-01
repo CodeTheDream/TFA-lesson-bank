@@ -3,8 +3,7 @@
   <div class="row top_session">
     <div class="col-8">
         <div class="show_button_section btn btn_show_back">  
-        
-          <% if @search || @subject || @district || @available_grade_levels.present? %>       
+          <% if @search.present? || @subject.present? || @district.present? || @available_grade_levels.present? %>       
             <%= link_to search_page_path(search: @search, subject: @subject, district: @district, available_grade_levels: @available_grade_levels ) do  %> 
               <i class=" fa fa-caret-left " style="color:gray;"></i>                
               <span style="color: gray">BACK TO SEARCH RESULTS </span>
