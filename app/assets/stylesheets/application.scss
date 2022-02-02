@@ -172,6 +172,13 @@ form button:not(.disabled):hover {
   display: none;
 }
 
+.tableuser thead tr th {
+  vertical-align: middle !important;
+}
+.tableuser tbody {
+  padding: .1px;
+  text-align: center;
+}
 @media only screen and (max-width: 1200px) {
   /* Force table to not be like tables anymore */
   #no-more-tables table,
