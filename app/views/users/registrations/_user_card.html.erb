@@ -14,18 +14,22 @@
       <%= simple_format truncate(h(user.role.capitalize), length: 10, separator: ' ') %>
     </div>
   </div>
+
   <div class="text-center ">
     <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= user.name %></span></div>
     <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= user.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
-    <a href='/users/<%="#{user.id}"%>' class="btn button_user_card">VIEW USER </a>
-    <a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
-    <%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn button_user_card", data: { confirm: 'Are you sure?'} %>       
-    <%# <%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn button_user_card", data: { confirm: 'Are you sure?'} %>        
-    <a href='/users/<%="#{user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
-    <a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
-    <a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
-
-
+    <%if current_user.role == "admin"%> 
+      <a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
+      <%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn button_user_card", data: { confirm: 'Are you sure?'} %>       
+      <%# <%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn button_user_card", data: { confirm: 'Are you sure?'} %>        
+      <a href='/users/<%="#{user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
+      <a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
+      <a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
+    <%elsif (user.id == @current_user.id) && current_user.role.include?("teacher") %>
+      <a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
+    <%else%>
+      <a href='/users/<%="#{user.id}"%>' class="btn button_user_card">VIEW USER </a>
+    <%end%>
   </div>
 </div>
 <%# I need to adjust the buttons to show only the ones with their rights %>
