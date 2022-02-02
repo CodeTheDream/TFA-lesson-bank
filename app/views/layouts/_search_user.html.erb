@@ -1,7 +1,7 @@
 
 <div class="row mx-auto  justify-content-start mb-4">
   <div class="col">    
-      <%= form_tag search_page_path, :method => 'get', enforce_utf8: false do %>
+      <%= form_tag users_path, :method => 'get', enforce_utf8: false do %>
         <div class="row mb-4">
           <div class="input-group center-items">      
             <%= search_field_tag :search, params[:search], placeholder: 'Search for a user...', class: " form-control form-control-lg right-arrow", style:'width: 50%' %>

@@ -1,56 +1,41 @@
 <div class="user-form-container">
   <div class="set-size-and-position">
     <div class="blue-header"></div>  
-      <div class="container mt-5 ">     
-          <div class="col-lg-12 ">  
-            <div class="container-mt5">
-              <h5 class="center font-weight-light mb-0 align-middle">Who downloaded my Content: <%= @user.name%></h4>
-              <div class="row center">
-                <div class="tableuser">
-                  <br>
-                  <%@mylogs%>
-                  <%@creator%>
-                  <% mylogs = Log.where(creator_id: @user.id)%>
-                  <table class="table tableuser table-hover user-table mb-0" id="whodownloaded">
-                    <thead>
-                    <div class="row">
-                      <tr>
-                        <th class="h5" style="background:none;">Document Name</th>
-                        <th class="h5" style="background:none;">Downloaded by (email)</th>
-                        <th class="h5" style="background:none;">Downloaded by (name)</th>
-                      </tr>
-                      </div>
-                    </thead>
+    <div class="container mt-5 ">     
+      <h5 class="center font-weight-light mb-0 align-middle">Who downloaded my Content: <%= @user.name%></h5>
+      <div class="center">
+        <div class="tableuser">
+          <br>
+          <table class="table table-hover user-table mb-0" id="whodownloaded">
+            <thead>
+              <tr>
+                <th class="h5" style="background:none;">Document Name</th>
+                <th class="h5" style="background:none;">Downloaded by (email)</th>
+                <th class="h5" style="background:none;">Downloaded by (name)</th>
+              </tr>
+            </thead>
 
-                    <tbody>
-                      <% @mylogs.each do |log| %>
-                      <div class="row">
-                        <tr>
-                          <td data-title="Document Name"><%= log.document.name %></td>
-                          <% creator = User.find(log.creator_id)%>
-                          <% creator.email%>
-                          <td data-title="Document Creator"><%= log.user.email %></td>
-                          <td data-title="User Name"><%= log.user.name %></td>
-                        </tr>
-                      </div>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </div> <%#table-responsive%>
-              </div> <%#row center%>
+            <tbody>
+              <% @mylogs.each do |log| %>
+                <tr>
+                  <td><%= log.document.name %></td>
+                  <td><%= log.user.email %></td>
+                  <td><%= log.user.name %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div> <%#tableuser%>
+      </div> <%#center%>
 
-              <div class="center actions form-group p-3">
-                <button class="btn button_user_card" onclick="exportData()">
-                  <span class="glyphicon glyphicon-download"></span>
-                  Export Report
-                </button>
-                <%= link_to 'Back', users_path, :class => "btn button_user_card"  %>           
-              </div> <%#actions form-group p-3%>
-
-            </div> <%#container-mt5%>
-          </div> <%#col-lg-12 %>
-        </div> <%#row big_card %>
-      </div <%# container mt-5 %>>
+      <div class="center actions form-group p-3">
+        <button class="btn button_user_card" onclick="exportData()">
+          <span class="glyphicon glyphicon-download mr-2"></span>
+          Export Report
+        </button>
+        <%= link_to 'Back', users_path, :class => "btn button_user_card ml-2"  %>           
+      </div> <%#actions form-group p-3%>
+    </div <%# container mt-5 %>>
   </div> <%# set-size-and-position %>
 </div> <%# user-form-container %>
 
