@@ -1,9 +1,119 @@
 // Place all the styles related to the Courses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.show_button_section {
+  margin-top: 120px !important;
+}
+.btn_show_back {
+  border: none;
+  background-color: white !important;
+  font-family: Montserrat;
+  font-size: 12px !important;
+  color: gray !important;
+}
+.top_session {
+  margin-top: 72px !important;
+}
+.pencil_session {
+  float: right !important;
+  margin-top: 120px !important;
+  margin-right: 30px;
+}
+.big_card {
+  position: relative;
+  background-color: #f0eeed;
+  margin-top: 15px;
+  height: 100%;
+  font-family: Montserrat;
+  width: 100%;
+}
+.show_left {
+  margin-left: 40px;
+}
+
+.fa-trash-alt.trash_delete {
+  position: relative;
+  bottom: 6px;
+  color: #1996aa !important;
+  font-size: 22px;
+}
+.fa-trash-alt.trash_delete:hover {
+  position: relative;
+  bottom: 6px;
+  color: #081e32 !important;
+  font-size: 22px;
+  cursor: pointer;
+}
+.fa-pencil-alt.pencil_edit {
+  position: relative;
+  bottom: 3px;
+  color: #1996aa !important;
+  font-size: 28px;
+}
+.fa-pencil-alt.pencil_edit:hover {
+  position: relative;
+  bottom: 3px;
+  color: #081e32 !important;
+  font-size: 28px;
+  cursor: pointer;
+}
+.fa-pencil-alt.pencil_edit_card {
+  color: #1996aa !important;
+  font-size: 20px;
+}
+.fa-pencil-alt.pencil_edit_card:hover {
+  color: #081e32 !important;
+  font-size: 20px;
+  cursor: pointer;
+}
+.lesson_accordion {
+  background-color: white;
+}
+.lesson_show_description {
+  background-color: white;
+}
+.lesson_show_description p {
+  padding: 20px;
+  margin-top: 0% !important;
+}
+.card-header {
+  background-color: #1996aa !important;
+  height: 2px;
+  border-radius: 0% !important;
+  width: 100%;
+}
+.thead {
+  vertical-align: middle !important;
+}
+.table thead tr th,
+.table tbody tr td {
+  border: none !important;
+  vertical-align: middle !important;
+}
+.table td,
+.table th,
+.table tr {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+// .lesson_clickable {
+//   background-color: white;
+//   width: 1050px !important;
+// }
+.fa-play.icon-play,
+.fa-plus.plus-lesson {
+  color: #1996aa !important;
+  font-size: 25px;
+  margin-right: 10px;
+}
 
 .tag_button {
   height: 10px;
+}
+.courses_tags {
+  color: gray !important;
+  background-color: white;
 }
 
 .center-right {
@@ -11,23 +121,422 @@
   left: 15em;
 }
 
-.fit-width {
-  width: 66%;
-  height: 125px;
-}
-
 .course-dropdown {
   font-size: 24px;
 }
 
 .move-left {
-  right:6em;
+  right: 6em;
 }
 
 .bump-left {
-  right:1.7em;
+  right: 1.7em;
 }
 
 .nudge-left {
-  right:.7em;
+  right: 0.7em;
+}
+
+.course-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.set-size-and-position {
+  position: relative;
+  top: 15em;
+  right: 1em;
+  background-color: #f0f0f0;
+  width: 73%;
+}
+
+.set-height-and-position {
+  position: relative;
+  bottom: 4.5em;
+  left: 0em;
+}
+
+.blue-header {
+  height: 11px;
+  background-color: #1996aa;
+}
+
+ul li.favorites::marker {
+  content: "⭐️";
+}
+
+.move-label {
+  position: relative;
+  right: 1.25em;
+}
+
+.move-grade-label {
+  position: relative;
+  right: 0.3em;
+}
+
+.checkboxes {
+  position: relative;
+  right: 1em;
+  bottom: 0em;
+  max-width: 15em;
+}
+
+.move-description {
+  position: relative;
+  bottom: 2.5em;
+  left: 9em;
+}
+
+#myList li {
+  display: inline;
+}
+
+.move-tag-list {
+  position: relative;
+  left: 5.4em;
+  bottom: 1.95em;
+  margin-bottom: 0em !important;
+}
+
+.move-lesson-tag-list {
+  position: relative;
+  left: 4em;
+  bottom: 1.9em;
+  list-style-type: none;
+  margin-bottom: 0em !important;
+  width: calc(100% - 86px);
+}
+
+.star {
+  position: relative;
+  bottom: 2.5em;
+  float: right;
+}
+
+.lesson-star {
+  position: relative;
+  bottom: 1.6em;
+  float: right;
+  margin-right: 0%;
+}
+
+.checkbox-format input[type="checkbox"] {
+  height: 1.1rem !important;
+  width: 1.3rem !important;
+  margin-left: 1em !important;
+}
+
+.checkbox-format label {
+  font-size: 0.7rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.grid-container-filter {
+  display: grid;
+  height: fit-content;
+  width: 20%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 0.9em;
+  margin-left: 4em !important;
+}
+
+.move-grade-label {
+  position: relative;
+  right: 0.3em;
+}
+
+.course-title {
+  background-color: transparent;
+  font-size: 2.5em;
+  font-family: Montserrat;
+  position: relative;
+  // left: 0.75em;
+  bottom: 0.25em;
+}
+
+.district-label {
+  color: gray;
+  font-family: Montserrat;
+  font-size: 14px;
+}
+
+.district-dropdown {
+  width: 9em;
+  border: none;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+  font-weight: bolder;
+}
+
+.district-position {
+  position: relative;
+  left: 3.7em;
+  bottom: 0.8em;
+}
+
+.subject-label {
+  position: relative;
+  bottom: 0.5em;
+  color: gray;
+  font-family: Montserrat;
+  font-size: 14px;
+}
+
+.subject-dropdown {
+  width: 9em;
+  border: none;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+  font-weight: bolder;
+  position: relative;
+  left: 0.2em;
+}
+
+.grade-label {
+  color: gray;
+  font-family: Montserrat;
+  font-size: 14px;
+}
+
+.grade-description-container {
+  position: relative;
+  left: 1em;
+  bottom: 0.9em;
+  color: gray;
+}
+
+.tag-button-container {
+  position: relative;
+  bottom: 2.5em;
+  left: 2.4em;
+  font-family: Montserrat;
+}
+
+// .tag-fields {
+//   margin-right: 0.2em;
+//   font-family: Montserrat;
+//   position: relative;
+//   right: 2em;
+// }
+// ----Buttons----
+.form-button {
+  height: 2.5em !important;
+  font-size: 12px !important;
+  font-family: Montserrat;
+}
+
+.doc-button {
+  background-color: #081e32 !important;
+  color: white !important;
+  font-size: 12px !important;
+  border-radius: 0% !important;
+  border: none;
+  font-family: Montserrat;
+  max-height: 2.5em !important;
+}
+.input_tags_buttons {
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+  padding: 4px 8px;
+  font-family: Montserrat;
+  font-size: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  // border-radius: 0.25rem;
+  // background-clip: padding-box;
+  // transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  border-color: #1996aa !important;
+  box-shadow: 0 0 1px #1996aa;
+  cursor: pointer;
+}
+
+.course-description-label {
+  color: gray;
+  position: relative;
+  left: 0.15em;
+}
+
+.course-description-area {
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 10px;
+  // max-width: 750px;
+  text-align: justify;
+  padding: 10px;
+}
+.course-buttons-position {
+  position: relative;
+  bottom: 0.8em !important;
+}
+.lesson-title {
+  background-color: white !important;
+  font-size: 1.5em;
+  font-family: Montserrat;
+}
+
+.lesson_title_row {
+  background-color: white;
+  padding: 5px;
+}
+.lesson_title_row h3 {
+  margin-top: 10px;
+  text-decoration: none !important;
+}
+.lesson_title_row h3:hover {
+  color: #1996aa;
+}
+a {
+  text-decoration: none !important;
+}
+.right_arrow {
+  display: inline-block;
+  position: relative;
+  background: #1996aa;
+  padding: 10px;
+}
+.right_arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 80%;
+  top: 67%;
+  margin-top: -10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #1996aa;
+  margin-left: 7px;
+}
+.lesson-description-area,
+.course-description-area {
+  width: calc(100% - 86px);
+}
+.lesson-title,
+.course-title,
+.lesson-description-area,
+.course-description-area {
+  border-color: transparent !important;
+}
+.lesson-title:hover,
+.course-title:hover,
+.lesson-description-area:hover,
+.course-description-area:hover {
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+  cursor: pointer;
+  width: calc(100% - 86px);
+}
+.lesson-description-label {
+  position: relative;
+  left: 0.15em;
+  font-size: 1.5em;
+  font-family: Montserrat;
+}
+.lesson-tag-button-container {
+  position: relative;
+  bottom: 0em;
+}
+.lesson-tag-fields {
+  margin-right: 0.2em;
+  font-family: Montserrat;
+  position: relative;
+  right: 2em;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.buttons-position {
+  position: relative;
+  bottom: 0.8em;
+}
+
+.move-lessons {
+  position: relative;
+  bottom: 2em;
+}
+
+.course-checkboxes {
+  max-width: 9em;
+  // position: relative;
+  // top: 0.2em;
+}
+
+.doc-form {
+  font-family: Montserrat;
+}
+
+.move-heart {
+  margin-right: 3.3rem !important;
+  margin-top: 0.45rem !important;
+  float: right;
+}
+
+.center-modal-title {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+}
+
+.document-name {
+  border: none !important;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+  color: #212529;
+  font-weight: 600;
+}
+
+.document-kind {
+  border: none !important;
+  background-color: #f0eeed !important;
+  font-family: Montserrat;
+  color: gray;
+  font-weight: 600;
+}
+.document_row h4 {
+  font-family: Montserrat;
+  padding: 10px;
+  padding-left: 0;
+}
+.document_row h4:hover {
+  color: #1996aa;
+  outline: none !important;
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+  cursor: pointer;
+}
+.fa-plus.plus-document {
+  color: #1996aa !important;
+  font-size: 25px;
+  margin-right: 3px;
+  margin-left: 5px;
+}
+
+.lesson-document-name {
+  border: none !important;
+  font-family: Montserrat;
+  color: #212529;
+  font-weight: 600;
+}
+
+.lesson-document-kind {
+  border: none !important;
+  font-family: Montserrat;
+  color: gray;
+  font-weight: 600;
+}
+
+.lesson-document-container {
+  width: 50%;
 }

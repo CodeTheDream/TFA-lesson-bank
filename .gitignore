@@ -34,3 +34,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# to ensure that coverage results are not tracked by Git
+coverage
+

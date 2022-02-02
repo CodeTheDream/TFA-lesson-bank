@@ -37,10 +37,10 @@ describe LessonPolicy do
       context 'owner' do
         it 'allow access to admin' do
           @user = FactoryBot.create(:user, role:'admin')
-          course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+          course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
           @course = Course.new(course_hash)
           lesson_hash = {title: "test lesson1", description: "test lesson1", 
-            created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+            created_at: Time.now, updated_at: Time.now, course_id: @course.id}
           @lesson = Lesson.create(lesson_hash)
           expect(policy).to permit @user
         end

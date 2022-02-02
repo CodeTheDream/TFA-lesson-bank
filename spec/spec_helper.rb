@@ -14,6 +14,27 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter "/config/"
+    add_filter "/spec/"
+    add_filter "/lib/devise_custom_failure.rb"
+
+    add_group "Model", "app/models"
+    add_group "Controllers", "app/controllers"
+    add_group "Helpers", "app/helpers"
+    add_group "Jobs", "app/jobs"
+    add_group "Mailers", "app/mailers"
+    add_group "Serializers", "app/serailizers"
+    add_group "Policies", "app/policies"
+    add_group "Views", "app/views"
+
+
+
+
+
+
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

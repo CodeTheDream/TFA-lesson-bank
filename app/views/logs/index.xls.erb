@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Logs Sheet">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="Number">Log Id</Data></Cell>
+        <Cell><Data ss:Type="String">Doc Id</Data></Cell>
+        <Cell><Data ss:Type="String">User Id</Data></Cell>
+      </Row>
+    <% @logs.each do |log| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= log.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= log.document_id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= log.user_id %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+

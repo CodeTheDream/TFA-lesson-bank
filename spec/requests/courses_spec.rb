@@ -13,7 +13,7 @@ RSpec.describe "Courses", type: :request do
   describe "get courses_path" do
     it "renders the index view" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       sign_in @user
       @user.confirm
@@ -24,7 +24,7 @@ RSpec.describe "Courses", type: :request do
   describe "get course_path" do
     it "renders the :show template" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       sign_in @user
       @user.confirm
@@ -33,7 +33,7 @@ RSpec.describe "Courses", type: :request do
     end
     it "renders the :show template - redirects to the index path if the course id is invalid" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.new(course_hash)
       sign_in @user
       @user.confirm
@@ -45,7 +45,8 @@ RSpec.describe "Courses", type: :request do
     it "renders the :new template - redirects to the index path if the the user role is invalid" do
       @user = FactoryBot.create(:user)
       @user.role = "stranger"
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      Grade.create(grade_level: '1')
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.new(course_hash)
       sign_in @user
       # User is not confirmed and role is stranger
@@ -57,7 +58,7 @@ RSpec.describe "Courses", type: :request do
   describe "get edit_course_path" do
     it "renders the :edit template" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       sign_in @user
       @user.confirm
@@ -66,7 +67,7 @@ RSpec.describe "Courses", type: :request do
     end
     it "renders the :edit template - redirects to the root path if the course id is invalid" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       sign_in @user
       @user.confirm
@@ -81,7 +82,7 @@ RSpec.describe "Courses", type: :request do
       # @tag = FactoryBot.create(:tag)
       # tags_string = "tag1, tag2"
       # tags_params = tags_string
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       # hash = {course_id: @course.id, tag_id: @tag.id, frequency: 1}
       # KeyWord.find_or_create_by(hash)
@@ -93,13 +94,13 @@ RSpec.describe "Courses", type: :request do
 
       expect { post courses_path, params: {course: course_attributes}
     }.to change(Course, :count)
-      expect(response).to redirect_to courses_path #course_path(id: Course.last.id)
+      expect(response).to redirect_to course_lesson_form_courses_path
     end
   end
   describe "post courses_path with invalid data" do
     it "saves a new entry and redirects to the show path for the course" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       #check when we have the final version for tags.  
       sign_in @user
@@ -108,22 +109,28 @@ RSpec.describe "Courses", type: :request do
       course_attributes.delete(:title)
       expect { post courses_path, params: {course: course_attributes}
     }.to_not change(Course, :count)
-      expect(response.status).to render_template(:new)
+      expect(response).to redirect_to course_lesson_form_courses_path
+      # course_lesson_form_courses_path
+      # expect(response).to redirect_to course_lesson_form_courses_path(course_id: @course.id)
+
     end
   end
 
   describe "put course_path with valid data" do
-    it "updates an entry and redirects to the show path for the course" do
+    it "updates an entry and redirects to the edit path for the course" do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district }
+      search_item = SearchItem.create(hash)
+      @course.search_item = search_item
       put course_path(id: @course.id), params: {course:{title: "React", description: "React", subject: "Hooks", 
-        grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
+        state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       @course.reload
       expect(@course.title).to eq("React")
-      expect(response).to redirect_to course_path(id: @course.id)
+      expect(response).to redirect_to course_lesson_form_courses_path(course_id: @course.id)
     end
   end
 
@@ -132,13 +139,13 @@ RSpec.describe "Courses", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       put course_path(id: @course.id), params: {course:{title: "", description: "", subject: "", 
-        grade_level: "", state: "", district: "", created_at: "", updated_at: "", user_id: ""}}
+        state: "", district: "", created_at: "", updated_at: "", user_id: ""}}
       @course.reload
       expect(@course.title).to_not eq("nil")
-      expect(response.status).to render_template(:edit)
+      expect(response).to redirect_to course_lesson_form_courses_path
     end
   end
 
@@ -147,7 +154,7 @@ RSpec.describe "Courses", type: :request do
       @user = FactoryBot.create(:user)
       sign_in @user
       @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
       expect {delete course_path(id: @course.id)}.to change(Course, :count)
       expect(response).to redirect_to courses_path
@@ -157,7 +164,7 @@ RSpec.describe "Courses", type: :request do
   describe "get courses_path" do
     it "renders the index view" do
       @user = FactoryBot.create(:user)
-      course_hash = {title: "React", description: "React", subject: "Hooks", grade_level: 2, state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.new(course_hash)
       sign_in @user
       @user.confirm

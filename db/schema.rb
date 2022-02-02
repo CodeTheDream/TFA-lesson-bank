@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_151300) do
+ActiveRecord::Schema.define(version: 2022_01_15_065957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,8 +45,16 @@ ActiveRecord::Schema.define(version: 2021_07_29_151300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
-    t.string "grade_level"
     t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "courses_grades", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "grade_id"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_courses_grades_on_course_id"
+    t.index ["grade_id"], name: "index_courses_grades_on_grade_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -61,10 +69,24 @@ ActiveRecord::Schema.define(version: 2021_07_29_151300) do
     t.index ["lesson_id"], name: "index_documents_on_lesson_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "favoritable_id"
+    t.string "favoritable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string "grade_level"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "key_words", force: :cascade do |t|
     t.bigint "tag_id"
     t.bigint "course_id"
-    t.integer "frequency"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "lesson_id"
@@ -78,9 +100,18 @@ ActiveRecord::Schema.define(version: 2021_07_29_151300) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "units_covered"
     t.bigint "course_id", null: false
     t.index ["course_id"], name: "index_lessons_on_course_id"
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "creator_id"
+    t.index ["document_id"], name: "index_logs_on_document_id"
+    t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
   create_table "search_items", force: :cascade do |t|
@@ -96,6 +127,10 @@ ActiveRecord::Schema.define(version: 2021_07_29_151300) do
     t.string "district"
     t.string "units_covered"
     t.string "course_id"
+    t.string "tags"
+    t.integer "user_id"
+    t.string "last_name"
+    t.string "user_status"
     t.index ["searchable_type", "searchable_id"], name: "index_search_items_on_searchable_type_and_searchable_id"
   end
 
@@ -118,6 +153,10 @@ ActiveRecord::Schema.define(version: 2021_07_29_151300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "unconfirmed_email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "previous_email"
+    t.string "status"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -125,6 +164,9 @@ ActiveRecord::Schema.define(version: 2021_07_29_151300) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "documents", "courses"
   add_foreign_key "documents", "lessons"
+  add_foreign_key "favorites", "users"
   add_foreign_key "key_words", "lessons"
   add_foreign_key "lessons", "courses"
+  add_foreign_key "logs", "documents"
+  add_foreign_key "logs", "users"
 end

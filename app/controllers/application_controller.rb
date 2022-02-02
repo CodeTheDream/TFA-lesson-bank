@@ -1,17 +1,28 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  require 'csv'
+  respond_to :html, :json
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   
   protected
 
   def configure_permitted_parameters
-    attributes = [:role, :email, :password, :password_confirmation, :unconfirmed_email]
+    attributes = [:role, :email, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name, :previous_email, :status]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
+    devise_parameter_sanitizer.permit(:account_update, keys: attributes)
   end
 
   def configure_sign_up_parameters
     params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email)
+  end
+
+  def configure_registration_parameters
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email)
+  end
+
+  def configure_registration_update_parameters
+    params.require(:user).permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name, :previous_email, :status)
   end
   
   # instructions for what to do when user is signed in but does not have the
@@ -21,7 +32,7 @@ class ApplicationController < ActionController::Base
     # if they requested json, give them access denied json message
     # default pundit message can be overidden by message starting with "warning"
     # raise NotAuthorizedError, "Warning: enter message here" if condition
-    msg = exception.message['Warning'] ? exception.message : 'Access denied.'
+    # msg = exception.message['Warning'] ? exception.message : 'Access denied.'
     respond_to do |format|
       format.html do
         referrer = request.referrer

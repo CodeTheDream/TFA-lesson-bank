@@ -6,7 +6,7 @@ RSpec.describe Lesson, type: :model do
       @user = FactoryBot.create(:user)
       @course = FactoryBot.create(:course)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, units_covered: "3", course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
         @lesson = Lesson.create(lesson_hash)
     end
 
@@ -26,10 +26,6 @@ RSpec.describe Lesson, type: :model do
       @lesson.description = nil
       expect(@lesson).to_not be_valid
     end
-    it "is not valid without units_covered" do
-      @lesson.units_covered  = nil
-      expect(@lesson).to_not be_valid
-    end
   end
 
   describe "Associations" do
@@ -39,10 +35,10 @@ RSpec.describe Lesson, type: :model do
       @course = FactoryBot.create(:course)
       lesson_hash = {title: "test lesson1", description: "test lesson1", 
         # tags: @tag.id, ?
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       # ?tags
       @lesson = Lesson.create(lesson_hash)
-      hash = {course_id: @course.id, lesson_id: @lesson.id, tag_id: @tag.id, frequency: 1}
+      hash = {course_id: @course.id, lesson_id: @lesson.id, tag_id: @tag.id}
       KeyWord.find_or_create_by(hash)
       # @document = FactoryBot.create(:document)
       document_hash = {name: "Doc1 for RonR", description: "Doc1 for RonR", kind: "type1", created_at: "2021-06-01 03:25:33", updated_at: "2021-06-01 03:25:33", lesson_id: @lesson.id, course_id: @course.id}
@@ -82,10 +78,10 @@ RSpec.describe Lesson, type: :model do
       @course = FactoryBot.create(:course)
       lesson_hash = {id: 1, title: "test lesson1", description: "test lesson1", 
         # tags: @tag.id, ?
-        created_at: Time.now, updated_at: Time.now, units_covered: "3",  course_id: @course.id}
+        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
       # ?tags
       @lesson = Lesson.create(lesson_hash)
-      hash = {course_id: @course.id, lesson_id: @lesson.id, tag_id: @tag.id, frequency: 1}
+      hash = {course_id: @course.id, lesson_id: @lesson.id, tag_id: @tag.id}
       KeyWord.find_or_create_by(hash)
       # @document = FactoryBot.create(:document)
       document_hash = {name: "Doc1 for RonR", description: "Doc1 for RonR", kind: "type1", created_at: "2021-06-01 03:25:33", updated_at: "2021-06-01 03:25:33", lesson_id: @lesson.id, course_id: @course.id}
