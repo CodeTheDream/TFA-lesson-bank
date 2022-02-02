@@ -4,16 +4,14 @@
       <div class="container mt-5 ">     
         <div class="row big_card center">  
           <div class="col-lg-12 center">  
-            <div class="row ">
-              <div class="col-md-9 col-lg-8 mx-auto">
-                <h4 class="font-weight-light mb-0 align-middle">Edit User</h4>
-
-                <%# <h2 class="center"> Edit User </h2> %>
-                <%# <h2>Edit <%= resource_name.to_s.humanize %>
-
+            <div class="container-mt5">
+              <h4 class="center font-weight-light mb-0 align-middle">Edit User</h4>
+              <div class="center col-md-9 col-lg-8 mx-auto">
                 <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { :onsubmit => 'return checkEmail();', method: :put }) do |f| %>    
                   <%= render "users/shared/error_messages", resource: resource %>
                   <%= hidden_field_tag "id", f.object.id %>    
+                  
+
                   <div class="form-group">
                     <%= f.label :FirstName %><br />
                     <%= f.text_field :first_name, autofocus: true %>
@@ -53,7 +51,8 @@
                   <% end %>
 
                   <div class="actions">
-                    <%= f.submit "Update", id: 'submit_button' %>
+                    <%= f.submit "Update", id: 'submit_button', :class => "btn button_user_card" %>
+                    <%= link_to "Back", :back,  :class => "btn button_user_card" %>
                   </div>
 
                 <%end%>
@@ -63,13 +62,11 @@
               <%# <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
               <%# </p> %> 
 
-              <%= link_to "Back", :back, :class => "center btn btn-outline-primary btn-sm" %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>   
-    </div>
-  </div>
-</div>    
-
+              
+              </div> <%#col-md-9 col-lg-8 mx-auto%>
+            </div>  <%# container mt-5 %>
+          </div> <%#col-lg-12 %>
+        </div> <%#row big_card %>
+      </div <%# container mt-5 %>>
+  </div> <%# set-size-and-position %>
+</div> <%# user-form-container %>  

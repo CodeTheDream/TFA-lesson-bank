@@ -26,11 +26,11 @@
                       <% @mylogs.each do |log| %>
                       <div class="row">
                         <tr>
-                          <td style="text-align:center;" data-title="Document Name"><%= log.document.name %></td>
+                          <td data-title="Document Name"><%= log.document.name %></td>
                           <% creator = User.find(log.creator_id)%>
                           <% creator.email%>
-                          <td style="text-align:center;" data-title="Document Creator"><%= log.user.email %></td>
-                          <td style="text-align:center;" data-title="User Name"><%= log.user.name %></td>
+                          <td data-title="Document Creator"><%= log.user.email %></td>
+                          <td data-title="User Name"><%= log.user.name %></td>
                         </tr>
                       </div>
                       <% end %>
@@ -43,7 +43,7 @@
                 <button class="btn button_user_card" onclick="exportData()">
                   <span class="glyphicon glyphicon-download"></span>
                   Export Report
-                </button>   
+                </button>
                 <%= link_to 'Back', users_path, :class => "btn button_user_card"  %>           
               </div> <%#actions form-group p-3%>
 
