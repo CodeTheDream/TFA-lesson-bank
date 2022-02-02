@@ -1,12 +1,16 @@
 require "zip"
 require 'fileutils'
+#this is a comment
 class CoursesController < ApplicationController
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log]
+  before_action :set_document, only: [:log]
   before_action :verify_role!
 
   def index
-    @courses = Course.all
+    @courses = Course.all.includes(:grades)
   end
 
   # GET /courses/1
@@ -24,7 +28,8 @@ class CoursesController < ApplicationController
   # GET /courses/new
   def new
     @course = Course.new
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @document = @course.documents.build
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
@@ -32,7 +37,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
@@ -42,31 +47,46 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     @course = Course.new(course_params)
     @course.user = current_user
+    @course.state = 'NC'
+    @course.courses_grades.delete_all
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
+    @course.grades << new_grades if new_grades.present?
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
-      @course.search_item = SearchItem.create(hash)
+      course_tags = @course.tags.pluck(:name).join(' ')
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
+      search_item = SearchItem.create(hash)
+      @course.search_item = search_item
       flash.notice = "The course record was created successfully."
-      redirect_to courses_path
+      redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      render :new  
+      redirect_to course_lesson_form_courses_path
     end
   end
 
   # PATCH/PUT /courses/1
   # PATCH/PUT /courses/1.json
   def update
-    @available_grade_levels = %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
+    @available_grade_levels = Grade.all
     @subjects = %w[Art English Math Music Science Technology]
     @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @course.courses_grades.delete_all
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
+    @course.grades << new_grades if new_grades.present?
+    if document_params[:documents].present?
+      document_params[:documents].each do |document_param|
+        doc = Document.find document_param[0].to_i
+        doc.update document_param[1]
+      end
+    end
     if @course.update(course_params)
       if params[:tag_names]&.present? && params[:existing_tags]&.present?
 	      tags = tags_params.values + existing_tags_params
@@ -76,18 +96,21 @@ class CoursesController < ApplicationController
         tags = existing_tags_params
       end
       @course.tag_list=(tags) if tags.present?
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: @course.grade_level, state: @course.state, district: @course.district } 
-      @course.search_item.update hash
+      course_tags = @course.tags.pluck(:name).join(' ')
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district, grade_level: @course.grades.pluck(:grade_level).join(' '), tags: course_tags, user_id: current_user.id, last_name: current_user.last_name, user_status: current_user.status } 
+      search_item = SearchItem.find_by(searchable_id: @course.id, searchable_type: 'Course')
+      search_item.update hash
+      @course.search_item = search_item
       flash.notice = "The course record was updated successfully."
-      redirect_to @course
+      redirect_to course_lesson_form_courses_path(course_id: @course.id)
     else
       flash.now.alert = @course.errors.full_messages.to_sentence
-      render :edit
+      redirect_to course_lesson_form_courses_path
     end
   end
 
-  # DELETE /lessons/1
-  # DELETE /lessons/1.json
+  # DELETE /courses/1
+  # DELETE /courses/1.json
   def destroy
     @course.destroy
     respond_to do |format|
@@ -96,9 +119,69 @@ class CoursesController < ApplicationController
     end
   end
 
+  def favorite
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
+    @favorite = Favorite.new(hash)
+    if @favorite.save
+      if favorite_params[:source] == "course_edit"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_path(course_id: @course.id)
+      end
+    else
+      if favorite_params[:source] == "course_edit"
+        flash.now.alert = @course.errors.full_messages.to_sentence
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        flash.now.alert = "You favorited this course"
+        redirect_to course_path(course_id: @course.id)
+      end
+    end
+  end
 
+  def unfavorite
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
+      if favorite_params[:source] == "course_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        redirect_to course_path(course_id: @course.id)
+      end
+    else
+    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
+    Favorite.delete(@unfavorite)
+      if favorite_params[:source] == "course_edit"
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif favorite_params[:source] == "course_show"
+        redirect_to course_path(course_id: @course.id)
+      end
+    end
+  end
+
+
+  def log
+    @document_creator = Document.find(@document.id).lesson_id.present? ? Document.find(@document.id).lesson.course.user : Document.find(@document.id).course.user
+    @creator_id = @document_creator.id
+    log = Log.find_or_create_by( user_id: current_user.id, document_id: @document.id, creator_id: @creator_id)
+    if log.present?
+      if @document.file.present?
+        send_data @document.file.download, filename: @document.file.filename.to_s, content_type: @document.file.content_type
+      else 
+        flash.now.alert = "File could not be found"
+        redirect_to course_path(course_id: @course.id)
+      end
+    else
+      flash.now.alert = @course.errors.full_messages.to_sentence
+      redirect_to course_path(course_id: @course.id)
+    end     
+  end
+
+  
   def download
-    @courses = @course.documents.where(id: params[:document_ids])
+    @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
     begin
       FileUtils.rm_rf(tmp_user_folder)
@@ -109,6 +192,7 @@ class CoursesController < ApplicationController
     FileUtils.mkdir_p(tmp_user_folder) unless Dir.exists?(tmp_user_folder)
     @courses.each do |document|
       filename = document.file.blob.filename.to_s
+
       create_tmp_folder_and_store_documents(document, tmp_user_folder, filename) unless directory_length_same_as_documents
       #---------- Convert to .zip --------------------------------------- #
       create_zip_from_tmp_folder(tmp_user_folder, filename) unless directory_length_same_as_documents
@@ -116,6 +200,59 @@ class CoursesController < ApplicationController
     # Sends the *.zip file to be download to the client's browser
     send_file(Rails.root.join("#{tmp_user_folder}.zip"), :type => "application/zip",
                                                          :filename => "Files_for_#{@course.title.downcase.gsub(/\s+/, "_")}.zip", :disposition => "attachment")
+  end
+
+  def course_lesson_form
+    new_course = Course.new(title: "New")
+    @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
+    @course = params[:course_id].present? ? Course.find(params[:course_id]) : new_course
+    @available_grade_levels = Grade.all
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    new_lesson = Lesson.new(title: "Add Lesson")
+    @lessons = @course.lessons.to_a.unshift new_lesson
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    if @course&.id.present?
+      @document = @course.documents.new
+    elsif @lesson&.id.present?
+      @document = @lesson.documents.new
+    end
+  end
+
+  def load_course
+    if ajax_params[:course_id].present?
+      @course = Course.find ajax_params[:course_id]
+    else
+      @course = Course.new
+    end
+    @available_grade_levels = Grade.all
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    new_lesson = Lesson.new(title: "Add Lesson")
+    @lessons = @course.lessons.to_a.unshift new_lesson
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    @from_load_course = true
+    @document = @course.documents.new if @course.id.present?
+    render "/courses/course_lesson_form.js.erb"
+  end
+
+  def load_lesson
+    @course = Course.find ajax_params[:course_id]
+    new_lesson = Lesson.new(title: "New")
+    @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"
+    if ajax_params[:lesson_id].present?
+      @lesson = Lesson.find ajax_params[:lesson_id]
+    else
+      @lesson = nil 
+    end
+    @available_grade_levels = Grade.all
+    @subjects = %w[Art English Math Music Science Technology]
+    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @from_load_course = false
+    render "/courses/course_lesson_form.js.erb"
   end
 
   private
@@ -132,6 +269,9 @@ class CoursesController < ApplicationController
     end
   end
 
+  # def course_owner
+  #   @course_owner = User.find(params[:id])    
+  # end
 
   def verify_role!
     authorize @course || Course 
@@ -142,9 +282,31 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
+  end
+
+  def set_document
+    @document = Document.find(params[:document_id])
+  end
+
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names)
+    params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites, :id)
+  end
+
+  def document_params
+    params.permit(:documents => {})
+  end
+  def favorite_params
+    params.permit(:source, :id)
+  end
+  def grade_params
+    params.permit(:grade_levels => {})
+  end
+
+  def ajax_params
+    params.permit(:course_id, :lesson_id)
   end
 
   def tags_params
@@ -155,10 +317,15 @@ class CoursesController < ApplicationController
     params.require(:existing_tags)
   end
 
-
   def catch_not_found(e)
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s
     redirect_to courses_path
+  end
+
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    redirect_to root_path
   end
 end

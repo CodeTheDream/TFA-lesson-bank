@@ -1,76 +1,166 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
-<%= form_for(course) do |f| %>
-  
-  <% if course.errors.any? %>
-    <div id="error_explanation" class="my_alert">
-      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
-      <ul>
-      <% course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+<div class="container mt-5 ">     
+  <%= form_for(@course) do |f| %>
+    <% if @course.errors.any? %>
+      <div id="error_explanation" class="my_alert">
+        <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+        <ul>
+        <% @course.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="row big_card">  
+      <!-- Course Favorites Section-->       
+      <div class="col-lg-12 ">        
+        <% if @course.id.present?%>
+          <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
+          <% if fav_course.include? @course.id %>
+            <%= link_to(unfavorite_course_path(id: @course.id, source: "course_edit")) do %>  
+              <i class="fas fa-heart fa-lg move-heart" style="color:#d13139;"></i>
+            <% end %> 
+          <% else %> 
+            <%= link_to(favorite_course_path(id: @course.id, source: "course_edit")) do %> 
+              <i class="fas fa-heart fa-lg move-heart" style="color:gray;"></i>
+            <% end %>                     
+          <%end %>
+        <%end%>
+      </div>      
+      <!-- Left Side Course-->
+      <div class="col-lg-4 mb-5">
+        <div class="show_left">
+          <div class="row justify-content-between ">        
+            <%= f.text_field :title, class: 'course-title', placeholder: "Add Title", :required => true %>
+          </div>    
+          <div>
+            DISTRICT: <%= f.select :district, options_for_select(@districts, @course.district), {}, {:class => 'district-dropdown'} %>
+          </div>
+          <div>
+            SUBJECT: <%= f.select :subject, options_for_select(@subjects, @course.subject), {}, {:class => 'subject-dropdown'}  %>
+          </div>
+          GRADE:
+          <div class='grid-container-filter mb-2 checkbox-format course-checkboxes'>
+            <% @available_grade_levels.each do |grade_level|%>
+              <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true, f.object.grades.pluck(:grade_level).include?(grade_level.grade_level)%>
+              <%= label_tag grade_level.grade_level, grade_level.grade_level  %>
+            <%end%>
+          </div>
+        </div>
+      </div>
+      <!-- Right Side Course-->
+      <div class="col-lg-8 mt-2 mb-2">           
+        <!-- Course Description Section-->              
+        <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: 'Add Description', class: 'course-description-area', :required => true %>
+        
+        <!-- Course Right Side Documents Section-->  
+        <table class="table">
+          <thead>
+            <tr>
+              <th><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
+              <th style="color: #212529;">TYPE</th>
+              <th class="text-center" style="color: #212529;">PREVIEW</th>
+            </tr>
+          </thead>  
+          <% if f.object.id.present? && f.object.documents.any? %>
+            <% f.object.documents.each do |document| %>
+              <% if document.lesson_id.nil? && document.id.present? %>
+                <tbody class="text-center">
+                    <tr>
+                      <th>
+                        <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'document-name' %>
+                      </th>
+                      <% if document.file.attached? %>
+                        <th>
+                          <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'document-kind' %>
+                        </th> 
+                      <% end %>
+                      <% if document.file.representable? %>
+                        <th class="text-center">
+                          <%= link_to(document.file) do %>
+                            <i class=" fa fa-search" style="color:gray;"></i>
+                          <% end %>
+                        </th>
+                      <% end %>
+                    </tr>
+                  </tbody>
+              <% end %>
+            <% end %>
+          <% end %>
+        </table>
+        <%= link_to "#newDocument", data: { toggle: "modal" } do %>
+          <div class=" document_row col-4 ">
+            <h4><i class="fa fa-plus plus-document"></i> Document</h4>
+          </div>
+        <% end %>
+      </div>
+      <div class="container  mb-5">      
+        <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+        <ul id="myList" class="row move-lesson-tag-list ">
+          <% @course.tags.each do |tag| %>	  
+            <% time_stamp = Time.now.to_i %>	  
+            <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'input_tags_buttons' %></li>
+          <% end %>
+        </ul>
+        <div class="actions buttons-position">
+          <% if @course&.id.present? %>
+            <%= f.submit "Save Changes", {:class => 'search_button form-button mt-4'} %>
+          <% else %>
+            <%= f.submit "Create Course", {:class => 'search_button form-button mt-4'} %>
+          <% end %>
+        </div>
+      </div>
+    </div>  
   <% end %>
-  
-  <div class="form-row center-right">
-    <div class="form-group col-sm-4 pl-4">
-      <%= f.label :title %>
-      <%= f.text_field :title, class: 'form-control', :required => true %>  
-    </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-1">
-      <%= button_tag 'Add Tag', type: 'button', id: 'addTag', onclick: 'addTagField()' %>
-    </div>
-    <br />
-    <div id="TagHeader" style="display:none"> 
-      Tag Name: 
-    </div>
-    <br />
-    <ul id="myList">
-      <% course.tags.each do |tag| %>	  
-        <% time_stamp = Time.now.to_i %>	  
-        <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'form-control' %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  </br>
-
-  <div class="form-row center-right pl-4">
-    <div class="form-group col-sm-2 course-dropdown">
-      <%= f.label :state, :class => "course-dropdown" %>
-      <%= f.select :state, options_for_select(states, course.state)  %>
-    </div>
-
-    <div class="form-group col-sm-2 course-dropdown">
-      <%= f.label :district, :class => "course-dropdown" %>
-      <%= f.select :district, options_for_select(districts, course.district)  %>
-    </div>
-
-    <div class="form-group col-sm-2 bump-left course-dropdown">
-      <%= f.label :grade_level, :class => "control-label" %>
-      <%= f.select :grade_level, options_for_select(available_grade_levels, course.grade_level)  %>
-    </div>
-    <div class="form-group col-sm-2 nudge-left course-dropdown">
-      <%= f.label :subject, :class => "control-label" %>
-      <%= f.select :subject, options_for_select(subjects, course.subject)  %>
-    </div>
-  </div>
-
-  <div class="form-group center-right fit-width pl-4">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: 'form-control', :required => true %>
-  </div>
-
-  <div class="form-group center-right pl-4">
-    <div class="actions">
-      <%= f.submit %>
-      <% if @course&.id.present? %>
-        | <%= link_to 'New Document (Course)', new_course_document_path(@course.id), :class => "btn btn-outline-primary btn-sm" %>
-        | <%= link_to 'New Lesson', new_course_lesson_path(@course.id), :class => "btn btn-outline-primary btn-sm" %>
-          <%= link_to 'Back to Courses', courses_path, :class => "btn btn-outline-primary btn-sm" %>    
-      <% end %>
+</div>
+<div id="newDocument" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="center-modal-title"><h4 class="modal-title">New Document</h4></div>
+      </div>
+      <div class="modal-body">
+        <% obj = @course.present? ? @course : @lesson %>
+        <% if @document.present? %>
+          <%= form_for([obj,@document]) do |f| %>
+            <% if @document.errors.any? %>
+              <div id="error_explanation" class="my_alert">
+                <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+                <ul>
+                <% @document.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="form-group pl-4 fit-width">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group fit-width pl-4">
+              <%= f.label :description %>
+              <%= f.text_area :description, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group pl-4 fit-width">
+              <%= f.label :type %>
+              <%= f.text_field :kind, class: 'form-control', :required => true %>
+            </div>
+            <div class="form-group pl-4">
+              <%= f.label :file %>
+              <%= f.file_field :file %>
+            </div>
+            <div class="form-group pl-4">
+              <div class="actions">
+                <%= f.submit %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          You must create the course before uploading and documents
+        <% end %>
+      </div>
     </div>
   </div>
-  
-<% end %>
+</div>

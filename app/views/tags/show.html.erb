@@ -3,6 +3,9 @@
 <ul>
   <% @tag.courses.each do |course| %>
     <li><%= link_to course.title, course_path(course) %></li>
+    <%= render "course_card", collection: course.course_cards,
+                              as: :course_card,
+                              locals: { courses: @tag.courses } %>
   <% end %>
 </ul>
 

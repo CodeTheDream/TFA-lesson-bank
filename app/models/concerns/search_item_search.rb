@@ -1,12 +1,12 @@
 module SearchItemSearch
   attr_reader :query, :options
 
-  PER_PAGE = 20
+  PER_PAGE = 18
 
-  def self.search(query:nil, options: {})
+  def self.search(query:nil, options: {}, current_user:nil)
     @query = query.presence || "*"
     @options = options
-
+    @current_user = current_user if current_user.present?
     constraints = {
       page: options[:page],
       per_page: PER_PAGE
@@ -24,10 +24,6 @@ module SearchItemSearch
       where["subject"] = @options["subject"]
     end
 
-    if @options["grade_level"].present?
-      where["grade_level"] = @options["grade_level"]
-    end
-
     if @options["state"].present?
       where["state"] = @options["state"]
     end
@@ -36,9 +32,19 @@ module SearchItemSearch
       where["district"] = @options["district"]
     end
 
-    if @options["units_covered"].present?
-      where["units_covered"] = @options["units_covered"]
+    if @options["courses"].present? && !@options["lessons"].present?
+      where["type"] = "course_type"
     end
+
+    if @options["lessons"].present? && !@options["courses"].present?
+      where["type"] = "lesson_type"
+    end
+
+    if @options["mycontent"].present? && @options["mycontent"] == "true"
+      where["user_id"] = @current_user.id
+    end
+  
+    where["user_status"] = "Approved"
 
     where
   end
