@@ -16,7 +16,6 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-  
     @search = search_params[:search]
     @subject = search_params[:subject]
     @district = search_params[:district]
