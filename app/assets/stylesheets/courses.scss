@@ -376,6 +376,7 @@ ul li.favorites::marker {
   background-color: white !important;
   font-size: 1.5em;
   font-family: Montserrat;
+  width: calc(100%);
 }
 
 .lesson_title_row {
@@ -417,6 +418,7 @@ a {
 .course-description-area {
   width: calc(100% - 86px);
 }
+
 .lesson-title,
 .course-title,
 .lesson-description-area,
