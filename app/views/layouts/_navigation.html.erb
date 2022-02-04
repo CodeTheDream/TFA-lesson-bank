@@ -16,10 +16,14 @@
           <li class='nav-item  '><%= link_to 'ABOUT', about_page_path, class: 'nav-link right_list position-about' %></li>
           <% if current_user && !current_user.role.blank? %>
             <div class="user-container">
-            <li class="nav-item dropdown">
-              <a class="nav-link user-icon-text" style="color:#1996aa;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdownuser">
+              <a class="nav-link user-icon-text" style="color:#1996aa;" href="#" id="navbarDropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
+                <div class="dropdownuser-content">
+                  <%= link_to 'USER', users_path %>
+                </div>
               </a>
+              
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="triangle-border"></div>
                 <div class="triangle"></div>
