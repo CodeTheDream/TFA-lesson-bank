@@ -16,11 +16,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @search = search_params[:search]
-    @subject = search_params[:subject]
-    @district = search_params[:district]
-    @available_grade_levels = search_params[:available_grade_levels]
-    
+      
     if params[:lesson_id].present?
       @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
       @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
@@ -308,7 +304,7 @@ class CoursesController < ApplicationController
     params.permit(:source, :id)
   end
   def grade_params
-    params.permit(:grade_levels => {})
+    params.permit(:selected_grades => {})
   end
 
   def ajax_params
@@ -340,6 +336,6 @@ class CoursesController < ApplicationController
     private
 
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :available_grade_levels => {} )
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :selected_grades => {} )
   end
 end
