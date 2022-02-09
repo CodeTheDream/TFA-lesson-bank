@@ -10,13 +10,15 @@ class PagesController < ApplicationController
 #    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
     @districts = %w[ Durham Harnett Johnston Wake Warren ]
     query = search_params[:search].present? ? search_params[:search] : nil
+    @search = query
     @selected_subject  = search_params[:subject].present? ? search_params[:subject] : ''
     @selected_district  = search_params[:district].present? ? search_params[:district] : ''
-    @selected_grades = search_params[:available_grade_levels].present? ? search_params[:available_grade_levels].keys : []
+    @selected_grades = search_params[:available_grade_levels].present? ? search_params[:available_grade_levels] : {}
     @selected_types = []
     @selected_types << "courses" if params[:courses] == "true"
     @selected_types << "lessons" if params[:lessons] == "true"
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
+  
     if search_params[:available_grade_levels].present?
       @results =  @results.select {|x| (x.grade_level.split(' ') - (search_params[:available_grade_levels].keys)) != x.grade_level.split(' ')}
     end

@@ -13,7 +13,11 @@ class LessonsController < ApplicationController
     
   # GET /lessons/1
   # GET /lessons/1.json
-  def show
+  def show    
+    @search = search_params[:search]
+    @subject = search_params[:subject]
+    @district = search_params[:district]
+    @available_grade_levels = search_params[:available_grade_levels]
   end
     
   # GET /lessons/new
@@ -201,5 +205,13 @@ class LessonsController < ApplicationController
     policy_name = exception.policy.class.to_s.underscore
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
+  end
+  def search    
+    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
+  end
+    private
+
+  def search_params
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :available_grade_levels => {} )
   end
 end

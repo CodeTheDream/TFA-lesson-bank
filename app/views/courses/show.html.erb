@@ -2,12 +2,15 @@
   <!-- Button Back Section & Pencil-->   
   <div class="row top_session">
     <div class="col-8">
-      <div class="show_button_section btn btn_show_back">        
-        <%= link_to courses_path do  %>                
-          <i class=" fa fa-caret-left " style="color:gray;"></i>                
-          <span style="color: gray">BACK TO SEARCH RESULTS </span>
-        <% end %>   
-      </div> 
+        <div class="show_button_section btn btn_show_back">  
+        
+            <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons]  ) do  %> 
+              <i class=" fa fa-caret-left " style="color:gray;"></i>     
+                    
+              <span style="color: gray">BACK TO SEARCH RESULTS </span>
+           
+              <% end %>    
+        </div> 
     </div> 
     <div class="col-4 ">
       <% if current_user == @course.user || current_user&.role == 'admin'%>                   
@@ -210,17 +213,13 @@
                     </div>
                     </div>
                   </div>
-                </div>
-                             
+                </div>                             
             </div>
           </div>
         <%end%>
       <%end%>
     </div>
-       
-
-  </div> 
-
+  </div>
 </div> 
 
 
