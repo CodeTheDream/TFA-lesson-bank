@@ -11,7 +11,6 @@ RUN echo $MASTER_KEY >> /TFA-lesson-bank/master.key
 RUN echo $MASTER_KEY
 
 COPY . /TFA-lesson-bank
-#RUN rails webpacker:compile
 RUN rails assets:precompile
 
 # Add a script to be executed every time the container starts.

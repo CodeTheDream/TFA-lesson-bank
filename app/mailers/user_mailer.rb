@@ -1,15 +1,8 @@
 class UserMailer < ApplicationMailer
-  def welcome_email
-    @user = params[:user]
-    @url  = 'http://tfa.org/login'
-    mail(
-      from: "Teach for America team",
-      to: @user.email, 
-      subject: 'Welcome to Teach for America')
-  end
+
   def new_registration
     @user = params[:user]
-    @url  = 'http://tfa.org/login'
+    @url  = 'https://tfa-lesson-bank-2nhhr.ondigitalocean.app/users/sign_in'
     mail(
       from: "Teach for America team",
       to: @user.email,
@@ -18,7 +11,7 @@ class UserMailer < ApplicationMailer
   end
   def update_email
     @user = params[:user]
-    @url  = 'http://tfa.org/login'
+    @url  = 'https://tfa-lesson-bank-2nhhr.ondigitalocean.app/users/sign_in'
     mail(
       from: "Teach for America team",
       to: @user.email,
@@ -26,7 +19,7 @@ class UserMailer < ApplicationMailer
   end
   def new_email
     @user = params[:user]
-    @url  = 'http://tfa.org/login'
+    @url  = 'https://tfa-lesson-bank-2nhhr.ondigitalocean.app/users/sign_in'
     mail(
       from: "Teach for America team",
       to: @user,
@@ -34,7 +27,7 @@ class UserMailer < ApplicationMailer
   end
   # def password_reset_action
   #   @user = params[:user]
-  #   @url  = 'http://tfa.org/login'
+  #   @url  = 'https://tfa-lesson-bank-2nhhr.ondigitalocean.app/users/sign_in'
   #   # @user = User.find_by_email(params[:email])
   #   UserMailer.password_reset.deliver
   # end
