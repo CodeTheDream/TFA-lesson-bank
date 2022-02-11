@@ -1,34 +1,38 @@
 <div class="grid-container">    
-  <div class="search-filter">
+  <div class="search-filter"> 
   </div>
+   
   
   <div class="main-result">  
 
-    <div class="col  mx-auto ">   
-      <%= render 'layouts/search_user' %>
-    </div> 
- 
-    <div class="col mx-auto pagination li center">
-      <%= will_paginate @users %>
-    </div>
- 
+  <!-- Cards disabled -->
+  <div class="switch">
+    <label class="switch">
+      <input type="checkbox" id="card_checkbox">
+      <span class="slider round"></span> 
+    </label>
+  </div>
+  <%= render partial: "users/registrations/index_table" %>
 
-
-    <div class="col mb-4 mx-auto">   
-      <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
-    </div> 
-
-
-    <div class="center">
-      <% if @results.present? %>
-        <%= will_paginate @results %>
-      <% end %>
-    </div>  
-
-    <div class="card-container shadow-none">          
-      <% @users.each do |user| %>                       
-        <%= render 'user_card', user: user %>
-      <% end %>                               
-    </div>  
+  
+  <%# <button onclick="check()">View Cards</button>
+  <button onclick="uncheck()">View Table</button> %>
+  
+  
+ <%# <%= render partial: "users/registrations/index_card" %> 
+ <%# <%= render partial: "users/registrations/index_table" %> 
+  
   </div>
 </div>
+
+<script>
+  // function check() {
+    // document.getElementById("card_checkbox").checked = true;
+    //  <%= render partial: "users/registrations/index_card" %>;
+  // }
+
+  // function uncheck() {
+    // document.getElementById("card_checkbox").checked = false;
+    //  <%= render partial: "users/registrations/index_table" %>;
+  // }
+</script>
