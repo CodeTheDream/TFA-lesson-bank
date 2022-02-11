@@ -8,32 +8,22 @@
   <!-- Cards disabled -->
   <div class="switch">
     <label class="switch">
-      <input type="checkbox" id="card_checkbox">
+      <input type="checkbox" id="card_checkbox" onChange="check()">
       <span class="slider round"></span> 
     </label>
   </div>
-  <%= render partial: "users/registrations/index_table" %>
-  <%# <%= render partial: "users/registrations/index_card" %> 
-
-  
-  <%# <button onclick="check()">View Cards</button>
-  <button onclick="uncheck()">View Table</button> %>
-  
-  
- <%# <%= render partial: "users/registrations/index_card" %> 
- <%# <%= render partial: "users/registrations/index_table" %> 
-  
+  <div id="user_info">
+    <%= render partial: "users/registrations/index_card" %>
+  </div>
   </div>
 </div>
 
 <script>
-  // function check() {
-    // document.getElementById("card_checkbox").checked = true;
-    //  <%= render partial: "users/registrations/index_card" %>;
-  // }
-
-  // function uncheck() {
-    // document.getElementById("card_checkbox").checked = false;
-    //  <%= render partial: "users/registrations/index_table" %>;
-  // }
+  window.check = function check() {
+    if (document.getElementById("card_checkbox").checked) {
+      $("#user_info").html("<%= escape_javascript(render partial: 'index_table', locals: { } ) %>");
+    } else {
+      $("#user_info").html("<%= escape_javascript(render partial: 'index_card', locals: { } ) %>");
+    };
+  }
 </script>
