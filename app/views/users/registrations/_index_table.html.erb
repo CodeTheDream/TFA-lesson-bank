@@ -33,7 +33,7 @@
             <td><strong><%= user.role %></strong></td>
             <%# Show the buttons to show only the ones with their rights %>
           <%if current_user.role == "admin"%> 
-            <td><a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
+            <td><a href='/users/<%="#{user.id}"%>/edit' class="btn btn-outline-primary btn-sm">EDIT USER </a>
             <td><%= link_to "DELETE USER",  user_delete_path(user.id), method: :delete, :class => "btn btn-outline-primary btn-sm", data: { confirm: 'Are you sure?'} %> </td>      
             <td><a href='/users/<%="#{user.id}"%>/usercourses' class="btn btn-outline-primary btn-sm">USER'S CONTENT </a></td>
             <td><a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn btn-outline-primary btn-sm">WHO DOWNLOADED</a></td>
