@@ -16,14 +16,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def index
     @users = User.where('last_name iLike ? OR email iLike ?', "%#{search_params[:search]}%", "%#{search_params[:search]}#%")
     @users = @users.paginate(page: params[:page], :per_page => 18)
-    # @partial = params[:view] || "index_card"
   end 
-
-  # def index
-  #   @users = User.all
-  #   @partial = params[:view] || "index"
-  # end 
-
+ 
   def usercourses
     # @users = User.all
     @courses = @user.courses 
