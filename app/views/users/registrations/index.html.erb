@@ -1,34 +1,29 @@
 <div class="grid-container">    
-  <div class="search-filter">
+  <div class="search-filter"> 
   </div>
+   
   
   <div class="main-result">  
 
-    <div class="col  mx-auto ">   
-      <%= render 'layouts/search_user' %>
-    </div> 
- 
-    <div class="col mx-auto pagination li center">
-      <%= will_paginate @users %>
-    </div>
- 
-
-
-    <div class="col mb-4 mx-auto">   
-      <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
-    </div> 
-
-
-    <div class="center">
-      <% if @results.present? %>
-        <%= will_paginate @results %>
-      <% end %>
-    </div>  
-
-    <div class="card-container shadow-none">          
-      <% @users.each do |user| %>                       
-        <%= render 'user_card', user: user %>
-      <% end %>                               
-    </div>  
+  <!-- Cards disabled -->
+  <div class="switch">
+    <label class="switch">
+      <input type="checkbox" id="card_checkbox" onChange="check()">
+      <span class="slider round"></span> 
+    </label>
+  </div>
+  <div id="user_info">
+    <%= render partial: "users/registrations/index_card" %>
+  </div>
   </div>
 </div>
+
+<script>
+  window.check = function check() {
+    if (document.getElementById("card_checkbox").checked) {
+      $("#user_info").html("<%= escape_javascript(render partial: 'index_table', locals: { } ) %>");
+    } else {
+      $("#user_info").html("<%= escape_javascript(render partial: 'index_card', locals: { } ) %>");
+    };
+  }
+</script>
