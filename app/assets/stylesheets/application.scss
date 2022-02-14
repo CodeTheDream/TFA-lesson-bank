@@ -89,10 +89,14 @@ a.btn.callout-button:hover {
   background-color: #f0eeed;
 }
 .logo_end {
-  height: 45px;
+  width: 100;
+  height: auto;
+  // height: 45px;
   background-color: #f0eeed;
 }
 .logo_end img {
+  width: 100;
+  height: auto;
   align-items: center;
   // margin-bottom: 165px !important;
   height: 70px;
@@ -230,6 +234,13 @@ a[aria-expanded="true"] {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
+.tableuser thead tr th {
+  vertical-align: middle !important;
+}
+.tableuser tbody {
+  padding: 0.1px;
+  text-align: center;
+}
 @media only screen and (max-width: 1200px) {
   /* Force table to not be like tables anymore */
   #no-more-tables table,

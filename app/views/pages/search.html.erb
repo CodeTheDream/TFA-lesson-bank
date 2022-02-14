@@ -1,84 +1,77 @@
 
-<div class="grid-container">     
-
-      <div class="wrapper">          
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-          <div class="sidebar-header">              
-            <div class="search-filter">    
-              <%= form_tag(search_page_path, :method => 'get') do -%>
-                <div>
-                  <h5><b>Filters</b></h5>
-                  <small class="form-text text-muted mt-4">SUBJECT</small>
-                  <%= select_tag :subject, options_for_select(@subjects, @selected_subject), {include_blank: true, class: 'form-control'}  %>
-                </div>
-                <div class="mb-4">
-                  <small class="form-text text-muted">DISTRICT</small>
-                  <%= select_tag :district, options_for_select(@districts, @selected_district), { include_blank: true, class: 'form-control' } %>
-                </div>
-      ​           <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
-                <div class='grid-container-filter mb-2 checkbox-format '>                    
-                  <% @available_grade_levels.each do |grade_level|%>                       
-                    <%= check_box_tag "available_grade_levels[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
-                    <%= label_tag "available_grade_levels[#{grade_level}]", grade_level  %>
-                  <%end%>
-                </div>
-                <h6 class="form-text text-bold mt-4  mb-4">SHOW ME:</h6>
-                <div class='show-more checkbox-format'>                      
-                  <%= check_box_tag 'courses', 'true', @selected_types.include?("courses")%>
-                  <%= label_tag 'courses', 'COURSES'  %>
-                  <%= check_box_tag 'lessons', 'true', @selected_types.include?("lessons")%>
-                  <%= label_tag 'lessons', 'LESSONS'  %>                      
-                </div>     
-                <%= hidden_field_tag :search, params[:search] %>
-                <div class="mt-4">
-                  <%= submit_tag "FILTER RESULTS", :class => 'btn button_filter ' %>
-                </div>
-              <% end %>
+<div class="grid-container">   
+  <div class="wrapper">          
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+      <div class="sidebar-header">              
+        <div class="search-filter">    
+          <%= form_tag(search_page_path, :method => 'get') do -%>
+            <div>
+              <h5><b>Filters</b></h5>
+              <small class="form-text text-muted mt-4">SUBJECT</small>
+              <%= select_tag :subject, options_for_select(@subjects, @selected_subject), {include_blank: true, class: 'form-control'}  %>
             </div>
-          </div>   
-        </nav>          
-      </div>
-      <div class="main-result">  
-        <div class="col  mx-auto ">   
-          <%= render 'layouts/search_landingpage' %>
-        </div>   
-        
-          <button type="button" id="sidebarCollapse" class="btn button_filter_hide text-center mb-4"><i class="fa fa-solid fa-play fa-rotate-180 black-icon-play"></i>SHOW FILTERS</button>
-            
-        <div class="col mb-4 mx-auto">   
-          <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
-        </div>                 
-        <div class="center">
-          <% if @results.present? %><%= will_paginate @results %><% end %>
-        </div>    
-        <div class="card-container shadow-none">          
-          <% @results.each do |result| %>                       
-            <% if result.searchable_type == "Lesson" %>
-              <%= render 'lesson_card', lesson: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites] %>
-            <% else %>  
-              <%= render 'course_card',  course: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites]  %>
-            <% end %>                               
-          <%end%>              
-        </div>   
-      </div>
+            <div class="mb-4">
+              <small class="form-text text-muted">DISTRICT</small>
+              <%= select_tag :district, options_for_select(@districts, @selected_district), { include_blank: true, class: 'form-control' } %>
+            </div>
+  ​           <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
+            <div class='grid-container-filter mb-2 checkbox-format '>                    
+              <% @available_grade_levels.each do |grade_level|%>                       
+                <%= check_box_tag "available_grade_levels[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
+                <%= label_tag "available_grade_levels[#{grade_level}]", grade_level  %>
+              <%end%>
+            </div>
+            <h6 class="form-text text-bold mt-4  mb-4">SHOW ME:</h6>
+            <div class='show-more checkbox-format'>                      
+              <%= check_box_tag 'courses', 'true', @selected_types.include?("courses")%>
+              <%= label_tag 'courses', 'COURSES'  %>
+              <%= check_box_tag 'lessons', 'true', @selected_types.include?("lessons")%>
+              <%= label_tag 'lessons', 'LESSONS'  %>                      
+            </div>     
+            <%= hidden_field_tag :search, params[:search] %>
+            <div class="mt-4">
+              <%= submit_tag "FILTER RESULTS", :class => 'btn button_filter ' %>
+            </div>
+          <% end %>
+        </div>
+      </div>   
+    </nav>          
+  </div>
+  <div class="main-result">  
+    <div class="col  mx-auto ">   
+      <%= render 'layouts/search_landingpage' %>
+    </div>   
     
-  
-  
+      <button type="button" id="sidebarCollapse" class="btn button_filter_hide text-center mb-4"><i class="fa fa-solid fa-play fa-rotate-180 black-icon-play"></i>SHOW FILTERS</button>
+        
+    <div class="col mb-4 mx-auto">   
+      <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
+    </div>                 
+    <div class="center">
+      <% if @results.present? %><%= will_paginate @results %><% end %>   
+    </div>    
+    <div class="card-container shadow-none">          
+      <% @results.each do |result| %>                       
+        <% if result.searchable_type == "Lesson" %>
+          <%= render 'lesson_card', lesson: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
+        <% else %>  
+        <%= render 'course_card', course: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
+        <% end %>                               
+      <%end%>              
+    </div>        
+  </div>        
 </div> 
-
   
-<!-- jQuery CDN -->
-         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-         <!-- Bootstrap Js CDN -->
-         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-         <script type="text/javascript">
-             $(document).ready(function () {
-                 $('#sidebarCollapse').on('click', function () {
-                     $('#sidebar').toggleClass('active');
-                 });
-             });
-         </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
 
 

@@ -1,16 +1,34 @@
-<h1 class="title mt-5 mb-5 display-3" style="text-align: center;">Users</h1>
-<div id="no-more-tables" class="table-responsive card mb-5">
-  <div class="container container-custom rounded-3 container-bg">
+<div class="grid-container">    
+  <div class="search-filter">
+  </div>
+  
+  <div class="main-result">  
+
+    <div class="col  mx-auto ">   
+      <%= render 'layouts/search_user' %>
+    </div> 
+ 
+    <div class="col mx-auto pagination li center">
+      <%= will_paginate @users %>
+    </div>
+ 
+
+
+    <div class="col mb-4 mx-auto">   
+      <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
+    </div> 
+
+
+    <div class="center">
+      <% if @results.present? %>
+        <%= will_paginate @results %>
+      <% end %>
+    </div>  
+
+    <div class="card-container shadow-none">          
+      <% @users.each do |user| %>                       
+        <%= render 'user_card', user: user %>
+      <% end %>                               
+    </div>  
   </div>
 </div>
-
-<div class="center">
-  <%= will_paginate @users %>
-</div>    
-
-<div class="card-container shadow-none">          
-  <% @users.each do |user| %>                       
-    <%= render 'user_card', user: user %>
-  <% end %>                               
-</div>        
- 
