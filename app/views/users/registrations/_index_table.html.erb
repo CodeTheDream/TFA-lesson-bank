@@ -1,7 +1,6 @@
-<%# <h1 class="title mt-5 mb-5 display-3" style="text-align: center;">Users</h1> %>
-  <div class="col  mx-auto ">    
-    <%= render 'layouts/search_user' %>
-  </div>
+<div class="col  mx-auto ">    
+  <%= render 'layouts/search_user' %>
+</div>
 <div id="no-more-tables" class="table-responsive card mb-5">
   <div class="container container-custom rounded-3 container-bg">
 
@@ -22,8 +21,6 @@
             <th scope="col">Role </th> 
           </tr>
         </thead>    
-        <%# <%= current_user.role %>  
-        <%# p current_user.role       %>
         <tbody>
         <% @users.each do |user| %>           
           <tr class="apple_pagination" > 
@@ -46,16 +43,6 @@
             <td><a href='/users/<%="#{user.id}"%>' class="btn btn-outline-primary btn-sm">VIEW</a></td>
             <td><a href='/users/<%="#{user.id}"%>/usercourses' class="btn btn-outline-primary btn-sm">USER'S CONTENT </a></td>
           <%end%>
-
-            <%# <td><%= link_to 'Show', user_show_path(u), :class => "btn btn-outline-primary btn-sm" %>
-            <%# </td>  %> 
-            <%# <td><%= link_to 'Edit', user_edit_path(u), :class => "btn btn-outline-primary btn-sm"%>
-            <%# </td> %> 
-            
-            <%# <td> %>
-              <%# <%byebug%> 
-              <%# <%= link_to 'Destroy',  user_delete_path(u), method: :delete, :class => "btn btn-outline-primary btn-sm", data: { confirm: 'Are you sure?'} %>
-            <%# </td>             %>
           </tr>    
         <% end %>
         </tbody>         
