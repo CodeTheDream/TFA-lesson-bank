@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+      
     if params[:lesson_id].present?
       @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
       @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
@@ -23,6 +24,7 @@ class CoursesController < ApplicationController
     else
       @lesson = nil
     end
+    
   end
 
   # GET /courses/new
@@ -302,7 +304,7 @@ class CoursesController < ApplicationController
     params.permit(:source, :id)
   end
   def grade_params
-    params.permit(:grade_levels => {})
+    params.permit(:selected_grades => {})
   end
 
   def ajax_params
@@ -327,5 +329,13 @@ class CoursesController < ApplicationController
     policy_name = exception.policy.class.to_s.underscore
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
+  end
+  def search    
+    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
+  end
+    private
+
+  def search_params
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :selected_grades => {} )
   end
 end

@@ -47,26 +47,25 @@ button:focus {
   color: #1996aa;
 }
 
-// .align-dropdown {
-
-// }
-
 .user-container {
   position: relative;
   bottom: 0.5em;
   height: 50px;
   width: 50px;
-  background-color: white;
+  background-color: #1996aa;
   border-radius: 25px;
-  padding-left: 15px !important;
 }
 
 .user-icon-text {
   position: relative;
-  // right: 0.1em;
   top: 0.5em;
-  color: #1996aa;
-  padding-left: 2px !important;
+  color: #fff !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  text-align: center;
+  font-weight: bolder;
 }
 
 .dropdown-menu-container {
@@ -89,7 +88,17 @@ button:focus {
   left: -8.3em !important;
   top: 1em;
   text-align: right;
-  border-radius: 0rem;
+  border: none;
+  background-color: #1996aa !important;
+}
+.dropdown-item,
+.a:link {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+.dropdown-menu.show,
+:hover {
+  color: black !important;
 }
 
 .triangle {
@@ -100,21 +109,21 @@ button:focus {
   height: 0 !important;
   border-top: 10px solid transparent !important;
   border-bottom: 10px solid transparent !important;
-
-  border-right: 10px solid white;
+  border-right: 10px solid #1996aa;
 }
 
-.triangle-border {
-  position: absolute;
-  top: -0.7em;
-  right: -0.04em;
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
+// .triangle-border {
+//   position: absolute;
+//   top: -0.7em;
+//   right: -0.04em;
+//   width: 0;
+//   height: 0;
+//   border-top: 10px solid transparent;
 
-  border-right: 10px solid rgba(0, 0, 0, 0.15);
-}
+//   border-bottom: 10px solid transparent;
+
+//   border-right: 10px solid rgba(0, 0, 0, 0.15);
+// }
 
 .fancy-toggler.navbar-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(8,30,50)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
