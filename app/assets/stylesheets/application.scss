@@ -155,19 +155,81 @@ form button:not(.disabled):hover {
   background-color: #007bff;
   background-image: none;
 } */
-.line {
-  width: 100%;
-  box-sizing: border-box;
-}
-.line figure {
-  width: 45%;
-  margin: 0;
-  display: inline-block;
-}
+
 .hidden {
   display: none;
 }
+.my_alert {
+  color: red;
+}
 
+.move-down {
+  margin-top: 64px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: white;
+  color: black;
+  transition: all 0.3s;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+  padding: 5px;
+  background: white;
+}
+
+// #sidebar ul.components {
+//   // padding: 20px 0;
+//   // border-bottom: 1px solid #47748b;
+// }
+
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+#sidebar ul li a:hover {
+  color: #1996aa !important;
+  background: #fff;
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+  color: black;
+  background: white;
+}
+.button_filter_hide {
+  margin-left: 15px;
+  font-family: Montserrat;
+  border: none;
+}
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
 @media only screen and (max-width: 1200px) {
   /* Force table to not be like tables anymore */
   #no-more-tables table,
@@ -226,18 +288,7 @@ form button:not(.disabled):hover {
     margin-left: 8px;
   }
 }
-.my_alert {
-  color: red;
-}
 
-.move-down {
-  margin-top: 64px;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-}
 @media (max-width: 767px) {
   .logo_end img {
     width: 100% !important;
@@ -252,5 +303,39 @@ form button:not(.disabled):hover {
   }
   .triangle {
     left: 0em !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  // #sidebarCollapse span {
+  //   display: none;
+  // }
+}
+@media (max-width: 767px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  // #sidebarCollapse span {
+  //   display: none;
+  // }
+}
+@media (max-width: 480px) {
+  .button_filter_hide {
+    visibility: visible !important;
+  }
+}
+
+@media (min-width: 480px) {
+  .button_filter_hide {
+    visibility: hidden !important;
   }
 }
