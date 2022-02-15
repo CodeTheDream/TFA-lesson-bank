@@ -339,9 +339,16 @@ a[aria-expanded="true"] {
   //   display: none;
   // }
 }
+
 @media (max-width: 480px) {
   .button_filter_hide {
     visibility: visible !important;
+  }
+  .main-result {
+    margin-left: -35px !important;
+  }
+  #sidebar.active {
+    margin-left: -55px;
   }
 }
 
