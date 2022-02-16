@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_15_065957) do
+ActiveRecord::Schema.define(version: 2022_02_16_001853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 2022_01_15_065957) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "flags", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "flagable_id"
+    t.string "flagable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_flags_on_user_id"
   end
 
   create_table "grades", force: :cascade do |t|
@@ -165,6 +174,7 @@ ActiveRecord::Schema.define(version: 2022_01_15_065957) do
   add_foreign_key "documents", "courses"
   add_foreign_key "documents", "lessons"
   add_foreign_key "favorites", "users"
+  add_foreign_key "flags", "users"
   add_foreign_key "key_words", "lessons"
   add_foreign_key "lessons", "courses"
   add_foreign_key "logs", "documents"
