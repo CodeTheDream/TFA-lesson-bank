@@ -360,6 +360,15 @@ a[aria-expanded="true"] {
   #sidebar.active {
     margin-left: -55px;
   }
+  .grid-container {
+    grid-template-columns: 0fr 1fr;
+  }
+  .input-group {
+    width: 90% !important;
+  }
+  .center-items {
+    margin: 0%;
+  }
 }
 @media (min-width: 480px) {
   .button_filter_hide {
