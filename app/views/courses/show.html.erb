@@ -4,7 +4,7 @@
     <div class="col-8">
         <div class="show_button_section btn btn_show_back">  
         
-            <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons]  ) do  %> 
+            <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons], flags: params[:flags] ) do  %> 
               <i class=" fa fa-caret-left " style="color:gray;"></i>     
                     
               <span style="color: gray">BACK TO SEARCH RESULTS </span>
@@ -56,8 +56,13 @@
     </div>
 
     <!-- Right Side Course-->
-    <div class="col-lg-8 mt-5 mb-2 mr-auto">  
+    <div class="col-lg-8 mt-5 mb-4 mr-auto"> 
+      <div row>
       <!-- Course Description Section-->
+      <td class="col-lg-6" >
+      </td>
+
+      <td class="col-lg-1">
       <div class="star"> 
         <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
         <% if fav_course.include? @course.id %>
@@ -70,11 +75,31 @@
           <% end %>                     
         <%end %>
       </div>
+      </td>
 
+      <%# Flag Part%>
+    <td class="col-lg-1">
+    <div class="flag"> 
+        <%flag_course = Flag.where(user_id: current_user, flagable_type: "Course").distinct.pluck :flagable_id%>
+        <% if flag_course.include? @course.id %>
+          <%= link_to(unflag_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+          <% end %> 
+        <% else %> 
+          <%= link_to(flag_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:gray;"></i>
+          <% end %>                     
+        <%end %>
+      </div>
+      <td>
+      </div> <%# close row %>
       <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     
         </p>
+        <p></p>
+        <p></p>
+
       </div> 
 
       <!-- Course Right Side Documents Section-->      
@@ -155,6 +180,17 @@
                             <% else %>
                               <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
                                 <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                              <% end %>
+                            <%end %>
+                            <%# Flag %>
+                            <%flag_lesson = Flag.where(user_id: current_user, flagable_type: "Lesson").distinct.pluck :flagable_id%>
+                            <% if flag_lesson.include? lesson_show.id %>
+                              <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
+                              <% end %>
+                            <% else %>
+                              <%= link_to(flag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-flag fa-xs" style="color:gray;"></i>
                               <% end %>
                             <%end %>
                           </div>
