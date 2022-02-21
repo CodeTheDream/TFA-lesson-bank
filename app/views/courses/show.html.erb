@@ -144,7 +144,7 @@
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
                       <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
-                        <div class=" lesson_title_row  ">
+                        <div class="lesson_title_row">
                           <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
                           <div class="lesson-star">
                             <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
@@ -157,8 +157,8 @@
                                 <i class="fas fa-heart fa-xs" style="color:gray;"></i>
                               <% end %>
                             <%end %>
-                          </div>
-                        </div>
+                          </div> 
+                        </div>                       
                       <% end %>
                     </a>
                   </h4>
@@ -170,47 +170,47 @@
                 <% end %>
                   <div class="lesson_show_description"><p><%= lesson_show.description %></div>
                     <div class="panel-body">
-                    <div class="col-lg-8">  
-                      <table class="table">
-                            <thead>
-                              <tr>
-                                <th class=" blue_downloads" scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
-                                <th scope="col">TYPE</th>
-                                <th class="text-center" scope="col">PREVIEW</th>
-                                <th class="text-center" scope="col">DOWNLOAD</th>
-                              </tr>                        
-                            </thead>
-                        <% if lesson_show.present? %>
-                          <% lesson_show.documents.each do | lesson_document| %>                            
-                            <tbody>
-                              <tr>
-                                <th class=" mobile_document_title" scope="row">
-                                  <%= lesson_document.name.titleize %>
-                                </th>
-                                <% if lesson_document.file.attached? %>
-                                  <th scope="row">
-                                  <span style="color: gray"><%= lesson_document.kind.upcase %></span>
+                      <div class="col-lg-8">  
+                        <table class="table">
+                              <thead>
+                                <tr>
+                                  <th class=" blue_downloads" scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+                                  <th scope="col">TYPE</th>
+                                  <th class="text-center" scope="col">PREVIEW</th>
+                                  <th class="text-center" scope="col">DOWNLOAD</th>
+                                </tr>                        
+                              </thead>
+                          <% if lesson_show.present? %>
+                            <% lesson_show.documents.each do | lesson_document| %>                            
+                              <tbody>
+                                <tr>
+                                  <th class=" mobile_document_title" scope="row">
+                                    <%= lesson_document.name.titleize %>
                                   </th>
-                                <% end %> 
-                                <% if lesson_document.file.representable? %>
-                                  <th class="search_icon text-center" scope="row">                                
-                                    <%= link_to (lesson_document.file) do %>
-                                      <i class=" fa fa-search" style="color:gray;"></i> 
-                                    <% end %>   
-                                  </th>
-                                <%end%>                        
-                                <th class="text-center download_icon" scope="row">
-                                  <%# CREATE LOG FOR LESSONS %>
-                                  <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
-                                    <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                                  <% end %>  
-                                </th>                                
-                              </tr>
-                            </tbody>  
-                          <% end %>
-                        <% end %>                            
-                      </table>                     
-                    </div>
+                                  <% if lesson_document.file.attached? %>
+                                    <th scope="row">
+                                    <span style="color: gray"><%= lesson_document.kind.upcase %></span>
+                                    </th>
+                                  <% end %> 
+                                  <% if lesson_document.file.representable? %>
+                                    <th class="search_icon text-center" scope="row">                                
+                                      <%= link_to (lesson_document.file) do %>
+                                        <i class=" fa fa-search" style="color:gray;"></i> 
+                                      <% end %>   
+                                    </th>
+                                  <%end%>                        
+                                  <th class="text-center download_icon" scope="row">
+                                    <%# CREATE LOG FOR LESSONS %>
+                                    <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
+                                      <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                                    <% end %>  
+                                  </th>                                
+                                </tr>
+                              </tbody>  
+                            <% end %>
+                          <% end %>                            
+                        </table>                     
+                      </div>
                     </div>
                   </div>
                 </div>                             

@@ -218,7 +218,8 @@ ul li.favorites::marker {
   position: relative;
   bottom: 1.6em;
   float: right;
-  margin-right: 0%;
+  // margin-right: 0%;
+  min-height: 50px;
 }
 
 .checkbox-format input[type="checkbox"] {
