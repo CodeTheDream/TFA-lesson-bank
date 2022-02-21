@@ -149,21 +149,11 @@ class CoursesController < ApplicationController
     hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id }
     @flag = Flag.new(hash)
     if @flag.save
-      if flag_params[:source] == "course_edit"
-        flash.now.alert = "You flagged this course"
-        redirect_to course_lesson_form_courses_path(course_id: @course.id)
-      elsif flag_params[:source] == "course_show"
-        flash.now.alert = "You flagged this course"
-        redirect_to course_path(course_id: @course.id)
-      end
+      flash.now.alert = "You flagged this course"
+      redirect_to course_path(course_id: @course.id)
     else
-      if flag_params[:source] == "course_edit"
-        flash.now.alert = @course.errors.full_messages.to_sentence
-        redirect_to course_lesson_form_courses_path(course_id: @course.id)
-      elsif flag_params[:source] == "course_show"
-        flash.now.alert = "You flagged this course"
-        redirect_to course_path(course_id: @course.id)
-      end
+      flash.now.alert = "You flagged this course"
+      redirect_to course_path(course_id: @course.id)
     end
   end
 
@@ -189,19 +179,11 @@ class CoursesController < ApplicationController
   def unflag
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Flag.find_by(user_id: current_user.id, flagable_id: @course.id).present?
-      if flag_params[:source] == "course_edit"
-        redirect_to course_lesson_form_courses_path(course_id: @course.id)
-      elsif flag_params[:source] == "course_show"
-        redirect_to course_path(course_id: @course.id)
-      end
+      redirect_to course_path(course_id: @course.id)
     else
-    @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
-    Flag.delete(@unflag)
-      if flag_params[:source] == "course_edit"
-        redirect_to course_lesson_form_courses_path(course_id: @course.id)
-      elsif flag_params[:source] == "course_show"
-        redirect_to course_path(course_id: @course.id)
-      end
+      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
+      Flag.delete(@unflag)
+      redirect_to course_path(course_id: @course.id)
     end
   end
 

@@ -13,12 +13,7 @@
     <% end %>
     <div class="row big_card">  
       <!-- Course Favorites Section-->       
-      <div class="col-lg-12 "> 
-      <div row> 
-      <td class="col-lg-10" >
-      </td>
-      <td class="col-lg-1" >
-      <div class="star">      
+      <div class="col-lg-12 ">      
         <% if @course.id.present?%>
           <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
           <% if fav_course.include? @course.id %>
@@ -31,27 +26,7 @@
             <% end %>                     
           <%end %>
         <%end%>
-      </td>
       </div>
-        <%# Flag %>
-      <td class="col-lg-1" >
-      <div class="flag">
-        <% if @course.id.present?%>
-          <%flag_course = Flag.where(user_id: current_user, flagable_type: "Course").distinct.pluck :flagable_id%>
-          <% if flag_course.include? @course.id %>
-            <%= link_to(unflag_course_path(id: @course.id, source: "course_edit")) do %>  
-              <i class="fas fa-flag fa-lg" style="color:red;"></i>
-            <% end %> 
-          <% else %> 
-            <%= link_to(flag_course_path(id: @course.id, source: "course_edit")) do %> 
-              <i class="fas fa-flag fa-lg" style="color:gray;"></i>
-            <% end %>                     
-          <%end %>
-        <%end%>
-      </div>
-    </td>
-  </div> <%# Close the row        %>
-      
       <!-- Left Side Course-->
       <div class="col-lg-4 mb-5">
         <div class="show_left">
