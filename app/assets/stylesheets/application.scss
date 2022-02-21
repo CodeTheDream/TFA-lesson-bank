@@ -387,7 +387,8 @@ a[aria-expanded="true"] {
     grid-template-columns: 0fr 1fr;
   }
   .input-group {
-    width: 90% !important;
+    width: 100%;
+    height: auto;
   }
   .center-items {
     margin: 0%;
