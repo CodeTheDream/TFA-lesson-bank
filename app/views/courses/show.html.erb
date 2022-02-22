@@ -74,12 +74,8 @@
             <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
           <% end %>                     
         <%end %>
-      </div>
-      </td>
-
-      <%# Flag Part%>
-    <td class="col-lg-1">
-    <div class="flag"> 
+        
+        <%# Flag Section%>
         <%flag_course = Flag.where(user_id: current_user, flagable_type: "Course").distinct.pluck :flagable_id%>
         <% if flag_course.include? @course.id %>
           <%= link_to(unflag_course_path(source: "course_show")) do  %> 
@@ -91,15 +87,12 @@
           <% end %>                     
         <%end %>
       </div>
-      <td>
+      </td>
       </div> <%# close row %>
       <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     
         </p>
-        <p></p>
-        <p></p>
-
       </div> 
 
       <!-- Course Right Side Documents Section-->      

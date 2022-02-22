@@ -108,6 +108,19 @@ class LessonsController < ApplicationController
     end
   end
 
+  def flag
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    hash = {flagable_type: "Lesson", flagable_id: params[:lesson_id], user_id: current_user.id }
+    @flag = Flag.new(hash)
+    if @flag.save
+      flash.now.alert = "You flagged this lesson"
+      redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+    else
+      flash.now.alert = "You flagged this lesson"
+      redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+    end
+  end
+
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id]).present?
@@ -124,6 +137,17 @@ class LessonsController < ApplicationController
       elsif favorite_params[:source] == "lesson_show"
         redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
       end
+    end
+  end
+
+  def unflag
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    if !Flag.find_by(user_id: current_user.id, flagable_id: params[:lesson_id]).present?
+      redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
+    else
+      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: params[:lesson_id])
+      Flag.delete(@unflag)
+      redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)    
     end
   end
 
