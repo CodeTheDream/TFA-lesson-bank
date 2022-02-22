@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def set_default_status
-    self.status ||= :Pending
+    self.status ||= :Approved
   end
 
 end
