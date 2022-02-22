@@ -21,9 +21,9 @@
 <script>
   window.check = function check() {
     if (document.getElementById("card_checkbox").checked) {
-      $("#user_info").html("<%= escape_javascript(render partial: 'index_table', locals: { } ) %>");
-    } else {
       $("#user_info").html("<%= escape_javascript(render partial: 'index_card', locals: { } ) %>");
+    } else {
+      $("#user_info").html("<%= escape_javascript(render partial: 'index_table', locals: { } ) %>");
     };
   }
 </script>
