@@ -64,8 +64,7 @@
 
       <td class="col-lg-1">
       <div class="star"> 
-        <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
-        <% if fav_course.include? @course.id %>
+        <% if @fav_courses.include? @course.id %>
           <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
             <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
@@ -76,8 +75,7 @@
         <%end %>
         
         <%# Flag Section%>
-        <%flag_course = Flag.where(user_id: current_user, flagable_type: "Course").distinct.pluck :flagable_id%>
-        <% if flag_course.include? @course.id %>
+        <% if @flagged_courses.include? @course.id %>
           <%= link_to(unflag_course_path(source: "course_show")) do  %> 
             <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
@@ -165,8 +163,7 @@
                         <div class=" lesson_title_row  ">
                           <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
                           <div class="lesson-star">
-                            <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                            <% if fav_lesson.include? lesson_show.id %>
+                            <% if @fav_lessons.include? lesson_show.id %>
                               <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
                                 <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
                               <% end %>
@@ -176,8 +173,7 @@
                               <% end %>
                             <%end %>
                             <%# Flag %>
-                            <%flag_lesson = Flag.where(user_id: current_user, flagable_type: "Lesson").distinct.pluck :flagable_id%>
-                            <% if flag_lesson.include? lesson_show.id %>
+                            <% if @flagged_lessons.include? lesson_show.id %>
                               <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
                                 <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
                               <% end %>
