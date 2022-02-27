@@ -39,6 +39,11 @@ main {
   padding-top: 40px;
   padding-bottom: 45px;
 }
+.custom-container {
+  margin: 40px auto;
+  margin-bottom: 5px;
+}
+
 a,
 a:link,
 a:visited,
@@ -100,6 +105,7 @@ a.btn.callout-button:hover {
   align-items: center;
   // margin-bottom: 165px !important;
   height: 70px;
+  margin-bottom: -25px;
 }
 .original_logo {
   max-width: 100px;
@@ -159,83 +165,9 @@ form button:not(.disabled):hover {
   background-color: #007bff;
   background-image: none;
 } */
-.line {
-  width: 100%;
-  box-sizing: border-box;
-}
-.line figure {
-  width: 45%;
-  margin: 0;
-  display: inline-block;
-}
+
 .hidden {
   display: none;
-}
-
-.tableuser thead tr th {
-  vertical-align: middle !important;
-}
-.tableuser tbody {
-  padding: .1px;
-  text-align: center;
-}
-@media only screen and (max-width: 1200px) {
-  /* Force table to not be like tables anymore */
-  #no-more-tables table,
-  #no-more-tables thead,
-  #no-more-tables tbody,
-  #no-more-tables th,
-  #no-more-tables td,
-  #no-more-tables tr {
-    display: block;
-  }
-
-  /* Hide table headers (but not display: none;, for accessibility) */
-  #no-more-tables thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  #no-more-tables tr {
-    border: 1px solid #ccc;
-  }
-
-  #no-more-tables td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-    white-space: normal;
-    text-align: left;
-  }
-
-  #no-more-tables td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    text-align: left;
-    font-weight: bold;
-  }
-
-  /*
-   Label the data
-   */
-  #no-more-tables td:before {
-    content: attr(data-title);
-  }
-}
-@media (max-width: 992px) {
-  .pic_landing {
-    padding-bottom: 20px;
-    margin-left: 8px;
-  }
 }
 .my_alert {
   color: red;
@@ -249,6 +181,167 @@ form button:not(.disabled):hover {
   display: flex;
   justify-content: center;
 }
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: white;
+  color: black;
+  transition: all 0.3s;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+  padding: 5px;
+  background: white;
+}
+
+// #sidebar ul.components {
+//   // padding: 20px 0;
+//   // border-bottom: 1px solid #47748b;
+// }
+
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+#sidebar ul li a:hover {
+  color: #1996aa !important;
+  background: #fff;
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+  color: black;
+  background: white;
+}
+.button_filter_hide {
+  margin-left: 15px;
+  font-family: Montserrat;
+  border: none;
+}
+
+.tableuser thead tr th {
+  vertical-align: middle !important;
+}
+.tableuser tbody {
+  padding: 0.1px;
+  text-align: center;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+// @media only screen and (max-width: 1200px) {
+//   /* Force table to not be like tables anymore */
+//   #no-more-tables table,
+//   #no-more-tables thead,
+//   #no-more-tables tbody,
+//   #no-more-tables th,
+//   #no-more-tables td,
+//   #no-more-tables tr {
+//     display: block;
+//   }
+
+//   /* Hide table headers (but not display: none;, for accessibility) */
+//   #no-more-tables thead tr {
+//     position: absolute;
+//     top: -9999px;
+//     left: -9999px;
+//   }
+
+//   #no-more-tables tr {
+//     border: 1px solid #ccc;
+//   }
+
+//   #no-more-tables td {
+//     /* Behave  like a "row" */
+//     border: none;
+//     border-bottom: 1px solid #eee;
+//     position: relative;
+//     padding-left: 50%;
+//     white-space: normal;
+//     text-align: center;
+//   }
+
+//   #no-more-tables td:before {
+//     /* Now like a table header */
+//     position: absolute;
+//     /* Top/left values mimic padding */
+//     top: 6px;
+//     left: 6px;
+//     width: 45%;
+//     padding-right: 10px;
+//     white-space: nowrap;
+//     text-align: center;
+//     font-weight: bold;
+//   }
+
+//   /*
+//    Label the data
+//    */
+//   #no-more-tables td:before {
+//     content: attr(data-title);
+//   }
+// }
+
+@media (max-width: 480px) {
+  /* Force table to not be like tables anymore */
+
+  // th .arrow-enter,
+  // .download_arrow {
+  //   display: block;
+  // }
+  tr {
+    display: block;
+  }
+  th {
+    display: none;
+    text-align: center !important;
+  }
+  .blue_downloads,
+  .mobile_document_title,
+  .search_icon,
+  .download_icon,
+  .doc_type {
+    visibility: visible !important;
+    display: block !important;
+  }
+  // tbody {
+  //   vertical-align: middle;
+  // }
+  .big_card {
+    margin-left: 0% !important;
+  }
+  .top_session {
+    margin-top: -320px;
+  }
+}
+
+@media (max-width: 992px) {
+  .pic_landing {
+    padding-bottom: 20px;
+    margin-left: 8px;
+  }
+}
+
 @media (max-width: 767px) {
   .logo_end img {
     width: 100% !important;
@@ -263,5 +356,49 @@ form button:not(.disabled):hover {
   }
   .triangle {
     left: 0em !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #sidebar {
+    margin-left: -250px;
+    padding: 0;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .button_filter_hide {
+    visibility: visible !important;
+  }
+  .main-result {
+    margin-left: -10px !important;
+    margin-top: 40px;
+  }
+  #sidebar.active {
+    margin-left: -55px;
+  }
+  #sidebar .sidebar-header {
+    padding: 0%;
+  }
+  .grid-container {
+    grid-template-columns: 0fr 1fr;
+  }
+  .input-group {
+    width: 100%;
+    height: auto;
+  }
+  .center-items {
+    margin: 0%;
+  }
+  .top_session {
+    margin-top: -120px;
+  }
+}
+@media (min-width: 480px) {
+  .button_filter_hide {
+    visibility: hidden !important;
   }
 }
