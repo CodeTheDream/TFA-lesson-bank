@@ -109,8 +109,8 @@ class LessonsController < ApplicationController
   end
 
   def flag
-    @lesson = params[:id].present? ? Lesson.find(params[:id]) : nil
-    hash = {flagable_type: "Lesson", flagable_id: params[:id], user_id: current_user.id, description: flag_params["flag_description"] }
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    hash = {flagable_type: "Lesson", flagable_id: params[:lesson_id], user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
     if @flag.save
       flash.now.alert = "You flagged this lesson"

@@ -80,7 +80,7 @@
             <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
         <% else %> 
-          <%= link_to "#flagModal", data: { toggle: "modal" } do %>
+          <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
             <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
           <% end %>
         <%end %>
@@ -256,7 +256,7 @@
                   <div class="center-modal-title"><h4 class="modal-title">Flag Lesson</h4></div>
                 </div>
                 <div class="modal-body">
-                  <%= form_tag flag_course_lesson_path(id: lesson_show.id, course_id: @course.id) do %>
+                  <%= form_tag flag_course_lesson_path(id: @course.id, lesson_id: lesson_show.id, course_id: @course.id) do %>
                     <%= text_field_tag "flag_description", "Reason for flagging this content", required: true, class: "form-control" %>
                     <div class="modal-footer actions">
                       <%= submit_tag "Add Flag" %>
