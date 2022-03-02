@@ -148,15 +148,10 @@ class CoursesController < ApplicationController
   end
 
   def flag
-    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id }
+    hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
     if @flag.save
       flash.now.alert = "You flagged this course"
-      # byebug
-      # format.js { render :partial => 'courses/flag_modal.js.erb' }
-      # byebug
-      
       redirect_to course_path(course_id: @course.id)
     else
       flash.now.alert = "You flagged this course"
@@ -335,7 +330,7 @@ class CoursesController < ApplicationController
     params.permit(:source, :id)
   end
   def flag_params
-    params.permit(:source, :id)
+    params.permit(:flag_description)
   end
   def grade_params
     params.permit(:selected_grades => {})

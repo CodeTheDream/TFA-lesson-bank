@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     member do
       get :favorite
       get :unfavorite
-      get :flag
+      post :flag
       get :unflag
     end
     member do
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
         get :download
         get :favorite
         get :unfavorite
-        get :flag
+        post :flag
         get :unflag
       end
     end
