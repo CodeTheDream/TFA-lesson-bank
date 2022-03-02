@@ -325,7 +325,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
-  spring (>= 1.0)
+  spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
