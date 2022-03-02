@@ -153,6 +153,10 @@ class CoursesController < ApplicationController
     @flag = Flag.new(hash)
     if @flag.save
       flash.now.alert = "You flagged this course"
+      # byebug
+      # format.js { render :partial => 'courses/flag_modal.js.erb' }
+      # byebug
+      
       redirect_to course_path(course_id: @course.id)
     else
       flash.now.alert = "You flagged this course"
