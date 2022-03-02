@@ -80,7 +80,7 @@
             <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
         <% else %> 
-          <%= link_to "#flagModal", data: { toggle: "modal" } do %>
+          <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
             <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
           <% end %>
         <%end %>
@@ -184,7 +184,7 @@
                               <% end %>
                             <% else %>
                               <%= link_to "#flagLessonModal#{lesson_show.id}", data: { toggle: "modal" } do %>
-                                <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myLessonFlag"></i>
+                                <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
                               <% end %>
                             <%end %>
                           </div>
