@@ -152,7 +152,6 @@ class CoursesController < ApplicationController
     @flag = Flag.new(hash)
     @course_creator_id = @course.user_id
     @course_creator_email = @course.user.email
-    byebug
     if @flag.save
       flash.now.alert = "You flagged this course"
       UserMailer.with(user: @course_creator_email).send_flag_notification.deliver_now

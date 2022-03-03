@@ -115,8 +115,6 @@ class LessonsController < ApplicationController
     @lesson_course_id = @lesson.course_id
     @course_user = Course.where(id: @lesson_course_id).pluck(:user_id)
     @lesson_creator_email = User.where(id: @course_user).pluck(:email)
-    byebug
-
     if @flag.save
       flash.now.alert = "You flagged this lesson"
       UserMailer.with(user: @lesson_creator_email).send_flag_notification.deliver_now
