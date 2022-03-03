@@ -152,6 +152,9 @@ class CoursesController < ApplicationController
     @flag = Flag.new(hash)
     if @flag.save
       flash.now.alert = "You flagged this course"
+      byebug
+      UserMailer.send_flag_notification.deliver_now
+      byebug
       redirect_to course_path(course_id: @course.id)
     else
       flash.now.alert = "You flagged this course"
@@ -188,7 +191,6 @@ class CoursesController < ApplicationController
       redirect_to course_path(course_id: @course.id)
     end
   end
-
 
   def log
     @document_creator = Document.find(@document.id).lesson_id.present? ? Document.find(@document.id).lesson.course.user : Document.find(@document.id).course.user
