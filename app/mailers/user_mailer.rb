@@ -26,14 +26,14 @@ class UserMailer < ApplicationMailer
       subject: "You Update your email: #{@user.email}")
   end
   def send_flag_notification
+    @user = params[:user]
     @adminsmail = User.where(role:"admin").pluck(:email)
     @adminsmail.each do |mail|
-      byebug
       @url  = 'https://tfa-lesson-bank-2nhhr.ondigitalocean.app/users/sign_in'
       mail(
         from: "Teach for America team",  
         to: @adminsmail, 
-        subject: "Content has been flagged")
+        subject: "Content created by #{@user} has been flagged")
     end
   end
   # def password_reset_action
