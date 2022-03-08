@@ -13,7 +13,7 @@
     </label>
   </div>
   <div id="user_info">
-    <%= render partial: "users/registrations/index_card" %>
+    <%= render partial: "users/registrations/index_table" %>
   </div>
   </div>
 </div>
@@ -21,9 +21,9 @@
 <script>
   window.check = function check() {
     if (document.getElementById("card_checkbox").checked) {
-      $("#user_info").html("<%= escape_javascript(render partial: 'index_table', locals: { } ) %>");
-    } else {
       $("#user_info").html("<%= escape_javascript(render partial: 'index_card', locals: { } ) %>");
+    } else {
+      $("#user_info").html("<%= escape_javascript(render partial: 'index_table', locals: { } ) %>");
     };
   }
 </script>

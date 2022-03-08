@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :confirmable
   has_many :courses, dependent: :destroy 
   has_many :favorites, dependent: :destroy
+  has_many :flags, dependent: :destroy
   has_many :logs, dependent: :destroy
 
   before_create :set_default_role, :set_default_status
@@ -25,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def set_default_status
-    self.status ||= :Pending
+    self.status ||= :Approved
   end
 
 end

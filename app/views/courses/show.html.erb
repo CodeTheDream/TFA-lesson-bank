@@ -4,7 +4,7 @@
     <div class="col-8">
         <div class="show_button_section btn btn_show_back">  
         
-            <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons]  ) do  %> 
+            <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons], flags: params[:flags] ) do  %> 
               <i class=" fa fa-caret-left " style="color:gray;"></i>     
                     
               <span style="color: gray">BACK TO SEARCH RESULTS </span>
@@ -56,11 +56,15 @@
     </div>
 
     <!-- Right Side Course-->
-    <div class="col-lg-8 mt-5 mb-2 mr-auto">  
+    <div class="col-lg-8 mt-5 mb-4 mr-auto"> 
+      <div row>
       <!-- Course Description Section-->
+      <td class="col-lg-6" >
+      </td>
+
+      <td class="col-lg-1">
       <div class="star"> 
-        <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
-        <% if fav_course.include? @course.id %>
+        <% if @fav_courses.include? @course.id %>
           <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
             <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
           <% end %> 
@@ -69,7 +73,24 @@
             <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
           <% end %>                     
         <%end %>
+        
+        <%# Flag Section%>
+        <% if @flagged_courses.include? @course.id %>
+          <%= link_to(unflag_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+          <% end %> 
+        <% else %> 
+          <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
+            <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
+          <% end %>
+        <%end %>
       </div>
+      </td>
+      </div> <%# close row %>
+
+
+
+
 
       <div class="mb-3 course_show_description">
         <p>
@@ -147,8 +168,7 @@
                         <div class="lesson_title_row">
                           <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
                           <div class="lesson-star">
-                            <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                            <% if fav_lesson.include? lesson_show.id %>
+                            <% if @fav_lessons.include? lesson_show.id %>
                               <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
                                 <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
                               <% end %>
@@ -157,8 +177,18 @@
                                 <i class="fas fa-heart fa-xs" style="color:gray;"></i>
                               <% end %>
                             <%end %>
-                          </div> 
-                        </div>                       
+                            <%# Flag %>
+                            <% if @flagged_lessons.include? lesson_show.id %>
+                              <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
+                              <% end %>
+                            <% else %>
+                              <%= link_to "#flagLessonModal#{lesson_show.id}", data: { toggle: "modal" } do %>
+                                <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
+                              <% end %>
+                            <%end %>
+                          </div>
+                        </div>
                       <% end %>
                     </a>
                   </h4>
@@ -216,26 +246,48 @@
                 </div>                             
             </div>
           </div>
+          <% modalId = "flagLessonModal#{lesson_show.id}" %>
+          <div id=<%=modalId%> class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <div class="center-modal-title"><h4 class="modal-title">Flag Lesson</h4></div>
+                </div>
+                <div class="modal-body">
+                  <%= form_tag flag_course_lesson_path(id: @course.id, lesson_id: lesson_show.id, course_id: @course.id) do %>
+                    <%= text_field_tag "flag_description", "Reason for flagging this content", required: true, class: "form-control" %>
+                    <div class="modal-footer actions">
+                      <%= submit_tag "Add Flag" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         <%end%>
       <%end%>
     </div>
   </div>
 </div> 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="flagCourseModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="center-modal-title"><h4 class="modal-title">Flag Course</h4></div>
+      </div>
+      <div class="modal-body">
+        <%= form_tag flag_course_path do %>
+          <%= text_field_tag "flag_description", "Reason for flagging this content", required: true, class: "form-control" %>
+          <div class="modal-footer actions">
+            <%= submit_tag "Add Flag" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
