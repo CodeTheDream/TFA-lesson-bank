@@ -25,7 +25,7 @@
                   <div class="triangle" ></div>
                   <%= link_to 'MY MATERIAL', search_page_path(mycontent: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades]), class: 'dropdown-item' %>
                   <%= link_to 'FAVORITES', search_page_path(favorites: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades]), class: 'dropdown-item' %>
-                  <%# <%= link_to 'FLAGS', search_page_path(flags: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades]), class: 'dropdown-item' %> 
+                  <%# <%= link_to 'FLAGS', search_page_path(flags: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades]), class: 'dropdown-item'  %>
                   <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
                   <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
                 </div>
