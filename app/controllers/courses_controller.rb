@@ -336,6 +336,7 @@ class CoursesController < ApplicationController
     private
 
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :selected_grades => {} )
+  
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades => {} )
   end
 end
