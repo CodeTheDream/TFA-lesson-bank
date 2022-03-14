@@ -150,8 +150,11 @@ class CoursesController < ApplicationController
   def flag
     hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
+    @course_creator_id = @course.user_id
+    @course_creator_email = @course.user.email
     if @flag.save
       flash.now.alert = "You flagged this course"
+      UserMailer.with(user: @course_creator_email).send_flag_notification.deliver_now
       redirect_to course_path(course_id: @course.id)
     else
       flash.now.alert = "You flagged this course"
@@ -188,7 +191,6 @@ class CoursesController < ApplicationController
       redirect_to course_path(course_id: @course.id)
     end
   end
-
 
   def log
     @document_creator = Document.find(@document.id).lesson_id.present? ? Document.find(@document.id).lesson.course.user : Document.find(@document.id).course.user

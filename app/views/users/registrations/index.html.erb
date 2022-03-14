@@ -1,20 +1,18 @@
-<div class="grid-container">    
-  <div class="search-filter"> 
-  </div>
-   
-  
+<div class="container-mt5">    
+  <%# <div class="search-filter"> </div> %>
   <div class="main-result">  
-
-  <!-- Cards disabled -->
-  <div class="switch">
-    <label class="switch">
-      <input type="checkbox" id="card_checkbox" onChange="check()">
-      <span class="slider round"></span> 
-    </label>
-  </div>
-  <div id="user_info">
-    <%= render partial: "users/registrations/index_table" %>
-  </div>
+    <div class="col  mx-auto ">   
+      <!-- Cards disabled -->
+      <div class="switch">
+        <label class="switch">
+          <input type="checkbox" id="card_checkbox" onChange="check()">
+          <span class="slider round"></span> 
+        </label>
+      </div>
+      <div id="user_info">
+        <%= render partial: "users/registrations/index_table" %>
+      </div>
+    </div>
   </div>
 </div>
 

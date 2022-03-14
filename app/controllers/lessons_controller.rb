@@ -112,8 +112,12 @@ class LessonsController < ApplicationController
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = {flagable_type: "Lesson", flagable_id: params[:lesson_id], user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
+    @lesson_course_id = @lesson.course_id
+    @course_user = Course.where(id: @lesson_course_id).pluck(:user_id)
+    @lesson_creator_email = User.where(id: @course_user).pluck(:email)
     if @flag.save
       flash.now.alert = "You flagged this lesson"
+      UserMailer.with(user: @lesson_creator_email).send_flag_notification.deliver_now
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
     else
       flash.now.alert = "You flagged this lesson"
@@ -189,7 +193,7 @@ class LessonsController < ApplicationController
   end
 
   def flag_params
-    params.permit(:flag_description)
+    params.permit(:flag_description, :authenticity_token, :commit, :lesson_id, :course_id, :id)
   end
 
   def document_params
