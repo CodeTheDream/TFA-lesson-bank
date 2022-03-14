@@ -15,8 +15,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1
   # GET /courses/1.json
-  def show
-      
+  def show        
     if params[:lesson_id].present?
       @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
       @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
@@ -57,7 +56,9 @@ class CoursesController < ApplicationController
     @course.user = current_user
     @course.state = 'NC'
     @course.courses_grades.delete_all
-    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
+   
+    
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_levels_hash.keys) : nil
     @course.grades << new_grades if new_grades.present?
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
@@ -337,6 +338,6 @@ class CoursesController < ApplicationController
 
   def search_params
   
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades => {} )
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
   end
 end
