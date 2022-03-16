@@ -15,15 +15,11 @@ class CoursesController < ApplicationController
 
   # GET /courses/1
   # GET /courses/1.json
-<<<<<<< HEAD
-  def show        
-=======
   def show
     @fav_courses = Favorite.where(user_id: current_user.id, favoritable_type: "Course").distinct.pluck(:favoritable_id)
     @flagged_courses = Flag.where(flagable_type: "Course").distinct.pluck(:flagable_id)
     @fav_lessons = Favorite.where(user_id: current_user.id, favoritable_type: "Lesson").distinct.pluck(:favoritable_id)
     @flagged_lessons = Flag.where(flagable_type: "Lesson").distinct.pluck(:flagable_id)  
->>>>>>> a5d9b986d81a29c1a8d402f1aee42ca70f88cd5b
     if params[:lesson_id].present?
       @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
       @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))

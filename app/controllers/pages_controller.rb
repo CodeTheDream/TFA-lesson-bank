@@ -55,10 +55,6 @@ class PagesController < ApplicationController
   private
 
   def search_params
-<<<<<<< HEAD
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades_back, :selected_grades => {} )
-=======
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :flags, :available_grade_levels => {} )
->>>>>>> a5d9b986d81a29c1a8d402f1aee42ca70f88cd5b
   end
 end
