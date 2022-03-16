@@ -17,7 +17,7 @@
                 <tbody>
                   <% @user.courses.each do |course| %>
                     <tr>
-                      <td>Course: <%= course.title %></td>
+                      <td>Course: <%= link_to course.title, course_path(course), :target => "_blank"  %></td>
                     </tr>
                     <% course.lessons.each do |lesson| %>
                       <tr>

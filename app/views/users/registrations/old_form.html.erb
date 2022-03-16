@@ -1,0 +1,39 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :FirstName %><br />
+    <%= f.text_field :first_name, autofocus: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :LastName %><br />
+    <%= f.text_field :last_name, autofocus: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, :required => true, autocomplete: "email", id:"email"%>
+  </div>
+
+  <div>
+    <%= f.label :Role %><br />
+    <%= f.text_field :role, autofocus: true %>               
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update", id: 'submit_button', :class => "btn button_user_card" %>
+    <%= link_to "Back", :back,  :class => "btn button_user_card" %>
+  </div>
+
+<% end %>

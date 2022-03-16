@@ -39,11 +39,26 @@ class PagesController < ApplicationController
       end
       @results = results
     end
+    if search_params[:flags] == "true"
+      flags = Flag.where(user_id: current_user.id)
+      results = []
+      flags.each do |flag|
+        @results.each do |result|
+          results << result if (result.searchable_type == flag.flagable_type) && (result.searchable_id == flag.flagable_id)
+        end
+      end
+      @results = results
+    end
+
     @results = @results.paginate(page: params[:page], :per_page => 18) if @results.class == Array
   end
   private
 
   def search_params
+<<<<<<< HEAD
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades_back, :selected_grades => {} )
+=======
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :flags, :available_grade_levels => {} )
+>>>>>>> a5d9b986d81a29c1a8d402f1aee42ca70f88cd5b
   end
 end

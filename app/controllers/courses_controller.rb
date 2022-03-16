@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log, :flag, :unflag]
   before_action :set_document, only: [:log]
   before_action :verify_role!
 
@@ -15,7 +15,15 @@ class CoursesController < ApplicationController
 
   # GET /courses/1
   # GET /courses/1.json
+<<<<<<< HEAD
   def show        
+=======
+  def show
+    @fav_courses = Favorite.where(user_id: current_user.id, favoritable_type: "Course").distinct.pluck(:favoritable_id)
+    @flagged_courses = Flag.where(flagable_type: "Course").distinct.pluck(:flagable_id)
+    @fav_lessons = Favorite.where(user_id: current_user.id, favoritable_type: "Lesson").distinct.pluck(:favoritable_id)
+    @flagged_lessons = Flag.where(flagable_type: "Lesson").distinct.pluck(:flagable_id)  
+>>>>>>> a5d9b986d81a29c1a8d402f1aee42ca70f88cd5b
     if params[:lesson_id].present?
       @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
       @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
@@ -145,6 +153,21 @@ class CoursesController < ApplicationController
     end
   end
 
+  def flag
+    hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id, description: flag_params["flag_description"] }
+    @flag = Flag.new(hash)
+    @course_creator_id = @course.user_id
+    @course_creator_email = @course.user.email
+    if @flag.save
+      flash.now.alert = "You flagged this course"
+      UserMailer.with(user: @course_creator_email).send_flag_notification.deliver_now
+      redirect_to course_path(course_id: @course.id)
+    else
+      flash.now.alert = "You flagged this course"
+      redirect_to course_path(course_id: @course.id)
+    end
+  end
+
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
@@ -164,6 +187,16 @@ class CoursesController < ApplicationController
     end
   end
 
+  def unflag
+    @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    if !Flag.find_by(user_id: current_user.id, flagable_id: @course.id).present?
+      redirect_to course_path(course_id: @course.id)
+    else
+      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
+      Flag.delete(@unflag)
+      redirect_to course_path(course_id: @course.id)
+    end
+  end
 
   def log
     @document_creator = Document.find(@document.id).lesson_id.present? ? Document.find(@document.id).lesson.course.user : Document.find(@document.id).course.user
@@ -303,6 +336,9 @@ class CoursesController < ApplicationController
   end
   def favorite_params
     params.permit(:source, :id)
+  end
+  def flag_params
+    params.permit(:flag_description)
   end
   def grade_params
     params.permit(:selected_grades => {})
