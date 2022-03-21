@@ -11,4 +11,7 @@ class UserPreview < ActionMailer::Preview
   def new_email
     UserMailer.with(user: User.last).new_email
   end
+  def send_flag_notification
+    UserMailer.with(user: User.last).send_flag_notification
+  end
 end
