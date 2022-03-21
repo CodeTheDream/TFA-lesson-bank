@@ -1,9 +1,9 @@
 // Place all the styles related to the Courses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-.show_button_section {
-  margin-top: 120px !important;
-}
+// .show_button_section {
+//   margin-top: 120px !important;
+// }
 .btn_show_back {
   border: none;
   background-color: white !important;
@@ -12,11 +12,14 @@
   color: gray !important;
 }
 .top_session {
-  margin-top: 72px !important;
+  margin-top: 130px !important;
+}
+#selectedCourseId {
+  margin-left: -15px;
 }
 .pencil_session {
   float: right !important;
-  margin-top: 120px !important;
+  // margin-top: 120px !important;
   margin-right: 30px;
 }
 .big_card {
@@ -143,8 +146,8 @@
 }
 
 .set-size-and-position {
-  position: relative;
-  top: 15em;
+  // position: relative;
+  // top: 15em;
   right: 1em;
   background-color: #f0f0f0;
   width: 73%;
@@ -156,10 +159,10 @@
   left: 0em;
 }
 
-.blue-header {
-  height: 11px;
-  background-color: #1996aa;
-}
+// .blue-header {
+//   height: 11px;
+//   background-color: #1996aa;
+// }
 
 ul li.favorites::marker {
   content: "⭐️";
@@ -207,12 +210,16 @@ ul li.favorites::marker {
   margin-bottom: 0em !important;
   width: calc(100% - 86px);
 }
-
-.star {
-  position: relative;
-  bottom: 2.5em;
-  float: right;
+.course_favorites_section {
+  // position: relative;
+  // bottom: 2.5em;
+  float: right !important;
 }
+// .star {
+//   position: relative;
+//   bottom: 2.5em;
+//   float: right;
+// }
 
 .flag {
   position: relative;
@@ -565,7 +572,6 @@ a {
   width: 50%;
 }
 
-
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -576,8 +582,8 @@ a {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */

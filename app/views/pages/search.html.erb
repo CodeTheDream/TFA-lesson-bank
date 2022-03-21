@@ -18,7 +18,7 @@
   ​           <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
             <div class='grid-container-filter mb-2 checkbox-format '>                    
               <% @available_grade_levels.each do |grade_level|%>                       
-                <%= check_box_tag "selected_grades[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
+                <%= check_box_tag "available_grade_levels[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
                 <%= label_tag "available_grade_levels[#{grade_level}]", grade_level  %>
               <%end%>
             </div>

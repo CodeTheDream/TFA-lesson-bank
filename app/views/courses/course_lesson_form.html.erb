@@ -1,19 +1,28 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
-<div class="container custom-container ">  
-  <div class="course-form-container">
-    <div class="set-size-and-position">
-      <div class="blue-header"></div>    
-        <div id="selectedCourseId" class="set-height-and-position " >
-        <%= select_tag :course,  options_from_collection_for_select(@courses, "id", "title", (@course.present? ? @course.id : "New")), { required: true, onChange: 'courseSelect()',class: 'dropdowns_inputs new_select ', } %>
+    <div class="container">
+      <div class="row top_session">   
+        <div class="col-12">   
+          <div id="selectedCourseId"  >
+            <%= select_tag :course,  options_from_collection_for_select(@courses, "id", "title", (@course.present? ? @course.id : "New")), { required: true, onChange: 'courseSelect()',class: 'dropdowns_inputs new_select ', } %>
+          </div>
+        </div>
       </div>
-      <div id="courseForm">
-        <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
-      </div>
-      <div id="lessonSide">
-        <% if @lessons.length > 0 %>
-          <%= render 'lessons/form', lesson: @lesson %>
-        <% end %>
-      </div>
+      
+        <!-- Course Errors-->      
+        <% if @course.errors.any? %>
+          <div id="error_explanation" class="my_alert">
+            <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+            <ul>
+            <% @course.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>   
+        <div id="courseForm">
+          <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
+        </div>
+          
+        
+     
     </div>
-  </div>
-</div>

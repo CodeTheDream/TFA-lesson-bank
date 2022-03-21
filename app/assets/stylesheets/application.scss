@@ -308,6 +308,9 @@ a[aria-expanded="true"] {
   // .download_arrow {
   //   display: block;
   // }
+  #selectedCourseId {
+    margin-left: 0;
+  }
   tr {
     display: block;
   }
@@ -326,12 +329,13 @@ a[aria-expanded="true"] {
   // tbody {
   //   vertical-align: middle;
   // }
-  .big_card {
+  .big_card,
+  #courseForm {
     margin-left: 0% !important;
   }
-  .top_session {
-    margin-top: -320px;
-  }
+  // .top_session {
+  //   margin-top: -320px;
+  // }
 }
 
 @media (max-width: 992px) {
