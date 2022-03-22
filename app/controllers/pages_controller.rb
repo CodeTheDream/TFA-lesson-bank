@@ -13,7 +13,7 @@ class PagesController < ApplicationController
     @search = query
     @selected_subject  = search_params[:subject].present? ? search_params[:subject] : ''
     @selected_district  = search_params[:district].present? ? search_params[:district] : ''
-    @selected_grades = nil
+    @selected_grades = []
     if search_params[:selected_grades].present?
       @selected_grades = search_params[:selected_grades].keys 
     elsif search_params[:selected_grades_back].present?
