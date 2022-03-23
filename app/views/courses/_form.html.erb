@@ -1,5 +1,5 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
-<div class="container custom-container ">     
+<div class="container">     
   <%= form_for(@course) do |f| %>
     <% if @course.errors.any? %>
       <div id="error_explanation" class="my_alert">
@@ -13,19 +13,21 @@
     <% end %>
     <div class="row big_card">  
       <!-- Course Favorites Section-->       
-      <div class="col-lg-12 ">      
-        <% if @course.id.present?%>
-          <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
-          <% if fav_course.include? @course.id %>
-            <%= link_to(unfavorite_course_path(id: @course.id, source: "course_edit")) do %>  
-              <i class="fas fa-heart fa-lg" style="color:#d13139;"></i>
-            <% end %> 
-          <% else %> 
-            <%= link_to(favorite_course_path(id: @course.id, source: "course_edit")) do %> 
-              <i class="fas fa-heart fa-lg" style="color:gray;"></i>
-            <% end %>                     
-          <%end %>
-        <%end%>
+      <div class="col-12 ">  
+        <div class="course_favorites_section">      
+          <% if @course.id.present?%>
+            <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
+            <% if fav_course.include? @course.id %>
+              <%= link_to(unfavorite_course_path(id: @course.id, source: "course_edit")) do %>  
+                <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+              <% end %> 
+            <% else %> 
+              <%= link_to(favorite_course_path(id: @course.id, source: "course_edit")) do %> 
+                <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
+              <% end %>                     
+            <%end %>
+          <%end%>
+        </div>
       </div>
       <!-- Left Side Course-->
       <div class="col-lg-4 mb-5">
@@ -164,3 +166,4 @@
     </div>
   </div>
 </div>
+

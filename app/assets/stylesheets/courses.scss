@@ -22,7 +22,7 @@
 .big_card {
   position: relative;
   background-color: #f0eeed;
-  margin-top: 15px;
+  // margin-top: 15px;
   height: 100%;
   font-family: Montserrat;
   width: 100%;
@@ -147,7 +147,7 @@
   top: 15em;
   right: 1em;
   background-color: #f0f0f0;
-  width: 73%;
+  // width: 73%;
 }
 
 .set-height-and-position {
@@ -212,6 +212,9 @@ ul li.favorites::marker {
   position: relative;
   bottom: 2.5em;
   float: right;
+}
+.course_favorites_section {
+  float: right !important;
 }
 
 .flag {
@@ -565,7 +568,6 @@ a {
   width: 50%;
 }
 
-
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -576,8 +578,8 @@ a {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
