@@ -395,10 +395,15 @@ a[aria-expanded="true"] {
   .top_session {
     margin-top: -120px;
   }
+  .course_lesson_container {
+    margin-right: -15px !important;
+  }
   .set-size-and-position {
-    width: 120%;
-    margin-left: 90px !important;
-    margin-top: 40px;
+    // margin-left: 10px !important;
+    // justify-content: center;
+    // margin-right: 10px !important;
+    // margin-top: 0px;
+    // padding: 10px 0 0 10px;
   }
 }
 @media (min-width: 480px) {
@@ -406,3 +411,10 @@ a[aria-expanded="true"] {
     visibility: hidden !important;
   }
 }
+// @media (min-width: 768px) {
+//   .set-size-and-position {
+//     margin-left: 10px !important;
+//     // justify-content: center;
+//     margin-right: 10px !important;
+//     // margin-top: 0px;
+//   }
