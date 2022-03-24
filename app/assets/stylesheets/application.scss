@@ -342,12 +342,10 @@ a[aria-expanded="true"] {
 }
 
 @media (max-width: 767px) {
-  .logo_end img {
-    width: 100% !important;
-    height: auto !important;
-  }
   .logo_gen img {
     margin-bottom: -45px !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
   .dropdown-menu.show {
@@ -396,11 +394,10 @@ a[aria-expanded="true"] {
     margin-top: -120px;
   }
   .course_lesson_container {
-    margin-right: -15px !important;
+    // margin-right: -15px !important;
   }
   .set-size-and-position {
-    // margin-left: 10px !important;
-    // justify-content: center;
+    // // justify-content: center;
     // margin-right: 10px !important;
     // margin-top: 0px;
     // padding: 10px 0 0 10px;

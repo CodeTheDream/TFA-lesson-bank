@@ -145,7 +145,8 @@
 .set-size-and-position {
   position: relative;
   top: 15em;
-  right: 1em;
+  // right: 4em;
+  // left: 3em;
   background-color: #f0eeed;
   // width: 73%;
 }
@@ -205,7 +206,7 @@ ul li.favorites::marker {
   bottom: 1.9em;
   list-style-type: none;
   margin-bottom: 0em !important;
-  width: calc(100% - 89px) !important;
+  width: calc(100% - 86px) !important;
 }
 
 .star {
