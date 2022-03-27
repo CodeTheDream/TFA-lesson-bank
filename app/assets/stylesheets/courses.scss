@@ -606,3 +606,12 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+
+.edit_button_table {
+  border: none;
+  background-color: transparent !important;
+  color: gray !important;
+}
+.edit_button_table :hover {
+  border-color: #1996aa !important;
+}

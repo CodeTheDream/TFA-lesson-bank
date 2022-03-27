@@ -130,6 +130,7 @@ class CoursesController < ApplicationController
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
+    @favorites_count = course.favorites(User).count
     if @favorite.save
       if favorite_params[:source] == "course_edit"
         flash.now.alert = "You favorited this course"
@@ -333,6 +334,16 @@ class CoursesController < ApplicationController
   def favorite_params
     params.permit(:source, :id)
   end
+ 
+  # def course_favorites_count   
+  #   @course_favorites_count = @course.favorites.count
+  # end
+  # def favorites_count    
+  #   @favorites_count = SearchItemSearch(query: query, options: favorite_params, current_user: current_user)
+  # end
+  # def search    
+  #   @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
+  # end
   def flag_params
     params.permit(:flag_description)
   end
@@ -366,6 +377,7 @@ class CoursesController < ApplicationController
   def search    
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
   end
+  
     private
 
   def search_params
