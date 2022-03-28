@@ -1,8 +1,13 @@
 class LessonPolicy < ApplicationPolicy
     def logged_in?
       @user.present?
+      byebug
     end
   
+    def owner_or_creator?
+      (@user&.role == 'creator') || (@record&.user_id == @user.id) 
+    end
+
     def owner_or_admin?
       (@user&.role == 'admin') || (@record&.user_id == @user.id) 
     end

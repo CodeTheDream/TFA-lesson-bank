@@ -50,7 +50,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @user = User.new configure_sign_up_params
-    @user.role = 'teacher'
+    @user.role = 'user'
     if @user.save
       UserMailer.with(user: @user).new_registration.deliver_now
       redirect_to root_path, notice: 'Success! Check your email to confirm your account'

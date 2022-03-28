@@ -14,7 +14,7 @@ class DocumentPolicy < ApplicationPolicy
       # (@user&.role == 'admin') || (course&.user_id == @user.id)
     end
   
-    %i(index? course_index? lesson_index? new? create? show?).each do |ali|
+    %i(index? course_index? lesson_index? new? create? show? load_course? load_lesson? favorite? unfavorite? log? flag? unflag?).each do |ali|
       alias_method ali, :logged_in?
     end
   
