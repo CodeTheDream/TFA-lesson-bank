@@ -63,7 +63,7 @@ class CoursesController < ApplicationController
     @course.courses_grades.delete_all
    
     
-    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_levels_hash.keys) : nil
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
     @course.grades << new_grades if new_grades.present?
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
@@ -332,7 +332,6 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    byebug
     params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites, :id)
   end
 
@@ -356,7 +355,7 @@ class CoursesController < ApplicationController
     params.permit(:flag_description)
   end
   def grade_params
-    params.permit(:selected_grades => {})
+    params.permit(:grade_levels => {})
   end
 
   def ajax_params
@@ -386,8 +385,6 @@ class CoursesController < ApplicationController
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
   end
   
-    private
-
   def search_params
   
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
