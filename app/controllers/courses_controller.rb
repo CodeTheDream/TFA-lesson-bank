@@ -185,11 +185,11 @@ class CoursesController < ApplicationController
 
   def unflag
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    if !Flag.find_by(user_id: current_user.id, flagable_id: @course.id).present?
+    unflag = Flag.find_by(flagable_id: @course.id, flagable_type: "Course")
+    if unflag.present?
+      Flag.destroy(unflag.id)
       redirect_to course_path(course_id: @course.id)
     else
-      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
-      Flag.delete(@unflag)
       redirect_to course_path(course_id: @course.id)
     end
   end
@@ -332,6 +332,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
+    byebug
     params.require(:course).permit(:title, :description, :subject, :grade_level, :state, :district, :start_date, :end_date, :tag_names, :favorites, :id)
   end
 

@@ -25,32 +25,6 @@ class PagesController < ApplicationController
     @selected_types << "courses" if params[:courses] == "true"
     @selected_types << "lessons" if params[:lessons] == "true"
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-
-    if @selected_grades.present?
-      @results =  @results.select {|x| (x.grade_level.split(' ') - (@selected_grades)) != x.grade_level.split(' ')}
-    end
-    if search_params[:favorites] == "true"
-      favorites = Favorite.where(user_id: current_user.id)
-      results = []
-      favorites.each do |favorite|
-        @results.each do |result|
-          results << result if (result.searchable_type == favorite.favoritable_type) && (result.searchable_id == favorite.favoritable_id)
-        end
-      end
-      @results = results
-    end
-    if search_params[:flags] == "true"
-      flags = Flag.where(user_id: current_user.id)
-      results = []
-      flags.each do |flag|
-        @results.each do |result|
-          results << result if (result.searchable_type == flag.flagable_type) && (result.searchable_id == flag.flagable_id)
-        end
-      end
-      @results = results
-    end
-
-    @results = @results.paginate(page: params[:page], :per_page => 18) if @results.class == Array
   end
   private
 
