@@ -15,16 +15,20 @@ class PagesController < ApplicationController
     @selected_district  = search_params[:district].present? ? search_params[:district] : ''
     @selected_grades = []
     if search_params[:selected_grades].present?
-      @selected_grades = search_params[:selected_grades].keys 
+      @selected_grades = search_params[:selected_grades].keys
     elsif search_params[:selected_grades_back].present?
       @selected_grades = eval(search_params[:selected_grades_back])
     end
-      
+    search_hash = {}
+    search_params.each do |param|
+      search_hash[param[0]] = param[1]
+    end
+    search_hash["selected_grades"] = @selected_grades
     
     @selected_types = []
     @selected_types << "courses" if params[:courses] == "true"
     @selected_types << "lessons" if params[:lessons] == "true"
-    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
+    @results = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
   end
   private
 

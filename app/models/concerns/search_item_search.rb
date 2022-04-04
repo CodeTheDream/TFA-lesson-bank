@@ -40,8 +40,8 @@ module SearchItemSearch
       where["type"] = "lesson_type"
     end
 
-    if @options["available_grade_levels"].present?
-      where["grade_level"] = @options["available_grade_levels"].keys
+    if @options["selected_grades"].present?
+      where["grade_level"] = @options["selected_grades"]
     end
 
     if @options["mycontent"].present? && @options["mycontent"] == "true"

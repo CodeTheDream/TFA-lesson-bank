@@ -211,15 +211,6 @@ class CoursesController < ApplicationController
     end     
   end
 
-
-
-
-
-
-
-
-
-
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
@@ -338,19 +329,11 @@ class CoursesController < ApplicationController
   def document_params
     params.permit(:documents => {})
   end
+
   def favorite_params
     params.permit(:source, :id)
   end
  
-  # def course_favorites_count   
-  #   @course_favorites_count = @course.favorites.count
-  # end
-  # def favorites_count    
-  #   @favorites_count = SearchItemSearch(query: query, options: favorite_params, current_user: current_user)
-  # end
-  # def search    
-  #   @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-  # end
   def flag_params
     params.permit(:flag_description)
   end

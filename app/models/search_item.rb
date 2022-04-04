@@ -11,7 +11,7 @@ class SearchItem < ApplicationRecord
       subject: self.subject,
       grade_level: self.grade_level.split(' '),
       state: self.state,
-      district: self.district,
+      district: (self.searchable.class == Lesson) ? Course.find(self.course_id).district : self.district,
       course_id:  (self.searchable.class == Lesson) ? self.searchable.course_id.to_s : "",
       tags: self.tags,
       user_id: self.user_id,
