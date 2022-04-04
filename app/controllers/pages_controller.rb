@@ -15,42 +15,20 @@ class PagesController < ApplicationController
     @selected_district  = search_params[:district].present? ? search_params[:district] : ''
     @selected_grades = []
     if search_params[:selected_grades].present?
-      @selected_grades = search_params[:selected_grades].keys 
+      @selected_grades = search_params[:selected_grades].keys
     elsif search_params[:selected_grades_back].present?
       @selected_grades = eval(search_params[:selected_grades_back])
     end
-      
+    search_hash = {}
+    search_params.each do |param|
+      search_hash[param[0]] = param[1]
+    end
+    search_hash["selected_grades"] = @selected_grades
     
     @selected_types = []
     @selected_types << "courses" if params[:courses] == "true"
     @selected_types << "lessons" if params[:lessons] == "true"
-    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-
-    if @selected_grades.present?
-      @results =  @results.select {|x| (x.grade_level.split(' ') - (@selected_grades)) != x.grade_level.split(' ')}
-    end
-    if search_params[:favorites] == "true"
-      favorites = Favorite.where(user_id: current_user.id)
-      results = []
-      favorites.each do |favorite|
-        @results.each do |result|
-          results << result if (result.searchable_type == favorite.favoritable_type) && (result.searchable_id == favorite.favoritable_id)
-        end
-      end
-      @results = results
-    end
-    if search_params[:flags] == "true"
-      flags = Flag.where(user_id: current_user.id)
-      results = []
-      flags.each do |flag|
-        @results.each do |result|
-          results << result if (result.searchable_type == flag.flagable_type) && (result.searchable_id == flag.flagable_id)
-        end
-      end
-      @results = results
-    end
-
-    @results = @results.paginate(page: params[:page], :per_page => 18) if @results.class == Array
+    @results = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
   end
   private
 

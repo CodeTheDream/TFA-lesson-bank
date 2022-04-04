@@ -63,7 +63,7 @@ class CoursesController < ApplicationController
     @course.courses_grades.delete_all
    
     
-    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_levels_hash.keys) : nil
+    new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
     @course.grades << new_grades if new_grades.present?
     if @course.save
       @course.tag_list=(tags_params.values) if params[:tag_names].present?
@@ -185,11 +185,11 @@ class CoursesController < ApplicationController
 
   def unflag
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    if !Flag.find_by(user_id: current_user.id, flagable_id: @course.id).present?
+    unflag = Flag.find_by(flagable_id: @course.id, flagable_type: "Course")
+    if unflag.present?
+      Flag.destroy(unflag.id)
       redirect_to course_path(course_id: @course.id)
     else
-      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
-      Flag.delete(@unflag)
       redirect_to course_path(course_id: @course.id)
     end
   end
@@ -210,15 +210,6 @@ class CoursesController < ApplicationController
       redirect_to course_path(course_id: @course.id)
     end     
   end
-
-
-
-
-
-
-
-
-
 
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
@@ -338,24 +329,16 @@ class CoursesController < ApplicationController
   def document_params
     params.permit(:documents => {})
   end
+
   def favorite_params
     params.permit(:source, :id)
   end
  
-  # def course_favorites_count   
-  #   @course_favorites_count = @course.favorites.count
-  # end
-  # def favorites_count    
-  #   @favorites_count = SearchItemSearch(query: query, options: favorite_params, current_user: current_user)
-  # end
-  # def search    
-  #   @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-  # end
   def flag_params
     params.permit(:flag_description)
   end
   def grade_params
-    params.permit(:selected_grades => {})
+    params.permit(:grade_levels => {})
   end
 
   def ajax_params
@@ -385,8 +368,6 @@ class CoursesController < ApplicationController
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
   end
   
-    private
-
   def search_params
   
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
