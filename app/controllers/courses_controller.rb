@@ -8,6 +8,7 @@ class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log, :flag, :unflag]
   before_action :set_document, only: [:log]
   before_action :verify_role!
+  # before_filter :admin_user, :only => :index
 
   def index
     @courses = Course.all.includes(:grades)
@@ -125,12 +126,11 @@ class CoursesController < ApplicationController
     format.json { head :no_content }
     end
   end
-
   def favorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
-    @favorites_count = course.favorites(User).count
+    
     if @favorite.save
       if favorite_params[:source] == "course_edit"
         flash.now.alert = "You favorited this course"
@@ -149,7 +149,6 @@ class CoursesController < ApplicationController
       end
     end
   end
-
   def flag
     hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
@@ -164,9 +163,9 @@ class CoursesController < ApplicationController
       redirect_to course_path(course_id: @course.id)
     end
   end
-
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
       if favorite_params[:source] == "course_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
@@ -174,8 +173,8 @@ class CoursesController < ApplicationController
         redirect_to course_path(course_id: @course.id)
       end
     else
-    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
-    Favorite.delete(@unfavorite)
+    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id, favoritable_type: "Course" )
+    Favorite.destroy(@unfavorite.id)
       if favorite_params[:source] == "course_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
       elsif favorite_params[:source] == "course_show"
@@ -212,7 +211,15 @@ class CoursesController < ApplicationController
     end     
   end
 
-  
+
+
+
+
+
+
+
+
+
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"

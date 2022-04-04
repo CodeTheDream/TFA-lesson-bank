@@ -134,8 +134,8 @@ class LessonsController < ApplicationController
         redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
       end
     else
-      @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id])
-      Favorite.delete(@unfavorite)
+      @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: params[:lesson_id], favoritable_type: "Lesson")
+      Favorite.destroy(@unfavorite.id)
       if favorite_params[:source] == "lesson_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id, lesson_id: @lesson.id)
       elsif favorite_params[:source] == "lesson_show"

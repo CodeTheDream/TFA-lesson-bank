@@ -115,12 +115,12 @@
                           </th>
                                 
                           <% if document.file.attached? %>
-                            <th class=" doc_type" scope="row">
+                            <th class=" doc_type text-center" scope="row">
                               <span class="badge badge-primary d-none d-sm-inline d-md-none" style="color: gray"><%=document.kind.upcase%></span>            
                             </th> 
                           <% end %>   
                           <% if document.file.representable? %>
-                            <th class="search_icon" scope="row">
+                            <th class="search_icon text-center" scope="row">
                               <%= link_to(document.file) do %>
                                 <i class=" fa fa-search" style="color:gray;"></i>
                               <% end %> 

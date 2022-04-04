@@ -28,13 +28,11 @@
     </div>   
   </div>
   <div class="text-center ">   
-      <i class="fas fa-heart fa-lg " style="color:#d13139;font-size:14px;"></i>
-      <span style="color: gray;font-size:14px; font-style:italic;"> 
-
-         
-      (<%=Favorite.where(favoritable_id: course.id, favoritable_type: "Course").count %>)</span>
-      
-      <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= course.searchable.user.name %></span></div>
+    <i class="fas fa-heart fa-lg " style="color:#d13139;font-size:14px;"></i>
+    <span style="color: gray;font-size:14px; font-style:italic;">         
+      (<%= course.favorited %>)
+    </span>      
+    <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= course.searchable.user.name %></span></div>
     <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
     <a href='/courses/<%="#{course.searchable_id}"%>?search=<%="#{search}"%>&subject=<%="#{subject}"%>&district=<%="#{district}"%>&selected_grades=<%=("#{selected_grades}").encode("UTF-8", :invalid => :replace, :undef => :replace, :replace => "")%>&mycontent=<%="#{mycontent}"%>&favorites=<%="#{favorites}"%>&courses=<%="#{courses}"%>&lessons=<%="#{lessons}"%>', class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW COURSE </a>
   </div>

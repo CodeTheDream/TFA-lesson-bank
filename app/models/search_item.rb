@@ -17,7 +17,8 @@ class SearchItem < ApplicationRecord
       user_id: self.user_id,
       last_name: self.last_name,
       user_status: self.user_status,
-      type: self.searchable.class == Lesson ? "lesson_type" : "course_type"
+      type: self.searchable.class == Lesson ? "lesson_type" : "course_type", 
+      favorite: self.searchable.class == Lesson ? Favorite.where(favoritable_id: self.searchable_id, favoritable_type: "Lesson").count : Favorite.where(favoritable_id: self.searchable_id, favoritable_type: "Course").count
     }
   end
 end
