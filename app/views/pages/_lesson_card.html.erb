@@ -8,7 +8,7 @@
     
     <% if current_user == lesson.searchable.course.user || current_user&.role == 'admin'%>    
       <%=link_to "/courses/course_lesson_form?course_id=#{lesson.course_id}&lesson_id=#{lesson.searchable_id}#lesson#{lesson.searchable_id}" do %>        
-        <i class=" fa fa-pe\]`ncil-alt pencil_edit_card"></i>        
+        <i class=" fa fa-pencil-alt pencil_edit_card"></i>        
       <%end%>  
     <% end %>      
     </h2>     
