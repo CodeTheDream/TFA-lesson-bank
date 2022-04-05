@@ -6,4 +6,13 @@ class Favorite < ApplicationRecord
     scope: [:favoritable_id, :favoritable_type],
     message: 'can only favorite an item once'
   }
+
+  after_commit :search_item_reindex
+  after_destroy :search_item_reindex
+
+  def search_item_reindex
+    search_item = SearchItem.find_by(searchable_id: favoritable_id, searchable_type: favoritable_type)
+    search_item.update(favorited: Favorite.where(favoritable_id: favoritable_id, favoritable_type: favoritable_type).count)
+    search_item.reindex if search_item.present?
+  end
 end

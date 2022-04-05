@@ -52,7 +52,7 @@ gem 'will_paginate-bootstrap4'
 
 
 # Use searchkick to interact with ElastciSearch
-gem 'searchkick'
+gem 'searchkick', '4.6.3'
 
 gem 'rails-controller-testing'
 gem 'factory_bot_rails'

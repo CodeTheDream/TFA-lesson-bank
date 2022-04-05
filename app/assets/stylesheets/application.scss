@@ -40,7 +40,7 @@ main {
   padding-bottom: 45px;
 }
 .custom-container {
-  margin: 40px auto;
+  margin: 140px auto;
   margin-bottom: 5px;
 }
 
@@ -342,12 +342,10 @@ a[aria-expanded="true"] {
 }
 
 @media (max-width: 767px) {
-  .logo_end img {
-    width: 100% !important;
-    height: auto !important;
-  }
   .logo_gen img {
     margin-bottom: -45px !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
   .dropdown-menu.show {
@@ -395,9 +393,25 @@ a[aria-expanded="true"] {
   .top_session {
     margin-top: -120px;
   }
+  .course_lesson_container {
+    // margin-right: -15px !important;
+  }
+  .set-size-and-position {
+    // // justify-content: center;
+    // margin-right: 10px !important;
+    // margin-top: 0px;
+    // padding: 10px 0 0 10px;
+  }
 }
 @media (min-width: 480px) {
   .button_filter_hide {
     visibility: hidden !important;
   }
 }
+// @media (min-width: 768px) {
+//   .set-size-and-position {
+//     margin-left: 10px !important;
+//     // justify-content: center;
+//     margin-right: 10px !important;
+//     // margin-top: 0px;
+//   }

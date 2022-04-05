@@ -1,4 +1,4 @@
-<div class=" custom-container ">
+
 <div class="grid-container">   
   <div class="wrapper">          
     <!-- Sidebar Holder -->
@@ -18,7 +18,7 @@
   ​           <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
             <div class='grid-container-filter mb-2 checkbox-format '>                    
               <% @available_grade_levels.each do |grade_level|%>                       
-                <%= check_box_tag "available_grade_levels[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
+                <%= check_box_tag "selected_grades[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
                 <%= label_tag "available_grade_levels[#{grade_level}]", grade_level  %>
               <%end%>
             </div>
@@ -54,15 +54,15 @@
     <div class="card-container shadow-none">          
       <% @results.each do |result| %>                       
         <% if result.searchable_type == "Lesson" %>
-          <%= render 'lesson_card', lesson: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses], flags: params[:flags]%>
+          <%= render 'lesson_card', lesson: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
         <% else %>  
-        <%= render 'course_card', course: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses], flags: params[:flags]%>
+        <%= render 'course_card', course: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
         <% end %>                               
       <%end%>              
     </div>        
   </div>        
 </div> 
-</div> 
+
   
 
 

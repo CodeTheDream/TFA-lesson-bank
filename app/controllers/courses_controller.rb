@@ -8,6 +8,7 @@ class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log, :flag, :unflag]
   before_action :set_document, only: [:log]
   before_action :verify_role!
+  # before_filter :admin_user, :only => :index
 
   def index
     @courses = Course.all.includes(:grades)
@@ -60,6 +61,8 @@ class CoursesController < ApplicationController
     @course.user = current_user
     @course.state = 'NC'
     @course.courses_grades.delete_all
+   
+    
     new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
     @course.grades << new_grades if new_grades.present?
     if @course.save
@@ -123,11 +126,11 @@ class CoursesController < ApplicationController
     format.json { head :no_content }
     end
   end
-
   def favorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
+    
     if @favorite.save
       if favorite_params[:source] == "course_edit"
         flash.now.alert = "You favorited this course"
@@ -146,7 +149,6 @@ class CoursesController < ApplicationController
       end
     end
   end
-
   def flag
     hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
@@ -161,9 +163,9 @@ class CoursesController < ApplicationController
       redirect_to course_path(course_id: @course.id)
     end
   end
-
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
       if favorite_params[:source] == "course_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
@@ -171,8 +173,8 @@ class CoursesController < ApplicationController
         redirect_to course_path(course_id: @course.id)
       end
     else
-    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
-    Favorite.delete(@unfavorite)
+    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id, favoritable_type: "Course" )
+    Favorite.destroy(@unfavorite.id)
       if favorite_params[:source] == "course_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
       elsif favorite_params[:source] == "course_show"
@@ -183,11 +185,11 @@ class CoursesController < ApplicationController
 
   def unflag
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    if !Flag.find_by(user_id: current_user.id, flagable_id: @course.id).present?
+    unflag = Flag.find_by(flagable_id: @course.id, flagable_type: "Course")
+    if unflag.present?
+      Flag.destroy(unflag.id)
       redirect_to course_path(course_id: @course.id)
     else
-      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
-      Flag.delete(@unflag)
       redirect_to course_path(course_id: @course.id)
     end
   end
@@ -209,7 +211,6 @@ class CoursesController < ApplicationController
     end     
   end
 
-  
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
@@ -328,14 +329,16 @@ class CoursesController < ApplicationController
   def document_params
     params.permit(:documents => {})
   end
+
   def favorite_params
     params.permit(:source, :id)
   end
+ 
   def flag_params
     params.permit(:flag_description)
   end
   def grade_params
-    params.permit(:selected_grades => {})
+    params.permit(:grade_levels => {})
   end
 
   def ajax_params
@@ -364,9 +367,9 @@ class CoursesController < ApplicationController
   def search    
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
   end
-    private
-
+  
   def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :selected_grades => {} )
+  
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
   end
 end

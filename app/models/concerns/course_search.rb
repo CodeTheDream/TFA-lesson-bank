@@ -40,13 +40,6 @@ module CourseSearch
   end
 
   def self.order
-   options = {}
-#    if options[:sort_attribute].present?
-#      order = options[:sort_order].presence || :asc
-#      options[:sort_attribute] => order
-#    else
-#      { }
-#    end
-   options
+    {"favorited": "desc"}
   end
 end
