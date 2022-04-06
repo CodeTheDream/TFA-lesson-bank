@@ -16,7 +16,6 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    byebug
     @fav_courses = Favorite.where(user_id: current_user.id, favoritable_type: "Course").distinct.pluck(:favoritable_id)
     @flagged_courses = Flag.where(flagable_type: "Course").distinct.pluck(:flagable_id)
     @fav_lessons = Favorite.where(user_id: current_user.id, favoritable_type: "Lesson").distinct.pluck(:favoritable_id)

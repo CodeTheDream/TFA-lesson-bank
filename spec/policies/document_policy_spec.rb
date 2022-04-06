@@ -44,9 +44,9 @@ describe DocumentPolicy do
         it 'denies access if it is not owner or admin' do
 	  @user&.role == ''
 	  @user.save
-	  teacher_hash = { email: 'teacher@teacher.com', role: 'teacher' }
-	  @teacher = User.create(teacher_hash)
-	  expect(policy).not_to permit @teacher, @course_document
+	  creator_hash = { email: 'creator@creator.com', role: 'creator' }
+	  @creator = User.create(creator_hash)
+	  expect(policy).not_to permit @creator, @course_document
         end
       end
       context 'role admin' do

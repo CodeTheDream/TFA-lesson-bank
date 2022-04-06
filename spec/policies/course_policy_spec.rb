@@ -2,7 +2,7 @@ require 'pundit/rspec'
 require 'rails_helper'
 describe CoursePolicy do
   let(:policy) { described_class }
-  %i(new? create? index? show?).each do |ali|
+  %i(index? show?).each do |ali|
     permissions ali do
       context 'User is not logged in' do
         it 'denies access' do
@@ -20,7 +20,7 @@ describe CoursePolicy do
       end  
     end
   end
-   
+  # Pending new and create to check with Sheila's changes
   %i(edit? update? destroy?).each do |ali|
     permissions ali do
       context 'owner or admin' do

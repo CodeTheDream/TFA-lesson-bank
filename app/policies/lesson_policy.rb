@@ -1,7 +1,6 @@
 class LessonPolicy < ApplicationPolicy
     def logged_in?
       @user.present?
-      byebug
     end
   
     def owner_or_creator?
