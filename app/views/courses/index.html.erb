@@ -20,23 +20,18 @@
             </tr>
           </div>
         </thead>
-
         <tbody>
           <% @courses.each do |course| %>      
             <tr>
               <td data-title="Title"><%= course.title %></td>
               <td data-title="User"><%= course.user.name %></td>
               <td data-title="Date"><%= course.created_at.to_date.strftime("%B %d, %Y")%></td> 
-                <% if course.present? && !course.flags.present?%>          
-                  <td data-title="State"> Live</td> 
-                <% else %>         
-                  <td data-title="State">Blocked</td>
-                <%end%> 
-              <td><%= link_to 'EDIT', course_lesson_form_courses_path(course_id: course.search_item), :class => "btn btn-sm edit_button_table" %></td>  
-              
-              
-
-              
+              <% if course.present? && !course.flags.present?%>          
+                <td data-title="State"> Live</td> 
+              <% else %>         
+                <td data-title="State">Blocked</td>
+              <%end%> 
+              <%#= link_to 'EDIT', course_lesson_form_courses_path(course_id: course.search_item), :class => "btn btn-sm edit_button_table" %>  
             </tr>      
           <% end %>
         </tbody>
