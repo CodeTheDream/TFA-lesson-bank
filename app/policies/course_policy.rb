@@ -16,7 +16,7 @@ class CoursePolicy < ApplicationPolicy
   # end 
 
   def owner_and_approved?
-    (@course.record&.id == @user.id) && (@user.status == 'Approved')
+    (@record&.user_id == @user.id) && (@user.status == 'Approved')
   end 
 
   %i(new? create? show? download? course_lesson_form? load_course? load_lesson? favorite? unfavorite? log? flag? unflag?).each do |ali|
