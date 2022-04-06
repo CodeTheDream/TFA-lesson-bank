@@ -9,9 +9,13 @@ class UserPolicy < ApplicationPolicy
     (@user.present?) && (@user.status == 'Approved')
   end
     
-  def admin_or_owner_and_approved?
-    ((@user.role == 'admin') || (@record&.id == @user.id)) && (@user.status == 'Approved')
+  def admin?
+    (@user.role == 'admin') 
   end
+
+  def owner_and_approved?
+    (@record&.id == @user.id) && (@user.status == 'Approved')
+  end 
     
   %i(index? new? create? show? who_downloaded? i_downloaded?).each do |ali|
     alias_method ali, :logged_in_and_approved?
