@@ -1,36 +1,36 @@
-<h2 class="title mt-5 mb-5 display-3" style="text-align: center;">Lessons</h2>
-    <div id="no-more-tables" class="table-responsive card mb-5">
-    <table class="table table-hover">
-
-  <thead>
-    <div class="row">
-    <tr>
-      <th class="h2" style="background:none;">Course</th>
-      <th class="h2" style="background:none;">Lesson Title</th>
-      <th class="h2" style="background:none;">Description</th>
-      <th colspan="3"></th>
-    </tr>
+<div class="custom-container container-fluid ">   
+  <div class="row justify-content-end ">
+    <div class="col-6">  
+      <%= render 'layouts/search_landingpage' %>
     </div>
-  </thead>
-
-  <tbody>
-    <% @lessons.each do |lesson| %>
-      <div class="row">
-      <tr>
-        <td data-title="Course"><%= lesson.course_id %></td>
-        <td data-title="Title"><%= lesson.title %></td>
-        <td data-title="Description"><%= lesson.description %></td>
-
-
-        <td><%= link_to 'Show', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Edit', edit_course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Destroy', course_lesson_path(@course, lesson), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
-      </tr>
-    </div>
-    <% end %>
-  </tbody>
-</table>
+  </div>  
+  <h2 class="course_table_title" style="text-align: left;">Lessons</h2>
+  <div class="table-responsive">    
+    <table class="table  table-striped">
+      <div class="admin_table table-sm  table-striped ">
+        <thead>         
+          <tr>
+            <th scope="col"><span style="color:gray">NAME </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+            <th scope="col"><span style="color:gray">AUTHOR </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+            <th scope="col"><span style="color:gray">ADDED </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+            <th scope="col"><span style="color:gray">STATUS </span><i class=" fa fa-caret-down table_down_arrow"</i></th>  
+          </tr>
+        </thead>     
+        <tbody>     
+          <% @lessons.each do |lesson| %>      
+            <tr>        
+              <td data-title="Title"><%= lesson.title %></td>
+              <td data-title="Description"><%= lesson.course.user.name %></td>
+              <td data-title="Date"><%= lesson.created_at.to_date.strftime("%B %d, %Y")%></td> 
+              <% if lesson.present? && !lesson.flags.present?%> 
+                <td data-title="State"> Live</td> 
+              <% else %>         
+                <td data-title="State">Blocked</td>
+              <%end%> 
+            </tr>
+          <%end%>  
+        </tbody>
+      </div>
+    </table>
+  </div>
 </div>
-<br>
-<td><%= link_to 'New Lesson', new_course_lesson_path, :class => "btn btn-outline-primary btn-sm" %></td>
-<td><%= link_to 'Back to Courses', courses_path(@course), :class => "btn btn-outline-primary btn-sm" %></td>
