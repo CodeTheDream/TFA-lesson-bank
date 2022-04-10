@@ -17,16 +17,18 @@
           </tr>
         </thead>     
         <tbody>     
-          <% @lessons.each do |lesson| %>      
-            <tr>        
-              <td data-title="Title"><%= lesson.title %></td>
-              <td data-title="Description"><%= lesson.course.user.name %></td>
+          <% @lessons.each do |lesson| %>  
+            <tr>
+              <td class="admin_table_title"><a href='/courses/<%="#{lesson.course_id}"%>"'><%= lesson.title %> </a></td>
+              <td><%= lesson.course.user.name %></td>
               <td data-title="Date"><%= lesson.created_at.to_date.strftime("%B %d, %Y")%></td> 
               <% if lesson.present? && !lesson.flags.present?%> 
                 <td data-title="State"> Live</td> 
-              <% else %>         
-                <td data-title="State">Blocked</td>
-              <%end%> 
+              <% else %>  
+                <%lesson.flags.each do |flagged_lesson|%>         
+                  <td <a href="#" data-toggle="tooltip" title= "<%= flagged_lesson.description %>">Blocked</a></td>    
+                <%end%>
+              <%end%>          
             </tr>
           <%end%>  
         </tbody>
@@ -34,3 +36,9 @@
     </table>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});
+</script>

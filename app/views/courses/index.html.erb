@@ -5,7 +5,7 @@
       <%= render 'layouts/search_landingpage' %>
     </div>
   </div>   
-  <h2 class="course_table_title" style="text-align: left;">Courses</h2>
+  <h2 class="course_table_title" style="text-align: left;">Courses</h2>  
   <div class="table-responsive">    
     <table class="table  table-striped">
       <div class="admin_table table-sm  table-striped ">
@@ -20,20 +20,27 @@
         </thead>
         <tbody>
           <% @courses.each do |course| %>      
-            <tr>
-              <td data-title="Title"><%= course.title %></td>
-              <td data-title="User"><%= course.user.name %></td>
+            <tr>            
+              <td class="admin_table_title"><%= link_to course.title, course_path(course)%></td>
+              <td><%= link_to course.user.name%></td>
               <td data-title="Date"><%= course.created_at.to_date.strftime("%B %d, %Y")%></td> 
               <% if course.present? && !course.flags.present?%>          
                 <td data-title="State"> Live</td> 
-              <% else %>         
-                <td data-title="State">Blocked</td>
-              <%end%> 
-              <%#= link_to 'EDIT', course_lesson_form_courses_path(course_id: course.search_item), :class => "btn btn-sm edit_button_table" %>  
-            </tr>      
+              <% else %>  
+                <%course.flags.each do |flagged_course|%>    
+                  <td <a href="#" data-toggle="tooltip" title= "<%= flagged_course.description %>">Blocked</a></td>    
+                <%end%>
+              <%end%>                 
+            </tr>               
           <% end %>
         </tbody>      
       </div>
     </table>
   </div>  
 </div>
+
+<script>
+$(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});
+</script>
