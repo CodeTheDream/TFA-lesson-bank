@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_15_065957) do
+ActiveRecord::Schema.define(version: 2022_04_01_183205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,16 @@ ActiveRecord::Schema.define(version: 2022_01_15_065957) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
+  create_table "flags", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "flagable_id"
+    t.string "flagable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "description"
+    t.index ["user_id"], name: "index_flags_on_user_id"
+  end
+
   create_table "grades", force: :cascade do |t|
     t.string "grade_level"
     t.datetime "created_at", precision: 6, null: false
@@ -131,6 +141,7 @@ ActiveRecord::Schema.define(version: 2022_01_15_065957) do
     t.integer "user_id"
     t.string "last_name"
     t.string "user_status"
+    t.integer "favorited"
     t.index ["searchable_type", "searchable_id"], name: "index_search_items_on_searchable_type_and_searchable_id"
   end
 
@@ -165,6 +176,7 @@ ActiveRecord::Schema.define(version: 2022_01_15_065957) do
   add_foreign_key "documents", "courses"
   add_foreign_key "documents", "lessons"
   add_foreign_key "favorites", "users"
+  add_foreign_key "flags", "users"
   add_foreign_key "key_words", "lessons"
   add_foreign_key "lessons", "courses"
   add_foreign_key "logs", "documents"

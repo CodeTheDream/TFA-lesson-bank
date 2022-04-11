@@ -7,7 +7,7 @@ class LessonPolicy < ApplicationPolicy
       (@user&.role == 'admin') || (@record&.user_id == @user.id) 
     end
   
-    %i(index? new? create? show? download? favorite? unfavorite?).each do |ali|
+    %i(index? new? create? show? download? favorite? unfavorite? flag? unflag?).each do |ali|
       alias_method ali, :logged_in?
     end
   

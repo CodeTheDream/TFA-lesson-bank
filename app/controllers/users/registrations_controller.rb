@@ -11,12 +11,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def new
   #   super
   # end
+  # @partial = params[:view] || "index" || "index_card"
 
   def index
-    @users = User.all
-    @users = @users.paginate(page: params[:page], :per_page => 3)
+    @users = User.where('last_name iLike ? OR email iLike ? OR role iLike ? OR status iLike ?' , "%#{search_params[:search]}%", "%#{search_params[:search]}#%", "%#{search_params[:search]}%", "%#{search_params[:search]}%")
+    @users = @users.paginate(page: params[:page], :per_page => 18)
   end 
-
+ 
   def usercourses
     # @users = User.all
     @courses = @user.courses 
@@ -34,10 +35,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def i_downloaded
-    @logs = Log.order(:id)
     # Documents downloaded by this user
     @document_ids = Log.where(creator_id: @user.id).distinct.pluck :document_id
     #Find the creator
+    @creators = {}
+    @user.logs.each do |log|
+      @creators[log] = User.find log.creator_id
+    end
     @document_ids.each do |creator|
       @creatordoc = Document.find(creator).lesson_id.present? ? Document.find(creator).lesson.course.user : Document.find(creator).course.user
     end
@@ -75,8 +79,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit 
   end
-  # if @lesson.update(lesson_params.except(:documents_less))
-  # redirect_to user_edit_path(@user), notice: 'User could not be updated'
 
   def update
     user_lastname = @user.last_name
@@ -108,30 +110,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 end      
 
-#@user.errors.messages
-#@user.update!  configure_registration_update_parameters
-#owner and admin pundit
-#verify role for registration controller
-#admin updating another user
-#teacher updating myself
-#record vs user
-
-
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
-
-  # PUT /resource
-  # def update
-  #   super
-  # end
-
-  # DELETE /resource
-  # def destroy
-  #   super
-  # end
-
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
   # in to be expired now. This is useful if the user wants to
@@ -149,8 +127,12 @@ end
     # devise_parameter_sanitizer.permit(:email, :role, :password, :password_confirmation, :unconfirmed_email, :first_name, :last_name) 
   end
 
- private
-  
+  private
+
+  def search_params
+    params.permit(:search)
+  end
+
   def set_user
     @user = User.find params[:id]
   end

@@ -22,7 +22,7 @@
 .big_card {
   position: relative;
   background-color: #f0eeed;
-  margin-top: 15px;
+  // margin-top: 15px;
   height: 100%;
   font-family: Montserrat;
   width: 100%;
@@ -145,9 +145,10 @@
 .set-size-and-position {
   position: relative;
   top: 15em;
-  right: 1em;
-  background-color: #f0f0f0;
-  width: 73%;
+  // right: 4em;
+  // left: 3em;
+  background-color: #f0eeed;
+  // width: 73%;
 }
 
 .set-height-and-position {
@@ -205,7 +206,7 @@ ul li.favorites::marker {
   bottom: 1.9em;
   list-style-type: none;
   margin-bottom: 0em !important;
-  width: calc(100% - 86px);
+  width: calc(100% - 86px) !important;
 }
 
 .star {
@@ -213,12 +214,29 @@ ul li.favorites::marker {
   bottom: 2.5em;
   float: right;
 }
+.course_favorites_section {
+  float: right !important;
+}
+
+.flag {
+  position: relative;
+  bottom: 2.5em;
+  float: right;
+}
 
 .lesson-star {
   position: relative;
-  bottom: 1.6em;
+  bottom: 1em;
   float: right;
   margin-right: 0%;
+}
+
+.lesson-flag {
+  position: relative;
+  bottom: 1em;
+  float: right;
+  // margin-right: 0%;
+  min-height: 50px;
 }
 
 .checkbox-format input[type="checkbox"] {
@@ -254,6 +272,15 @@ ul li.favorites::marker {
   position: relative;
   // left: 0.75em;
   bottom: 0.25em;
+}
+.course_table_title {
+  // font-size: 2.5em;
+  font-family: Montserrat;
+  padding: 10px;
+  margin-left: 20px;
+}
+.admin_table {
+  padding: 30px;
 }
 
 .district-label {
@@ -376,6 +403,7 @@ ul li.favorites::marker {
   background-color: white !important;
   font-size: 1.5em;
   font-family: Montserrat;
+  width: calc(100%);
 }
 
 .lesson_title_row {
@@ -417,21 +445,30 @@ a {
 .course-description-area {
   width: calc(100% - 86px);
 }
+
 .lesson-title,
 .course-title,
 .lesson-description-area,
-.course-description-area {
+.course-description-area,
+.document-name,
+.document-kind,
+.lesson-document-name,
+.lesson-document-kind {
   border-color: transparent !important;
 }
 .lesson-title:hover,
 .course-title:hover,
 .lesson-description-area:hover,
-.course-description-area:hover {
+.course-description-area:hover,
+.document-name:hover,
+.document-kind:hover,
+.lesson-document-name:hover,
+.lesson-document-kind:hover {
   outline: none !important;
   border-color: #1996aa;
   box-shadow: 0 0 3px #1996aa;
   cursor: pointer;
-  width: calc(100% - 86px);
+  width: calc(100%);
 }
 .lesson-description-label {
   position: relative;
@@ -539,4 +576,51 @@ a {
 
 .lesson-document-container {
   width: 50%;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.edit_button_table {
+  border: none;
+  background-color: transparent !important;
+  color: gray !important;
+}
+.edit_button_table :hover {
+  border-color: #1996aa !important;
 }
