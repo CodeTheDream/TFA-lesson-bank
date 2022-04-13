@@ -1,36 +1,44 @@
-<h2 class="title mt-5 mb-5 display-3" style="text-align: center;">Lessons</h2>
-    <div id="no-more-tables" class="table-responsive card mb-5">
-    <table class="table table-hover">
-
-  <thead>
-    <div class="row">
-    <tr>
-      <th class="h2" style="background:none;">Course</th>
-      <th class="h2" style="background:none;">Lesson Title</th>
-      <th class="h2" style="background:none;">Description</th>
-      <th colspan="3"></th>
-    </tr>
+<div class="custom-container container-fluid ">   
+  <div class="ml-2 row">
+    <div class="col-6"><h1>Lessons</h1></div>
+    <div class="col-6 justify-content-end">  
+      <%= render 'layouts/search_lessons' %>
     </div>
-  </thead>
-
-  <tbody>
-    <% @lessons.each do |lesson| %>
-      <div class="row">
-      <tr>
-        <td data-title="Course"><%= lesson.course_id %></td>
-        <td data-title="Title"><%= lesson.title %></td>
-        <td data-title="Description"><%= lesson.description %></td>
-
-
-        <td><%= link_to 'Show', course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Edit', edit_course_lesson_path(@course, lesson), :class => "btn btn-outline-primary btn-sm" %></td>
-        <td><%= link_to 'Destroy', course_lesson_path(@course, lesson), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-primary btn-sm" %></td>
-      </tr>
-    </div>
-    <% end %>
-  </tbody>
-</table>
+  </div>  
+  <div class="table-responsive">    
+    <table class="ml-4 table table-striped admin_table table-sm">
+      <thead>         
+        <tr>
+          <th scope="col"><span style="color:gray">NAME </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+          <th scope="col"><span style="color:gray">AUTHOR </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+          <th scope="col"><span style="color:gray">ADDED </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+          <th scope="col"><span style="color:gray">STATUS </span><i class=" fa fa-caret-down table_down_arrow"</i></th>  
+        </tr>
+      </thead>     
+      <tbody>     
+        <% @lessons.each do |lesson| %>
+          <tr class="clickable-row" data-link='<%=course_path(id: lesson.course_id, lesson_id: lesson.searchable_id, anchor: "lesson#{lesson.searchable_id}")%>'>
+            <td class="admin_table_title"><%= lesson.title %></td>
+            <td><%= lesson.last_name %></td>
+            <td data-title="Date"><%= lesson.created_at.to_date.strftime("%B %d, %Y")%></td> 
+            <% if @flags.pluck(:flagable_id).include? lesson.searchable_id %>
+              <% flag = @flags.select{|x| x.flagable_id == lesson.searchable_id}[0] %>
+              <td> <a href="#" data-toggle="tooltip" title= "<%= flag.description %>">Blocked</a></td>    
+            <% else %>  
+              <td data-title="State"> Live</td> 
+            <% end %>
+          </tr>
+        <%end%>  
+      </tbody>
+    </table>
+  </div>
 </div>
-<br>
-<td><%= link_to 'New Lesson', new_course_lesson_path, :class => "btn btn-outline-primary btn-sm" %></td>
-<td><%= link_to 'Back to Courses', courses_path(@course), :class => "btn btn-outline-primary btn-sm" %></td>
+
+<script>
+  $(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    $("tr[data-link]").click(function() {
+      window.location = $(this).data("link");
+    })
+  });
+</script>

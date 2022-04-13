@@ -96,7 +96,12 @@
   border-top: none !important;
   border-bottom: none !important;
 }
-
+.admin_table_title a {
+  color: #1996aa !important;
+  font-weight: 500;
+  font-size: larger;
+  text-decoration: underline !important;
+}
 // .lesson_clickable {
 //   background-color: white;
 //   width: 1050px !important;
@@ -281,6 +286,11 @@ ul li.favorites::marker {
 }
 .admin_table {
   padding: 30px;
+}
+.clickable-row:hover {
+  color:black;
+  background-color: #1996aa !important;
+//  font-weight: bold;
 }
 
 .district-label {

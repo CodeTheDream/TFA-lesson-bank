@@ -60,8 +60,12 @@ module SearchItemSearch
   end
 
   def self.order
-   options = {}
-   options[:favorited] = "desc"
-   options
+    options = {}
+    if @options["admin_view"].present? && @options["admin_view"] == "true"
+      options[:flagged] = "desc"
+    else
+      options[:favorited] = "desc"
+    end
+    options
   end
 end

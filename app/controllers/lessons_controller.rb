@@ -4,11 +4,14 @@ class LessonsController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :get_course
+  before_action :get_course, except: :index
   before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
 
   def index
-    @lessons = @course.lessons
+    query = search_params[:search].present? ? search_params[:search] : nil
+    search_hash = {"lessons" => "true", "admin_view" => "true"}
+    @lessons = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
+    @flags = Flag.where(flagable_type: "Lesson", flagable_id: @lessons.pluck(:searchable_id))
   end
     
   # GET /lessons/1
@@ -150,7 +153,7 @@ class LessonsController < ApplicationController
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
     else
       @unflag = Flag.find_by(user_id: current_user.id, flagable_id: params[:lesson_id])
-      Flag.delete(@unflag)
+      Flag.destroy(@unflag.id)
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)    
     end
   end
