@@ -287,6 +287,11 @@ ul li.favorites::marker {
 .admin_table {
   padding: 30px;
 }
+.clickable-row:hover {
+  color:black;
+  background-color: #1996aa !important;
+//  font-weight: bold;
+}
 
 .district-label {
   color: gray;

@@ -11,7 +11,10 @@ class CoursesController < ApplicationController
   # before_filter :admin_user, :only => :index
 
   def index
-    @courses = Course.all.includes(:grades)
+    query = search_params[:search].present? ? search_params[:search] : nil
+    search_hash = {"courses" => "true", "admin_view" => "true"}
+    @courses = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
+    @flags = Flag.where(flagable_type: "Course", flagable_id: @courses.pluck(:searchable_id))
   end
 
   # GET /courses/1
@@ -364,12 +367,8 @@ class CoursesController < ApplicationController
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
   end
-  def search    
-    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-  end
-  
-  def search_params
-  
+
+  def search_params  
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
   end
 end

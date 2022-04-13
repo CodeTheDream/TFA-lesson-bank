@@ -21,8 +21,8 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="triangle-border"></div>
                 <div class="triangle" ></div>                
-                <%if current_user.role == "admin" %>             
-                  <%= link_to 'ADMIN:USER', user_edit_path(current_user.id), class: 'dropdown-item' %>
+                <% if current_user.role == "admin" %>             
+                  <%= link_to 'ADMIN:USER', users_path, class: 'dropdown-item' %>
                   <%= link_to 'ADMIN:COURSES', courses_path , class: 'dropdown-item' %>
                   <%= link_to 'ADMIN:LESSONS', lessons_path, class: 'dropdown-item' %>
                 <%end%>                

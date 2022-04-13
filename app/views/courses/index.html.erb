@@ -1,46 +1,45 @@
 <div class="custom-container container-fluid ">    
-        
-  <div class="row justify-content-end ">
-    <div class="col-6">  
-      <%= render 'layouts/search_landingpage' %>
+  <div class="ml-2 row">
+    <div class="col-6"><h1>Courses</h2></div>
+    <div class="col-6 justify-content-end">  
+      <%= render 'layouts/search_courses' %>
     </div>
   </div>   
-  <h2 class="course_table_title" style="text-align: left;">Courses</h2>  
   <div class="table-responsive">    
-    <table class="table  table-striped">
-      <div class="admin_table table-sm  table-striped ">
-        <thead>    
-          <tr>
-            <th scope="col"><span style="color:gray">NAME </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
-            <th scope="col"><span style="color:gray">AUTHOR </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
-            <th scope="col"><span style="color:gray">ADDED </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
-            <th scope="col"><span style="color:gray">STATUS </span><i class=" fa fa-caret-down table_down_arrow"</i></th>  
-            <th scope="col"></th>   
-          </tr>          
-        </thead>
-        <tbody>
-          <% @courses.each do |course| %>      
-            <tr>            
-              <td class="admin_table_title"><%= link_to course.title, course_path(course)%></td>
-              <td><%= link_to course.user.name%></td>
-              <td data-title="Date"><%= course.created_at.to_date.strftime("%B %d, %Y")%></td> 
-              <% if course.present? && !course.flags.present?%>          
-                <td data-title="State"> Live</td> 
-              <% else %>  
-                <%course.flags.each do |flagged_course|%>    
-                  <td <a href="#" data-toggle="tooltip" title= "<%= flagged_course.description %>">Blocked</a></td>    
-                <%end%>
-              <%end%>                 
-            </tr>               
-          <% end %>
-        </tbody>      
-      </div>
+    <table class="ml-4 table table-striped admin_table table-sm">
+      <thead>    
+        <tr>
+          <th scope="col"><span style="color:gray">NAME </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+          <th scope="col"><span style="color:gray">AUTHOR </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+          <th scope="col"><span style="color:gray">ADDED </span><i class=" fa fa-caret-down table_down_arrow"</i></th>
+          <th scope="col"><span style="color:gray">STATUS </span><i class=" fa fa-caret-down table_down_arrow"</i></th>  
+          <th scope="col"></th>   
+        </tr>          
+      </thead>
+      <tbody>
+        <% @courses.each do |course| %>      
+          <tr class="clickable-row" data-link="<%=course_path(course.searchable_id)%>">
+            <td class="admin_table_title"><%=course.title%></td>
+            <td><%= course.last_name %></td>
+            <td data-title="Date"><%= course.created_at.to_date.strftime("%B %d, %Y")%></td> 
+            <% if @flags.pluck(:flagable_id).include? course.searchable_id %>
+              <% flag = @flags.select{|x| x.flagable_id == course.searchable_id}[0] %>
+              <td> <a href="#" data-toggle="tooltip" title= "<%= flag.description %>">Blocked</a></td>    
+            <% else %>  
+              <td data-title="State"> Live</td> 
+            <% end %>
+          </tr>               
+        <% end %>
+      </tbody>      
     </table>
   </div>  
 </div>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-});
+    $("tr[data-link]").click(function() {
+      window.location = $(this).data("link");
+    })
+  });
 </script>
