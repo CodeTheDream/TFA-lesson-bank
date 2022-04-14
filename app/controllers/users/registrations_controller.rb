@@ -5,7 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
   before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :who_downloaded, :i_downloaded]  
-  before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
+  before_action :verify_role!, only: [:index, :show,:edit, :update, :destroy, :who_downloaded, :i_downloaded] 
 # before_action :configure_account_update_params, only: [:update]
   # GET /resource/sign_up
   # def new

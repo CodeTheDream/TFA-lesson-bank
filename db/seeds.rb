@@ -15,12 +15,12 @@
 
 # Create Users
 print "Creating users"
+user1 = {email: 'EdnaKrabappel@SES.com', role: 'user', first_name: 'Edna', last_name: 'Krabappel', password: 'Pa$$word111', status: 'Approved'}
+user2 = {email: 'ArthurCollins@AMS.com', role: 'user', first_name: 'Arthur', last_name: 'Collins', password: 'Pa$$word111', status: 'Approved'}
 user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'creator', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111', status: 'Approved'}
 user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'creator', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111', status: 'Approved'}
 user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
 user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
-user1 = {email: 'user1@TFA.com', role: 'user', first_name: 'User1', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
-user2 = {email: 'user2@TFA.com', role: 'user', first_name: 'User2', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
 user_hashes = []
 user_hashes << user_hash1
 user_hashes << user_hash2
@@ -117,6 +117,40 @@ lesson_hashes.each do |hash|
 end
 puts 'done'
 puts "Created #{success} lessons with #{errors} failures"
+
+# Create Search Items
+print "Creating Search Items"
+courses = Course.all
+user = User.find_by email: "missbliss@jfkhs.com"
+errors = 0
+success = 0
+courses.each do |course|
+  hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id, last_name: user.last_name, user_status: user.status}
+  search_item = SearchItem.new(hash)
+  if search_item.save
+    course.search_item = search_item
+    success += 1
+    print '.'
+  else
+    errors =+ 1
+    print 'x'
+  end
+  course.lessons.each do |lesson|
+    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id, last_name: user.last_name, user_status: user.status }
+    search_item = SearchItem.new hash
+    if search_item.save
+      lesson.search_item = search_item
+      success += 1
+      print '.'
+    else
+      errors =+ 1
+      print 'x'
+    end
+  end
+end
+SearchItem.reindex
+puts 'done'
+puts "Created #{success} search_items with #{errors} failures"
 
 #Create course favorite and lesson favorite
 user = User.find_by email: "missbliss@jfkhs.com"
@@ -237,37 +271,3 @@ key_word_hashes.each do |hash|
 end
 puts 'done'
 puts "Created #{success} key_words with #{errors} failures"
-
-# Create Search Items
-print "Creating Search Items"
-courses = Course.all
-user = User.find_by email: "missbliss@jfkhs.com"
-errors = 0
-success = 0
-courses.each do |course|
-  hash = { searchable_id: course.id, searchable_type: 'Course', title: course.title, description: course.description, subject: course.subject, grade_level: course.grades.pluck(:grade_level).join(' '), state: course.state, district: course.district, tags: course.tags.pluck(:name).join(' '), user_id: user.id, last_name: user.last_name, user_status: user.status}
-  search_item = SearchItem.new(hash)
-  if search_item.save
-    course.search_item = search_item
-    success += 1
-    print '.'
-  else
-    errors =+ 1
-    print 'x'
-  end
-  course.lessons.each do |lesson|
-    hash = { searchable_id: lesson.id, searchable_type: 'Lesson', title: lesson.title, description: lesson.description, course_id: lesson.course_id, tags: lesson.tags.pluck(:name).join(' '), subject: lesson.course.subject, grade_level: lesson.course.grades.pluck(:grade_level).join(' '), user_id: user.id, last_name: user.last_name, user_status: user.status }
-    search_item = SearchItem.new hash
-    if search_item.save
-      lesson.search_item = search_item
-      success += 1
-      print '.'
-    else
-      errors =+ 1
-      print 'x'
-    end
-  end
-end
-SearchItem.reindex
-puts 'done'
-puts "Created #{success} search_items with #{errors} failures"

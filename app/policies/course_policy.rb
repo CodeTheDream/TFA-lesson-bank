@@ -20,14 +20,14 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def owner_and_creator_or_admin?
-    (creator? || admin?) && owner?
+    creator_or_admin? && owner?
   end
 
   %i(show? favorite? flag? unfavorite? log? download?).each do |ali|
     alias_method ali, :logged_in_and_approved?
   end
 
-  %i(new? create? course_lesson_form? load_course?).each do |ali|
+  %i(create? course_lesson_form? load_course?).each do |ali|
     alias_method ali, :creator_or_admin?
   end
 

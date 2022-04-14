@@ -34,15 +34,15 @@ class CoursesController < ApplicationController
     
   end
 
-  # GET /courses/new
-  def new
-    @course = Course.new
-    @document = @course.documents.build
-    @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-  end
+#  # GET /courses/new
+#  def new
+#    @course = Course.new
+#    @document = @course.documents.build
+#    @available_grade_levels = Grade.all
+#    @subjects = %w[Art English Math Music Science Technology]
+#    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+#    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+#  end
 
   # GET /courses/1/edit
   def edit

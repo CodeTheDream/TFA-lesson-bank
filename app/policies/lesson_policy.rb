@@ -1,28 +1,41 @@
 class LessonPolicy < ApplicationPolicy
-    def logged_in?
-      @user.present?
-    end
-  
-    # def owner_or_admin?
-    #   (@user&.role == 'admin') || (@record&.user_id == @user.id) 
-    # end
-    def admin?
-      (@user&.role == 'admin') 
-    end
-    def owner_and_approved?
-      (@record&.user_id == @user.id) && (@user.status == 'Approved')
-    end 
-  
-    %i(new? create? show? download? favorite? unfavorite? flag? unflag?).each do |ali|
-      alias_method ali, :logged_in?
-    end
+  def logged_in_and_approved?
+    @user.present? && @user.status == 'Approved'
+  end
 
-    %i(index? edit? update? destroy?).each do |ali|
-      alias_method ali, :admin?
-    end
-  
-    %i(edit? update? destroy?).each do |ali|
-      alias_method ali, :owner_and_approved?
-    end
+  def creator?
+    @user&.role == 'creator'
+  end
 
+  def owner?
+    @record&.user_id == @user.id
+  end
+
+  def admin?
+    logged_in_and_approved? && @user&.role == 'admin'
+  end
+
+  def creator_or_admin?
+    logged_in_and_approved? && (creator? || admin?)
+  end
+
+  def owner_and_creator_or_admin?
+    creator_or_admin? && owner?
+  end
+
+  %i(favorite? flag? unfavorite? download?).each do |ali|
+    alias_method ali, :logged_in_and_approved?
+  end
+
+  %i(new? create?).each do |ali|
+    alias_method ali, :creator_or_admin?
+  end
+
+  %i(update? destroy?).each do |ali|
+    alias_method ali, :owner_and_creator_or_admin?
+  end
+
+  %i(index? unflag?).each do |ali|
+    alias_method ali, :admin?
+  end
 end

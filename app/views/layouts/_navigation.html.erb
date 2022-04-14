@@ -27,9 +27,9 @@
                   <%= link_to 'ADMIN:LESSONS', lessons_path, class: 'dropdown-item' %>
                 <%end%>                
                 <% if current_user && !current_user.role.blank? %> 
-                  <%= link_to 'MY MATERIAL', search_page_path(mycontent: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
                   <%= link_to 'FAVORITES', search_page_path(favorites: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
                   <% if current_user.role == "admin" || current_user.role == "creator" %>
+                    <%= link_to 'MY MATERIAL', search_page_path(mycontent: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
                     <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
                   <%end%>
                   <%= link_to 'MY ACCOUNT', user_edit_path(current_user.id), class: 'dropdown-item' %>

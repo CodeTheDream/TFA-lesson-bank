@@ -6,17 +6,17 @@ class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   before_action :verify_role!
   
-  def index
-    @documents = Document.all
-  end
-      
-  def course_index
-    @documents = @course.documents
-  end
-
-  def lesson_index
-    @documents = @lesson.documents
-  end
+#  def index
+#    @documents = Document.all
+#  end
+#      
+#  def course_index
+#    @documents = @course.documents
+#  end
+#
+#  def lesson_index
+#    @documents = @lesson.documents
+#  end
 
   # GET /documents/1
   # GET /documents/1.json
@@ -35,14 +35,14 @@ class DocumentsController < ApplicationController
     #end
   end
       
-  # GET /documents/new
-  def new
-    @document = Document.new
-  end
+#  # GET /documents/new
+#  def new
+#    @document = Document.new
+#  end
       
-  # GET /documents/1/edit
-  def edit
-  end
+#  # GET /documents/1/edit
+#  def edit
+#  end
       
   # POST /documents
   # POST /documents.json
