@@ -82,8 +82,6 @@ RSpec.describe "Courses", type: :request do
       # @tag = FactoryBot.create(:tag)
       # tags_string = "tag1, tag2"
       # tags_params = tags_string
-      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
-      @course = Course.create(course_hash)
       # hash = {course_id: @course.id, tag_id: @tag.id, frequency: 1}
       # KeyWord.find_or_create_by(hash)
       sign_in @user
@@ -91,10 +89,10 @@ RSpec.describe "Courses", type: :request do
       course_attributes = FactoryBot.attributes_for(:course)
       # create_tags(tags_params[@tag], @course)
       # create_tags(@tag, @course)
-
       expect { post courses_path, params: {course: course_attributes}
     }.to change(Course, :count)
-      expect(response).to redirect_to course_lesson_form_courses_path
+      course_obj = OpenStruct.new(course_attributes)
+      expect(response).to redirect_to course_lesson_form_courses_path(course_id: course_obj.id)
     end
   end
   describe "post courses_path with invalid data" do

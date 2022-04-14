@@ -100,7 +100,7 @@
 
       <!-- Course Right Side Documents Section-->      
       <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
-        <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+        <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
     
           
           <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
@@ -164,7 +164,7 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
-                      <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+                      <% if current_user&.role == 'user' || current_user&.role == 'creator' || current_user&.role == 'admin'%>
                         <div class="lesson_title_row">
                           <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
                           <div class="lesson-star">

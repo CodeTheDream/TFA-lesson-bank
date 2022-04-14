@@ -38,7 +38,7 @@
                 <td><a href='/users/<%="#{user.id}"%>/usercourses' class="btn btn-outline-primary btn-sm">USER'S CONTENT </a></td>
                 <td><a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn btn-outline-primary btn-sm">WHO DOWNLOADED</a></td>
                 <td><a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn btn-outline-primary btn-sm">I DOWNLOADED </a></td>
-              <%elsif (user.id == @current_user.id) && current_user.role.include?("teacher") %>
+              <%elsif (user.id == @current_user.id) && current_user.role.include?("creator") %>
                 <td><a href='/users/<%="#{user.id}"%>/edit' class="btn btn-outline-primary btn-sm">EDIT</a></td>
                 <td><a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn btn-outline-primary btn-sm">WHO DOWNLOADED</a></td>
                 <td><a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn btn-outline-primary btn-sm">I DOWNLOADED </a></td>

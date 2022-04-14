@@ -15,15 +15,19 @@
 
 # Create Users
 print "Creating users"
-user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'teacher', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111', status: 'Approved'}
-user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'teacher', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111', status: 'Approved'}
+user_hash1 = {email: 'MissBliss@JFKHS.com', role: 'creator', first_name: 'Carrie', last_name: 'Bliss', password: 'Pa$$word111', status: 'Approved'}
+user_hash2 = {email: 'GeorgeFeeny@JAHS.com', role: 'creator', first_name: 'George', last_name: 'Feeny', password: 'Pa$$word111', status: 'Approved'}
 user_admin1 = {email: 'admin1@TFA.com', role: 'admin', first_name: 'Admin1', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
 user_admin2 = {email: 'admin2@TFA.com', role: 'admin', first_name: 'Admin2', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
+user1 = {email: 'user1@TFA.com', role: 'user', first_name: 'User1', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
+user2 = {email: 'user2@TFA.com', role: 'user', first_name: 'User2', last_name: 'TFA', password: 'Pa$$word111', status: 'Approved'}
 user_hashes = []
 user_hashes << user_hash1
 user_hashes << user_hash2
 user_hashes << user_admin1
 user_hashes << user_admin2
+user_hashes << user1
+user_hashes << user2
 errors = 0
 success = 0
 user_hashes.each do |hash|

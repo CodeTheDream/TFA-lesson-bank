@@ -27,7 +27,7 @@ RSpec.describe "Users", type: :request do
       redirect_to users_path
     end
     it "it won't render the :index template if your user is sign_in, but your user status is Pending" do
-      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      userpending = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}      
       @user = User.create(userpending)
       sign_in @user
       @user.confirm
@@ -35,14 +35,14 @@ RSpec.describe "Users", type: :request do
       expect(response.status).not_to render_template(:index)
       redirect_to root_path
     end
-    it "it won't render the :index template if your user is not sign_in (user status is Approved)" do
+    it "it wont render the :index template if your user is not sign_in (user status is Approved)" do
       @user = FactoryBot.create(:user)
       get users_path
       expect(response.status).not_to render_template(:index)
       redirect_to root_path
     end
     it "it won't render the :index template if your user is not sign_in (user status is Pending)" do
-      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      userpending = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}      
       @user = User.create(userpending)
       get users_path
       expect(response.status).not_to render_template(:index)
@@ -59,7 +59,7 @@ RSpec.describe "Users", type: :request do
       redirect_to user_show_path
     end
     it "it won't render the :show user template if your user is sign_in and your status is Pending" do
-      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      userpending = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
       @user = User.create(userpending)
       sign_in @user
       @user.confirm
@@ -68,7 +68,7 @@ RSpec.describe "Users", type: :request do
       redirect_to root_path
     end
     it "won't renders the :show user template if your user is NOT sign_in and status is pending" do
-      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      userpending = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
       @user = User.create(userpending)
       # We do not sign in the user
       get user_show_path(id: @user.id)
@@ -92,7 +92,7 @@ RSpec.describe "Users", type: :request do
       expect(response.status).to render_template(:edit)
     end
     it "won't renders the :edit template if your user is sign_in and your status is Pending" do
-      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      userpending = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
       @user = User.create(userpending)
       sign_in @user
       @user.confirm
@@ -101,19 +101,19 @@ RSpec.describe "Users", type: :request do
       redirect_to root_path
     end
     it "won't renders the :edit template if your user is NOT sign_in and status is pending" do
-      userpending = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      userpending = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
       @user = User.create(userpending)
       # We do not sign in the user
       get user_edit_path(id: @user.id)
       expect(response).not_to render_template(:edit)
       redirect_to users_sign_in_path
     end
-    it "won't renders the :edit template if your role is teacher and you try to edit another teacher's account" do
-      tecaher1 = {email: 'test1@test.com', role: 'teacher', first_name: 'Test1', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
-      tecaher2 = {email: 'test2@test.com', role: 'teacher', first_name: 'Test2', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
-      @user1 = User.create(tecaher1)
-      @user2 = User.create(tecaher2)
-      #signin teacher1
+    it "won't renders the :edit template if your role is creator and you try to edit another creator's account" do
+      creator1 = {email: 'test1@test.com', role: 'creator', first_name: 'Test1', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      creator2 = {email: 'test2@test.com', role: 'creator', first_name: 'Test2', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      @user1 = User.create(creator1)
+      @user2 = User.create(creator2)
+      #signin creator1
       sign_in @user1
       @user1.confirm
       # We do not sign in the user
@@ -123,14 +123,14 @@ RSpec.describe "Users", type: :request do
     end
     it "will render the :edit template if your role is admin with status approved and you try to edit a teacher's account with status Approved" do
       useradmin1 = {email: 'admin1@test.com', role: 'admin', first_name: 'Admin1', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
-      teacher = {email: 'teacher@test.com', role: 'teacher', first_name: 'Teacher', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      creator = {email: 'creator@test.com', role: 'creator', first_name: 'Creator', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
       @admin1 = User.create(useradmin1)
-      @teacher1 = User.create(teacher)
+      @creator1 = User.create(creator)
       #signin admin with status Approved
       sign_in @admin1
       @admin1.confirm
       #Admin try to edit teacher with status Approved
-      get user_edit_path(id: @teacher1.id)
+      get user_edit_path(id: @creator1.id)
       expect(response).to render_template(:edit)
       expect(response.status).to render_template(:edit)
     end
@@ -152,17 +152,17 @@ RSpec.describe "Users", type: :request do
       expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
       expect(response).to redirect_to root_path
     end
-    it "it won't delete the user record if your user (teacher) is sign_in and your status is Approved" do
-      userteacher = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
-      @user = User.create(userteacher)
+    it "it won't delete the user record if your user (creator) is sign_in and your status is Approved" do
+      usercreator = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
+      @user = User.create(usercreator)
       sign_in @user
       @user.confirm
       expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
       expect(response).to redirect_to users_path
     end
-    it "it won't delete the user record if your user (teacher) is sign_in and your status is Pending" do
-      userteacher = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
-      @user = User.create(userteacher)
+    it "it won't delete the user record if your user (creator) is sign_in and your status is Pending" do
+      usercreator = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(usercreator)
       sign_in @user
       @user.confirm
       expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
@@ -171,20 +171,20 @@ RSpec.describe "Users", type: :request do
   end
   describe "create the new_user with status pending" do
     it "won't create the new_user with no email" do
-      userteacher = {email: '', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
-      @user = User.create(userteacher)
+      usercreator = {email: '', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(usercreator)
       expect(@user.errors[:email]).to include("can't be blank")
       #it won't create the user and it will send error message
     end
     it "won't create the new_user without a valid email" do
-      userteacher = {email: 'testdotcom', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
-      @user = User.create(userteacher)
+      usercreator = {email: 'testdotcom', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(usercreator)
       expect(@user.errors[:email]).to include("is invalid")
       #it won't create the user and it will send error message
     end
-    it "create the new_user teacher with role pendig and will redirect to the root page and wait for confirmation and an admin to chenge status to Approved" do
-      userteacher = {email: 'test@test.com', role: 'teacher', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
-      @user = User.create(userteacher)
+    it "create the new_user creator with role pendig and will redirect to the root page and wait for confirmation and an admin to chenge status to Approved" do
+      usercreator = {email: 'test@test.com', role: 'creator', first_name: 'Test', last_name: 'Lastname', password: 'Pa$$word111', status: 'Pending'}
+      @user = User.create(usercreator)
       @user.save
       #Call the method from the model and send email confirmation 
       expect { @user.send_email_confirmation }.to change { ActionMailer::Base.deliveries.count }.by(1)
