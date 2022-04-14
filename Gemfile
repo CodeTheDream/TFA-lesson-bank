@@ -39,6 +39,8 @@ gem 'image_processing', '~> 1.2'
 # use jquery-rails for jquery
 gem 'jquery-rails'
 gem "font-awesome-rails"
+# use aws-sdk-s3 for storage in production
+gem "aws-sdk-s3", require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -52,7 +54,7 @@ gem 'will_paginate-bootstrap4'
 
 
 # Use searchkick to interact with ElastciSearch
-gem 'searchkick'
+gem 'searchkick', '4.6.3'
 
 gem 'rails-controller-testing'
 gem 'factory_bot_rails'

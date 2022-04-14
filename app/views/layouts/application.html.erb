@@ -12,57 +12,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-  </head>
-
-  <body>
-    </header>
-    <%= render 'layouts/navigation' %>
-    </header>
-<!--    <%# if notice %>
-      <p class="notice"><%#= notice %></p>
-    <%# elsif alert %>
-      <p class="alert"><%#= alert %></p>
-      <%# end %>-->
-    <main>
-      <% if notice %>
-        <div id="notice_wrapper">
-        <%# Adjust below the NavBar %>
-        <h1>p</h1>
-        <h5 class="notice mt-5"><%= notice %></h5>
-        </div>
-      <% elsif alert %>
-        <div id="notice_wrapper">
-          <p class="alert"> <%= alert %> </p> 
-        </div>
-      <% end %>
-      <%= yield %>
-    </main class="flex-shrink-0" role="main">
-
-    <footer class="fixed-bottom d-flex justify-content-center">
-<%#= render 'layouts/footer' %>
-    </footer>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">  
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <% if notice %>
+      <div id="notice_wrapper">
+        <%# Adjust below the NavBar %>        
+        <p class="notice "><%= notice %></h5>
+      </div>
+    <% elsif alert %>
+      <div id="notice_wrapper">
+        <p class="alert"> <%= alert %> </p> 
+      </div>
+    <% end %>
+    </header>
+    <%= render 'layouts/navigation' %>
+    </header>
+    <main>  
+      <%= yield %>
+    </main class="flex-shrink-0" role="main">  
+    
   </body>
+
   <script type="text/javascript" >
-  if (document.getElementById("notice_wrapper") != null){
-    var s = document.getElementById('notice_wrapper').style;
-    s.opacity = 1;
-    (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,200)})();
-  }
-  function checkUser(){
-    let usernil = <%= @current_user.nil?.to_json %> ;
-    if (usernil === true){
-      alert ("You need to login to get access to the content");
-    }else{
-      return; 
+  $(document).ready(function(){
+    setTimeout(function(){
+        $('#notice_wrapper').fadeOut("slow", function() {
+            $(this).remove();
+        })
+    }, 2500);
+    });
+    function checkUser(){
+      let usernil = <%= @current_user.nil?.to_json %> ;
+      if (usernil === true){
+        alert ("You need to login to get access to the content");
+      }else{
+        return; 
+      }
     }
-  }
   </script>
 </html>
 

@@ -40,23 +40,32 @@ module SearchItemSearch
       where["type"] = "lesson_type"
     end
 
+    if @options["selected_grades"].present?
+      where["grade_level"] = @options["selected_grades"]
+    end
+
     if @options["mycontent"].present? && @options["mycontent"] == "true"
       where["user_id"] = @current_user.id
+    elsif @current_user.role != "admin"
+      where["flagged"] = "false"
     end
-  
+
+    if @options["favorites"].present? && @options["favorites"] == "true"
+      where["favorited_by"] = @current_user.id
+    end
+
     where["user_status"] = "Approved"
 
     where
   end
 
   def self.order
-   options = {}
-#    if options[:sort_attribute].present?
-#      order = options[:sort_order].presence || :asc
-#      options[:sort_attribute] => order
-#    else
-#      { }
-#    end
-   options
+    options = {}
+    if @options["admin_view"].present? && @options["admin_view"] == "true"
+      options[:flagged] = "desc"
+    else
+      options[:favorited] = "desc"
+    end
+    options
   end
 end

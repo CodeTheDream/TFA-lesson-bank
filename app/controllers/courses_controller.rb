@@ -8,9 +8,13 @@ class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log, :flag, :unflag]
   before_action :set_document, only: [:log]
   before_action :verify_role!
+  # before_filter :admin_user, :only => :index
 
   def index
-    @courses = Course.all.includes(:grades)
+    query = search_params[:search].present? ? search_params[:search] : nil
+    search_hash = {"courses" => "true", "admin_view" => "true"}
+    @courses = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
+    @flags = Flag.where(flagable_type: "Course", flagable_id: @courses.pluck(:searchable_id))
   end
 
   # GET /courses/1
@@ -60,6 +64,8 @@ class CoursesController < ApplicationController
     @course.user = current_user
     @course.state = 'NC'
     @course.courses_grades.delete_all
+   
+    
     new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
     @course.grades << new_grades if new_grades.present?
     if @course.save
@@ -123,11 +129,11 @@ class CoursesController < ApplicationController
     format.json { head :no_content }
     end
   end
-
   def favorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
     @favorite = Favorite.new(hash)
+    
     if @favorite.save
       if favorite_params[:source] == "course_edit"
         flash.now.alert = "You favorited this course"
@@ -146,7 +152,6 @@ class CoursesController < ApplicationController
       end
     end
   end
-
   def flag
     hash = {flagable_type: "Course", flagable_id: @course.id, user_id: current_user.id, description: flag_params["flag_description"] }
     @flag = Flag.new(hash)
@@ -161,9 +166,9 @@ class CoursesController < ApplicationController
       redirect_to course_path(course_id: @course.id)
     end
   end
-
   def unfavorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
+    
     if !Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id).present?
       if favorite_params[:source] == "course_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
@@ -171,8 +176,8 @@ class CoursesController < ApplicationController
         redirect_to course_path(course_id: @course.id)
       end
     else
-    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id)
-    Favorite.delete(@unfavorite)
+    @unfavorite = Favorite.find_by(user_id: current_user.id, favoritable_id: @course.id, favoritable_type: "Course" )
+    Favorite.destroy(@unfavorite.id)
       if favorite_params[:source] == "course_edit"
         redirect_to course_lesson_form_courses_path(course_id: @course.id)
       elsif favorite_params[:source] == "course_show"
@@ -183,11 +188,11 @@ class CoursesController < ApplicationController
 
   def unflag
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    if !Flag.find_by(user_id: current_user.id, flagable_id: @course.id).present?
+    unflag = Flag.find_by(flagable_id: @course.id, flagable_type: "Course")
+    if unflag.present?
+      Flag.destroy(unflag.id)
       redirect_to course_path(course_id: @course.id)
     else
-      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: @course.id)
-      Flag.delete(@unflag)
       redirect_to course_path(course_id: @course.id)
     end
   end
@@ -209,7 +214,6 @@ class CoursesController < ApplicationController
     end     
   end
 
-  
   def download
     @courses = @course.documents.where(id: params[:document_ids].keys)
     tmp_user_folder = "tmp/course_#{@course.id}"
@@ -268,23 +272,6 @@ class CoursesController < ApplicationController
     render "/courses/course_lesson_form.js.erb"
   end
 
-  def load_lesson
-    @course = Course.find ajax_params[:course_id]
-    new_lesson = Lesson.new(title: "New")
-    @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"
-    if ajax_params[:lesson_id].present?
-      @lesson = Lesson.find ajax_params[:lesson_id]
-    else
-      @lesson = nil 
-    end
-    @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    @from_load_course = false
-    render "/courses/course_lesson_form.js.erb"
-  end
-
   private
 
   def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
@@ -298,10 +285,6 @@ class CoursesController < ApplicationController
       zf.add(filename, "#{tmp_user_folder}/#{filename}")
     end
   end
-
-  # def course_owner
-  #   @course_owner = User.find(params[:id])    
-  # end
 
   def verify_role!
     authorize @course || Course 
@@ -328,14 +311,16 @@ class CoursesController < ApplicationController
   def document_params
     params.permit(:documents => {})
   end
+
   def favorite_params
     params.permit(:source, :id)
   end
+ 
   def flag_params
     params.permit(:flag_description)
   end
   def grade_params
-    params.permit(:selected_grades => {})
+    params.permit(:grade_levels => {})
   end
 
   def ajax_params
@@ -361,12 +346,8 @@ class CoursesController < ApplicationController
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
   end
-  def search    
-    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-  end
-    private
 
-  def search_params
-    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons,  :selected_grades => {} )
+  def search_params  
+    params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
   end
 end

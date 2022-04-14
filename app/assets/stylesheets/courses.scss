@@ -22,7 +22,7 @@
 .big_card {
   position: relative;
   background-color: #f0eeed;
-  margin-top: 15px;
+  // margin-top: 15px;
   height: 100%;
   font-family: Montserrat;
   width: 100%;
@@ -96,7 +96,12 @@
   border-top: none !important;
   border-bottom: none !important;
 }
-
+.admin_table_title a {
+  color: #1996aa !important;
+  font-weight: 500;
+  font-size: larger;
+  text-decoration: underline !important;
+}
 // .lesson_clickable {
 //   background-color: white;
 //   width: 1050px !important;
@@ -145,9 +150,10 @@
 .set-size-and-position {
   position: relative;
   top: 15em;
-  right: 1em;
-  background-color: #f0f0f0;
-  width: 73%;
+  // right: 4em;
+  // left: 3em;
+  background-color: #f0eeed;
+  // width: 73%;
 }
 
 .set-height-and-position {
@@ -205,13 +211,16 @@ ul li.favorites::marker {
   bottom: 1.9em;
   list-style-type: none;
   margin-bottom: 0em !important;
-  width: calc(100% - 86px);
+  width: calc(100% - 86px) !important;
 }
 
 .star {
   position: relative;
   bottom: 2.5em;
   float: right;
+}
+.course_favorites_section {
+  float: right !important;
 }
 
 .flag {
@@ -268,6 +277,20 @@ ul li.favorites::marker {
   position: relative;
   // left: 0.75em;
   bottom: 0.25em;
+}
+.course_table_title {
+  // font-size: 2.5em;
+  font-family: Montserrat;
+  padding: 10px;
+  margin-left: 20px;
+}
+.admin_table {
+  padding: 30px;
+}
+.clickable-row:hover {
+  color:black;
+  background-color: #1996aa !important;
+//  font-weight: bold;
 }
 
 .district-label {
@@ -565,7 +588,6 @@ a {
   width: 50%;
 }
 
-
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -576,8 +598,8 @@ a {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
@@ -602,4 +624,13 @@ a {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.edit_button_table {
+  border: none;
+  background-color: transparent !important;
+  color: gray !important;
+}
+.edit_button_table :hover {
+  border-color: #1996aa !important;
 }

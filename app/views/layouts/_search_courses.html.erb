@@ -1,0 +1,12 @@
+<div class="row mx-auto  justify-content-start mb-4">
+  <div class="col">    
+    <%= form_tag courses_path, :method => 'get', enforce_utf8: false do %>
+      <div class="row mb-4">
+        <div class="input-group center-items"> 
+        <%= search_field_tag :search, params[:search], placeholder: 'Search for a course...', class: " form-control form-control-lg right-arrow", style:'width: 50%' %>
+            <button class="btn-lg my-0 search_button">SEARCH <i class="fa fa-solid fa-play yellow-icon-play"></i></button>
+        </div>
+      </div>
+    <% end %>    
+  </div>
+</div>

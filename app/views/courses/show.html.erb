@@ -2,15 +2,14 @@
   <!-- Button Back Section & Pencil-->   
   <div class="row top_session">
     <div class="col-8">
-        <div class="show_button_section btn btn_show_back">  
+      <div class="show_button_section btn btn_show_back">  
+        <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades_back: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons], flags: params[:flags] ) do  %> 
+          <i class=" fa fa-caret-left " style="color:gray;"></i>     
+                
+          <span style="color: gray">BACK TO SEARCH RESULTS </span>
         
-            <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons], flags: params[:flags] ) do  %> 
-              <i class=" fa fa-caret-left " style="color:gray;"></i>     
-                    
-              <span style="color: gray">BACK TO SEARCH RESULTS </span>
-           
-              <% end %>    
-        </div> 
+        <% end %>    
+      </div> 
     </div> 
     <div class="col-4 ">
       <% if current_user == @course.user || current_user&.role == 'admin'%>                   
@@ -25,7 +24,30 @@
      
   <div class="row big_card">
     <div class="card-header"></div> 
-
+      <div class="col-12">
+        <div class="course_favorites_section"> 
+          <% if @fav_courses.include? @course.id %>
+            <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
+              <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+            <% end %> 
+          <% else %> 
+            <%= link_to(favorite_course_path(source: "course_show")) do  %> 
+              <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
+            <% end %>                     
+          <%end %>
+          
+          <%# Flag Section%>
+          <% if @flagged_courses.include? @course.id %>
+            <%= link_to(unflag_course_path(source: "course_show")) do  %> 
+              <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+            <% end %> 
+          <% else %> 
+            <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
+              <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
+            <% end %>
+          <%end %>
+        </div>
+      </div>
     <!-- Left Side Course-->
     <div class="col-lg-4 mb-5">
       <!-- Course header-->
@@ -55,102 +77,68 @@
       </div>      
     </div>
 
+
+
     <!-- Right Side Course-->
     <div class="col-lg-8 mt-5 mb-4 mr-auto"> 
-      <div row>
-      <!-- Course Description Section-->
-      <td class="col-lg-6" >
-      </td>
-
-      <td class="col-lg-1">
-      <div class="star"> 
-        <% if @fav_courses.include? @course.id %>
-          <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
-            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
-          <% end %> 
-        <% else %> 
-          <%= link_to(favorite_course_path(source: "course_show")) do  %> 
-            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
-          <% end %>                     
-        <%end %>
-        
-        <%# Flag Section%>
-        <% if @flagged_courses.include? @course.id %>
-          <%= link_to(unflag_course_path(source: "course_show")) do  %> 
-            <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
-          <% end %> 
-        <% else %> 
-          <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
-            <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
-          <% end %>
-        <%end %>
-      </div>
-      </td>
-      </div> <%# close row %>
-
-
-
-
-
+    
+      <!-- Course Description Section-->  
       <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     
         </p>
       </div> 
-
       <!-- Course Right Side Documents Section-->      
       <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
         <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
-    
-          
-          <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
-                  <th scope="col">TYPE</th>
-                  <th scope="col">PREVIEW</th>
-                  <th scope="col">DOWNLOAD</th>
-                </tr>
-              </thead>
-              
-              <% if @course.documents.any? %>                
-                <% @course.documents.each do |document| %> 
-                  <% if document.lesson_id.nil? %>      
-                    <tbody >
-                      <tr>
-                        <th class=" mobile_document_title" scope="row">
-                          <%=document.name.titleize%>
-                        </th>
-                              
-                        <% if document.file.attached? %>
-                          <th class=" doc_type" scope="row">
-                            <span class="badge badge-primary d-none d-sm-inline d-md-none" style="color: gray"><%=document.kind.upcase%></span>            
-                          </th> 
-                        <% end %>   
-                        <% if document.file.representable? %>
-                          <th class="search_icon" scope="row">
-                            <%= link_to(document.file) do %>
-                              <i class=" fa fa-search" style="color:gray;"></i>
-                            <% end %> 
-                          </th>       
-                        <% end %>
-                       
-                        <th class="download_icon text-center" scope="row"> 
-                           <%# CREATE THE LOG %>
-                          <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
-                           <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
-                          <% end %>                     
-                        </th>                            
-                      </tr>
-                    </tbody>
-                  <% end %>
-                <% end %>             
-              <% end %> 
-            </table>             
-          <% end %>
-        <% end %>         
-      <% end %> 
+            <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                    <th scope="col">TYPE</th>
+                    <th scope="col">PREVIEW</th>
+                    <th scope="col">DOWNLOAD</th>
+                  </tr>
+                </thead>
+                <!-- Course Right Side Documents Section-->    
+                <% if @course.documents.any? %>                
+                  <% @course.documents.each do |document| %> 
+                    <% if document.lesson_id.nil? %>      
+                      <tbody >
+                        <tr>
+                          <th class=" mobile_document_title" scope="row">
+                            <%=document.name.titleize%>
+                          </th>
+                                
+                          <% if document.file.attached? %>
+                            <th class=" doc_type text-center" scope="row">
+                              <span class="badge badge-primary d-none d-sm-inline d-md-none" style="color: gray"><%=document.kind.upcase%></span>            
+                            </th> 
+                          <% end %>   
+                          <% if document.file.representable? %>
+                            <th class="search_icon text-center" scope="row">
+                              <%= link_to(document.file) do %>
+                                <i class=" fa fa-search" style="color:gray;"></i>
+                              <% end %> 
+                            </th>       
+                          <% end %>
+                        
+                          <th class="download_icon text-center" scope="row"> 
+                            <%# CREATE THE LOG %>
+                            <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
+                            <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
+                            <% end %>                     
+                          </th>                            
+                        </tr>
+                      </tbody>
+                    <% end %>
+                  <% end %>             
+                <% end %> 
+              </table>             
+            <% end %>
+          <% end %>         
+        <% end %> 
     </div>             
   
     

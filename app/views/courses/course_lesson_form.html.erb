@@ -1,19 +1,17 @@
 <%= javascript_pack_tag 'courses', 'data-turbolinks-track': 'reload' %>
-<div class="container custom-container ">  
-  <div class="course-form-container">
-    <div class="set-size-and-position">
-      <div class="blue-header"></div>    
-        <div id="selectedCourseId" class="set-height-and-position " >
-        <%= select_tag :course,  options_from_collection_for_select(@courses, "id", "title", (@course.present? ? @course.id : "New")), { required: true, onChange: 'courseSelect()',class: 'dropdowns_inputs new_select ', } %>
-      </div>
-      <div id="courseForm">
-        <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
-      </div>
-      <div id="lessonSide">
-        <% if @lessons.length > 0 %>
-          <%= render 'lessons/form', lesson: @lesson %>
-        <% end %>
-      </div>
+<div class= "container">
+  <div class="set-size-and-position">
+    <div class="blue-header"></div>    
+      <div id="selectedCourseId" class="set-height-and-position " >
+      <%= select_tag :course,  options_from_collection_for_select(@courses, "id", "title", (@course.present? ? @course.id : "New")), { required: true, onChange: 'courseSelect()',class: 'dropdowns_inputs new_select ', } %>
+    </div>
+    <div id="courseForm">
+      <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
+    </div>
+    <div id="lessonSide">
+      <% if @lessons.length > 0 %>
+        <%= render 'lessons/form', lesson: @lesson %>
+      <% end %>
     </div>
   </div>
 </div>
