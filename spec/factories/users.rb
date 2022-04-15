@@ -11,4 +11,5 @@ FactoryBot.define do
       f.password { "Pa$$word1" }
       f.password_confirmation { "Pa$$word1" }
   end
+
 end

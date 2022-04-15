@@ -19,11 +19,29 @@ RSpec.describe "Users", type: :request do
   end
   describe "get user_index_path" do
     it "renders the :index template if your user is sign_in and your status is Approved" do
-      @user = FactoryBot.create(:user)
+      @user = FactoryBot.create(:user, role:'admin')
       sign_in @user
       @user.confirm
       get users_path
       expect(response.status).to render_template(:index)
+      redirect_to users_path
+    end
+    it "it won't render the :index template if your user is sign_in with user role" do
+      @user = FactoryBot.create(:user, role:'user')
+      sign_in @user
+      @user.confirm
+      get users_path
+      expect(response.status).not_to render_template(:index)
+      redirect_to users_path
+    end
+    it "it won't render the :index template if your user is sign_in with user creator" do
+      @user = FactoryBot.create(:user, role:'creator')
+      sign_in @user
+      @user.confirm
+      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
+      @course = Course.new(course_hash)
+      get users_path
+      expect(response.status).not_to render_template(:index)
       redirect_to users_path
     end
     it "it won't render the :index template if your user is sign_in, but your user status is Pending" do
