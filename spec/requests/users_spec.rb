@@ -139,7 +139,7 @@ RSpec.describe "Users", type: :request do
       expect(response).not_to render_template(:edit)
       redirect_to users_sign_in_path
     end
-    it "will render the :edit template if your role is admin with status approved and you try to edit a teacher's account with status Approved" do
+    it "won't render the :edit template if your role is admin with status approved and you try to edit a creators account with status Approved" do
       useradmin1 = {email: 'admin1@test.com', role: 'admin', first_name: 'Admin1', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
       creator = {email: 'creator@test.com', role: 'creator', first_name: 'Creator', last_name: 'Lastname', password: 'Pa$$word111', status: 'Approved'}
       @admin1 = User.create(useradmin1)
@@ -149,8 +149,8 @@ RSpec.describe "Users", type: :request do
       @admin1.confirm
       #Admin try to edit teacher with status Approved
       get user_edit_path(id: @creator1.id)
-      expect(response).to render_template(:edit)
-      expect(response.status).to render_template(:edit)
+      expect(response).not_to render_template(:edit)
+      expect(response.status).not_to render_template(:edit)
     end
   end
   describe "delete user according to your status" do
@@ -184,7 +184,7 @@ RSpec.describe "Users", type: :request do
       sign_in @user
       @user.confirm
       expect {delete user_delete_path(id: @user.id)}.not_to change(User, :count)
-      expect(response).to redirect_to users_path
+      expect(response).to redirect_to root_path
     end
   end
   describe "create the new_user with status pending" do
