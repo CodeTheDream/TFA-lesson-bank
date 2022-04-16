@@ -8,7 +8,12 @@ class DocumentPolicy < ApplicationPolicy
   end
 
   def owner?
-    @record&.user_id == @user.id
+    if @record.lesson_id.present?
+      record_creator = Document.find(@record.id).lesson.course.user
+    elsif @record.course_id.present?
+      record_creator = Document.find(@record.id).course.user
+    end
+      record_creator.id == @user.id
   end
 
   def admin?
