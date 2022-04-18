@@ -27,7 +27,7 @@ describe DocumentPolicy do
     @course.delete if @course.present?
     @user.delete if @user.present?
   end
-  #check why do we remove it  course_index? lesson_index? 
+  #we removed course_index? lesson_index? 
   %i(show?).each do |ali|
     permissions ali do
       context 'User is not logged in' do
@@ -39,6 +39,7 @@ describe DocumentPolicy do
       context 'User is logged in' do
         it 'grants access' do
           @user.status ="Approved"
+          @user.save
           expect(policy).to permit @user
         end
       end
@@ -56,16 +57,19 @@ describe DocumentPolicy do
         it 'as user it denies access as only creator or admin can create' do
           @user.role= 'user'
           @course.user_id = 101
+          @user.save
           @course.user_id != @user_id
           expect(policy).not_to permit @user
         end
         it 'as creator it grants access to create as creator_owner' do
           @user.role= 'creator'
+          @user.save
           @course.user_id == @user_id
           expect(policy).to permit @user
         end
         it 'as admin it grants access to create' do
           @user.role= 'admin'
+          @user.save
           expect(policy).to permit @user
         end
       end
@@ -83,6 +87,7 @@ describe DocumentPolicy do
       context 'user' do
         it 'it denies the access to the user' do
           @user.role = "user"
+          @user.save
           @document_owner = @lesson_document.present? ? Document.find(@lesson_document.id).lesson.course.user : Document.find(@course_document.id).lesson.course.user
           @user_id != @document_owner.id
 	        expect(policy).not_to permit @user, @lesson_document

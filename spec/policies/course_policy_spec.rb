@@ -36,15 +36,15 @@ describe CoursePolicy do
         end
       end
       context 'User is logged in' do
-        it 'as user it grants access to show view' do
+        it 'as user it grants access' do
           @user = FactoryBot.create(:user,role:'user')
           expect(policy).to permit @user
         end
-        it 'as creator it grants access to show view' do
+        it 'as creator it grants access' do
           @user = FactoryBot.create(:user)
           expect(policy).to permit @user
         end
-        it 'as admin it grants access to show view' do
+        it 'as admin it grants access' do
           @user = FactoryBot.create(:user, role:'admin')
           expect(policy).to permit @user
         end
