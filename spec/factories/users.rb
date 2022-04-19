@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :user do |f|
-      f.id { 1000 }
       f.first_name {"name"}
       f.last_name {"lastname"}
       f.status {"Approved"}

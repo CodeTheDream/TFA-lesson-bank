@@ -8,7 +8,7 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def owner?
-    @record&.user_id == @user.id
+    @record&.course.user_id == @user.id
   end
 
   def admin?

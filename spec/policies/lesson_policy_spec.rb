@@ -2,50 +2,48 @@ require 'pundit/rspec'
 require 'rails_helper'
 describe LessonPolicy do
   let(:policy) { described_class }
-  # before do
-  #   @user = FactoryBot.create(:user)
-  #   course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}
-  #   @course = Course.create(course_hash)
-  #   lesson_hash = {title: "test lesson1", description: "test lesson1",
-  #        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
-  #   @lesson = Lesson.create(lesson_hash)
-  #   @lesson_owner = Lesson.find(@lesson.id).course.user
-  #   @course_owner = Course.find(@course.id).user
-  # end
+  before do
+    @user = FactoryBot.create(:user, role: "user")
+    @creator = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:user, role: "admin")
+    creator_course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @creator.id}
+    admin_course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @admin.id}
+    @creator_course = Course.create(creator_course_hash)
+    @admin_course = Course.create(admin_course_hash)
+    creator_lesson_hash = {title: "test lesson1", description: "test lesson1", created_at: Time.now, updated_at: Time.now, course_id: @creator_course.id}
+    admin_lesson_hash = {title: "test lesson1", description: "test lesson1", created_at: Time.now, updated_at: Time.now, course_id: @admin_course.id}
+    @creator_lesson = Lesson.create(creator_lesson_hash)
+    @admin_lesson = Lesson.create(admin_lesson_hash)
+  end
   
-  # after do
-  #   @course_owner.delete if @course_owner.present?
-  #   @lesson_owner.delete if @lesson_owner.present?
-  #   @lesson.delete if @lesson.present?
-  #   @course.delete if @course.present?
-  #   @user.delete if @user.present?
-  # end
-  # new? create? index? 
+  after do
+    @creator_lesson.delete if @creator_lesson.present?
+    @admin_lesson.delete if @admin_lesson.present?
+    @creator_course.delete if @creator_course.present?
+    @admin_course.delete if @admin_course.present?
+    @user.delete if @user.present?
+    @creator.delete if @creator.present?
+    @admin.delete if @admin.present?
+  end
+  
   %i(index? unflag?).each do |ali|
     permissions ali do
       context 'User is not logged in' do
         it 'denies access' do
           @user = nil
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @user, Lesson
         end
       end
       context 'User is logged in' do
         it 'as user it denies access as only admins will see index view' do
-          @user = FactoryBot.create(:user, role:'user')
-          @user.save
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @user, Lesson
         end
         it 'as creator it denies access as only admins will see index view' do
-          @user = FactoryBot.create(:user, role:'creator')
-          @user.save
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @creator, Lesson
         end
         it 'as admin it grants access' do
-          @user = FactoryBot.create(:user, role:'admin')
-          @user.save
-          expect(policy).to permit @user
+          expect(policy).to permit @admin, Lesson
         end
-        
       end  
     end
   end
@@ -53,25 +51,19 @@ describe LessonPolicy do
     permissions ali do
       context 'User is not logged in' do
         it 'denies access' do
-          @user = nil
-          expect(policy).not_to permit @user
+          user = nil
+          expect(policy).not_to permit user, Lesson
         end
       end
       context 'User is logged in' do
         it 'as user it denies access to create and new' do
-          @user = FactoryBot.create(:user, role:'user')
-          @user.save
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @user, Lesson
         end
         it 'as creator it grants access to create and new' do
-          @user = FactoryBot.create(:user)
-          @user.save
-          expect(policy).to permit @user
+          expect(policy).to permit @creator, Lesson
         end
         it 'as admin it grants access to to create and new' do
-          @user = FactoryBot.create(:user, role:'admin')
-          @user.save
-          expect(policy).to permit @user
+          expect(policy).to permit @admin, Lesson
         end
       end  
     end
@@ -81,14 +73,13 @@ describe LessonPolicy do
       context 'User is not logged in' do
         it 'denies access' do
           @user = nil
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @user, @creator_lesson
         end
       end
       context 'User is logged in' do
         it 'as user it grants access' do
-          @user = FactoryBot.create(:user, role:'user')
-          @user.save
-          expect(policy).to permit @user
+          expect(policy).to permit @creator, @creator_lesson
+          expect(policy).to permit @admin, @admin_lesson
         end
       end
     end
@@ -97,35 +88,19 @@ describe LessonPolicy do
     permissions ali do
       context 'owner or admin' do
         it 'denies access if it is not owner or admin' do
-          @user = FactoryBot.create(:user)
-          @user&.role == ''
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @user, @creator_lesson
+          expect(policy).not_to permit @creator, @admin_lesson
         end
       end
       context 'role admin' do
         it 'denies access to edit content to admin for copywright issues' do
-          @user = FactoryBot.create(:user, role:'admin')
-          @user.save
-          expect(policy).not_to permit @user
+          expect(policy).not_to permit @admin, @creator_lesson
         end
       end 
       context 'owner' do
         it 'allow access to owner and creator' do
-          @user = FactoryBot.create(:user, role:'creator')
-          course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
-          @course = Course.new(course_hash)
-          @course.save
-          lesson_hash = {title: "test lesson1", description: "test lesson1", 
-            created_at: Time.now, updated_at: Time.now, course_id: @course.id}
-          @lesson = Lesson.create(lesson_hash)
-          byebug
-          @creator = @lesson.present? ? Lesson.find(@lesson.id).course.user : Course.find(@course.id).user
-          @lesson.save
-          @user.save
-          @creator.save
-          byebug
-          @user.id == @creator.id
-          expect(policy).to permit @user
+          expect(policy).to permit @admin, @admin_lesson
+          expect(policy).to permit @creator, @creator_lesson
         end
       end 
     end

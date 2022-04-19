@@ -13,7 +13,7 @@ RSpec.describe "Lessons", type: :request do
 
   describe "get lessons_path" do
     it "renders the index view" do
-      @user = FactoryBot.create(:user)
+      @user = FactoryBot.create(:user, role: 'admin')
       sign_in @user
       @user.confirm
       course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
@@ -28,34 +28,6 @@ RSpec.describe "Lessons", type: :request do
     end
   end
 
-  describe "get show_assignment_path" do
-    # doesn't render the :show template if a user is not logged in' ???
-    it "get show_assignment_path" do
-      @user = FactoryBot.create(:user)
-      sign_in @user
-      @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
-      @course = Course.create(course_hash)
-      lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
-      @lesson = Lesson.create(lesson_hash)
-      get course_lesson_path(course_id: @course.id, id: @lesson.id)
-      expect(response).to render_template(:show)
-    end
-    
-    it "redirects to the courses index path if the lesson id is invalid" do
-      @user = FactoryBot.create(:user)
-      sign_in @user
-      @user.confirm
-      course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
-      @course = Course.create(course_hash)
-      lesson_hash = {title: "test lesson1", description: "test lesson1", 
-        created_at: Time.now, updated_at: Time.now, course_id: @course.id}
-      @lesson = Lesson.create(lesson_hash)
-      get course_lesson_path(course_id: @course.id, id: 5000)
-      expect(response).to redirect_to courses_path
-    end
-  end
   describe "get new_course_lesson_path" do
     it "renders the :new template" do
       @user = FactoryBot.create(:user)
@@ -146,7 +118,7 @@ RSpec.describe "Lessons", type: :request do
         lesson_hash = {title: "test lesson1", description: "test lesson1", 
           created_at: Time.now, updated_at: Time.now, course_id: @course.id}
         @lesson = Lesson.create(lesson_hash)
-        hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id }
+        hash = { searchable_id: @lesson.id, searchable_type: 'Lesson', title: @lesson.title, description: @lesson.description, course_id: @lesson.course_id, grade_level: '' }
         search_item = SearchItem.create(hash)
         @lesson.search_item = search_item 
 
@@ -157,8 +129,8 @@ RSpec.describe "Lessons", type: :request do
         expect(@lesson.course_id).to eq(@course.id) 
         expect(@lesson.id).to eq(@lesson.id)   
         expect(@lesson.description).to eq("test lesson1") 
-        #check
-        expect(response).to redirect_to course_lesson_form_courses_path(course_id: @course.id,lesson_id: @lesson.id)      end
+        expect(response).to redirect_to course_lesson_form_courses_path(course_id: @course.id,lesson_id: @lesson.id, anchor: "lesson#{@lesson.id}")
+      end
     end
   describe "put course_lesson_path with valid data" do
     it "does not update an entry and render an edit template for the course_lesson_path" do
