@@ -46,7 +46,7 @@ module SearchItemSearch
 
     if @options["mycontent"].present? && @options["mycontent"] == "true"
       where["user_id"] = @current_user.id
-    elsif @current_user.role != "admin"
+    elsif @current_user&.role != "admin"
       where["flagged"] = "false"
     end
 
