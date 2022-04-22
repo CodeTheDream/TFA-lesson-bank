@@ -1,6 +1,6 @@
 <%= javascript_pack_tag 'lessons', 'data-turbolinks-track': 'reload' %>
 <!-- Lesson Bottom Accordion Section-->
-<div class="container mb-5 move-lessons">
+<div class="container mb-5 ">
   <% if @lessons.present? %>
     <% @lessons.each do |lesson_show| %>
       <div class="col-lg-12  mb-2 lesson_accordion" id='lesson<%="#{lesson_show.id}"%>'>
@@ -9,30 +9,28 @@
             <div class="panel-heading" role="tab" id="headingOne">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
-                  <div class=" lesson_title_row  ">
-                    <% if @course.id.present? %>
-                      <% if lesson_show.title == "Add Lesson"%>
-                        <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
-                      <%else%>
-                        <h3><i class="fa fa-solid fa-play icon-play" ></i>  Lesson:  <%= lesson_show.title.titleize%></h3>
-                      <%end%>
-                    <% end %>
-                    <%# Lesson Favorites %>
-                    <div class="lesson-star">
-                      <% if lesson_show.title != "Add Lesson"%>
-                       <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                       <% if fav_lesson.include? lesson_show.id %>
-                         <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
-                           <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
-                         <% end %> 
-                       <% else %> 
-                         <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
-                           <i class="fas fa-heart fa-xs" style="color:gray;"></i>
-                         <% end %>
-                       <%end %>
-                      <%end%>
-                    <div>
-                  </div>
+                  <% if @course.id.present? %>
+                    <% if lesson_show.title == "Add Lesson"%>
+                      <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
+                    <%else%>
+                      <h3><i class="fa fa-solid fa-play icon-play" ></i>  Lesson:  <%= lesson_show.title.titleize%></h3>
+                    <%end%>
+                  <% end %>
+                  <%# Lesson Favorites %>
+                  <div class="lesson-star">
+                    <% if lesson_show.title != "Add Lesson"%>
+                      <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
+                      <% if fav_lesson.include? lesson_show.id %>
+                        <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
+                          <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
+                        <% end %> 
+                      <% else %> 
+                        <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
+                          <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                        <% end %>
+                      <%end %>
+                    <%end%>
+                  <div>                  
                 </a>
               </h4>
             </div>
