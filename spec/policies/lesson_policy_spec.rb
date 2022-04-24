@@ -118,12 +118,10 @@ describe LessonPolicy do
           lesson_hash = {title: "test lesson1", description: "test lesson1", 
             created_at: Time.now, updated_at: Time.now, course_id: @course.id}
           @lesson = Lesson.create(lesson_hash)
-          byebug
           @creator = @lesson.present? ? Lesson.find(@lesson.id).course.user : Course.find(@course.id).user
           @lesson.save
           @user.save
           @creator.save
-          byebug
           @user.id == @creator.id
           expect(policy).to permit @user
         end

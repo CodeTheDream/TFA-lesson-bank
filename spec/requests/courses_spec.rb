@@ -18,7 +18,7 @@ RSpec.describe "Courses", type: :request do
       sign_in @user
       @user.confirm
       get courses_path
-      expect(response.status).to render_template(:index)
+      expect(response.status).to redirect_to root_path
     end
   end
   describe "get course_path" do
@@ -121,10 +121,10 @@ RSpec.describe "Courses", type: :request do
       @user.confirm
       course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.create(course_hash)
-      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, state: @course.state, district: @course.district }
+      hash = { searchable_id: @course.id, searchable_type: 'Course', title: @course.title, description: @course.description, subject: @course.subject, grade_level: "11", state: @course.state, district: @course.district }
       search_item = SearchItem.create(hash)
       @course.search_item = search_item
-      put course_path(id: @course.id), params: {course:{title: "React", description: "React", subject: "Hooks", 
+      put course_path(id: @course.id), params: {course:{title: "React", description: "React", subject: "Hooks",
         state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id}}
       @course.reload
       expect(@course.title).to eq("React")
@@ -160,14 +160,14 @@ RSpec.describe "Courses", type: :request do
   end
 
   describe "get courses_path" do
-    it "renders the index view" do
+    it "it will render the index view as a creator" do
       @user = FactoryBot.create(:user)
       course_hash = {title: "React", description: "React", subject: "Hooks", state: "NC", district: "02", created_at: Time.now, updated_at: Time.now, user_id: @user.id} 
       @course = Course.new(course_hash)
       sign_in @user
       @user.confirm
       get courses_path
-      expect(response.status).to render_template(:index)
+      expect(response.status).to redirect_to root_path
     end
   end
 
