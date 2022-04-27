@@ -50,7 +50,7 @@
       </div>
       <!-- Course Title Section-->   
       <div class="col-12 mt-2"> 
-        <h1 class="mb-2 mt-4"><%= @course.title %>        
+        <h1 class="mb-2 mt-4 show_left"><%= @course.title %>        
         <% if current_user == @course.user || current_user&.role == 'admin'%>
           <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %>
             <i class=" fa fa-pencil-alt pencil_edit"></i>
@@ -95,6 +95,7 @@
                   <th scope="col">TYPE</th>
                   <th scope="col">PREVIEW</th>
                   <th scope="col">DOWNLOAD</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <!-- Course Right Side Documents Section-->    
@@ -123,9 +124,16 @@
                         <th class="download_icon text-center" scope="row"> 
                           <%# CREATE THE LOG %>
                           <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
-                          <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
+                           <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
                           <% end %>                     
-                        </th>                            
+                        </th>   
+                        <th class="trash_delete" scope="row"> 
+                          <% if current_user == @course.user || current_user&.role == 'admin'%>
+                            <%= link_to(document_path, method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                              <i class=" fa fa-trash-alt trash_delete"></i>
+                            <% end %>       
+                          <%end%>  
+                        </th>                             
                       </tr>
                     </tbody>
                   <% end %>
@@ -192,6 +200,7 @@
                                   <th scope="col">TYPE</th>
                                   <th class="text-center" scope="col">PREVIEW</th>
                                   <th class="text-center" scope="col">DOWNLOAD</th>
+                                  <th></th>
                                 </tr>                        
                               </thead>
                           <% if lesson_show.present? %>
@@ -218,7 +227,14 @@
                                     <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
                                       <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
                                     <% end %>  
-                                  </th>                                
+                                  </th> 
+                                  <th class="trash_delete" scope="row"> 
+                                    <% if current_user == @course.user || current_user&.role == 'admin'%>
+                            <%= link_to_document_path(document_id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                              <i class=" fa fa-trash-alt trash_delete"></i>
+                            <% end %>       
+                          <%end%>  
+                        </th>                                     
                                 </tr>
                               </tbody>  
                             <% end %>
