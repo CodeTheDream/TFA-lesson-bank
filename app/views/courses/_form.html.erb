@@ -34,23 +34,22 @@
         <%= f.text_field :title, class: 'course-title', placeholder: "Add Title", :required => true %>
       </div>    
       <!-- Left Side Course-->
-      <div class="col-lg-4 mb-5">
-                
-          <div>
-            DISTRICT: <%= f.select :district, options_for_select(@districts, @course.district), {}, {:class => 'district-dropdown'} %>
-          </div>
-          <div>
-            SUBJECT: <%= f.select :subject, options_for_select(@subjects, @course.subject), {}, {:class => 'subject-dropdown'}  %>
-          </div>
-          GRADE:
-          <div class='grid-container-filter mb-2 checkbox-format course-checkboxes'>
-            <% @available_grade_levels.each do |grade_level|%>
-              <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true, f.object.grades.pluck(:grade_level).include?(grade_level.grade_level)%>
-              <%= label_tag grade_level.grade_level, grade_level.grade_level  %>
-            <%end%>
-          </div>
+      <div class="col-lg-4 mb-5">                
+        <div>
+          DISTRICT: <%= f.select :district, options_for_select(@districts, @course.district), {}, {:class => 'district-dropdown'} %>
+        </div>
+        <div>
+          SUBJECT: <%= f.select :subject, options_for_select(@subjects, @course.subject), {}, {:class => 'subject-dropdown'}  %>
+        </div>
+        GRADE:
+        <div class='grid-container-filter mb-2 checkbox-format course-checkboxes'>
+          <% @available_grade_levels.each do |grade_level|%>
+            <%= check_box_tag "grade_levels[#{grade_level.grade_level}]", true, f.object.grades.pluck(:grade_level).include?(grade_level.grade_level)%>
+            <%= label_tag grade_level.grade_level, grade_level.grade_level  %>
+          <%end%>
         </div>
       </div>
+    
       <!-- Right Side Course-->
       <div class="col-lg-8  mb-2">           
         <!-- Course Description Section-->              

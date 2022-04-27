@@ -48,10 +48,8 @@
           <%end %>
         </div>
       </div>
-    <!-- Left Side Course-->
-    <div class="col-lg-4 mb-5">
-      <!-- Course header-->
-      <div class="show_left">
+      <!-- Course Title Section-->   
+      <div class="col-12 mt-2"> 
         <h1 class="mb-2 mt-4"><%= @course.title %>        
         <% if current_user == @course.user || current_user&.role == 'admin'%>
           <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %>
@@ -60,10 +58,13 @@
           <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
             <i class=" fa fa-trash-alt trash_delete"></i>
           <% end %>       
-        <%end%>
-        
- 
-        <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
+        <%end%>         
+      </div>    
+    <!-- Left Side Course-->
+    <div class="col-lg-4 mb-5">      
+      <div class="show_left">        
+        <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">DISTRICT</span> <b><%= @course.district.upcase%></b></div>
+        <div style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
         <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
         <!-- Tags-->
@@ -76,71 +77,64 @@
         <div><span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= @course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
       </div>      
     </div>
-
-
-
     <!-- Right Side Course-->
-    <div class="col-lg-8 mt-5 mb-4 mr-auto"> 
-    
+    <div class="col-lg-8  mb-4 ">   
       <!-- Course Description Section-->  
-      <div class="mb-3 course_show_description">
+      <div class="mb-3 mt-2 course_show_description">
         <p>
           <%= @course.description %>     
         </p>
-      </div> 
-    
-
-        
-        <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
-          <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
-            <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
-                    <th scope="col">TYPE</th>
-                    <th scope="col">PREVIEW</th>
-                    <th scope="col">DOWNLOAD</th>
-                  </tr>
-                </thead>
-                <!-- Course Right Side Documents Section-->    
-                <% if @course.documents.any? %>                
-                  <% @course.documents.each do |document| %> 
-                    <% if document.lesson_id.nil? %>      
-                      <tbody >
-                        <tr>
-                          <th class=" mobile_document_title" scope="row">
-                            <%=document.name.titleize%>
-                          </th>
-                                
-                          <% if document.file.attached? %>
-                            <th class=" doc_type text-center" scope="row">
-                              <span class="badge badge-primary d-none d-sm-inline d-md-none" style="color: gray"><%=document.kind.upcase%></span>            
-                            </th> 
-                          <% end %>   
-                          <% if document.file.representable? %>
-                            <th class="search_icon text-center" scope="row">
-                              <%= link_to(document.file) do %>
-                                <i class=" fa fa-search" style="color:gray;"></i>
-                              <% end %> 
-                            </th>       
-                          <% end %>
-                        
-                          <th class="download_icon text-center" scope="row"> 
-                            <%# CREATE THE LOG %>
-                            <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
-                            <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
-                            <% end %>                     
-                          </th>                            
-                        </tr>
-                      </tbody>
-                    <% end %>
-                  <% end %>             
-                <% end %> 
-              </table>             
-            <% end %>
-          <% end %>         
-        <% end %> 
+      </div>         
+      <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
+        <% if current_user&.role == 'teacher' || current_user&.role == 'admin'%>
+          <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                  <th scope="col">TYPE</th>
+                  <th scope="col">PREVIEW</th>
+                  <th scope="col">DOWNLOAD</th>
+                </tr>
+              </thead>
+              <!-- Course Right Side Documents Section-->    
+              <% if @course.documents.any? %>                
+                <% @course.documents.each do |document| %> 
+                  <% if document.lesson_id.nil? %>      
+                    <tbody >
+                      <tr>
+                        <th class=" mobile_document_title" scope="row">
+                          <%=document.name.titleize%>
+                        </th>
+                              
+                        <% if document.file.attached? %>
+                          <th class=" doc_type text-center" scope="row">
+                            <span class="badge badge-primary d-none d-sm-inline d-md-none" style="color: gray"><%=document.kind.upcase%></span>            
+                          </th> 
+                        <% end %>   
+                        <% if document.file.representable? %>
+                          <th class="search_icon text-center" scope="row">
+                            <%= link_to(document.file) do %>
+                              <i class=" fa fa-search" style="color:gray;"></i>
+                            <% end %> 
+                          </th>       
+                        <% end %>
+                      
+                        <th class="download_icon text-center" scope="row"> 
+                          <%# CREATE THE LOG %>
+                          <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
+                          <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
+                          <% end %>                     
+                        </th>                            
+                      </tr>
+                    </tbody>
+                  <% end %>
+                <% end %>             
+              <% end %> 
+            </table>             
+          <% end %>
+        <% end %>         
+      <% end %> 
     </div>             
   
     
