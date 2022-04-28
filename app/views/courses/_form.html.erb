@@ -62,9 +62,9 @@
           <thead>
             <tr>
               <th><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
-              <th style="color: #212529;">TYPE</th>
+              <th  style="color: #212529;">TYPE</th>
               <th class="text-center" style="color: #212529;">PREVIEW</th>
-              <th class="text-center" style="color: #212529;">PREVIEW</th>
+              <th></th>
             </tr>
           </thead>  
           <% if f.object.id.present? && f.object.documents.any? %>
@@ -76,7 +76,7 @@
                         <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'document-name' %>
                       </th>
                       <% if document.file.attached? %>
-                        <th>
+                        <th >
                           <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'document-kind' %>
                         </th> 
                       <% end %>
@@ -86,8 +86,15 @@
                             <i class=" fa fa-search" style="color:gray;"></i>
                           <% end %>
                         </th>
-                      <% end %>
-                    </tr>
+                      <% end %>                      
+                      <% if current_user == @course.user || current_user&.role == 'admin'%> 
+                        <th class="text-center">                       
+                          <%= link_to(document_path(id: document.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                            <i class=" fa fa-trash-alt trash_delete"></i>
+                          <% end %>       
+                        <%end%>    
+                      </th>
+                    </tr>                    
                   </tbody>
               <% end %>
             <% end %>
