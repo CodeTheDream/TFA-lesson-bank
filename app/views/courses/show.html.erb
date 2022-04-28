@@ -228,13 +228,7 @@
                                       <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
                                     <% end %>  
                                   </th> 
-                                  <th class="trash_delete" scope="row"> 
-                                    <% if current_user == @course.user || current_user&.role == 'admin'%>
-                            <%= link_to_document_path(document_id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
-                              <i class=" fa fa-trash-alt trash_delete"></i>
-                            <% end %>       
-                          <%end%>  
-                        </th>                                     
+                                                     
                                 </tr>
                               </tbody>  
                             <% end %>

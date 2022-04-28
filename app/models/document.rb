@@ -3,6 +3,7 @@ class Document < ApplicationRecord
   belongs_to :lesson, optional: true
   belongs_to :course, optional: true
   validates :name, presence: true
+  validates :file, presence: true
   validates :description, presence: true
   validates :kind, presence: true
   private
