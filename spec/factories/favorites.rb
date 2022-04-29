@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :favorite do
-    user { 1 }
-    favoritable_id { 1 }
+    user
+    favoritable_id { Course.last.id }
     favoritable_type { "MyString" }
   end
 end

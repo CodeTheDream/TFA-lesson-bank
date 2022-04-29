@@ -2,6 +2,7 @@ class Document < ApplicationRecord
   has_one_attached :file
   belongs_to :lesson, optional: true
   belongs_to :course, optional: true
+  has_many :logs, dependent: :destroy
   validates :name, presence: true
   validates :file, presence: true
   validates :description, presence: true

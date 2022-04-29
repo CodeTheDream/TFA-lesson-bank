@@ -40,7 +40,7 @@
                   <% if current_user.role.include?("admin") %>
                     <div class="form-group">
                       <%= f.label :role %><br />
-                      <%= f.select :role, options_for_select(["admin", "teacher"], f.object.role), { include_blank: true }%>
+                      <%= f.select :role, options_for_select(["admin", "creator", "user"], f.object.role), { include_blank: true }%>
                     </div>
                   <%else%>
                     <% current_user.role %>
