@@ -84,13 +84,17 @@
                                     <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
                                   </th>
                                 <% end %>
-                                <% if document.file.representable? %>
+                                <%if document.file.representable? %>
                                   <th class="text-center">
                                     <%= link_to(document.file) do %>
                                       <i class=" fa fa-search" style="color:gray;"></i>
                                     <% end %>
-                                  </th>
-                                <% end %>                                                                                   
+                                  </th>                                  
+                                <%else%>
+                                  <th class="search_icon text-center" scope="row">                             
+                                    <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                                  </th>  
+                                <% end %>                                                                                  
                                 <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
                                   <th class="trash_delete text-center"" scope="row">    
                                   <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
