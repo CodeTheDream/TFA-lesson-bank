@@ -51,7 +51,7 @@
       <!-- Course Title Section-->   
       <div class="col-12 mt-2"> 
         <h1 class="mb-2 mt-4 show_left"><%= @course.title %>        
-        <% if current_user == @course.user || current_user&.role == 'admin'%>
+        <% if current_user&.role == "creator" &&  current_user&.role == "owner" || current_user&.role == 'admin'%>
           <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %>
             <i class=" fa fa-pencil-alt pencil_edit"></i>
           <% end %> 
@@ -118,12 +118,11 @@
                             <th class="search_icon text-center" scope="row">
                               <%= link_to(document.file) do %>
                                 <i class=" fa fa-search" style="color:gray;"></i>
-                                
                               <% end %> 
                             </th> 
                           <%else%>
                             <th class="search_icon text-center" scope="row">                             
-                              <a href="#" data-toggle="tooltip" title= "This Document is not representable"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                              <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
                             </th>  
                           <% end %>
                         
@@ -132,16 +131,7 @@
                             <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
                             <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
                             <% end %>                     
-                          </th>  
-                          
-                          
-                          <% if current_user == @course.user || current_user&.role == 'admin'%>
-                            <th class="trash_delete" scope="row"> 
-                              <%= link_to(document_path, method: :delete, data: { confirm: 'Are you sure?' }) do %>
-                                <i class=" fa fa-trash-alt trash_delete"></i>
-                              <% end %>                              
-                            </th>    
-                          <%end%>  
+                          </th>          
 
                         </tr>
                       </tbody>
@@ -237,8 +227,7 @@
                                     <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
                                       <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
                                     <% end %>  
-                                  </th> 
-                                                     
+                                  </th>                                                      
                                 </tr>
                               </tbody>  
                             <% end %>
