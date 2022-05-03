@@ -92,7 +92,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         @new_status = @user.status
         hash = {last_name: @new_last_name, user_status: @new_status}
         search_items_to_update.each {|sui| sui.update(hash)}
-        redirect_to users_path, notice: 'User was successfully updated' 
+        redirect_to search_page_path, notice: 'User was successfully updated' 
       elsif @previous_email != @user.email
         @new_email = configure_registration_update_parameters[:email]
         @user.update_attribute(:previous_email, @previous_email)
@@ -102,7 +102,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # user account will be pending until confirmation
         redirect_to root_path #sign_out @user
       else 
-        redirect_to users_path, notice: 'User was successfully updated'
+        redirect_to search_page_path, notice: 'User was successfully updated'
       end
   else
     flash.now.alert = @user.errors.full_messages.to_sentence

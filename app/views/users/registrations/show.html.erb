@@ -7,7 +7,7 @@
           <h4 class="font-weight-light mb-0">Show User</h4>
           <div class="col-sm-6" style="margin-left:-15px;">
             <br class="mr-4">
-            <div>
+            <div> 
               <strong>First Name:</strong>
               <%= @user.first_name %>                
             </div>
@@ -24,16 +24,33 @@
               <%= @user.role %>                
             </div>
           </div> 
-          <hr>    
-          <div class="actions form-group p-3">   
-            <%if current_user == "admin"%> 
-              <%= link_to 'Edit', user_edit_path(@user)%>
-              <%= link_to 'Destroy', user_delete_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
-            <% end %>   
-            <%= link_to 'Back', users_path, :class => "btn btn-outline-primary"  %>           
+          <hr>   
+
+          <div class="actions center form-group p-3">   
+            <%if current_user.role == "admin"%> 
+              <%= link_to 'EDIT', user_edit_path(@user), :class => "btn button_user_card"%>
+              <%= link_to 'DESTROY', user_delete_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn button_user_card" %>
+              <a href='/users/<%="#{@user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
+              <a href='/users/<%="#{@user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
+              <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
+            <%elsif (@user.id == current_user.id) && (current_user.role == "creator" || current_user.role == "user") %>
+              <a href='/users/<%="#{@user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
+              <a href='/users/<%="#{@user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
+              <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
+              <%= link_to 'EDIT', user_edit_path(@user), :class => "btn button_user_card"%>
+              <%= link_to 'BACK', search_page_path, :class => "btn button_user_card"  %>           
+            <%else%>
+              <a href='/users/<%="#{@user.id}"%>' class="btn button_user_card">VIEW</a>
+              <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
+            <%end%>
           </div>
+          <%# </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+</div> %>
+             
+              
