@@ -25,7 +25,7 @@ class DocumentPolicy < ApplicationPolicy
   end
 
   def owner_and_creator_or_admin?
-    creator_or_admin? && owner?
+    (owner? && creator?) || admin?
   end
 
   %i(show?).each do |ali|
