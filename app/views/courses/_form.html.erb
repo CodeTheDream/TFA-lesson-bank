@@ -62,6 +62,7 @@
               <th><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
               <th style="color: #212529;">TYPE</th>
               <th class="text-center" style="color: #212529;">PREVIEW</th>
+              <th>DELETE</th>
             </tr>
           </thead>  
           <% if f.object.id.present? && f.object.documents.any? %>
@@ -83,7 +84,19 @@
                             <i class=" fa fa-search" style="color:gray;"></i>
                           <% end %>
                         </th>
+                      <%else%>
+                        <th class="search_icon text-center">
+                          <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                        </th>
                       <% end %>
+
+                      <% if current_user&.id == document.course.user_id || current_user&.role == 'admin'%>
+                        <th class="trash_delete text-center" scope="row"> 
+                          <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                            <i class=" fa fa-trash-alt trash_delete"></i>
+                          <%end%>  
+                        </th>   
+                      <%end%>                 
                     </tr>
                   </tbody>
               <% end %>
@@ -160,10 +173,18 @@
             </div>
           <% end %>
         <% else %>
-          You must create the course before uploading and documents
+          You must create the course before uploading any documents
         <% end %>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  $(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    $("tr[data-link]").click(function() {
+      window.location = $(this).data("link");
+    })
+  });
+</script>
