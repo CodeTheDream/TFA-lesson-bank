@@ -12,7 +12,9 @@ class Favorite < ApplicationRecord
 
   def search_item_reindex
     search_item = SearchItem.find_by(searchable_id: favoritable_id, searchable_type: favoritable_type)
-    search_item.update(favorited: Favorite.where(favoritable_id: favoritable_id, favoritable_type: favoritable_type).count)
-    search_item.reindex if search_item.present?
+    if search_item.present?
+      search_item.update(favorited: Favorite.where(favoritable_id: favoritable_id, favoritable_type: favoritable_type).count)
+      search_item.reindex
+    end
   end
 end

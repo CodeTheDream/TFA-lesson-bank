@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :flag do
-    user { 1 }
-    flagable_id { 1 }
+    user
+    flagable_id { Course.last.id }
     flagable_type { "MyString" }
   end
 end
