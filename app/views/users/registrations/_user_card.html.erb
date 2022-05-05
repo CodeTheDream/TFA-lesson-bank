@@ -16,8 +16,8 @@
   </div>
 
   <div class="text-center ">
-    <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= user.name %></span></div>
-    <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= user.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
+    <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;"> Created by  <%= user.name %></span></div>
+    <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;"> Last Edited on <%= user.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
     <%# Show the buttons to show only the ones with their rights %>
     <%if current_user.role == "admin"%> 
       <a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
