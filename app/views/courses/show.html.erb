@@ -92,11 +92,17 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                    <th scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
                     <th scope="col">TYPE</th>
+<<<<<<< HEAD
                     <th scope="col">PREVIEW</th>
                     <th scope="col">DOWNLOAD</th>
                     <th scope="col"></th>
+=======
+                    <th class=" text-center" scope="col">PREVIEW</th>
+                    <th class=" text-center" scope="col">DOWNLOAD</th>
+                   
+>>>>>>> trash_conflicts
                   </tr>
                 </thead>
                 <!-- Course Right Side Documents Section-->    
@@ -110,8 +116,13 @@
                           </th>
                                 
                           <% if document.file.attached? %>
+<<<<<<< HEAD
                             <th class= "doc_type " scope="row">
                               <span style="color: gray"><%=document.kind.upcase%></span>            
+=======
+                            <th class="doc_type" style="color:gray;" scope="row">
+                             <%=document.kind.upcase%>       
+>>>>>>> trash_conflicts
                             </th> 
                           <% end %>   
                           <% if document.file.representable? %>
@@ -119,11 +130,19 @@
                               <%= link_to(document.file) do %>
                                 <i class=" fa fa-search" style="color:gray;"></i>
                               <% end %> 
+<<<<<<< HEAD
                             </th> 
                           <%else%>
                             <th class="search_icon text-center" scope="row">                             
                               <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
                             </th>  
+=======
+                            </th>  
+                          <%else%>
+                            <th class="search_icon text-center" scope="row">                             
+                              <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                            </th>                                   
+>>>>>>> trash_conflicts
                           <% end %>
                         
                           <th class="download_icon text-center" scope="row"> 
@@ -221,6 +240,10 @@
                                         <a href="#" data-toggle="tooltip" title= "This Document is not representable"></a> 
                                       <% end %>   
                                     </th>
+                                  <%else%>
+                                    <th class="search_icon text-center" scope="row">                             
+                                      <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                                    </th>  
                                   <%end%>                        
                                   <th class="text-center download_icon" scope="row">
                                     <%# CREATE LOG FOR LESSONS %>

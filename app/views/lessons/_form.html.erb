@@ -41,6 +41,7 @@
             <% else %>
               <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <% end %>
+<<<<<<< HEAD
             <% if @course.id.present? %>
               <%= form_for([@course,lesson_show]) do |f| %>
                 <% if lesson_show.errors.any? %>
@@ -78,10 +79,46 @@
                                   <!--<span style="color: #212529;"><%#=document.name.titleize%>-->
                                 </th>
                                 <% if document.file.attached? %>
+=======
+              <% if @course.id.present? %>
+                <%= form_for([@course,lesson_show]) do |f| %>
+                  <% if lesson_show.errors.any? %>
+                    <div id="error_explanation" class="my_alert">
+                      <h2><%= pluralize(lesson_show.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+                      <ul>
+                      <% lesson_show.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                  
+                  <div>
+                    <%= f.text_area :title, class: 'lesson-title ', :required => true %>
+                  </div> 
+                  <div class="lesson-description-label  mt-2"> Add Description</div>
+                  <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
+                  <div class="lesson-document-container">
+                    <% if f.object.id.present? && f.object.documents.any? %>
+                      <table class="table mb-0">
+                        <thead>
+                          <tr>
+                            <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
+                            <th style="color: #212529;">TYPE</th>
+                            <th class="text-center" style="color: #212529;">PREVIEW</th>
+                            <th class="text-center" style="color: #212529;">DELETE</th>
+                          </tr>
+                        </thead>
+                        <% f.object.documents.each do |document| %>
+                          <% if document.lesson_id.present? && document.id.present? %>
+                            <tbody class="text-center">
+                                <tr>
+>>>>>>> trash_conflicts
                                   <th>
                                     <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'lesson-document-kind' %>
                                     <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
                                   </th>
+<<<<<<< HEAD
                                 <% end %>
                                 <% if document.file.representable? %>
                                   <th class="text-center">
@@ -92,6 +129,35 @@
                                 <% end %>
                               </tr>
                             </tbody>
+=======
+                                  <% if document.file.attached? %>
+                                    <th>
+                                      <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'lesson-document-kind' %>
+                                      <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
+                                    </th>
+                                  <% end %>
+                                  <% if document.file.representable? %>
+                                    <th class="text-center">
+                                      <%= link_to(document.file) do %>
+                                        <i class=" fa fa-search" style="color:gray;"></i>
+                                      <% end %>
+                                    </th>
+                                  <%else%>
+                                    <th class="search_icon text-center" scope="row"> 
+                                      <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                                    </th>
+                                    <% end %>
+                                  <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
+                                    <th class="trash_delete text-center"" scope="row">    
+                                      <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                                        <i class=" fa fa-trash-alt trash_delete"></i>
+                                      <% end %>  
+                                    </th>      
+                                  <%end%>         
+                                </tr>
+                              </tbody>
+                          <% end %>
+>>>>>>> trash_conflicts
                         <% end %>
                       <% end %>
                     <% end %>
@@ -171,7 +237,7 @@
                   </div>
                 <% end %>
               <% else %>
-                You must create the lesson before uploading and documents
+                You must create the lesson before uploading any documents
               <% end %>
             </div>
           </div>

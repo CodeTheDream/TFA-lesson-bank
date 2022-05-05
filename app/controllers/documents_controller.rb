@@ -73,36 +73,25 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
-    # if @course
-    #   @document = @course.documents.build(document_params)
-    # elsif @lesson
-    #   @document = @lesson.documents.build(document_params)
-    # end
-    if @document.update(document_params)
-      flash.notice = "The document record was updated successfully."
-      if @course.present?
-        redirect_to [@course, @document]#course_documents_path(@course)
-      elsif @lesson.present?
-       redirect_to [@lesson, @document]#lesson_documents_path(@lesson)
-      else
-        redirect_to "/"
-      end
-      # redirect_to course_documents_path(@course)
-    else
-      flash.now.alert = @document.errors.full_messages.to_sentence
-      render :edit
-    end
   end
       
   # DELETE /lessons/1
   # DELETE /lessons/1.json
   def destroy
     @document = Document.find params[:id]
-    @document.destroy
-    respond_to do |format|
-    format.html { redirect_to courses_path, notice: 'Document was successfully destroyed.' }
-    # format.html { redirect_to course_documents_path(@course), notice: 'Document was successfully destroyed.' }
-    format.json { head :no_content }
+    @course = Course.find params[:course_id] if params[:course_id].present?
+    if @document.destroy
+      flash.notice = "The document record was deleted successfully."
+      if @course.present?
+        redirect_to course_lesson_form_courses_path(course_id: @course.id)
+      elsif @lesson.present?
+        redirect_to "/courses/course_lesson_form?course_id=#{@lesson.course.id}&lesson_id=#{@lesson.id}#lesson#{@lesson.id}"   
+      else
+        redirect_to "/"
+      end
+    else
+      flash.notice = "This document could not be deleted."
+      redirect_to "/"
     end
   end
       
