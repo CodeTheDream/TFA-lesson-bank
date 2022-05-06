@@ -48,23 +48,22 @@
           <%end %>
         </div>
       </div>
-      <!-- Course Title Section-->   
-      <div class="col-12 mt-2"> 
-        <h1 class="mb-2 mt-4 show_left"><%= @course.title %>        
-        <% if current_user&.role == "creator" &&  current_user&.role == "owner" || current_user&.role == 'admin'%>
+    <!-- Left Side Course-->
+    <div class="col-lg-4 mb-5">
+      <!-- Course header-->
+      <div class="show_left">
+        <h1 class="mb-2 mt-4"><%= @course.title %>        
+        <% if current_user == @course.user || current_user&.role == 'admin'%>
           <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %>
             <i class=" fa fa-pencil-alt pencil_edit"></i>
           <% end %> 
           <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
             <i class=" fa fa-trash-alt trash_delete"></i>
           <% end %>       
-        <%end%>         
-      </div>    
-    <!-- Left Side Course-->
-    <div class="col-lg-4 mb-5">      
-      <div class="show_left">        
-        <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">DISTRICT</span> <b><%= @course.district.upcase%></b></div>
-        <div style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
+        <%end%>
+        
+ 
+        <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
         <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
         <!-- Tags-->
@@ -77,10 +76,14 @@
         <div><span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= @course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
       </div>      
     </div>
+
+
+
     <!-- Right Side Course-->
-    <div class="col-lg-8  mb-4 ">   
+    <div class="col-lg-8 mt-5 mb-4 mr-auto"> 
+    
       <!-- Course Description Section-->  
-      <div class="mb-3 mt-2 course_show_description">
+      <div class="mb-3 course_show_description">
         <p>
           <%= @course.description %>     
         </p>
@@ -94,15 +97,9 @@
                   <tr>
                     <th scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
                     <th scope="col">TYPE</th>
-<<<<<<< HEAD
-                    <th scope="col">PREVIEW</th>
-                    <th scope="col">DOWNLOAD</th>
-                    <th scope="col"></th>
-=======
                     <th class=" text-center" scope="col">PREVIEW</th>
                     <th class=" text-center" scope="col">DOWNLOAD</th>
                    
->>>>>>> trash_conflicts
                   </tr>
                 </thead>
                 <!-- Course Right Side Documents Section-->    
@@ -116,13 +113,8 @@
                           </th>
                                 
                           <% if document.file.attached? %>
-<<<<<<< HEAD
-                            <th class= "doc_type " scope="row">
-                              <span style="color: gray"><%=document.kind.upcase%></span>            
-=======
                             <th class="doc_type" style="color:gray;" scope="row">
                              <%=document.kind.upcase%>       
->>>>>>> trash_conflicts
                             </th> 
                           <% end %>   
                           <% if document.file.representable? %>
@@ -130,19 +122,11 @@
                               <%= link_to(document.file) do %>
                                 <i class=" fa fa-search" style="color:gray;"></i>
                               <% end %> 
-<<<<<<< HEAD
-                            </th> 
-                          <%else%>
-                            <th class="search_icon text-center" scope="row">                             
-                              <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
-                            </th>  
-=======
                             </th>  
                           <%else%>
                             <th class="search_icon text-center" scope="row">                             
                               <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
                             </th>                                   
->>>>>>> trash_conflicts
                           <% end %>
                         
                           <th class="download_icon text-center" scope="row"> 
@@ -150,8 +134,7 @@
                             <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
                             <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
                             <% end %>                     
-                          </th>          
-
+                          </th>                            
                         </tr>
                       </tbody>
                     <% end %>
@@ -218,7 +201,6 @@
                                   <th scope="col">TYPE</th>
                                   <th class="text-center" scope="col">PREVIEW</th>
                                   <th class="text-center" scope="col">DOWNLOAD</th>
-                                  <th></th>
                                 </tr>                        
                               </thead>
                           <% if lesson_show.present? %>
@@ -237,7 +219,6 @@
                                     <th class="search_icon text-center" scope="row">                                
                                       <%= link_to (lesson_document.file) do %>
                                         <i class=" fa fa-search" style="color:gray;"></i> 
-                                        <a href="#" data-toggle="tooltip" title= "This Document is not representable"></a> 
                                       <% end %>   
                                     </th>
                                   <%else%>
@@ -250,7 +231,7 @@
                                     <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
                                       <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
                                     <% end %>  
-                                  </th>                                                      
+                                  </th>                                
                                 </tr>
                               </tbody>  
                             <% end %>
@@ -307,14 +288,3 @@
     </div>
   </div>
 </div>
-
-
-
-<script>
-  $(document).ready(function() {
-    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-    $("tr[data-link]").click(function() {
-      window.location = $(this).data("link");
-    })
-  });
-</script>
