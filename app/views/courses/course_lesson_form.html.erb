@@ -8,10 +8,14 @@
     <div id="courseForm">
       <%= render 'form', course: @course, available_grade_levels: @available_grade_levels, subjects: @subjects, states: @states, districts: @districts %>
     </div>
-    <div id="lessonSide">
-      <% if @lessons.length > 0 %>
-        <%= render 'lessons/form', lesson: @lesson %>
-      <% end %>
-    </div>
+    <% if @course.id.present? %>
+      <div id="lessonSide">
+        <% if @lessons.length > 0 %>
+          <div class="hide_white">
+            <%= render 'lessons/form', lesson: @lesson %>
+          </div>
+        <% end %>
+      </div>
+    <%end%>
   </div>
 </div>
