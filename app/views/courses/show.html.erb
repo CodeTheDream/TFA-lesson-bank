@@ -95,10 +95,11 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                    <th scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
                     <th scope="col">TYPE</th>
-                    <th scope="col">PREVIEW</th>
-                    <th scope="col">DOWNLOAD</th>
+                    <th class=" text-center" scope="col">PREVIEW</th>
+                    <th class=" text-center" scope="col">DOWNLOAD</th>
+                   
                   </tr>
                 </thead>
                 <!-- Course Right Side Documents Section-->    
@@ -112,8 +113,8 @@
                           </th>
                                 
                           <% if document.file.attached? %>
-                            <th class=" doc_type text-center" scope="row">
-                              <span class="badge badge-primary d-none d-sm-inline d-md-none" style="color: gray"><%=document.kind.upcase%></span>            
+                            <th class="doc_type" style="color:gray;" scope="row">
+                             <%=document.kind.upcase%>       
                             </th> 
                           <% end %>   
                           <% if document.file.representable? %>
@@ -121,7 +122,11 @@
                               <%= link_to(document.file) do %>
                                 <i class=" fa fa-search" style="color:gray;"></i>
                               <% end %> 
-                            </th>       
+                            </th>  
+                          <%else%>
+                            <th class="search_icon text-center" scope="row">                             
+                              <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                            </th>                                   
                           <% end %>
                         
                           <th class="download_icon text-center" scope="row"> 
@@ -216,6 +221,10 @@
                                         <i class=" fa fa-search" style="color:gray;"></i> 
                                       <% end %>   
                                     </th>
+                                  <%else%>
+                                    <th class="search_icon text-center" scope="row">                             
+                                      <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                                    </th>  
                                   <%end%>                        
                                   <th class="text-center download_icon" scope="row">
                                     <%# CREATE LOG FOR LESSONS %>
