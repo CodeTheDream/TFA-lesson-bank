@@ -96,7 +96,12 @@
   border-top: none !important;
   border-bottom: none !important;
 }
-
+.admin_table_title a {
+  color: #1996aa !important;
+  font-weight: 500;
+  font-size: larger;
+  text-decoration: underline !important;
+}
 // .lesson_clickable {
 //   background-color: white;
 //   width: 1050px !important;
@@ -282,6 +287,11 @@ ul li.favorites::marker {
 .admin_table {
   padding: 30px;
 }
+.clickable-row:hover {
+  color: black;
+  background-color: #1996aa !important;
+  //  font-weight: bold;
+}
 
 .district-label {
   color: gray;
@@ -390,10 +400,11 @@ ul li.favorites::marker {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  margin-top: 10px;
+  // margin-top: 10px;
   // max-width: 750px;
   text-align: justify;
-  padding: 10px;
+  // padding: 10px;
+  padding-top: 0px;
 }
 .course-buttons-position {
   position: relative;
@@ -540,6 +551,7 @@ a {
   font-family: Montserrat;
   color: gray;
   font-weight: 600;
+  width: 100%;
 }
 .document_row h4 {
   font-family: Montserrat;

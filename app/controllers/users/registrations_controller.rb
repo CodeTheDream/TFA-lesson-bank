@@ -5,7 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
   before_action :set_user, only: [:show, :update, :edit, :destroy, :usercourses, :who_downloaded, :i_downloaded]  
-  before_action :verify_role!, only: [:index,:show,:edit, :update, :delete] 
+  before_action :verify_role!, only: [:index, :show,:edit, :update, :destroy, :who_downloaded, :i_downloaded] 
 # before_action :configure_account_update_params, only: [:update]
   # GET /resource/sign_up
   # def new
@@ -50,7 +50,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @user = User.new configure_sign_up_params
-    @user.role = 'teacher'
+    @user.role = 'user'
     if @user.save
       UserMailer.with(user: @user).new_registration.deliver_now
       redirect_to root_path, notice: 'Success! Check your email to confirm your account'
@@ -92,7 +92,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         @new_status = @user.status
         hash = {last_name: @new_last_name, user_status: @new_status}
         search_items_to_update.each {|sui| sui.update(hash)}
-        redirect_to users_path, notice: 'User was successfully updated' 
+        redirect_to user_show_path(@user.id), notice: 'User was successfully updated' 
       elsif @previous_email != @user.email
         @new_email = configure_registration_update_parameters[:email]
         @user.update_attribute(:previous_email, @previous_email)
@@ -102,7 +102,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # user account will be pending until confirmation
         redirect_to root_path #sign_out @user
       else 
-        redirect_to users_path, notice: 'User was successfully updated'
+        redirect_to user_show_path(@user.id), notice: 'User was successfully updated'
       end
   else
     flash.now.alert = @user.errors.full_messages.to_sentence

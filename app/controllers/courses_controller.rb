@@ -11,7 +11,10 @@ class CoursesController < ApplicationController
   # before_filter :admin_user, :only => :index
 
   def index
-    @courses = Course.all.includes(:grades)
+    query = search_params[:search].present? ? search_params[:search] : nil
+    search_hash = {"courses" => "true", "admin_view" => "true"}
+    @courses = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
+    @flags = Flag.where(flagable_type: "Course", flagable_id: @courses.pluck(:searchable_id))
   end
 
   # GET /courses/1
@@ -31,15 +34,15 @@ class CoursesController < ApplicationController
     
   end
 
-  # GET /courses/new
-  def new
-    @course = Course.new
-    @document = @course.documents.build
-    @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-  end
+#  # GET /courses/new
+#  def new
+#    @course = Course.new
+#    @document = @course.documents.build
+#    @available_grade_levels = Grade.all
+#    @subjects = %w[Art English Math Music Science Technology]
+#    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
+#    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+#  end
 
   # GET /courses/1/edit
   def edit
@@ -269,23 +272,6 @@ class CoursesController < ApplicationController
     render "/courses/course_lesson_form.js.erb"
   end
 
-  def load_lesson
-    @course = Course.find ajax_params[:course_id]
-    new_lesson = Lesson.new(title: "New")
-    @lessons =  @course.lessons.to_a.unshift(new_lesson) if @course.lessons.last.title != "New"
-    if ajax_params[:lesson_id].present?
-      @lesson = Lesson.find ajax_params[:lesson_id]
-    else
-      @lesson = nil 
-    end
-    @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-    @from_load_course = false
-    render "/courses/course_lesson_form.js.erb"
-  end
-
   private
 
   def create_tmp_folder_and_store_documents(document, tmp_user_folder, filename)
@@ -299,10 +285,6 @@ class CoursesController < ApplicationController
       zf.add(filename, "#{tmp_user_folder}/#{filename}")
     end
   end
-
-  # def course_owner
-  #   @course_owner = User.find(params[:id])    
-  # end
 
   def verify_role!
     authorize @course || Course 
@@ -364,12 +346,8 @@ class CoursesController < ApplicationController
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to root_path
   end
-  def search    
-    @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
-  end
-  
-  def search_params
-  
+
+  def search_params  
     params.permit(:commit, :search, :page, :sort_attribute, :sort_order, :title, :description, :subject, :state, :district, :favorites, :mycontent, :courses, :lessons, :selected_grades)
   end
 end

@@ -46,7 +46,7 @@ module SearchItemSearch
 
     if @options["mycontent"].present? && @options["mycontent"] == "true"
       where["user_id"] = @current_user.id
-    elsif @current_user.role != "admin"
+    elsif @current_user&.role != "admin"
       where["flagged"] = "false"
     end
 
@@ -60,8 +60,12 @@ module SearchItemSearch
   end
 
   def self.order
-   options = {}
-   options[:favorited] = "desc"
-   options
+    options = {}
+    if @options["admin_view"].present? && @options["admin_view"] == "true"
+      options[:flagged] = "desc"
+    else
+      options[:favorited] = "desc"
+    end
+    options
   end
 end

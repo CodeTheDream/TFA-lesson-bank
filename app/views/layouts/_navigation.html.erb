@@ -20,11 +20,21 @@
                 </a>              
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="triangle-border"></div>
-                <div class="triangle" ></div>
-                <%= link_to 'MY MATERIAL', search_page_path(mycontent: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
-                <%= link_to 'FAVORITES', search_page_path(favorites: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
-                <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
-                <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                <div class="triangle" ></div>                
+                <% if current_user.role == "admin" %>             
+                  <%= link_to 'ADMIN:USER', users_path, class: 'dropdown-item' %>
+                  <%= link_to 'ADMIN:COURSES', courses_path , class: 'dropdown-item' %>
+                  <%= link_to 'ADMIN:LESSONS', lessons_path, class: 'dropdown-item' %>
+                <%end%>                
+                <% if current_user && !current_user.role.blank? %> 
+                  <%= link_to 'FAVORITES', search_page_path(favorites: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
+                  <% if current_user.role == "admin" || current_user.role == "creator" %>
+                    <%= link_to 'MY MATERIAL', search_page_path(mycontent: true, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: params[:selected_grades].to_s), class: 'dropdown-item' %>
+                    <%= link_to 'CREATE', course_lesson_form_courses_path, class: 'dropdown-item' %>
+                  <%end%>
+                  <%= link_to 'MY ACCOUNT', user_show_path(current_user.id), class: 'dropdown-item' %>
+                  <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                <%end%>                  
               </div>
             </li>
           </div>

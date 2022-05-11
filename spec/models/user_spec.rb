@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
   describe "Associations" do
     before do
       @user = FactoryBot.create(:user)
-      @courses = FactoryBot.create(:course)
+      @courses = FactoryBot.create(:course, user_id: @user.id)
     end
     after do
       @user.delete

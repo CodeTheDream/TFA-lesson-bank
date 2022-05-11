@@ -16,8 +16,8 @@
   </div>
 
   <div class="text-center ">
-    <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Created by  <%= user.name %></span></div>
-    <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= user.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
+    <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;"> Created by  <%= user.name %></span></div>
+    <div class="mt-2  mb-4 "<span style="color: gray;font-size:10px; font-style:italic;"> Last Edited on <%= user.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
     <%# Show the buttons to show only the ones with their rights %>
     <%if current_user.role == "admin"%> 
       <a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
@@ -25,7 +25,7 @@
       <a href='/users/<%="#{user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
       <a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
       <a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
-    <%elsif (user.id == @current_user.id) && current_user.role.include?("teacher") %>
+    <%elsif (user.id == @current_user.id) && current_user.role.include?("creator") %>
       <a href='/users/<%="#{user.id}"%>/edit' class="btn button_user_card">EDIT USER </a>
       <a href='/users/<%="#{user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
       <a href='/users/<%="#{user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>

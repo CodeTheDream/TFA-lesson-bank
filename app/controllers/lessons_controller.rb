@@ -1,33 +1,36 @@
 require "zip"
 require 'fileutils'
 class LessonsController < ApplicationController
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
-  before_action :get_course
+  before_action :get_course, except: :index
   before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
+  before_action :verify_role!
 
   def index
-    @lessons = @course.lessons
+    query = search_params[:search].present? ? search_params[:search] : nil
+    search_hash = {"lessons" => "true", "admin_view" => "true"}
+    @lessons = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
+    @flags = Flag.where(flagable_type: "Lesson", flagable_id: @lessons.pluck(:searchable_id))
   end
     
   # GET /lessons/1
   # GET /lessons/1.json
-  def show    
-    @search = search_params[:search]
-    @subject = search_params[:subject]
-    @district = search_params[:district]
-    @available_grade_levels = search_params[:available_grade_levels]
-  end
+#  def show    
+#    @search = search_params[:search]
+#    @subject = search_params[:subject]
+#    @district = search_params[:district]
+#    @available_grade_levels = search_params[:available_grade_levels]
+#  end
     
   # GET /lessons/new
   def new
     @lesson = @course.lessons.build
   end
     
-  # GET /Lessons/1/edit
-  def edit
-  end
+#  # GET /Lessons/1/edit
+#  def edit
+#  end
     
   # POST /lessons
   # POST /lessons.json
@@ -150,7 +153,7 @@ class LessonsController < ApplicationController
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
     else
       @unflag = Flag.find_by(user_id: current_user.id, flagable_id: params[:lesson_id])
-      Flag.delete(@unflag)
+      Flag.destroy(@unflag.id)
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)    
     end
   end
@@ -218,6 +221,10 @@ class LessonsController < ApplicationController
     @lesson = Lesson.find(params[:id])
   end
 
+  def verify_role!
+    authorize @lesson || Lesson
+  end
+
   # Only allow a list of trusted parameters through.
   def lesson_params
     params.require(:lesson).permit(:title, :description, :course_id, :tag_names)
@@ -233,11 +240,6 @@ class LessonsController < ApplicationController
     redirect_to courses_path
   end
 
-  def user_not_authorized(exception)
-    policy_name = exception.policy.class.to_s.underscore
-    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-    redirect_to root_path
-  end
   def search    
     @results = SearchItemSearch.search(query: query, options: search_params, current_user: current_user)
   end

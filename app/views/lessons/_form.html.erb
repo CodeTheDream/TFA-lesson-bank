@@ -67,6 +67,7 @@
                             <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
                             <th style="color: #212529;">TYPE</th>
                             <th class="text-center" style="color: #212529;">PREVIEW</th>
+                            <th class="text-center" style="color: #212529;">DELETE</th>
                           </tr>
                         </thead>
                         <% f.object.documents.each do |document| %>
@@ -89,7 +90,18 @@
                                         <i class=" fa fa-search" style="color:gray;"></i>
                                       <% end %>
                                     </th>
-                                  <% end %>
+                                  <%else%>
+                                    <th class="search_icon text-center" scope="row"> 
+                                      <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                                    </th>
+                                    <% end %>
+                                  <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
+                                    <th class="trash_delete text-center" scope="row">    
+                                      <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                                        <i class=" fa fa-trash-alt trash_delete"></i>
+                                      <% end %>  
+                                    </th>      
+                                  <%end%>         
                                 </tr>
                               </tbody>
                           <% end %>
@@ -172,7 +184,7 @@
                   </div>
                 <% end %>
               <% else %>
-                You must create the lesson before uploading and documents
+                You must create the lesson before uploading any documents
               <% end %>
             </div>
           </div>
