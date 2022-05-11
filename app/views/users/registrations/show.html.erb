@@ -1,29 +1,32 @@
 <div class="user-form-container">
   <div class="set-size-and-position">
     <div class="blue-header"></div>  
-    <div class="container mt-5 ">     
+    <div class="container mt-5">     
       <div class="big_card" style="width:95%;">  
         <div class="col-lg-12 ml-4">  
-          <h4 class="font-weight-light mb-0">Show User</h4>
-          <div class="col-sm-6" style="margin-left:-15px;">
-            <br class="mr-4">
-            <div> 
+          <h4 class="font-weight-light mb-0 center" style="margin-left:-15px;">Show User</h4>
+          <br class="mr-4">
+          <div class="container" style="margin-left:-15px;">
+            <div class="col">
+            </div>
+            <div class="col center">
               <strong>First Name:</strong>
               <%= @user.first_name %>                
             </div>
-            <div>
+            <div class="col center">
               <strong>Last Name:</strong>
               <%= @user.last_name %>                
             </div>
-            <div>
+            <div class="col center">
               <strong>Email:</strong>
               <%= @user.email %>                
             </div>
-            <div>
+            <div class="col center">
               <strong>Role:</strong>
               <%= @user.role %>                
             </div>
-          </div> 
+          </div>
+        <%# </div> %>
           <hr >
           <div class="actions center form-group p-3"> 
             <%if current_user.role == "admin"%> 
@@ -54,13 +57,10 @@
               <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
             <%end%>
           </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
 </div>
              
               
