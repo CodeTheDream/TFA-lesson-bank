@@ -288,9 +288,9 @@ ul li.favorites::marker {
   padding: 30px;
 }
 .clickable-row:hover {
-  color:black;
+  color: black;
   background-color: #1996aa !important;
-//  font-weight: bold;
+  //  font-weight: bold;
 }
 
 .district-label {
@@ -400,10 +400,11 @@ ul li.favorites::marker {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  margin-top: 10px;
+  // margin-top: 10px;
   // max-width: 750px;
   text-align: justify;
-  padding: 10px;
+  // padding: 10px;
+  padding-top: 0px;
 }
 .course-buttons-position {
   position: relative;
@@ -550,6 +551,7 @@ a {
   font-family: Montserrat;
   color: gray;
   font-weight: 600;
+  width: 100%;
 }
 .document_row h4 {
   font-family: Montserrat;
