@@ -34,7 +34,7 @@
         (<%= course.favorited %>)
       </span>  
     </div>    
-    <div class="mt-2"> <span style="color: gray;font-size:10px; font-style:italic;">Created by <%= link_to course.searchable.user.name, user_show_path(course.user_id)  %> </span></div>
+    <div class="mt-2"> <span style="font-size:10px; font-style:italic;">Created by <%= link_to course.searchable.user.name, user_show_path(course.user_id), :style=>'color: #1996AA;' %> </span></div>
     <div class="mt-2  mb-4 "><span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
     <a href='/courses/<%="#{course.searchable_id}"%>?search=<%="#{search}"%>&subject=<%="#{subject}"%>&district=<%="#{district}"%>&selected_grades=<%=("#{selected_grades}").encode("UTF-8", :invalid => :replace, :undef => :replace, :replace => "")%>&mycontent=<%="#{mycontent}"%>&favorites=<%="#{favorites}"%>&courses=<%="#{courses}"%>&lessons=<%="#{lessons}"%>', class="btn button_view_card right-arrow" onclick= "checkUser();">VIEW COURSE </a>
   </div>
