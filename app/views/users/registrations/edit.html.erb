@@ -1,72 +1,72 @@
 <div class="user-form-container">
-  <div class="set-size-and-position">
+  <div class="set-size-and-position" style="width:45%">
     <div class="blue-header"></div>  
-      <div class="container mt-5 ">     
-        <div class="row big_card center">  
-          <div class="col-lg-12 center">  
-            <div class="container-mt5">
-              <h4 class="center font-weight-light mb-0 align-middle">Edit User</h4>
-              <div class="center col-md-9 col-lg-8 mx-auto">
-                <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { :onsubmit => 'return checkEmail();', method: :put }) do |f| %>    
-                  <%= render "users/shared/error_messages", resource: resource %>
-                  <%= hidden_field_tag "id", f.object.id %>    
-                  
+    <div class="container mt-5 ">     
+      <div class="big_card">
+        <h3 class="font-weight-light mb-2 center">Edit User</h3>
+        <%= form_for(resource, as: resource_name, url: user_update_path(resource), html: { :onsubmit => 'return checkEmail();', method: :put }) do |f| %>    
+          <%= render "users/shared/error_messages", resource: resource %>
+          <%= hidden_field_tag "id", f.object.id %>    
+          
 
-                  <div class="form-group">
-                    <%= f.label :FirstName %><br />
-                    <%= f.text_field :first_name, autofocus: true %>
-                  </div>
+          <div class="row ml-4">
+            <div class="col-sm-6 form-group">
+              <%= f.label :FirstName %><br />
+              <%= f.text_field :first_name, autofocus: true %>
+            </div>
 
-                  <div class="form-group">
-                    <%= f.label :LastName %><br />
-                    <%= f.text_field :last_name, autofocus: true %>
-                  </div>
+            <div class="col-sm-6 form-group">
+              <%= f.label :LastName %><br />
+              <%= f.text_field :last_name, autofocus: true %>
+            </div>
+          </div>
 
-                  <div class="form-group">
-                    <%= f.label :email %><br />
-                    <%= f.email_field :email, autofocus: true, :required => true, autocomplete: "email", id:"email"%>
-                  <%# autocomplete: "email", %>
-                  </div>
-                  
-                  <% if current_user.role.include?("admin") %>
-                  <div class="form-group">
-                    <%= f.label :status %>                                              
-                    <%= f.select :status, options_for_select(['Pending', 'Approved'], f.object&.status), { include_blank: true }, :class => 'form-group'%> 
-                  </div>
-                  <%else%>
-                    <% current_user.role %>
-                  <% end %>
-                  
-                  <% if current_user.role.include?("admin") %>
-                    <div class="form-group">
-                      <%= f.label :role %><br />
-                      <%= f.select :role, options_for_select(["admin", "creator", "user"], f.object.role), { include_blank: true }%>
-                    </div>
-                  <%else%>
-                    <% current_user.role %>
-                  <% end %>
+          <div class="row ml-4">
+            <div class="col-sm-6 form-group">
+              <div>
+                <%= f.label :email %>
+              </div>
+              <div>
+                <%= f.email_field :email, autofocus: true, :required => true, autocomplete: "email", id:"email"%>
+              </div>
+            </div>
+            
+            <% if current_user.role.include?("admin") %>
+              <div class="form-group">
+                <%= f.label :status %>                                              
+                <%= f.select :status, options_for_select(['Pending', 'Approved'], f.object&.status), { include_blank: true }, :class => 'form-group'%> 
+              </div>
+            <%else%>
+              Status: <%= current_user.status %>
+            <% end %>
+            
+            <% if current_user.role.include?("admin") %>
+              <div class="form-group ml-2">
+                <%= f.label :role %>
+                <%= f.select :role, options_for_select(["admin", "creator", "user"], f.object.role), { include_blank: true }%>
+              </div>
+            <%else%>
+              | Role: <%= current_user.role %>
+            <% end %>
+          </div>
 
-                  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-                  <% end %>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %>
 
-                  <div class="actions">
-                    <%= f.submit "Update", id: 'submit_button', :class => "btn button_user_card" %>
-                    <%= link_to "Back", :back,  :class => "btn button_user_card" %>
-                  </div>
+          <div class="actions center">
+            <div class="row">
+              <div class="col-sm-6 p-2">
+                <%= f.submit "Update", id: 'submit_button', :class => "btn button_user_card" %>
+              </div>
+              <div class="col-sm-6 p-2">
+                <%= link_to "Back", :back,  :class => "btn button_user_card" %>
+              </div>
+            </div>
+          </div>
 
-                <%end%>
-
-              <%# <h3>Cancel my account</h3> %>
-
-              <%# <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
-              <%# </p> %> 
-
-              
-              </div> <%#col-md-9 col-lg-8 mx-auto%>
-            </div>  <%# container mt-5 %>
-          </div> <%#col-lg-12 %>
-        </div> <%#row big_card %>
-      </div <%# container mt-5 %>>
+        <%end%>
+      </div>  <%# big-card %>
+    </div <%# container mt-5 %>>
   </div> <%# set-size-and-position %>
 </div> <%# user-form-container %>  

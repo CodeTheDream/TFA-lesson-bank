@@ -1,66 +1,54 @@
 <div class="user-form-container">
-  <div class="set-size-and-position">
+  <div class="set-size-and-position" style="width:45%;">
     <div class="blue-header"></div>  
     <div class="container mt-5">     
-      <div class="big_card" style="width:95%;">  
-        <div class="col-lg-12 ml-4">  
-          <h4 class="font-weight-light mb-0 center" style="margin-left:-15px;">Show User</h4>
-          <br class="mr-4">
-          <div class="container" style="margin-left:-15px;">
-            <div class="col">
-            </div>
-            <div class="col center">
-              <strong>First Name:</strong>
-              <%= @user.first_name %>                
-            </div>
-            <div class="col center">
-              <strong>Last Name:</strong>
-              <%= @user.last_name %>                
-            </div>
-            <div class="col center">
-              <strong>Email:</strong>
-              <%= @user.email %>                
-            </div>
-            <div class="col center">
-              <strong>Role:</strong>
-              <%= @user.role %>                
-            </div>
+      <div class="big_card">  
+        <h3 class="font-weight-light mb-0 center">Account Info</h3>
+        <br>
+        <div class="row" style="margin-left:10%">
+          <div class="col-6">
+            <strong>First Name: <%= @user.first_name %></strong>
+          </div>  
+          <div class="col-6">
+            <strong>Last Name: <%= @user.last_name %></strong>
           </div>
-        <%# </div> %>
-          <hr >
-          <div class="actions center form-group p-3"> 
-            <%if current_user.role == "admin"%> 
-            <div class="col-4">
-              <div row>
+        </div>
+        <div class="row" style="margin-left:10%">
+          <div class="col-6">
+            <strong>Email: <%= @user.email %></strong>
+          </div>
+          <div class="col-6">
+            <strong>Role: <%= @user.role %></strong>
+          </div>
+        </div>
+        <hr>
+        <div class="actions form-group p-3">
+          <%if (current_user&.role == "admin") || ((@user&.id == current_user&.id) && (current_user&.role == "creator" || current_user&.role == "user")) %> 
+            <div class="row" style="margin-left:5%">
+              <div class="col-sm-4 p-2">
                 <a href='/users/<%="#{@user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
+              </div>
+              <div class="col-sm-4 p-2">
                 <a href='/users/<%="#{@user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
+              </div>
+              <div class="col-sm-4 p-2">
                 <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
               </div>
-              <div row>
+            </div>
+            <div class="row" style="margin-left:10%">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-5 p-2">
                 <%= link_to 'EDIT', user_edit_path(@user), :class => "btn button_user_card"%>
+              </div>
+              <div class="col-sm-6 p-2">
                 <%= link_to 'DESTROY', user_delete_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn button_user_card" %>
               </div>
-            </div> 
-            <%elsif (@user.id == current_user.id) && (current_user.role == "creator" || current_user.role == "user") %>
-              <div class="col-4">
-              <div row >
-                <a href='/users/<%="#{@user.id}"%>/who_downloaded' class="btn button_user_card">WHO DOWNLOADED</a>
-                <a href='/users/<%="#{@user.id}"%>/i_downloaded' class="btn button_user_card">I DOWNLOADED </a>
-                <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
-              </div>
-              <div row>
-                <%= link_to 'EDIT', user_edit_path(@user), :class => "btn button_user_card"%>
-                <%= link_to 'BACK', search_page_path, :class => "btn button_user_card"  %>           
-              </div>
-            <%else%>
-              <a href='/users/<%="#{@user.id}"%>' class="btn button_user_card">VIEW</a>
-              <a href='/users/<%="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
-            <%end%>
-          </div>
+            </div>
+          <%else%>
+            <a href='/users/<%#="#{@user.id}"%>/usercourses' class="btn button_user_card">USER'S CONTENT </a>
+          <%end%>
         </div>
       </div>
     </div>
   </div>
 </div>
-             
-              
