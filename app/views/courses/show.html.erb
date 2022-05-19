@@ -95,11 +95,10 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                    <th class=" blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
                     <th scope="col">TYPE</th>
                     <th class=" text-center" scope="col">PREVIEW</th>
                     <th class=" text-center" scope="col">DOWNLOAD</th>
-                   
                   </tr>
                 </thead>
                 <!-- Course Right Side Documents Section-->    
@@ -113,7 +112,7 @@
                           </th>
                                 
                           <% if document.file.attached? %>
-                            <th class="doc_type" style="color:gray;" scope="row">
+                            <th style="color:gray;" scope="row">
                              <%=document.kind.upcase%>       
                             </th> 
                           <% end %>   
