@@ -59,12 +59,12 @@
                   </div> 
                   <div class="lesson-description-label  mt-2"> Add Description</div>
                   <%= f.text_area :description, cols: 53, rows: 3, class: 'lesson-description-area mb-2 ', :required => true %>
-                  <div class="lesson-document-container">
+                  <div >
                     <% if f.object.id.present? && f.object.documents.any? %>
                       <table class="table mb-0">
                         <thead>
                           <tr>
-                            <th><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
+                            <th class="blue_downloads"><span style="color: #1996aa;">LESSON DOWNLOADS</span></th>
                             <th style="color: #212529;">TYPE</th>
                             <th class="text-center" style="color: #212529;">PREVIEW</th>
                             <th class="text-center" style="color: #212529;">DELETE</th>
@@ -74,7 +74,7 @@
                           <% if document.lesson_id.present? && document.id.present? %>
                             <tbody class="text-center">
                                 <tr>
-                                  <th>
+                                  <th class="mobile_document_title">
                                     <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'lesson-document-name' %>
                                     <!--<span style="color: #212529;"><%#=document.name.titleize%>-->
                                   </th>
@@ -85,7 +85,7 @@
                                     </th>
                                   <% end %>
                                   <% if document.file.representable? %>
-                                    <th class="text-center">
+                                    <th class="search_icon text-center">
                                       <%= link_to(document.file) do %>
                                         <i class=" fa fa-search" style="color:gray;"></i>
                                       <% end %>
