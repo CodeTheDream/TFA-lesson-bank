@@ -91,7 +91,7 @@
                       <% end %>
 
                       <% if current_user&.id == document.course.user_id || current_user&.role == 'admin'%>
-                        <th class="trash_delete text-center" scope="row"> 
+                        <th class="mobile_trash_delete text-center" scope="row"> 
                           <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
                             <i class=" fa fa-trash-alt trash_delete"></i>
                           <%end%>  
