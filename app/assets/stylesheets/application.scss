@@ -54,6 +54,8 @@ a:hover {
   text-decoration: none;
   color: #212529;
 }
+
+
 .btn {
   border-radius: 0% !important;
 }
@@ -304,13 +306,15 @@ a[aria-expanded="true"] {
 //   }
 // }
 
-@media (max-width: 480px) {
-  /* Force table to not be like tables anymore */
-
-  // th .arrow-enter,
-  // .download_arrow {
-  //   display: block;
-  // }
+@media (max-width: 480px) {  
+  .modal-dialog {
+    max-width:calc(100% - 80px);
+    max-height:calc(100% - 80px);
+  }
+  .modal-dialog .content {
+    overflow:auto;
+    max-height:calc(100vh - 125px);
+  }
   tr {
     display: block;
   }
@@ -382,6 +386,7 @@ a[aria-expanded="true"] {
   #sidebar.active {
     margin-left: 0;
   }
+ 
 
 }
 @media (max-width: 480px) {
