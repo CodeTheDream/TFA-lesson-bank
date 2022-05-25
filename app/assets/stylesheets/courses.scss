@@ -231,8 +231,8 @@ ul li.favorites::marker {
 
 .lesson-star {
   position: relative;
-  bottom: 1em;
-  float: right;
+  bottom: 1.5em;
+  float: right !important;
   margin-right: 0%;
 }
 
@@ -586,9 +586,9 @@ a {
   font-weight: 600;
 }
 
-.lesson-document-container {
-  width: 50%;
-}
+// .lesson-document-container {
+//   width: 50%;
+// }
 
 /* The Modal (background) */
 .modal {

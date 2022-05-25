@@ -1,6 +1,7 @@
 ## UML Diagram of Database
 
 - [Diagram](https://lucid.app/lucidchart/invitations/accept/inv_e7689d43-900f-4b9c-a535-3c7b44338c3c?viewport_loc=163%2C341%2C1696%2C881%2C0_0)
+- Final [Diagram] (https://dbdiagram.io/d/628befb6f040f104c18039a9)
 
 ## Setting up for the tfa_lesson_bank application.
 
