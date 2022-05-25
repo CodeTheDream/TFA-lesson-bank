@@ -58,7 +58,7 @@
             <i class=" fa fa-pencil-alt pencil_edit"></i>
           <% end %> 
           <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
-            <i class=" fa fa-trash-alt trash_delete"></i>
+            <i class=" fa fa-trash-alt trash_delete "></i>
           <% end %>       
         <%end%>
         
@@ -95,11 +95,10 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                    <th class="blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
                     <th scope="col">TYPE</th>
                     <th class=" text-center" scope="col">PREVIEW</th>
                     <th class=" text-center" scope="col">DOWNLOAD</th>
-                   
                   </tr>
                 </thead>
                 <!-- Course Right Side Documents Section-->    
@@ -108,12 +107,12 @@
                     <% if document.lesson_id.nil? %>      
                       <tbody >
                         <tr>
-                          <th class=" mobile_document_title" scope="row">
+                          <th class="mobile_document_title" scope="row">
                             <%=document.name.titleize%>
                           </th>
                                 
                           <% if document.file.attached? %>
-                            <th class="doc_type" style="color:gray;" scope="row">
+                            <th style="color:gray;" scope="row">
                              <%=document.kind.upcase%>       
                             </th> 
                           <% end %>   
@@ -158,30 +157,34 @@
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
                       <% if current_user&.role == 'user' || current_user&.role == 'creator' || current_user&.role == 'admin'%>
-                        <div class="lesson_title_row">
-                          <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
-                          <div class="lesson-star">
-                            <% if @fav_lessons.include? lesson_show.id %>
-                              <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
-                                <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
-                              <% end %>
-                            <% else %>
-                              <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
-                                <i class="fas fa-heart fa-xs" style="color:gray;"></i>
-                              <% end %>
-                            <%end %>
-                            <%# Flag %>
-                            <% if @flagged_lessons.include? lesson_show.id %>
-                              <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
-                                <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
-                              <% end %>
-                            <% else %>
-                              <%= link_to "#flagLessonModal#{lesson_show.id}", data: { toggle: "modal" } do %>
-                                <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
-                              <% end %>
-                            <%end %>
+                        
+                          <div class="lesson_title_row">                        
+                            <div class="col-lg-8">
+                              <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
+                            </div>                          
+                            <div class="lesson-star ">
+                              <% if @fav_lessons.include? lesson_show.id %>
+                                <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                  <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
+                                <% end %>
+                              <% else %>
+                                <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                  <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                                <% end %>
+                              <%end %>
+                              <%# Flag %>
+                              <% if @flagged_lessons.include? lesson_show.id %>
+                                <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                  <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
+                                <% end %>
+                              <% else %>
+                                <%= link_to "#flagLessonModal#{lesson_show.id}", data: { toggle: "modal" } do %>
+                                  <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
+                                <% end %>
+                              <%end %>
+                            </div>                       
                           </div>
-                        </div>
+                        
                       <% end %>
                     </a>
                   </h4>

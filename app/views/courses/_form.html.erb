@@ -13,7 +13,7 @@
     <% end %>
     <div class="row big_card">  
       <!-- Course Favorites Section-->       
-      <div class="col-12 ">  
+      <div class="col-12">  
         <div class="course_favorites_section">      
           <% if @course.id.present?%>
             <%fav_course = Favorite.where(user_id: current_user, favoritable_type: "Course").distinct.pluck :favoritable_id%>
@@ -51,7 +51,7 @@
       </div>
     
       <!-- Right Side Course-->
-      <div class="col-lg-8  mb-2">           
+      <div class="col-lg-8  mb-2 ">           
         <!-- Course Description Section-->              
         <%= f.text_area :description, cols: 57, rows: (((f.object.description&.length || 0)/57) + 1), placeholder: 'Add Description', class: 'course-description-area', :required => true %>
         
@@ -59,39 +59,39 @@
         <table class="table">
           <thead>
             <tr>
-              <th><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
+              <th class=" blue_downloads"><span style="color: #1996aa;">COURSE DOWNLOADS</span></th>
               <th style="color: #212529;">TYPE</th>
-              <th class="text-center" style="color: #212529;">PREVIEW</th>
-              <th>DELETE</th>
+              <th class=" text-center" scope="col">PREVIEW</th>              
+              <th class=" text-center" scope="col">DELETE</th>
             </tr>
           </thead>  
           <% if f.object.id.present? && f.object.documents.any? %>
             <% f.object.documents.each do |document| %>
               <% if document.lesson_id.nil? && document.id.present? %>
-                <tbody class="text-center">
+                  <tbody>
                     <tr>
-                      <th>
-                        <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'document-name' %>
+                      <th class="mobile_document_title " scope="row">
+                        <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'document-name ' %>
                       </th>
                       <% if document.file.attached? %>
-                        <th>
+                        <th scope="row"> 
                           <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'document-kind' %>
-                        </th> 
+                        </th>                        
                       <% end %>
                       <% if document.file.representable? %>
-                        <th class="text-center">
+                        <th class="search_icon text-center" scope="row">  
                           <%= link_to(document.file) do %>
                             <i class=" fa fa-search" style="color:gray;"></i>
                           <% end %>
                         </th>
                       <%else%>
-                        <th class="search_icon text-center">
+                        <th class="search_icon text-center" scope="row">
                           <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
                         </th>
                       <% end %>
 
                       <% if current_user&.id == document.course.user_id || current_user&.role == 'admin'%>
-                        <th class="trash_delete text-center" scope="row"> 
+                        <th class="mobile_trash_delete text-center" scope="row"> 
                           <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
                             <i class=" fa fa-trash-alt trash_delete"></i>
                           <%end%>  
@@ -104,7 +104,7 @@
           <% end %>
         </table>
         <%= link_to "#newDocument", data: { toggle: "modal" } do %>
-          <div class=" document_row col-6 ">
+          <div class=" document_row col-12 ">
             <h4><i class="fa fa-plus plus-document"></i> Document</h4>
           </div>
         <% end %>
