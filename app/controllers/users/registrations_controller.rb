@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 class Users::RegistrationsController < Devise::RegistrationsController
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :configure_sign_up_params, only: [:create]
@@ -139,12 +138,6 @@ end
 
   def verify_role!
     authorize @user || User
-  end
-
-  def user_not_authorized(exception)
-    policy_name = exception.policy.class.to_s.underscore
-    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-    redirect_to root_path
   end
 
   def catch_not_found(e)

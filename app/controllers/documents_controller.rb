@@ -1,5 +1,4 @@
 class DocumentsController < ApplicationController
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course_or_lesson
@@ -7,15 +6,6 @@ class DocumentsController < ApplicationController
   before_action :verify_role!
   
 #  def index
-#    @documents = Document.all
-#  end
-#      
-#  def course_index
-#    @documents = @course.documents
-#  end
-#
-#  def lesson_index
-#    @documents = @lesson.documents
 #  end
 
   # GET /documents/1
@@ -26,18 +16,10 @@ class DocumentsController < ApplicationController
       format.zip { send_zip @document.file }
     end
     @document = Document.find params[:id]
-
-    # if @course
-    #   @document = @course.documents.build(document_params)
-    # elsif @lesson
-
-      # @document = @course.lesson.documents.build(document_params)
-    #end
   end
       
 #  # GET /documents/new
 #  def new
-#    @document = Document.new
 #  end
       
 #  # GET /documents/1/edit
@@ -123,11 +105,5 @@ class DocumentsController < ApplicationController
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s
     redirect_to courses_path(@course)
-  end
-
-  def user_not_authorized(exception)
-    policy_name = exception.policy.class.to_s.underscore
-    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-    redirect_to root_path
   end
 end

@@ -4,7 +4,7 @@ class LessonsController < ApplicationController
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :get_course, except: :index
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :download, :unflag?, :flag?]
   before_action :verify_role!
 
   def index
@@ -17,10 +17,6 @@ class LessonsController < ApplicationController
   # GET /lessons/1
   # GET /lessons/1.json
 #  def show    
-#    @search = search_params[:search]
-#    @subject = search_params[:subject]
-#    @district = search_params[:district]
-#    @available_grade_levels = search_params[:available_grade_levels]
 #  end
     
   # GET /lessons/new
@@ -149,10 +145,10 @@ class LessonsController < ApplicationController
 
   def unflag
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
-    if !Flag.find_by(user_id: current_user.id, flagable_id: params[:lesson_id]).present?
+    if @lesson.present? && !Flag.find_by(flagable_id: @lesson.id, flagable_type: "Lesson").present?
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)
     else
-      @unflag = Flag.find_by(user_id: current_user.id, flagable_id: params[:lesson_id])
+      @unflag = Flag.find_by(flagable_id: @lesson.id, flagable_type: "Lesson")
       Flag.destroy(@unflag.id)
       redirect_to course_path(course_id: @course.id, lesson_id: @lesson.id)    
     end

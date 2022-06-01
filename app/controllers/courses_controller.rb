@@ -1,14 +1,11 @@
 require "zip"
 require 'fileutils'
-#this is a comment
 class CoursesController < ApplicationController
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   respond_to :html, :json
   rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :set_course, only: [:show, :edit, :update, :destroy, :download, :favorite, :unfavorite, :log, :flag, :unflag]
   before_action :set_document, only: [:log]
   before_action :verify_role!
-  # before_filter :admin_user, :only => :index
 
   def index
     query = search_params[:search].present? ? search_params[:search] : nil
@@ -33,16 +30,6 @@ class CoursesController < ApplicationController
     end
     
   end
-
-#  # GET /courses/new
-#  def new
-#    @course = Course.new
-#    @document = @course.documents.build
-#    @available_grade_levels = Grade.all
-#    @subjects = %w[Art English Math Music Science Technology]
-#    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-#    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-#  end
 
   # GET /courses/1/edit
   def edit
@@ -191,9 +178,9 @@ class CoursesController < ApplicationController
     unflag = Flag.find_by(flagable_id: @course.id, flagable_type: "Course")
     if unflag.present?
       Flag.destroy(unflag.id)
-      redirect_to course_path(course_id: @course.id)
+      redirect_to course_path(id: @course.id, course_id: @course.id, lesson_id: nil)
     else
-      redirect_to course_path(course_id: @course.id)
+      redirect_to course_path(id: @course.id, course_id: @course.id, lesson_id: nil)
     end
   end
 
@@ -339,12 +326,6 @@ class CoursesController < ApplicationController
     Rails.logger.debug("We had a not found exception.")
     flash.alert = e.to_s
     redirect_to courses_path
-  end
-
-  def user_not_authorized(exception)
-    policy_name = exception.policy.class.to_s.underscore
-    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-    redirect_to root_path
   end
 
   def search_params  

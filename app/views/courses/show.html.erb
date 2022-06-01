@@ -52,7 +52,8 @@
     <div class="col-lg-4 mb-5">
       <!-- Course header-->
       <div class="show_left">
-        <h1 class="mb-2 mt-4"><%= @course.title %>        
+        <% block_course = @course.flags.any? && !(current_user.role == "admin" || @course.user_id == current_user.id) %>
+        <h1 class="mb-2 mt-4"><%= block_course ? "Blocked Content" : @course.title %>        
         <% if current_user == @course.user || current_user&.role == 'admin'%>
           <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %>
             <i class=" fa fa-pencil-alt pencil_edit"></i>
@@ -68,9 +69,9 @@
         <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
         <!-- Tags-->
         <div class= "mt-2 mb-4">          
-          <% @course.tags.each do |tag| %>           
-            <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= tag.name.capitalize %></span>       
-          <% end %>     
+          <% @course.tags.each do |tag| %>
+            <span style="background-color:white;color: gray;padding:2px;font-size:12px;"><%= block_course ? "Blocked" : tag.name.capitalize %></span>       
+          <% end %>
         </div>  
         <div class="mt-2 "<span style="color: gray;font-size:10px; font-style:italic;">Uploaded on <%= @course.created_at.to_date.strftime("%B %d, %Y")%></span></div>
         <div><span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= @course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
@@ -85,7 +86,7 @@
       <!-- Course Description Section-->  
       <div class="mb-3 course_show_description">
         <p>
-          <%= @course.description %>     
+          <%= block_course ? "Blocked Content" : @course.description %>     
         </p>
       </div> 
       <!-- Course Right Side Documents Section-->      
@@ -102,7 +103,7 @@
                   </tr>
                 </thead>
                 <!-- Course Right Side Documents Section-->    
-                <% if @course.documents.any? %>                
+                <% if @course.documents.any? && !block_course.present? %>                
                   <% @course.documents.each do |document| %> 
                     <% if document.lesson_id.nil? %>      
                       <tbody >
@@ -150,6 +151,7 @@
     <div class="container  mb-5">
       <% if @course.lessons.present? %>
         <% @course.lessons.each do |lesson_show| %>
+          <% block_lesson = lesson_show.flags.any? && !(current_user.role == "admin" || lesson_show.course.user_id == current_user.id) %>
           <div class="col-lg-12  mb-2 lesson_accordion" id="lesson<%=lesson_show.id%>">  
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">              
               <div class="panel panel-default">
@@ -158,10 +160,10 @@
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
                       <% if current_user&.role == 'user' || current_user&.role == 'creator' || current_user&.role == 'admin'%>
                         
-                          <div class="lesson_title_row">                        
+                          <div class="lesson_title_row">
                             <div class="col-lg-8">
-                              <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= lesson_show.title.titleize%></h3>
-                            </div>                          
+                              <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= block_lesson ? "Blocked Content" : lesson_show.title.titleize%></h3>
+                            </div>
                             <div class="lesson-star ">
                               <% if @fav_lessons.include? lesson_show.id %>
                                 <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
@@ -182,7 +184,7 @@
                                   <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
                                 <% end %>
                               <%end %>
-                            </div>                       
+                            </div>
                           </div>
                         
                       <% end %>
@@ -194,7 +196,7 @@
                 <% else %>  
                   <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <% end %>
-                  <div class="lesson_show_description"><p><%= lesson_show.description %></div>
+                  <div class="lesson_show_description"><p><%= block_lesson ? "Blocked Content" : lesson_show.description %></div>
                     <div class="panel-body">
                       <div class="col-lg-8">  
                         <table class="table">
@@ -206,7 +208,7 @@
                                   <th class="text-center" scope="col">DOWNLOAD</th>
                                 </tr>                        
                               </thead>
-                          <% if lesson_show.present? %>
+                          <% if lesson_show.present? && !block_lesson%>
                             <% lesson_show.documents.each do | lesson_document| %>                            
                               <tbody>
                                 <tr>
