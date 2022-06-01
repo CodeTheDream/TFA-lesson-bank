@@ -24,8 +24,10 @@
             <td data-title="Date"><%= course.created_at.to_date.strftime("%B %d, %Y")%></td> 
             <% if @flags.pluck(:flagable_id).include? course.searchable_id %>
               <% flag = @flags.select{|x| x.flagable_id == course.searchable_id}[0] %>
-              <td> <a href="#" data-toggle="tooltip" title= "<%= flag.description %>">Blocked</a></td>    
-            <% else %>  
+              <td>
+                <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" aria-label="<%= flag.description %>" data-balloon-pos="up">Blocked</button>
+              </td>
+              <% else %>  
               <td data-title="State"> Live</td> 
             <% end %>
           </tr>               
@@ -34,12 +36,3 @@
     </table>
   </div>  
 </div>
-
-<script>
-  $(document).ready(function() {
-    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-    $("tr[data-link]").click(function() {
-      window.location = $(this).data("link");
-    })
-  });
-</script>

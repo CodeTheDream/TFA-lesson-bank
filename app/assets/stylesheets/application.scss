@@ -75,6 +75,16 @@ a:hover {
 a.btn.callout-button:hover {
   color: #f0f0f0;
 }
+.tooltip_button {
+  border: none;
+  color: #1996aa;
+  padding: 4.8px;
+}
+.tooltip_button:hover{
+  border: none;
+  color: black;
+  background-color: #1996aa;
+}
 .dropdowns_inputs {
   margin-right: 0.2em;
   padding: 8px 12px;
