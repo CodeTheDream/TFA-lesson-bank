@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     # if they requested json, give them access denied json message
     # default pundit message can be overidden by message starting with "warning"
     # raise NotAuthorizedError, "Warning: enter message here" if condition
-    # msg = exception.message['Warning'] ? exception.message : 'Access denied.'
+    msg = exception.message['Warning'] ? exception.message : 'Access denied.'
     respond_to do |format|
       format.html do
         referrer = request.referrer
