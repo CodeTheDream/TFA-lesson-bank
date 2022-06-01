@@ -92,7 +92,9 @@
                                     </th>
                                   <%else%>
                                     <th class="search_icon text-center" scope="row"> 
-                                      <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                                    <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" data-balloon-pos="up" aria-label="This document Preview is not available" >
+                                    <i class=" fa fa-search" style="color:gray;"></i>
+                                  </button>
                                     </th>
                                     <% end %>
                                   <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
