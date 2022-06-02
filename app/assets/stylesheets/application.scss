@@ -45,6 +45,7 @@ main {
 }
 #notice_wrapper {
   margin-top: 100px;
+  z-index: 999
 }
 
 a,
@@ -364,6 +365,11 @@ a[aria-expanded="true"] {
   .logo_gen img {
     margin-bottom: -45px !important;
   }
+  .navbar {
+    width: 100% !important;
+    height: auto !important;
+  }
+  
 }
 
 @media (max-width: 992px) {
