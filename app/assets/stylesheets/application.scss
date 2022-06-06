@@ -45,6 +45,7 @@ main {
 }
 #notice_wrapper {
   margin-top: 100px;
+  z-index: 999
 }
 
 a,
@@ -74,6 +75,16 @@ a:hover {
 } */
 a.btn.callout-button:hover {
   color: #f0f0f0;
+}
+.tooltip_button {
+  border: none;
+  color: #1996aa;
+  padding: 4.8px;
+}
+.tooltip_button:hover{
+  border: none;
+  color: black;
+  
 }
 .dropdowns_inputs {
   margin-right: 0.2em;
@@ -354,6 +365,11 @@ a[aria-expanded="true"] {
   .logo_gen img {
     margin-bottom: -45px !important;
   }
+  .navbar {
+    width: 100% !important;
+    height: auto !important;
+  }
+  
 }
 
 @media (max-width: 992px) {
