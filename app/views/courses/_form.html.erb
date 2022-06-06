@@ -85,8 +85,10 @@
                           <% end %>
                         </th>
                       <%else%>
-                        <th class="search_icon text-center" scope="row">
-                          <a href="#" data-toggle="tooltip" title= "This document Preview is not available"> <i class=" fa fa-search" style="color:gray;"></i></a> 
+                        <th class="search_icon text-center" scope="row">                        
+                          <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" data-balloon-pos="up" aria-label="Word Documents cannot be Previewable">
+                            <i class=" fa fa-search" style="color:gray;"></i>
+                          </button>
                         </th>
                       <% end %>
 
