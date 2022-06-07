@@ -112,7 +112,7 @@
                           </th>
                                 
                           <% if document.file.attached? %>
-                            <th style="color:gray;" scope="row">
+                            <th class="mobile_doc_type", style="color:gray;" scope="row">
                              <%=document.kind.upcase%>       
                             </th> 
                           <% end %>   
@@ -216,7 +216,7 @@
                                     <%= lesson_document.name.titleize %>
                                   </th>
                                   <% if lesson_document.file.attached? %>
-                                    <th scope="row">
+                                    <th class="mobile_doc_type", style="color:gray;" scope="row">
                                     <span style="color: gray"><%= lesson_document.kind.upcase %></span>
                                     </th>
                                   <% end %> 

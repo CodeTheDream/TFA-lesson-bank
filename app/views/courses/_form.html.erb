@@ -74,7 +74,7 @@
                         <%= text_field_tag "documents[#{document.id}][name]", document.name.titleize, class: 'document-name ' %>
                       </th>
                       <% if document.file.attached? %>
-                        <th scope="row"> 
+                        <th class="mobile_doc_type text-center" scope="row"> 
                           <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'document-kind' %>
                         </th>                        
                       <% end %>

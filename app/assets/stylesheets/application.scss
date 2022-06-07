@@ -337,12 +337,12 @@ a[aria-expanded="true"] {
   .mobile_document_title,
   .search_icon,
   .download_icon,
-  .doc_type, 
+  .mobile_doc_type, 
   .mobile_trash_delete {
     visibility: visible !important;
     display: block !important;
   }
-  .mobile_document_title input {
+  .mobile_document_title,  input {
     text-align: center !important;
   }
   // tbody {

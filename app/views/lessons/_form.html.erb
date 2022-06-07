@@ -79,7 +79,7 @@
                                     <!--<span style="color: #212529;"><%#=document.name.titleize%>-->
                                   </th>
                                   <% if document.file.attached? %>
-                                    <th>
+                                    <th class="mobile_doc_type">
                                       <%= text_field_tag "documents[#{document.id}][kind]", document.kind.upcase, class: 'lesson-document-kind' %>
                                       <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
                                     </th>
