@@ -472,7 +472,6 @@ a {
 .lesson-description-area:hover,
 .course-description-area:hover,
 .document-name:hover,
-.document-kind:hover,
 .lesson-document-name:hover,
 .lesson-document-kind:hover {
   outline: none !important;
@@ -481,6 +480,12 @@ a {
   cursor: pointer;
   width: calc(100%);
 }
+.document-kind:hover {
+  border-color: #1996aa;
+  box-shadow: 0 0 3px #1996aa;
+  outline: none !important;
+}
+
 .lesson-description-label {
   position: relative;
   left: 0.15em;
@@ -551,7 +556,7 @@ a {
   font-family: Montserrat;
   color: gray;
   font-weight: 600;
-  width: 100%;
+  // width: 70%;
 }
 .document_row h4 {
   font-family: Montserrat;
