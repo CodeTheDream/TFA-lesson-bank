@@ -10,13 +10,8 @@ class User < ApplicationRecord
   has_many :logs, dependent: :destroy
 
   before_create :set_default_role, :set_default_status
-  after_create :send_email_confirmation
 # email notification
   
-  def send_email_confirmation
-    UserMailer.with(user: self).new_registration.deliver_now
-  end
-
   def set_default_role
     self.role ||= :user
   end

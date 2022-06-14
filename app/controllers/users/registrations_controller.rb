@@ -51,7 +51,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new configure_sign_up_params
     @user.role = 'user'
     if @user.save
-      UserMailer.with(user: @user).new_registration.deliver_now
       redirect_to root_path, notice: 'Success! Check your email to confirm your account'
     else
       redirect_to root_path, notice: 'User cannot be added'
