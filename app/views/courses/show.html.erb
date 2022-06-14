@@ -91,61 +91,44 @@
       </div> 
       <!-- Course Right Side Documents Section-->      
       <%= form_tag course_path(@course), :method => 'get', enforce_utf8: false do %>       
-        <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
-            <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
-                    <th scope="col">TYPE</th>
-                    <th class=" text-center" scope="col">PREVIEW</th>
-                    <th class=" text-center" scope="col">DOWNLOAD</th>
-                  </tr>
-                </thead>
-                <!-- Course Right Side Documents Section-->    
-                <% if @course.documents.any? && !block_course.present? %>                
-                  <% @course.documents.each do |document| %> 
-                    <% if document.lesson_id.nil? %>      
-                      <tbody >
-                        <tr>
-                          <th class="mobile_document_title" scope="row">
-                            <%=document.name.titleize%>
-                          </th>
-                                
-                          <% if document.file.attached? %>
-                            <th style="color:gray;" scope="row">
-                             <%=document.kind.upcase%>       
-                            </th> 
-                          <% end %>   
-                          <% if document.file.representable? %>
-                            <th class="search_icon text-center" scope="row">
-                              <%= link_to(document.file) do %>
-                                <i class=" fa fa-search" style="color:gray;"></i>
-                              <% end %> 
-                            </th>  
-                          <%else%>
-                            <th class="search_icon text-center" scope="row">                             
-                              <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" data-balloon-pos="up" aria-label="Word Documents cannot be Previewable">
-                                <i class=" fa fa-search" style="color:gray;"></i>
-                              </button> 
-                            </th>                                   
-                          <% end %>
-                        
-                          <th class="download_icon text-center" scope="row"> 
-                            <%# CREATE THE LOG %>
-                            <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
-                            <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
-                            <% end %>                     
-                          </th>                            
-                        </tr>
-                      </tbody>
-                    <% end %>
-                  <% end %>             
-                <% end %> 
-              </table>             
-            <% end %>
-          <% end %>         
-        <% end %> 
+        <%= form_tag download_course_path(@course), :method => 'get', id: "form-download", enforce_utf8: false do %>       
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                <th scope="col">TYPE</th>
+                <th class=" text-center" scope="col">DOWNLOAD</th>
+              </tr>
+            </thead>
+            <!-- Course Right Side Documents Section-->    
+            <% if @course.documents.any? && !block_course.present? %>                
+              <% @course.documents.each do |document| %> 
+                <% if document.lesson_id.nil? %>      
+                  <tbody >
+                    <tr>
+                      <th class="mobile_document_title" scope="row">
+                        <%=document.name.titleize%>
+                      </th>
+                            
+                      <% if document.file.attached? %>
+                        <th style="color:gray;" scope="row">
+                         <%=document.kind.upcase%>       
+                        </th> 
+                      <% end %>   
+                      <th class="download_icon text-center" scope="row"> 
+                        <%# CREATE THE LOG %>
+                        <%= link_to(log_course_path(id: @course.id, document_id: document.id)) do %>
+                        <i class=" fa fa-arrow-down " style="color:gray;"></i>                          
+                        <% end %>                     
+                      </th>                            
+                    </tr>
+                  </tbody>
+                <% end %>
+              <% end %>             
+            <% end %> 
+          </table>             
+        <% end %>
+      <% end %>         
     </div>             
   
     
@@ -206,7 +189,6 @@
                                 <tr>
                                   <th class=" blue_downloads" scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
                                   <th scope="col">TYPE</th>
-                                  <th class="text-center" scope="col">PREVIEW</th>
                                   <th class="text-center" scope="col">DOWNLOAD</th>
                                 </tr>                        
                               </thead>
@@ -222,20 +204,6 @@
                                     <span style="color: gray"><%= lesson_document.kind.upcase %></span>
                                     </th>
                                   <% end %> 
-                                  <% if lesson_document.file.representable? %>
-                                    <th class="search_icon text-center" scope="row">                                
-                                      <%= link_to (lesson_document.file) do %>
-                                        <i class=" fa fa-search" style="color:gray;"></i> 
-                                      <% end %>   
-                                    </th>
-                                  <%else%>
-                                    <th class="search_icon text-center" scope="row">          
-                                      <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" data-balloon-pos="up" aria-label="Word Documents cannot be Previewable">
-                                        <i class=" fa fa-search" style="color:gray;"></i>
-                                      </button> 
-                                    </th> 
-                                    
-                                  <%end%>                        
                                   <th class="text-center download_icon" scope="row">
                                     <%# CREATE LOG FOR LESSONS %>
                                     <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
