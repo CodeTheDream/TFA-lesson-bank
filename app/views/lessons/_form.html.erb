@@ -84,19 +84,6 @@
                                       <!--<span style="color: gray"><%#=document.kind.upcase%></span>-->
                                     </th>
                                   <% end %>
-                                  <% if document.file.representable? %>
-                                    <th class="search_icon text-center">
-                                      <%= link_to(document.file) do %>
-                                        <i class=" fa fa-search" style="color:gray;"></i>
-                                      <% end %>
-                                    </th>
-                                  <%else%>
-                                    <th class="search_icon text-center" scope="row"> 
-                                    <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" data-balloon-pos="up" aria-label="Word Documents cannot be Previewable">
-                                    <i class=" fa fa-search" style="color:gray;"></i>
-                                  </button>
-                                    </th>
-                                    <% end %>
                                   <% if current_user&.role == 'creator' || current_user&.role == 'admin'%>
                                     <th class="mobile_trash_delete text-center" scope="row">    
                                       <%= link_to(document_path(id: document.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
