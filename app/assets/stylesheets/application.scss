@@ -432,6 +432,17 @@ a[aria-expanded="true"] {
   .top_session {
     margin-top: -120px;
   }
+  .lesson_title_row, .lesson-star, h3, .icon-play {
+    font-size: 22px !important;  
+  }
+  .lesson-star {
+    margin-right: -10px;
+  }
+  .move-lesson-tag-list {
+    padding-left: 0px !important;
+    margin-left: .2em !important;
+  }
+ 
   // .course_lesson_container {
   //   // margin-right: -15px !important;
   // }
