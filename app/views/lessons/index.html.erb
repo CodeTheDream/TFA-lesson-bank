@@ -24,9 +24,7 @@
             <td data-title="Date"><%= lesson.created_at.to_date.strftime("%B %d, %Y")%></td> 
             <% if @flags.pluck(:flagable_id).include? lesson.searchable_id %>
               <% flag = @flags.select{|x| x.flagable_id == lesson.searchable_id}[0] %>
-              <td>
-                <button class="tooltip_button" data-balloon-pos="left" data-balloon-length="medium" aria-label="<%= flag.description %>" data-balloon-pos="up">Blocked</button>
-              </td>    
+              <td> <a href="#" data-toggle="tooltip" data-placement="left" title= "<%= flag.description %>">Blocked</a></td>    
             <% else %>  
               <td data-title="State"> Live</td> 
             <% end %>
