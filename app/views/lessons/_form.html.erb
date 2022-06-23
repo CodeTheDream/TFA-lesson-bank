@@ -114,7 +114,7 @@
                         <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'input_tags_buttons' %></li>
                       <% end %>
                     </ul>
-                    <div class="actions buttons-position">
+                    <div class="actions buttons-position text-center">
                       <% if f.object.id.present? %>
                         <%= f.submit "Save Changes", {:class => 'search_button form-button mt-4'} %>
                       <% else %>
