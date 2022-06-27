@@ -7,18 +7,22 @@
   background-color: #f0eeed;
 }
 
-.search_button {
+.search_button, .tag_button {
   background-color: #081e32;
   color: white;
-  font-size: 12px !important;
+  font-size: 18px !important;
   border-radius: 0% !important;
   border: none;
 }
+.tag_button {
+  font-size: 12px !important;  
+}
 
-.search_button:hover {
+.search_button:hover, .tag_button:hover {
   background-color: #1996aa !important;
   border-radius: 0% !important;
   border: none !important;
+  
 }
 .search_button:hover,
 button:focus {
@@ -84,6 +88,7 @@ button:focus {
 
 .position-search {
   position: relative;
+ 
   // left: 0.1em;
 }
 
@@ -143,6 +148,9 @@ button:focus {
 // .navbar-toggler {
 //   margin-bottom: 5px;
 // }
+.login-heading {
+  margin-top: 50px !important;
+}
 
 #notice_wrapper {
   position: absolute;

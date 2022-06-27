@@ -97,17 +97,17 @@
         <% end %>
       </div>
       <div class="container  mb-5">      
-        <%= button_tag 'Add Tag', class: " search_button form-button", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
+        <%= button_tag 'Add Tag', class: " tag_button form-button", type: 'button', id: 'addTag', onclick: 'addTagField()' %>
         <ul id="myList" class="row move-lesson-tag-list ">
           <% @course.tags.each do |tag| %>	  
             <% time_stamp = Time.now.to_i %>	  
             <li><%= text_field :existing_tags, :tag_names["#{time_stamp}"], value: tag.name, class: 'input_tags_buttons' %></li>
           <% end %>
         </ul>
-        <div class="actions buttons-position">
-          <% if @course&.id.present? %>
+        <div class="actions buttons-position text-center">
+          <% if @course&.id.present? %>          
             <%= f.submit "Save Changes", {:class => 'search_button form-button mt-4'} %>
-          <% else %>
+          <% else %>         
             <%= f.submit "Create Course", {:class => 'search_button form-button mt-4'} %>
           <% end %>
         </div>
