@@ -4,13 +4,11 @@
     <div class="col-8">
       <div class="show_button_section btn btn_show_back">  
         <%= link_to search_page_path(search: params[:search], subject: params[:subject], district: params[:district], selected_grades_back: params[:selected_grades], mycontent: params[:mycontent], favorites: params[:favorites], courses: params[:courses], lessons: params[:lessons], flags: params[:flags] ) do  %> 
-          <i class=" fa fa-caret-left " style="color:gray;"></i>     
-                
-          <span style="color: gray">BACK TO SEARCH RESULTS </span>
-        
+          <i class=" fa fa-caret-left " style="color:gray;"></i>           
+          <span style="color: gray">BACK TO SEARCH RESULTS </span>        
         <% end %>    
-      </div> 
-    </div> 
+      </div>      
+    </div>  
     <div class="col-4 ">
       <% if current_user == @course.user || current_user&.role == 'admin'%>                   
         <%= link_to(course_lesson_form_courses_path(course_id: @course.id)) do %> 
@@ -24,30 +22,38 @@
      
   <div class="row big_card">
     <div class="card-header"></div> 
-      <div class="col-12">
-        <div class="course_favorites_section"> 
-          <% if @fav_courses.include? @course.id %>
-            <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
-              <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
-            <% end %> 
-          <% else %> 
-            <%= link_to(favorite_course_path(source: "course_show")) do  %> 
-              <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
-            <% end %>                     
-          <%end %>
-          
-          <%# Flag Section%>
-          <% if @flagged_courses.include? @course.id %>
-            <%= link_to(unflag_course_path(source: "course_show")) do  %> 
-              <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
-            <% end %> 
-          <% else %> 
-            <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
-              <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
-            <% end %>
-          <%end %>
-        </div>
+    <div class="col-12">    
+      <div class="course_favorites_section"> 
+        <% if @fav_courses.include? @course.id %>
+          <%= link_to(unfavorite_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+          <% end %> 
+        <% else %> 
+          <%= link_to(favorite_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-heart fa-lg mt-4 mr-4" style="color:gray;"></i>
+          <% end %>                     
+        <%end %>
+        
+        <%# Flag Section%>
+        <% if @flagged_courses.include? @course.id %>
+          <%= link_to(unflag_course_path(source: "course_show")) do  %> 
+            <i class="fas fa-flag fa-lg mt-4 mr-4" style="color:#d13139;"></i>
+          <% end %> 
+        <% else %> 
+          <%= link_to "#flagCourseModal", data: { toggle: "modal" } do %>
+            <i class="fas fa-flag fa-lg mt-4 mr-4"  style="color:gray;" id="myFlag"></i>
+          <% end %>
+        <%end %>
       </div>
+      <% if @course.flags.any? && (current_user.role == "admin" || current_user&.role == 'creator')%>
+        <% @course.flags.each do |flagCourse| %> 
+          <div class="mb-2 mt-2 text-center">
+            <span style="color: gray;font-size:18px; font-style:italic;">Reason for flagging this Course:</span></br>
+            <span style="color: red;font-size:18px; font-style:italic;"><%= flagCourse.description %></span>
+          </div>
+        <%end%>
+      <%end%> 
+    </div>
     <!-- Left Side Course-->
     <div class="col-lg-4 mb-5">
       <!-- Course header-->
@@ -61,9 +67,7 @@
           <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
             <i class=" fa fa-trash-alt trash_delete "></i>
           <% end %>       
-        <%end%>
-        
- 
+        <%end%> 
         <div class= "mt-2" style="font-size:14px;"><span style="color: gray; margin-right: 6px;">SUBJECT</span> <b><%= @course.subject.upcase%></b></div>
         <div style="font-size:14px;"><span style="color: gray; margin-right: 20px;">GRADE</span><b><%= @course.grades.pluck(:grade_level).join(', ') %></b></div>  
         <div style="font-size:14px;"><span style="color: gray; margin-right: 10px;">AUTHOR</span><b><%= @course.user.name.upcase %></b></div>
@@ -77,12 +81,8 @@
         <div><span style="color: gray;font-size:10px; font-style:italic;">Last Edited on <%= @course.updated_at.to_date.strftime("%B %d, %Y")%> </span></div>
       </div>      
     </div>
-
-
-
     <!-- Right Side Course-->
-    <div class="col-lg-8 mt-5 mb-4 mr-auto"> 
-    
+    <div class="col-lg-8 mt-5 mb-4 mr-auto">    
       <!-- Course Description Section-->  
       <div class="mb-3 course_show_description">
         <p>
@@ -143,35 +143,33 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
-                      <% if current_user&.role == 'user' || current_user&.role == 'creator' || current_user&.role == 'admin'%>
-                        
-                          <div class="lesson_title_row">
-                            <div class="col-lg-8">
-                              <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= block_lesson ? "Blocked Content" : lesson_show.title.titleize%></h3>
-                            </div>
-                            <div class="lesson-star ">
-                              <% if @fav_lessons.include? lesson_show.id %>
-                                <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
-                                  <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
-                                <% end %>
-                              <% else %>
-                                <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
-                                  <i class="fas fa-heart fa-xs" style="color:gray;"></i>
-                                <% end %>
-                              <%end %>
-                              <%# Flag %>
-                              <% if @flagged_lessons.include? lesson_show.id %>
-                                <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
-                                  <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
-                                <% end %>
-                              <% else %>
-                                <%= link_to "#flagLessonModal#{lesson_show.id}", data: { toggle: "modal" } do %>
-                                  <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
-                                <% end %>
-                              <%end %>
-                            </div>
+                      <% if current_user&.role == 'user' || current_user&.role == 'creator' || current_user&.role == 'admin'%>                        
+                        <div class="lesson_title_row">
+                          <div class="col-lg-8">
+                            <h3><i class="fa fa-solid fa-play icon-play" ></i>   Lesson: <%= block_lesson ? "Blocked Content" : lesson_show.title.titleize%></h3>
                           </div>
-                        
+                          <div class="lesson-star ">
+                            <% if @fav_lessons.include? lesson_show.id %>
+                              <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
+                              <% end %>
+                            <% else %>
+                              <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-heart fa-xs" style="color:gray;"></i>
+                              <% end %>
+                            <%end %>
+                            <%# Flag %>
+                            <% if @flagged_lessons.include? lesson_show.id %>
+                              <%= link_to(unflag_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_show")) do  %>
+                                <i class="fas fa-flag fa-xs" style="color:#d13139;"></i>
+                              <% end %>
+                            <% else %>
+                              <%= link_to "#flagLessonModal#{lesson_show.id}", data: { toggle: "modal" } do %>
+                                <i class="fas fa-flag fa-xs"  style="color:gray;" id="myLessonFlag"></i>
+                              <% end %>
+                            <%end %>
+                          </div>
+                        </div>                        
                       <% end %>
                     </a>
                   </h4>
@@ -181,44 +179,55 @@
                 <% else %>  
                   <div id="collapseOne_<%=lesson_show.id%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <% end %>
-                  <div class="lesson_show_description"><p><%= block_lesson ? "Blocked Content" : lesson_show.description %></div>
-                    <div class="panel-body">
-                      <div class="col-lg-8">  
-                        <table class="table">
-                              <thead>
-                                <tr>
-                                  <th class=" blue_downloads" scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
-                                  <th scope="col">TYPE</th>
-                                  <th class="text-center" scope="col">DOWNLOAD</th>
-                                </tr>                        
-                              </thead>
-                          <% if lesson_show.present? && !block_lesson%>
-                            <% lesson_show.documents.each do | lesson_document| %>                            
-                              <tbody>
-                                <tr>
-                                  <th class=" mobile_document_title" scope="row">
-                                    <%= lesson_document.name.titleize %>
-                                  </th>
-                                  <% if lesson_document.file.attached? %>
-                                    <th scope="row">
-                                    <span style="color: gray"><%= lesson_document.kind.upcase %></span>
-                                    </th>
-                                  <% end %> 
-                                  <th class="text-center download_icon" scope="row">
-                                    <%# CREATE LOG FOR LESSONS %>
-                                    <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
-                                      <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
-                                    <% end %>  
-                                  </th>                                
-                                </tr>
-                              </tbody>  
-                            <% end %>
-                          <% end %>                            
-                        </table>                     
+                <div>
+                  <% if lesson_show.flags.any? && (current_user.role == "admin" || current_user.role == "creator" )%>
+                    <% lesson_show.flags.each do |flagLesson| %> 
+                      <div class="text-center">
+                        <span style="color: gray;font-size:18px; font-style:italic;">Reason for flagging this Lesson:</span>
+                        <span style="color: red;font-size:18px; font-style:italic;"><%= flagLesson.description %></span>
                       </div>
+                    <%end%>
+                  <%end%>
+                </div>
+
+                <div class="lesson_show_description"><p><%= block_lesson ? "Blocked Content" : lesson_show.description %></div>
+                  <div class="panel-body">
+                    <div class="col-lg-8">  
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class=" blue_downloads" scope="col"><span style="color: #1996aa">LESSON DOWNLOADS</span></th>
+                            <th scope="col">TYPE</th>
+                            <th class="text-center" scope="col">DOWNLOAD</th>
+                          </tr>                        
+                        </thead>
+                        <% if lesson_show.present? && !block_lesson%>
+                          <% lesson_show.documents.each do | lesson_document| %>                            
+                            <tbody>
+                              <tr>
+                                <th class=" mobile_document_title" scope="row">
+                                  <%= lesson_document.name.titleize %>
+                                </th>
+                                <% if lesson_document.file.attached? %>
+                                  <th scope="row">
+                                    <span style="color: gray"><%= lesson_document.kind.upcase %></span>
+                                  </th>
+                                <% end %> 
+                                <th class="text-center download_icon" scope="row">
+                                  <%# CREATE LOG FOR LESSONS %>
+                                  <%= link_to(log_course_path(id: @course.id, document_id: lesson_document.id)) do %>
+                                    <i class=" fa fa-arrow-down arrow-enter" style="color:gray;"></i>                          
+                                  <% end %>  
+                                </th>                                
+                              </tr>
+                            </tbody>  
+                          <% end %>
+                        <% end %>                            
+                      </table>                     
                     </div>
                   </div>
-                </div>                             
+                </div>
+              </div>                             
             </div>
           </div>
           <% modalId = "flagLessonModal#{lesson_show.id}" %>
