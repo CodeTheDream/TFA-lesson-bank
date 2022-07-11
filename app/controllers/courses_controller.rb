@@ -31,22 +31,12 @@ class CoursesController < ApplicationController
     
   end
 
-  # GET /courses/1/edit
-  def edit
-    @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
-
-  end
-
   # POST /courses
   # POST /courses.json
   def create
     @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @subjects = Course.subjects
+    @districts = Course.districts
     @course = Course.new(course_params)
     @course.user = current_user
     @course.state = 'NC'
@@ -73,9 +63,8 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1.json
   def update
     @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @subjects = Course.subjects
+    @districts = Course.districts
     @course.courses_grades.delete_all
     new_grades = grade_params[:grade_levels].present? ? Grade.where(grade_level: grade_params[:grade_levels].keys) : nil
     @course.grades << new_grades if new_grades.present?
@@ -228,9 +217,8 @@ class CoursesController < ApplicationController
     @courses = Course.where(user_id: current_user.id).to_a.unshift new_course
     @course = params[:course_id].present? ? Course.find(params[:course_id]) : new_course
     @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @subjects = Course.subjects
+    @districts = Course.districts
     new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
@@ -248,9 +236,8 @@ class CoursesController < ApplicationController
       @course = Course.new
     end
     @available_grade_levels = Grade.all
-    @subjects = %w[Art English Math Music Science Technology]
-    @states = %w[AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY]
-    @districts = %w[ Durham Harnett Johnston Wake Warren ]
+    @subjects = Course.subjects
+    @districts = Course.districts
     new_lesson = Lesson.new(title: "Add Lesson")
     @lessons = @course.lessons.to_a.unshift new_lesson
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
