@@ -23,4 +23,12 @@ class Course < ApplicationRecord
   def available_grade_levels 
     %w[Prek-K K 1 2 3 4 5 6 7 8 9 10 11 12]
   end
+
+  def self.subjects
+    ["Art", "English", "Math", "Music", "Science", "Technology", "Social Studies", "Special Education", "Health/PE", "Foreign Language" ]
+  end
+
+  def self.districts
+    %w[ Charlotte-Mecklenburg Durham Edgecombe Guilford Harnett Johnston Kipp Pitt Wake Warren]
+  end
 end
