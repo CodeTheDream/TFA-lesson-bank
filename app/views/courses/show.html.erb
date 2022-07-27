@@ -95,7 +95,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th class="blue_downloads" scope="col"><span style="color: #1996aa; ">COURSE DOWNLOADS</span></th>
+                <th class="blue_downloads" scope="col"><span>COURSE DOWNLOADS</span></th>
                 <th scope="col">TYPE</th>
                 <th class=" text-center" scope="col">DOWNLOAD</th>
               </tr>
@@ -131,7 +131,31 @@
       <% end %>         
     </div>             
   
-    
+    <div class="commentsLink mb-2">
+      <i class="fa fa-arrow-down mt-1 mr-1"></i>
+      <a class="" id="commentsButton" data-toggle="collapse" data-target="#commentsSection">COMMENTS</a>
+    </div>
+    <div id="commentsSection" class="collapse comments_section mb-2">
+      <div class="comment-new row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-1">
+          <div class="user-container user-icon-text mb-3 mt-2">
+            <div class="comment-initials"><%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%></div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="newCommentText" name="newCommentText" class="newCommentText" placeholder="Leave a comment">
+          <div class="newCommentTriangleBorder"></div>
+          <div class="newCommentTriangle"></div>
+        </div>
+        <div class="search_button comment-button mt-2" onclick="return postComment();">Post it!</div>
+      </div>
+      <div id="courseComments">
+        <%= render "courses/course_comments", comments: @course_comments %>
+      </div>
+    </div>
+
+
     <!-- Lesson Bottom Accordion Section-->  
     <div class="container  mb-5">
       <% if @course.lessons.present? %>
@@ -226,6 +250,31 @@
                       </table>                     
                     </div>
                   </div>
+  
+                  <div class="commentsLink mb-2">
+                    <i class="fa fa-arrow-down mt-1 mr-1"></i>
+                    <a class="" id="lessonCommentsButton" data-toggle="collapse" data-target="#lesson<%=lesson_show.id%>CommentsSection">COMMENTS</a>
+                  </div>
+                  <div id="lesson<%=lesson_show.id%>CommentsSection" class="collapse comments_section mb-2">
+                    <div class="comment-new row">
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-1">
+                        <div class="user-container user-icon-text mb-3 mt-2">
+                          <div class="comment-initials"><%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%></div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" id="newLesson<%=lesson_show.id%>CommentText" name="newLessonCommentText" class="newCommentText" placeholder="Leave a comment">
+                        <div class="newLessonCommentTriangleBorder"></div>
+                        <div class="newLessonCommentTriangle"></div>
+                      </div>
+                      <div class="search_button comment-button mt-2" onclick="return postLessonComment(<%=lesson_show.id%>, <%=@course.id%>);">Post it!</div>
+                    </div>
+                    <div id="lesson<%=lesson_show.id%>Comments">
+                      <%= render "course_comments", comments: @lessons_comments.where(lesson_id: lesson_show.id) %>
+                    </div>
+                  </div>
+
                 </div>
               </div>                             
             </div>
@@ -275,3 +324,61 @@
     </div>
   </div>
 </div>
+
+<script>
+  window.postComment = function postComment() {
+    let commentText = $('#newCommentText').val();
+    console.log("post comment", commentText);
+    if (commentText.length > 0) {
+      $.post({
+        url: "/comments/",
+        type: "POST",
+        data: {
+          authenticity_token: $('[name="csrf-token"]')[0].content,
+          comment: { message: commentText, course_id: <%= @course.id%> }
+        },
+        success: function (data) {},
+        error: function (data) {}
+      });
+      $('#newCommentText').val("Leave a comment");
+    };
+  };
+
+  window.deleteComment = function deleteComment(commentId) {
+    $.post({
+      url: "/comments/delete",
+      type: "DELETE",
+      data: {
+        authenticity_token: $('[name="csrf-token"]')[0].content,
+        comment: { id: commentId, course_id: <%= @course.id%> }
+      },
+      success: function (data) {},
+      error: function (data) {}
+    });
+  };
+
+  window.postLessonComment = function postLessonComment(lessonId, courseId) {
+    let commentText = $(`#newLesson${lessonId}CommentText`).val();
+    console.log("post comment", commentText);
+    if (commentText.length > 0) {
+      $.post({
+        url: "/comments/",
+        type: "POST",
+        data: {
+          authenticity_token: $('[name="csrf-token"]')[0].content,
+          comment: { message: commentText, lesson_id: lessonId}//, course_id: courseId }
+        },
+        success: function (data) {},
+        error: function (data) {}
+      });
+      $(`#newLesson${lessonId}CommentText`).val("Leave a comment");
+    };
+  };
+
+  $(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    $("tr[data-link]").click(function() {
+      window.location = $(this).data("link");
+    })
+  });
+</script>

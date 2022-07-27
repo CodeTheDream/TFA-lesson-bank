@@ -1,0 +1,17 @@
+<% comments.each do |comment| %>
+  <div class="row">
+    <div class="col-sm-1">
+      <div class="user-container user-icon-text ml-2 mb-3">
+        <a href="#" data-toggle="tooltip" data-placement="left" class="comment-initials" title='<%="#{comment.user.first_name} #{comment.user.last_name}"%>' ><%="#{comment.user.first_name[0].upcase}#{comment.user.last_name[0].upcase}"%></a>
+      </div>
+    </div>
+    <div class="col-sm-8 mt-4 mb-2">
+      <div class="pl-2 postedComment"><%= comment.message %></div>
+      <div class="savedCommentTriangleBorder"></div>
+      <div class="savedCommentTriangle"></div>
+    </div>
+    <% if comment.user.id == current_user.id || current_user.role == "admin" %>
+      <i class="mt-4 fa fa-trash-alt delete-comment" onclick="return deleteComment(<%= comment.id %>);"></i>
+    <% end %>
+  </div>
+<% end %>

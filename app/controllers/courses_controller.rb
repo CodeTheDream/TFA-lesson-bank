@@ -20,7 +20,10 @@ class CoursesController < ApplicationController
     @fav_courses = Favorite.where(user_id: current_user.id, favoritable_type: "Course").distinct.pluck(:favoritable_id)
     @flagged_courses = Flag.where(flagable_type: "Course").distinct.pluck(:flagable_id)
     @fav_lessons = Favorite.where(user_id: current_user.id, favoritable_type: "Lesson").distinct.pluck(:favoritable_id)
-    @flagged_lessons = Flag.where(flagable_type: "Lesson").distinct.pluck(:flagable_id)  
+    @flagged_lessons = Flag.where(flagable_type: "Lesson").distinct.pluck(:flagable_id)
+    @course_comments = @course.comments
+#    @lesson_comments = Comment.joins(:lesson).where("lessons.course_id = ? and comments.lesson_id = ?", @course.id, 1).uniq
+    @lessons_comments = Comment.where(lesson_id: @course.lessons.pluck(:id))
     if params[:lesson_id].present?
       @lesson = params[:lesson_id].present? ? Lesson.where(id: params[:lesson_id]).includes(:documents) : nil
       @lesson = @course.lessons[0] if ((@course.lessons.any?) && (@lesson == nil))
