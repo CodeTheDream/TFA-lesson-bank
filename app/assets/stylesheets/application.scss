@@ -78,16 +78,37 @@ a:hover {
   font-weight: bolder;
 }
 
-.newCommentText {
-  width: 100%;
-  margin-top: 1em;
-  position: relative;
-  left: -.5em;
-  top: -.5em;
-  border-style: solid;
-  border-radius: 4px;
-  border-color: lightgray;
+.search_button {
+    
+  font-family: "Montserrat";
 }
+.comment_area {
+  width: 90% !important;   
+  
+}
+.comment-text{
+  margin-bottom: 0px;
+}
+.bg-white{
+  border-style: solid;
+  border-color: #f0eeed;
+}
+.bg-light{
+  background-color: #f0eeed !important;
+}
+.delete-comment{
+  float: right;
+}
+// .newCommentText {
+//   width: 100%;
+//   margin-top: 1em;
+//   position: relative;
+//   left: -.5em;
+//   top: -.5em;
+//   border-style: solid;
+//   border-radius: 4px;
+//   border-color: lightgray;
+// }
 
 .newCommentTriangle {
   position: relative;

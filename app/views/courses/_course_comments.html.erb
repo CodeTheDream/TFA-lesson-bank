@@ -1,17 +1,39 @@
-<% comments.each do |comment| %>
-  <div class="row">
-    <div class="col-sm-1">
-      <div class="user-container user-icon-text ml-2 mb-3">
-        <a href="#" data-toggle="tooltip" data-placement="left" class="comment-initials" title='<%="#{comment.user.first_name} #{comment.user.last_name}"%>' ><%="#{comment.user.first_name[0].upcase}#{comment.user.last_name[0].upcase}"%></a>
+<% comments.each do |comment| %> 
+  <div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+      <div class="col-md-10">
+        <div class="d-flex flex-column comment-section">     
+          <div class="bg-white p-2  mb-2">         
+            <div  class=" text-right" >           
+              <% if comment.user.id == current_user.id || current_user.role == "admin" %>
+                <i class="fa fa-trash-alt delete-comment text-right" onclick="return deleteComment(<%= comment.id %>);"></i>
+              <% end %>           
+            </div>     
+            <div class="d-flex flex-row user-info"> 
+              <div class="user-container user-icon-text  mb-3">
+                <a href="#" data-toggle="tooltip" data-placement="left" class="comment-initials">
+                  <%="#{comment.user.first_name[0].upcase}#{comment.user.last_name[0].upcase}"%>
+                </a>
+              </div>
+              <div class="d-flex flex-column justify-content-start ml-2">
+                <span class="d-block font-weight-bold name">
+                  <%="#{comment.user.first_name} #{comment.user.last_name}"%>
+                </span>
+                <span class="date text-black-50">
+                  Posted on 
+                  <%= comment.created_at.strftime('%B %Y')%>
+                </span>
+                
+              </div>
+            </div>
+            <div>
+              <p class="comment-text">
+                <%= comment.message %>
+              </p>                      
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-sm-8 mt-4 mb-2">
-      <div class="pl-2 postedComment"><%= comment.message %></div>
-      <div class="savedCommentTriangleBorder"></div>
-      <div class="savedCommentTriangle"></div>
-    </div>
-    <% if comment.user.id == current_user.id || current_user.role == "admin" %>
-      <i class="mt-4 fa fa-trash-alt delete-comment" onclick="return deleteComment(<%= comment.id %>);"></i>
-    <% end %>
   </div>
 <% end %>

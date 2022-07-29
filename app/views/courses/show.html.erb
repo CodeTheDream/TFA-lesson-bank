@@ -136,25 +136,32 @@
       <a class="" id="commentsButton" data-toggle="collapse" data-target="#commentsSection">COMMENTS</a>
     </div>
     <div id="commentsSection" class="collapse comments_section mb-2">
-      <div class="comment-new row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-1">
-          <div class="user-container user-icon-text mb-3 mt-2">
-            <div class="comment-initials"><%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%></div>
+      <div class="container mt-5">
+        <div class="d-flex justify-content-center row">
+          <div class="col-md-10">
+            <div class="d-flex flex-column comment-section">
+              <div class="bg-light p-2">
+                <div class="d-flex flex-row align-items-start ">
+                  <div class="user-container user-icon-text  mb-3">
+                    <a href="#" data-toggle="tooltip" data-placement="left" class="comment-initials">
+                    <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
+                    </a>
+                  </div> 
+                  <textarea type="text" id="newCommentText" name="newCommentText" class="form-control comment_area ml-1 shadow-none" placeholder="Leave a comment">           
+                  </textarea>
+                </div>
+                <div class="mt-2 text-right">
+                  <button class="search_button form-button"type="button" onclick="return postComment();">Post Comment</button>
+                </div>         
+              </div>          
+              <div id="courseComments">
+                <%= render "courses/course_comments", comments: @course_comments %>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <input type="text" id="newCommentText" name="newCommentText" class="newCommentText" placeholder="Leave a comment">
-          <div class="newCommentTriangleBorder"></div>
-          <div class="newCommentTriangle"></div>
-        </div>
-        <div class="search_button comment-button mt-2" onclick="return postComment();">Post it!</div>
       </div>
-      <div id="courseComments">
-        <%= render "courses/course_comments", comments: @course_comments %>
-      </div>
-    </div>
-
+    </div>  
 
     <!-- Lesson Bottom Accordion Section-->  
     <div class="container  mb-5">
@@ -256,23 +263,30 @@
                     <a class="" id="lessonCommentsButton" data-toggle="collapse" data-target="#lesson<%=lesson_show.id%>CommentsSection">COMMENTS</a>
                   </div>
                   <div id="lesson<%=lesson_show.id%>CommentsSection" class="collapse comments_section mb-2">
-                    <div class="comment-new row">
-                      <div class="col-sm-1"></div>
-                      <div class="col-sm-1">
-                        <div class="user-container user-icon-text mb-3 mt-2">
-                          <div class="comment-initials"><%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%></div>
+                    <div class="container mt-5">
+                      <div class="d-flex justify-content-center row">
+                        <div class="col-md-10">
+                          <div class="d-flex flex-column comment-section">
+                            <div class="bg-light p-2">
+                              <div class="d-flex flex-row align-items-start ">
+                                <div class="user-container user-icon-text  mb-3">
+                                  <a href="#" data-toggle="tooltip" data-placement="left" class="comment-initials">
+                                  <%="#{current_user.first_name[0].upcase}#{current_user.last_name[0].upcase}"%>
+                                  </a>
+                                </div> 
+                                <textarea type="text" id="newLesson<%=lesson_show.id%>CommentText" name="newLessonCommentText" class="form-control newCommentText comment_area ml-1 shadow-none" placeholder="Leave a comment"></textarea>          
+                              </div>
+                              <div class="mt-2 text-right">
+                                <button class="search_button form-button"type="button" onclick="return postLessonComment(<%=lesson_show.id%>, <%=@course.id%>);">Post Comment</button>
+                              </div>         
+                            </div>
+                            <div id="lesson<%=lesson_show.id%>Comments">
+                              <%= render "course_comments", comments: @lessons_comments.where(lesson_id: lesson_show.id) %>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="col-sm-6">
-                        <input type="text" id="newLesson<%=lesson_show.id%>CommentText" name="newLessonCommentText" class="newCommentText" placeholder="Leave a comment">
-                        <div class="newLessonCommentTriangleBorder"></div>
-                        <div class="newLessonCommentTriangle"></div>
-                      </div>
-                      <div class="search_button comment-button mt-2" onclick="return postLessonComment(<%=lesson_show.id%>, <%=@course.id%>);">Post it!</div>
-                    </div>
-                    <div id="lesson<%=lesson_show.id%>Comments">
-                      <%= render "course_comments", comments: @lessons_comments.where(lesson_id: lesson_show.id) %>
-                    </div>
+                    </div>                   
                   </div>
 
                 </div>

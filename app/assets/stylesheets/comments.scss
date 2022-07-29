@@ -1,3 +1,22 @@
 // Place all the styles related to the comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.search_button {
+    
+    font-family: "Montserrat";
+}
+.comment_area {
+    width: 90% !important;   
+    
+}
+
+.comment-text{
+    margin-bottom: 0px;
+}
+.bg-white{
+    border-style: solid;
+    border-color: #f0eeed;
+}
+.bg-light{
+    background-color: #f0eeed !important;
+}
