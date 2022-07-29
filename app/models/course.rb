@@ -5,6 +5,7 @@ class Course < ApplicationRecord
   has_many :lessons, dependent: :destroy
   has_many :documents, dependent: :destroy 
   has_many :key_words, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :tags, through: :key_words 
   has_one :search_item, as: :searchable, dependent: :delete
   has_many :favorites, as: :favoritable, dependent: :destroy

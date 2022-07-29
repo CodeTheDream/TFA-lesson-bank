@@ -1,0 +1,5 @@
+<% if !@course_comments.nil? %>
+  $('#courseComments').html("<%= j (render 'courses/course_comments', comments: @course_comments) %>");
+<% elsif !@lessons_comments.nil? %>
+  $("#lesson<%= @lesson.id %>Comments").html("<%= j (render 'courses/course_comments', comments: @lessons_comments.where(lesson_id: @lesson.id)) %>");
+<% end %>

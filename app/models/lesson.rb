@@ -3,6 +3,7 @@ class Lesson < ApplicationRecord
 
   belongs_to :course 
   has_many :documents, dependent: :destroy 
+  has_many :comments, dependent: :destroy 
   has_many :key_words, dependent: :destroy
   has_many :tags, through: :key_words
   has_many :favorites, as: :favoritable, dependent: :destroy
