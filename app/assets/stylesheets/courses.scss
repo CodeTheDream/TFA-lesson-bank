@@ -364,6 +364,14 @@ ul li.favorites::marker {
   font-family: Montserrat;
 }
 
+.comment-button {
+  height: 1.5em !important;
+  font-size: 12px !important;
+  font-family: Montserrat;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .doc-button {
   background-color: #081e32 !important;
   color: white !important;
@@ -635,4 +643,18 @@ a {
 }
 .edit_button_table :hover {
   border-color: #1996aa !important;
+}
+.commentsLink {
+  width: 100%;
+//  display: flex !important;
+//  justify-content: center !important;
+  margin-left: 3em;
+  color: #1996aa;
+  font-weight: 600 !important;
+}
+
+.comments_section {
+  margin-left: 1em;
+  width: 97%;
+  background-color: white;
 }

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
 
   resources :documents
+  resources :comments, only: [:create, :destroy]
   resources :courses do 
     member do
       get :favorite
