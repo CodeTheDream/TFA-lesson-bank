@@ -23,7 +23,7 @@ class CoursePolicy < ApplicationPolicy
     creator_or_admin? && owner?
   end
 
-  %i(show? favorite? flag? unfavorite? log? download?).each do |ali|
+  %i(show? favorite? flag? unfavorite? log? download? create_comment?).each do |ali|
     alias_method ali, :logged_in_and_approved?
   end
 
@@ -31,7 +31,7 @@ class CoursePolicy < ApplicationPolicy
     alias_method ali, :creator_or_admin?
   end
 
-  %i(edit? update? destroy?).each do |ali|
+  %i(edit? update? destroy? delete_comment?).each do |ali|
     alias_method ali, :owner_and_creator_or_admin?
   end
 
