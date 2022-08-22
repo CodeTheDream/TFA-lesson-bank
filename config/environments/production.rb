@@ -94,6 +94,7 @@ Rails.application.configure do
 
   # added for config in digital ocean
   config.hosts << "tfa-lesson-bank-2nhhr.ondigitalocean.app"
+  config.hosts << "tfalessonplanbank.onegoalnc.com"
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
