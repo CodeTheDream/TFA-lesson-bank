@@ -30,6 +30,7 @@ class Course < ApplicationRecord
   end
 
   def self.districts
-    %w[ Charlotte-Mecklenburg Durham Edgecombe Guilford Harnett Johnston Kipp Pitt Wake Warren]
+    %w[ Charlotte-Mecklenburg Durham Edgecombe Gaston Granville Guilford Halifax Harnett Kipp Northampton Pitt Vance Wake ]
+
   end
 end

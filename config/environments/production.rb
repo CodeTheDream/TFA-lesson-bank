@@ -63,7 +63,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "tfa_lesson_bank_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { :host => "tfa-lesson-bank-2nhhr.ondigitalocean.app" }
+  config.action_mailer.default_url_options = { :host => "tfalessonplanbank.onegoalnc.com" }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -94,6 +94,7 @@ Rails.application.configure do
 
   # added for config in digital ocean
   config.hosts << "tfa-lesson-bank-2nhhr.ondigitalocean.app"
+  config.hosts << "tfalessonplanbank.onegoalnc.com"
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
@@ -122,6 +123,6 @@ Rails.application.configure do
     password: ENV['GMAIL_PASSWORD'],
     authentication: :plain,
     enable_starttls_auto: true,
-    domain: 'fa-lesson-bank-2nhhr.ondigitalocean.app',
+    domain: 'tfalessonplanbank.onegoalnc.com',
   }
 end
