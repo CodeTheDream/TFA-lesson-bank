@@ -632,3 +632,11 @@ a[aria-expanded="true"] {
 //     margin-right: 10px !important;
 //     // margin-top: 0px;
 //   }
+
+.legal-link {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  bottom: 0;
+}
