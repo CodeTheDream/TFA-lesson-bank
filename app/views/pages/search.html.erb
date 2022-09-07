@@ -15,7 +15,7 @@
               <small class="form-text text-muted">DISTRICT</small>
               <%= select_tag :district, options_for_select(@districts, @selected_district), { include_blank: true, class: 'form-control' } %>
             </div>
-  ​           <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
+            <h6 class="form-text text-bold mb-4">GRADE LEVEL:</h6>
             <div class='grid-container-filter mb-2 checkbox-format '>                    
               <% @available_grade_levels.each do |grade_level|%>                       
                 <%= check_box_tag "selected_grades[#{grade_level}]", grade_level, @selected_grades.include?(grade_level) %>
@@ -43,7 +43,7 @@
       <%= render 'layouts/search_landingpage' %>
     </div>   
     
-      <button type="button" id="sidebarCollapse" class="btn button_filter_hide text-center mb-4"><i class="fa fa-solid fa-play fa-rotate-180 black-icon-play"></i>SHOW FILTERS</button>
+    <button type="button" id="sidebarCollapse" class="btn button_filter_hide text-center mb-4"><i class="fa fa-solid fa-play fa-rotate-180 black-icon-play"></i>SHOW FILTERS</button>
         
     <div class="col mb-4 mx-auto">   
       <h5><b>RESULTS FOR</b> <span style="color: gray; margin-left: 6px;"><%= params[:search].present? ? params[:search].capitalize : "" %></span></h5>
@@ -56,7 +56,7 @@
         <% if result.searchable_type == "Lesson" %>
           <%= render 'lesson_card', lesson: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
         <% else %>  
-        <%= render 'course_card', course: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
+          <%= render 'course_card', course: result, search: params[:search], subject: params[:subject], district: params[:district], selected_grades: @selected_grades, mycontent: params[:mycontent], favorites: params[:favorites], lessons: params[:lessons], courses: params[:courses]%>
         <% end %>                               
       <%end%>              
     </div>        

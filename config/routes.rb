@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   get '/search' => 'pages#search', :as => 'search_page'
   get '/about' => 'pages#about', :as => 'about_page'
+  get '/legal_disclaimer' => 'pages#legal_disclaimer'
   
 
 

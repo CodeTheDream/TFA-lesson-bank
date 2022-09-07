@@ -30,6 +30,7 @@ class PagesController < ApplicationController
     @selected_types << "lessons" if params[:lessons] == "true"
     @results = SearchItemSearch.search(query: query, options: search_hash, current_user: current_user)
   end
+
   private
 
   def search_params
