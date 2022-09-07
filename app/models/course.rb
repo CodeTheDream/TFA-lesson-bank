@@ -26,11 +26,11 @@ class Course < ApplicationRecord
   end
 
   def self.subjects
-    ["Art", "English", "Math", "Music", "Science", "Technology", "Social Studies", "Special Education", "Health/PE", "Foreign Language" ]
+    ["Art", "ELA", "English", "Foreign Language", "Health/PE", "History", "Math", "Music", "Reading", "Science", "Social Studies", "Special Education", "Technology"]
   end
 
   def self.districts
-    %w[ Charlotte-Mecklenburg Durham Edgecombe Gaston Granville Guilford Halifax Harnett Kipp Northampton Pitt Vance Wake ]
+    %w[Charlotte-Mecklenburg Durham Edgecombe Gaston Granville Guilford Halifax Harnett Kipp Northampton Pitt Vance Wake]
 
   end
 end
