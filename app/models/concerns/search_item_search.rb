@@ -8,7 +8,7 @@ module SearchItemSearch
     @options = options
     @current_user = current_user if current_user.present?
     constraints = {
-      page: options[:page],
+      page: options["page"],
       per_page: PER_PAGE
     }
 
