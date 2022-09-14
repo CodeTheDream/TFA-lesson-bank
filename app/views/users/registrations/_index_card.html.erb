@@ -6,12 +6,6 @@
   <%= will_paginate @users %>
 </div>
 
-<div class="center">
-  <% if @results.present? %>
-    <%= will_paginate @results %>
-  <% end %>
-</div>  
-
 <div class="card-container shadow-none">          
   <% @users.each do |user| %>                       
     <%= render 'user_card', user: user %>

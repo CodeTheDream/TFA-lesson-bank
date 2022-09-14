@@ -5,6 +5,10 @@
     <%= render 'layouts/search_user' %>
   </div>
 
+  <div class="col mx-auto pagination li center">
+    <%= will_paginate @users %>
+  </div>
+
   <div id="no-more-tables" class="table-responsive card mb-5">
 
       <div class="row container-header p-3 bg-light"> 

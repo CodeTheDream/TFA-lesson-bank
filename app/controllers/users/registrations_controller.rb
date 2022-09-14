@@ -13,7 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # @partial = params[:view] || "index" || "index_card"
 
   def index
-    @users = User.where('last_name iLike ? OR email iLike ? OR role iLike ? OR status iLike ?' , "%#{search_params[:search]}%", "%#{search_params[:search]}#%", "%#{search_params[:search]}%", "%#{search_params[:search]}%")
+    @users = User.where('last_name iLike ? OR email iLike ? OR role iLike ? OR status iLike ?' , "%#{search_params[:search]}%", "%#{search_params[:search]}%", "%#{search_params[:search]}%", "%#{search_params[:search]}%")
     @users = @users.paginate(page: params[:page], :per_page => 18)
   end 
  
