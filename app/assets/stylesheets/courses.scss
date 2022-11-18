@@ -222,6 +222,12 @@ ul li.favorites::marker {
   float: right !important;
 }
 
+.lesson_trashcan {
+  position: absolute;
+  right: 0;
+  margin-top: 15px;
+}
+
 .flag {
   position: relative;
   bottom: 2.5em;
@@ -427,6 +433,7 @@ ul li.favorites::marker {
 .lesson_title_row {
   background-color: white;
   padding: 5px;
+  width: 100%
 }
 .lesson_title_row h3 {
   margin-top: 10px;

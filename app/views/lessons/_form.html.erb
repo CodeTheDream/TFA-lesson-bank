@@ -9,29 +9,19 @@
             <div class="panel-heading" role="tab" id="headingOne">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%=lesson_show.id%>" aria-expanded="true" aria-controls="collapseOne">
-                  <div class=" lesson_title_row  ">
+                  <div class=" lesson_title_row row">
                     <% if @course.id.present? %>
                       <% if lesson_show.title == "Add Lesson"%>
                         <h3> <i class="fa fa-plus plus-lesson" aria-hidden="true"></i>Lesson</h3>
                       <%else%>
                         <h3><i class="fa fa-solid fa-play icon-play" ></i>  Lesson:  <%= lesson_show.title.titleize%></h3>
                       <%end%>
+                      <% if lesson_show.id %>
+                        <%= link_to(course_lesson_path(id: lesson_show.id, course_id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "lesson_trashcan mr-4") do %>
+                          <i class=" fa fa-trash-alt trash_delete ml-2"></i>
+                        <% end %>
+                      <% end %>
                     <% end %>
-                    <%# Lesson Favorites %>
-                    <div class="lesson-star">
-                      <% if lesson_show.title != "Add Lesson"%>
-                       <%fav_lesson = Favorite.where(user_id: current_user, favoritable_type: "Lesson").distinct.pluck :favoritable_id%>
-                       <% if fav_lesson.include? lesson_show.id %>
-                         <%= link_to(unfavorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
-                           <i class="fas fa-heart fa-xs" style="color:#d13139;"></i>
-                         <% end %> 
-                       <% else %> 
-                         <%= link_to(favorite_course_lesson_path(course_id: @course.id, lesson_id: lesson_show.id, id: @course.id, source: "lesson_edit")) do  %>
-                           <i class="fas fa-heart fa-xs" style="color:gray;"></i>
-                         <% end %>
-                       <%end %>
-                      <%end%>
-                    <div>
                   </div>
                 </a>
               </h4>
