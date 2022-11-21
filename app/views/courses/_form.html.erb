@@ -16,7 +16,7 @@
       <div class="col-12">  
         <% if @course.id %>
           <%= link_to(course_path(id: @course.id), method: :delete, data: { confirm: 'Are you sure?' }) do %>
-            <i class=" fa fa-trash-alt trash_delete ml-2"></i>
+            <i class=" fa fa-trash-alt course_trash_delete ml-2"></i>
           <% end %>
         <% end %>
       </div>     

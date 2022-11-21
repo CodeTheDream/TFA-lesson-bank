@@ -44,6 +44,17 @@
   font-size: 22px;
   cursor: pointer;
 }
+.fa-trash-alt.course_trash_delete {
+  float: right !important;
+  color: #1996aa !important;
+  font-size: 22px;
+}
+.fa-trash-alt.course_trash_delete:hover {
+  float: right !important;
+  color: #081e32 !important;
+  font-size: 22px;
+  cursor: pointer;
+}
 .fa-pencil-alt.pencil_edit {
   position: relative;
   bottom: 3px;
