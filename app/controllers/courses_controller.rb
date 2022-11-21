@@ -101,12 +101,13 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.json
   def destroy
-    @course.destroy
-    respond_to do |format|
-    format.html { redirect_to search_page_path, notice: 'Course was successfully destroyed.' }
-    format.json { head :no_content }
+    if @course.destroy
+      redirect_to search_page_path, notice: 'Course was successfully destroyed.'
+    else
+      redirect_to course_lesson_form_courses_path(id: @course.id, course_id: @course.id), notice: 'Lesson could not be destroyed.'
     end
   end
+
   def favorite
     @lesson = params[:lesson_id].present? ? Lesson.find(params[:lesson_id]) : nil
     hash = {favoritable_type: "Course", favoritable_id: @course.id, user_id: current_user.id }
