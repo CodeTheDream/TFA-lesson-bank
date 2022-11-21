@@ -44,6 +44,17 @@
   font-size: 22px;
   cursor: pointer;
 }
+.fa-trash-alt.course_trash_delete {
+  float: right !important;
+  color: #1996aa !important;
+  font-size: 22px;
+}
+.fa-trash-alt.course_trash_delete:hover {
+  float: right !important;
+  color: #081e32 !important;
+  font-size: 22px;
+  cursor: pointer;
+}
 .fa-pencil-alt.pencil_edit {
   position: relative;
   bottom: 3px;
@@ -220,6 +231,12 @@ ul li.favorites::marker {
 }
 .course_favorites_section {
   float: right !important;
+}
+
+.lesson_trashcan {
+  position: absolute;
+  right: 0;
+  margin-top: 15px;
 }
 
 .flag {
@@ -427,6 +444,7 @@ ul li.favorites::marker {
 .lesson_title_row {
   background-color: white;
   padding: 5px;
+  width: 100%
 }
 .lesson_title_row h3 {
   margin-top: 10px;
