@@ -1,6 +1,8 @@
 class SearchItem < ApplicationRecord
   include SearchItemSearch
   belongs_to :searchable, polymorphic: true
+  after_commit :search_item_reindex
+  after_destroy :search_item_reindex
 
   searchkick word_middle: [ :title, :description, :tags, :last_name, :user_status], merge_mappings: true
 
@@ -17,10 +19,14 @@ class SearchItem < ApplicationRecord
       user_id: self.user_id,
       last_name: self.last_name,
       user_status: self.user_status,
-      type: self.searchable.class == Lesson ? "lesson_type" : "course_type", 
+      type: self.searchable.class == Lesson ? "lesson_type" : "course_type",
       favorited: self.searchable.class == Lesson ? Favorite.where(favoritable_id: self.searchable_id, favoritable_type: "Lesson").count : Favorite.where(favoritable_id: self.searchable_id, favoritable_type: "Course").count,
       favorited_by: Favorite.where(favoritable_type: self.searchable_type, favoritable_id: self.searchable_id).pluck(:user_id),
       flagged: Flag.find_by(flagable_type: self.searchable_type, flagable_id: self.searchable_id).present?.to_s
     }
+  end
+
+  def search_item_reindex
+    self.reindex
   end
 end
