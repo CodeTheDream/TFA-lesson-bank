@@ -2,6 +2,7 @@ FROM ruby:2.7.0
 RUN apt-get update -qq && apt-get install -y npm nodejs postgresql-client
 RUN npm install -g yarn n
 Run n 14
+Run yarn add jquery
 WORKDIR /TFA-lesson-bank
 COPY Gemfile /TFA-lesson-bank/Gemfile
 COPY Gemfile.lock /TFA-lesson-bank/Gemfile.lock
